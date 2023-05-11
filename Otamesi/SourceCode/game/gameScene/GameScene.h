@@ -82,4 +82,6 @@ private: //メンバ変数
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
+
+	int blockActTimer_ = 0;
 };

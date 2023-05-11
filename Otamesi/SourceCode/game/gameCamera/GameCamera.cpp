@@ -273,3 +273,89 @@ void GameCamera::ChanegeDimension()
 	//行動を「何もしない」に戻す
 	actionPhase = ActionPhase::None;
 }
+
+void GameCamera::CameraSetMove()
+{
+	// InOutのQuint
+	SetEye({});
+
+	easeData_->Update();
+
+	if (easeData_->GetEndFlag())
+	{
+		easeData_->Reset();
+		easeData_->SetCount(30);
+		phase_ = 2;
+	}
+}
+
+void GameCamera::GamePlayStratCameraSetMove()
+{
+	SetTarget({}); //プレイヤーの座標
+
+	if (!cameraEaseChangeFlag_)
+	{
+		// InOutのQuad
+		SetEye({});
+
+		if (easeData_->GetEndFlag())
+		{
+			easeData_->Reset();
+			easeData_->SetCount(20);
+			cameraEaseChangeFlag_ = true;
+		}
+	}
+	else
+	{
+		// InOutのQuad
+		SetEye({});
+
+		if (easeData_->GetEndFlag())
+		{
+			isShake_ = true;
+		}
+	}
+
+	ShakeMove();
+}
+
+void GameCamera::ShakeMove()
+{
+	if (isShake_ && !shakeEnd_)
+	{
+		shakeTimer_++;
+
+		Vector3 shake = {};
+		shake.x = static_cast<float>(rand() % (5 - attenuation_) - 2);
+		shake.y = static_cast<float>(rand() % (5 - attenuation_) - 2) + 5.0f;
+		shake.z = 15.0f;
+
+		if (shakeTimer_ >= attenuation_ * 2)
+		{
+			// 減衰値の加算
+			attenuation_ += 1;
+			SetEye(shake);
+		}
+		else if (attenuation_ >= 4)
+		{
+			shakeTimer_ = 0;
+			attenuation_ = 0;
+			shakeEnd_ = true;
+			SetEye({ 0,5,15 });
+			// 未定
+			phase_ = 3;
+		}
+	}
+}
+
+void GameCamera::SetEaseData(const int count)
+{
+	if (easeData_ == nullptr)
+	{
+		easeData_ = std::make_unique<EaseData>(count);
+	}
+	else
+	{
+		easeData_->SetCount(count);
+	}
+}

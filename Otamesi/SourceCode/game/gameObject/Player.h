@@ -1,6 +1,7 @@
 #pragma once
 #include "ObjObject3d.h"
 #include "GameCamera.h"
+#include "EaseData.h"
 
 /// <summary>
 /// プレイヤー
@@ -75,6 +76,22 @@ private: //メンバ関数
 	/// </summary>
 	Vector3 GetMapChipPos(const XMINT3& mapChipNumberPos);
 
+	/// <summary>
+	/// イージングデータの設定
+	/// </summary>
+	/// <param name="count">フレームのカウント</param>
+	void SetEaseData(const int count);
+	/// <summary>
+	/// イージングを開始する時の位置の保存
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPlayerStratPos(const Vector3& position) { playerStratPos_ = position; }
+	/// <summary>
+	/// イージングを終了する時の位置の保存
+	/// </summary>
+	/// <param name="position"></param>
+	void SetPlayerEndPos(const Vector3& position) { playerEndPos_ = position; }
+
 private: //静的メンバ変数
 	//プレイヤーの大きさ
 	static const float playerSize;
@@ -96,4 +113,16 @@ private: //メンバ変数
 	Vector3 moveAfterPos;
 	//ゴールしたか
 	bool isGoal = false;
+	// 関数の管理
+	std::vector<std::function<void()>> func_;
+	// 関数の番号
+	size_t phase_ = 0;
+#pragma region
+	// 開始位置
+	Vector3 playerStratPos_;
+	// 終了位置
+	Vector3 playerEndPos_;
+	// イージングデータ
+	std::unique_ptr<EaseData> easeData_;
+#pragma endregion イージング関係
 };

@@ -248,6 +248,9 @@
     <ClCompile Include="SourceCode\game\gameObject\MapBlockData.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\engine\math\EaseData.cpp">
+      <Filter>ソース ファイル\engine\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\MapBlockData.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\math\EaseData.h">
+      <Filter>ソース ファイル\engine\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

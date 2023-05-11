@@ -176,3 +176,15 @@ Vector3 Player::GetMapChipPos(const XMINT3& mapChipNumberPos)
 {
 	return { mapChipNumberPos.z * Block::GetBlockSize(), -mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.x * Block::GetBlockSize() };
 }
+
+void Player::SetEaseData(const int count)
+{
+	if (easeData_ == nullptr)
+	{
+		easeData_ = std::make_unique<EaseData>(count);
+	}
+	else
+	{
+		easeData_->SetCount(count);
+	}
+}

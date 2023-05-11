@@ -277,10 +277,19 @@ void GameScene::Update()
 	//オブジェクト更新
 	//プレイヤー
 	player->Update();
+
+	int count = 0;
+	blockActTimer_++;
 	//マップ用ブロック
 	for (const std::unique_ptr<Block>& block : blocks) {
+		if (blockActTimer_ <= 10 * count)
+		{
+			break;
+		}
 		block->Update();
+		count++;
 	}
+
 	//天球
 	skydome->Update();
 

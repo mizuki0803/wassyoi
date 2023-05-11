@@ -125,6 +125,7 @@
     <ClCompile Include="SourceCode\engine\collision\CollisionShape.cpp" />
     <ClCompile Include="SourceCode\engine\input\Input.cpp" />
     <ClCompile Include="SourceCode\engine\light\LightGroup.cpp" />
+    <ClCompile Include="SourceCode\engine\math\EaseData.cpp" />
     <ClCompile Include="SourceCode\engine\math\Easing.cpp" />
     <ClCompile Include="SourceCode\engine\math\Spline.cpp" />
     <ClCompile Include="SourceCode\engine\math\Vector2.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="SourceCode\engine\light\LightGroup.h" />
     <ClInclude Include="SourceCode\engine\light\PointLight.h" />
     <ClInclude Include="SourceCode\engine\light\SpotLight.h" />
+    <ClInclude Include="SourceCode\engine\math\EaseData.h" />
     <ClInclude Include="SourceCode\engine\math\Easing.h" />
     <ClInclude Include="SourceCode\engine\math\Spline.h" />
     <ClInclude Include="SourceCode\engine\math\Vector2.h" />

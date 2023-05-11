@@ -1,6 +1,10 @@
 #pragma once
 #include "Camera.h"
+#include "EaseData.h"
 #include <array>
+#include <memory>
+#include <vector>
+#include <functional>
 
 /// <summary>
 /// ゲームカメラ
@@ -110,6 +114,22 @@ private: //メンバ関数
 	/// </summary>
 	void ChanegeDimension();
 
+	/// <summary>
+	/// 開始時の位置調整
+	/// </summary>
+	void CameraSetMove();
+
+	void GamePlayStratCameraSetMove();
+	/// <summary>
+	/// カメラのシェイク
+	/// </summary>
+	void ShakeMove();
+	/// <summary>
+	/// イージングデータの設定
+	/// </summary>
+	/// <param name="count">フレームのカウント</param>
+	void SetEaseData(const int count);
+
 private:
 	//ステージ中央座標
 	Vector3 stageCenterPos;
@@ -135,4 +155,20 @@ private:
 	bool is2D = false;
 	//次元変更が完了した瞬間か
 	bool isTriggerDimensionChange = false;
+	// 関数の管理
+	std::vector<std::function<void()>> func_;
+	// 関数の番号
+	size_t phase_ = 0;
+	// イージングデータ
+	std::unique_ptr<EaseData> easeData_;
+	// シェイクしているか
+	bool isShake_ = false;
+	// シェイクが終わったか
+	bool shakeEnd_ = false;
+	// シェイクタイマー
+	int shakeTimer_ = 0;
+	// 減衰値
+	int attenuation_ = 0;
+	// カメラのイージングの切り替えし
+	bool cameraEaseChangeFlag_ = false;
 };
