@@ -20,21 +20,28 @@ Block* Block::Create(ObjModel* model, const Vector3& position)
 	}
 
 	// イージングデータの設定
-	instance->SetEaseData(90);
+	instance->SetEaseData(60);
 	//座標をセット
-	instance->SetBlockStratPos(position);
+	
 	Vector3 temppos = position;
-	temppos.y = -50.0f;
-	instance->SetBlockEndPos(temppos);
-	instance->position = position;
+	temppos.y = -100.0f;
+	instance->SetBlockStratPos(temppos);
+	instance->SetBlockEndPos(position);
+	instance->position = temppos;
 	//大きさをセット
 	instance->scale = { blockSize, blockSize, blockSize };
+	// 関数の設定
+	instance->CreateAct();
 
     return instance;
 }
 
 void Block::Update()
 {
+	if (phase_ != static_cast<int>(GamePhase::None))
+	{
+		func_[phase_]();
+	}
 	//オブジェクト更新
 	ObjObject3d::Update();
 }
@@ -48,6 +55,12 @@ void Block::PlayStratMove()
 	easePos.z = Easing::InOutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 	// 位置の設定
 	SetPosition(easePos);
+
+	if (easeData_->GetEndFlag())
+	{
+		phase_ = static_cast<int>(GamePhase::None);
+	}
+
 	// イージングデータ更新
 	easeData_->Update();
 }
@@ -62,4 +75,9 @@ void Block::SetEaseData(const int count)
 	{
 		easeData_->SetCount(count);
 	}
+}
+
+void Block::CreateAct()
+{
+	func_.push_back([this] { return PlayStratMove(); });
 }

@@ -278,17 +278,7 @@ void GameScene::Update()
 	//プレイヤー
 	player->Update();
 
-	int count = 0;
-	blockActTimer_++;
-	//マップ用ブロック
-	for (const std::unique_ptr<Block>& block : blocks) {
-		if (blockActTimer_ <= 10 * count)
-		{
-			break;
-		}
-		block->Update();
-		count++;
-	}
+	BlockUpdate();
 
 	//天球
 	skydome->Update();
@@ -333,4 +323,46 @@ void GameScene::DrawFrontSprite()
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void GameScene::BlockUpdate()
+{
+	if (!isBolckUp_)
+	{
+		// 最大値の数
+		int timeCount = 0;
+		// 上げた個数
+		int blockUpCount = 0;
+		// 何個ずつ上げるかの計算
+		int UpBlockSize = static_cast<int>(blocks.size() / 3.0f);
+		blockActTimer_++;
+		//マップ用ブロック
+		for (const std::unique_ptr<Block>& block : blocks) {
+			if (blockActTimer_ <= 10 * timeCount)
+			{
+				break;
+			}
+			block->Update();
+
+			if (blockUpCount >= UpBlockSize)
+			{
+				timeCount++;
+				blockUpCount = 0;
+			}
+			blockUpCount++;
+		}
+
+		int count = static_cast<int>(blocks.size() - 1);
+		if (blocks[count]->GetActPhase() == 1)
+		{
+			isBolckUp_ = true;
+		}
+	}
+	else
+	{
+		//マップ用ブロック
+		for (const std::unique_ptr<Block>& block : blocks) {
+			block->Update();
+		}
+	}
 }

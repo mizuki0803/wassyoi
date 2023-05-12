@@ -7,6 +7,15 @@
 /// </summary>
 class Block : public ObjObject3d
 {
+public: //enum
+	/// <summary>
+	/// ゲームの全体
+	/// </summary>
+	enum class GamePhase
+	{
+		Strat,	//開始
+		None,	//何もしない
+	};
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
@@ -47,6 +56,15 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="position"></param>
 	void SetBlockEndPos(const Vector3& position) { blockEndPos_ = position; }
+	/// <summary>
+	/// 関数の設定
+	/// </summary>
+	void CreateAct();
+	/// <summary>
+	/// どの行動をしているかの取得
+	/// </summary>
+	/// <returns></returns>
+	int GetActPhase() { return static_cast<int>(phase_); }
 
 private: //静的メンバ変数
 	//ブロック一つの大きさ
@@ -56,7 +74,7 @@ private: // メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_ = 0;
+	size_t phase_ = static_cast<int>(GamePhase::Strat);
 
 #pragma region
 	// 開始位置

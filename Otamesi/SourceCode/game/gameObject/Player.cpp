@@ -26,7 +26,11 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNumberPos, GameCame
 	instance->mapChipNumberPos = mapChipNumberPos;
 	//初期座標をセット
 	//const float fitNum = (Block::GetBlockSize() - playerSize) / 2;	//しっかり接地するためにずらす量
-	instance->position = instance->GetMapChipPos(mapChipNumberPos);
+	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNumberPos));
+	Vector3 tempPos = instance->GetMapChipPos(mapChipNumberPos);
+	//位置をずらしてイージング
+
+	instance->position = tempPos;
 	//大きさをセット
 	instance->scale = { playerSize, playerSize, playerSize };
 	//ゲームカメラをセット

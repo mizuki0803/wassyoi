@@ -43,6 +43,10 @@ public: //メンバ関数
 	void DrawFrontSprite() override;
 
 private: //メンバ関数
+	/// <summary>
+	/// 
+	/// </summary>
+	void BlockUpdate();
 
 private: //メンバ変数
 	//カメラ
@@ -83,5 +87,8 @@ private: //メンバ変数
 	//ステージクリアフラグ
 	bool isStageClear = false;
 
+	// ブロックを上げるタイマー
 	int blockActTimer_ = 0;
+	// ブロックを上げ終わったか
+	bool isBolckUp_ = false;
 };
