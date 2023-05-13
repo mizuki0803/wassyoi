@@ -251,6 +251,9 @@
     <ClCompile Include="SourceCode\engine\math\EaseData.cpp">
       <Filter>ソース ファイル\engine\math</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\engine\3d\JsonLoader.cpp">
+      <Filter>ソース ファイル\engine\3d\object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -466,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\engine\math\EaseData.h">
       <Filter>ソース ファイル\engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\3d\JsonLoader.h">
+      <Filter>ソース ファイル\engine\3d\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

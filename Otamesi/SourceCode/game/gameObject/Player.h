@@ -97,7 +97,7 @@ private: //静的メンバ変数
 	static const float playerSize;
 
 private: //メンバ変数
-	//プレイヤー位置を表すマップ番号(Z,Y,Xの順番になっている)
+	//プレイヤー位置を表すマップ番号
 	XMINT3 mapChipNumberPos;
 	//ゲームカメラ
 	GameCamera* gameCamera = nullptr;

@@ -44,6 +44,12 @@ public: //メンバ関数
 
 private: //メンバ関数
 	/// <summary>
+	/// マップデータ読み込み
+	/// </summary>
+	/// <param name="fileName">ファイル名</param>
+	bool LoadMapData(const std::string& fileName);
+
+	/// <summary>
 	/// 
 	/// </summary>
 	void BlockUpdate();
@@ -76,6 +82,8 @@ private: //メンバ変数
 	//プレイヤー
 	std::unique_ptr<Player> player;
 
+	//マップのサイズ
+	XMINT3 mapSize;
 	//3次元マップ用の3次元配列
 	std::vector<std::vector<std::vector<int>>> mapChipNum;
 	//マップ用ブロック

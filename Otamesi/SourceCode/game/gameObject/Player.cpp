@@ -178,7 +178,7 @@ void Player::StageClearCheck()
 
 Vector3 Player::GetMapChipPos(const XMINT3& mapChipNumberPos)
 {
-	return { mapChipNumberPos.z * Block::GetBlockSize(), -mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.x * Block::GetBlockSize() };
+	return { mapChipNumberPos.x * Block::GetBlockSize(), mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.z * Block::GetBlockSize() };
 }
 
 void Player::SetEaseData(const int count)

@@ -46,12 +46,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(ProjectDir)lib\DirectXTex\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(ProjectDir)lib\DirectXTex\include;$(ProjectDir)lib\cereal\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(ProjectDir)lib\DirectXTex\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)lib\fbx_sdk\include;$(ProjectDir)lib\nlohmann;$(ProjectDir)lib\DirectXTex\include;$(ProjectDir)lib\cereal\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(ProjectDir)lib\DirectXTex\lib\$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -105,6 +105,7 @@
     <ClCompile Include="SourceCode\engine\3d\FbxLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\FbxModel.cpp" />
     <ClCompile Include="SourceCode\engine\3d\FbxObject3d.cpp" />
+    <ClCompile Include="SourceCode\engine\3d\JsonLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\LevelDataLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\ObjModel.cpp" />
     <ClCompile Include="SourceCode\engine\3d\ObjObject3d.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="SourceCode\engine\3d\FbxLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\FbxModel.h" />
     <ClInclude Include="SourceCode\engine\3d\FbxObject3d.h" />
+    <ClInclude Include="SourceCode\engine\3d\JsonLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\LevelDataLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\ObjModel.h" />
     <ClInclude Include="SourceCode\engine\3d\ObjObject3d.h" />

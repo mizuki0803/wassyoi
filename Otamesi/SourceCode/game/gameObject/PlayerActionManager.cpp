@@ -47,27 +47,27 @@ void PlayerActionManager::PlayerFrontmost2D(XMINT3& mapChipNumberPlayerPos, cons
 	//プレイヤーより画面手前にブロックが存在しなければプレイヤーを画面の一番手前に配置
 	//接地面が「上」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		mapChipNumberPlayerPos.y = 0;
-	}
-	//接地面が「下」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		mapChipNumberPlayerPos.y = (int)mapChipNum[mapChipNumberPlayerPos.x].size() - 1;
+	}
+	//接地面が「下」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		mapChipNumberPlayerPos.y = 0;
 	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		mapChipNumberPlayerPos.z = 0;
+		mapChipNumberPlayerPos.x = 0;
 	}
 	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		mapChipNumberPlayerPos.z = (int)mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size() - 1;
+		mapChipNumberPlayerPos.x = (int)mapChipNum.size() - 1;
 	}
 	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		mapChipNumberPlayerPos.x = 0;
+		mapChipNumberPlayerPos.z = 0;
 	}
 	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		mapChipNumberPlayerPos.x = (int)mapChipNum.size() - 1;
+		mapChipNumberPlayerPos.z = (int)mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size() - 1;
 	}
 }
 
@@ -75,7 +75,7 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 {
 	//接地面が「上」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
@@ -83,7 +83,7 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	}
 	//接地面が「下」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
@@ -91,32 +91,32 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return true;
-			}
-		}
-	}
-	//接地面が「右」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return true;
-			}
-		}
-	}
-	//接地面が「手前」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
 		}
 	}
-	//接地面が「奥」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	//接地面が「右」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+				return true;
+			}
+		}
+	}
+	//接地面が「手前」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+				return true;
+			}
+		}
+	}
+	//接地面が「奥」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
 				return true;
 			}
 		}
@@ -130,7 +130,7 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 {
 	//接地面が「上」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
@@ -138,7 +138,7 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 	}
 	//接地面が「下」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
@@ -146,32 +146,32 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return true;
-			}
-		}
-	}
-	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return true;
-			}
-		}
-	}
-	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
 		}
 	}
-	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+				return true;
+			}
+		}
+	}
+	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+				return true;
+			}
+		}		
+	}
+	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
 				return true;
 			}
 		}
@@ -185,18 +185,6 @@ void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos,
 {
 	//接地面が「上」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			//ブロックでなければ飛ばす
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z]))) { continue; }
-
-			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
-			mapChipNumberPlayerPos.y = i - 1;
-
-			return;
-		}
-	}
-	//接地面が「下」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y; i >= 0; --i) {
 			//ブロックでなければ飛ばす
 			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z]))) { continue; }
@@ -207,32 +195,20 @@ void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos,
 			return;
 		}
 	}
+	//接地面が「下」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+			//ブロックでなければ飛ばす
+			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z]))) { continue; }
+
+			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
+			mapChipNumberPlayerPos.y = i - 1;
+
+			return;
+		}
+	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			//ブロックでなければ飛ばす
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
-
-			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
-			mapChipNumberPlayerPos.z = i - 1;
-
-			return;
-		}
-	}
-	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = mapChipNumberPlayerPos.z; i >= 0; --i) {
-			//ブロックでなければ飛ばす
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
-
-			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
-			mapChipNumberPlayerPos.z = i + 1;
-
-			return;
-		}
-	}
-	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
 			//ブロックでなければ飛ばす
 			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) { continue; }
@@ -243,8 +219,8 @@ void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos,
 			return;
 		}
 	}
-	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x; i >= 0; --i) {
 			//ブロックでなければ飛ばす
 			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) { continue; }
@@ -255,38 +231,62 @@ void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos,
 			return;
 		}
 	}
+	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			//ブロックでなければ飛ばす
+			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
+
+			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
+			mapChipNumberPlayerPos.z = i - 1;
+
+			return;
+		}
+	}
+	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		for (int i = mapChipNumberPlayerPos.z; i >= 0; --i) {
+			//ブロックでなければ飛ばす
+			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
+
+			//最初に見つかったブロックに接地する番号にプレイヤーをセットする
+			mapChipNumberPlayerPos.z = i + 1;
+
+			return;
+		}
+	}
 }
 
 bool PlayerActionManager::PlayerGoalCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
 	//足場となるブロックがゴールならばtrueを返す
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
-			return true;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 			return true;
 		}
 	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			return true;
+		}
+	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1] == MapBlockData::BlockType::Goal) {
-			return true;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1] == MapBlockData::BlockType::Goal) {
-			return true;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		if (mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 			return true;
 		}
 	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		if (mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			return true;
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1] == MapBlockData::BlockType::Goal) {
+			return true;
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1] == MapBlockData::BlockType::Goal) {
 			return true;
 		}
 	}
@@ -303,7 +303,7 @@ bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 
 	//接地面が「上」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
 			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 				return true;
 			}
@@ -314,7 +314,7 @@ bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 	}
 	//接地面が「下」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
 			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 				return true;
 			}
@@ -325,28 +325,6 @@ bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
-				return true;
-			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return false;
-			}
-		}
-	}
-	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
-				return true;
-			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
-				return false;
-			}
-		}
-	}
-	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
 			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 				return true;
@@ -356,13 +334,35 @@ bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 			}
 		}
 	}
-	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	//接地面が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
 			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
 				return true;
 			}
 			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+				return false;
+			}
+		}
+	}
+	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
+				return true;
+			}
+			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+				return false;
+			}
+		}
+	}
+	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
+				return true;
+			}
+			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
 				return false;
 			}
 		}
@@ -379,73 +379,56 @@ void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, 
 		if (Input::GetInstance()->PushKey(DIK_W)) {
 			//縦軸カメラ位置が下以外のとき
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z++; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
 			}
 			//縦軸カメラ位置が下のとき
 			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z--; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
 			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_S)) {
 			//縦軸カメラ位置が下以外のとき
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z--; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
 			}
 			//縦軸カメラ位置が下のとき
 			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z++; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
 			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_D)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
+			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z--; }
 		}
 		else if (Input::GetInstance()->PushKey(DIK_A)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
+			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z++; }
 		}
 	}
 	//プレイヤーの接地面が前後左右の場合
 	else {
 		//接地面が前後左右の場合はWSで上下移動
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
 
 		//左右移動の判定
 		else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft || moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-			if (Input::GetInstance()->PushKey(DIK_D)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.x++;
-				}
-				else { mapChipNumberPlayerPos.x--; }
-
-			}
-			else if (Input::GetInstance()->PushKey(DIK_A)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.x--;
-				}
-				else { mapChipNumberPlayerPos.x++; }
-			}
-		}
-		else {
 			if (Input::GetInstance()->PushKey(DIK_D)) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
 					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
@@ -462,6 +445,23 @@ void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, 
 				else { mapChipNumberPlayerPos.z++; }
 			}
 		}
+		else {
+			if (Input::GetInstance()->PushKey(DIK_D)) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+					mapChipNumberPlayerPos.x++;
+				}
+				else { mapChipNumberPlayerPos.x--; }
+
+			}
+			else if (Input::GetInstance()->PushKey(DIK_A)) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+					mapChipNumberPlayerPos.x--;
+				}
+				else { mapChipNumberPlayerPos.x++; }
+			}
+		}
 	}
 }
 
@@ -469,79 +469,79 @@ void PlayerActionManager::PlayerMoveDirection2D(XMINT3& mapChipNumberPlayerPos, 
 {
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
-		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
 			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
 			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
 		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
 			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x--; }
 			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
 		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
 			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
 			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
-		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
 			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
 			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
 		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
 			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x++; }
 			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
 		}
-		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
 			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
 			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
 		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
 		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
 		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
 	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
+	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
 	}
 }
 
@@ -554,32 +554,32 @@ bool PlayerActionManager::PlayerMoveBlockCheck3D(const XMINT3& mapChipNumberPlay
 
 	//足場となるブロックが存在しなければ抜ける
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z]))) {
-			return false;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z]))) {
 			return false;
 		}
 	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z]))) {
+			return false;
+		}
+	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1]))) {
-			return false;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1]))) {
-			return false;
-		}
-	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) {
 			return false;
 		}
 	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) {
+			return false;
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1]))) {
+			return false;
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1]))) {
 			return false;
 		}
 	}
@@ -599,15 +599,15 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft || moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+		for (int i = 0; i < mapChipNum.size(); i++) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
 				return true;
 			}
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward || moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		for (int i = 0; i < mapChipNum.size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
 				return true;
 			}
 		}
