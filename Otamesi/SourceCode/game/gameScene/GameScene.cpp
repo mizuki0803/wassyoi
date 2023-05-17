@@ -29,7 +29,7 @@ void GameScene::Initialize()
 
 
 	//jsonマップデータ読み込み
-	LoadMapData("1-1");
+	LoadMapData("star");
 
 	//カメラ初期化
 	camera.reset(new GameCamera());
@@ -193,31 +193,51 @@ void GameScene::BlockUpdate()
 {
 	if (!isBolckUp_)
 	{
-		// 最大値の数
-		int timeCount = 0;
-		// 上げた個数
-		int blockUpCount = 0;
-		// 何個ずつ上げるかの計算
-		int UpBlockSize = static_cast<int>(blocks.size() / 3.0f);
+		// 何個ずつ上げるかの計算(全体の30%)
+		int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
+
+		if (blockActTimer_ >= 10)
+		{
+			for (int i = 0; i < UpBlockSize; i++)
+			{
+				BlockCountCreate();
+			}
+			blockActTimer_ = 0;
+		}
 		blockActTimer_++;
+
+		// 今検索しているブロックの数
+		int blockCount = 0;
 		//マップ用ブロック
 		for (const std::unique_ptr<Block>& block : blocks) {
-			if (blockActTimer_ <= 10 * timeCount)
+			// 検索が当たったか
+			bool hitFlag = false;
+			for (auto& cnt : rndcount)
 			{
-				break;
+				if (cnt == blockCount)
+				{
+					hitFlag = true;
+				}
+			}
+			blockCount++;
+			if (!hitFlag)
+			{
+				continue;
 			}
 			block->Update();
-
-			if (blockUpCount >= UpBlockSize)
-			{
-				timeCount++;
-				blockUpCount = 0;
-			}
-			blockUpCount++;
 		}
 
-		int count = static_cast<int>(blocks.size() - 1);
-		if (blocks[count]->GetActPhase() == 1)
+		// 検索が当たったか
+		bool hitFlag = false;
+		for (auto& block : blocks)
+		{
+			if (!block->IsEaseEndFlag())
+			{
+				hitFlag = true;
+			}
+		}
+
+		if (!hitFlag)
 		{
 			isBolckUp_ = true;
 		}
@@ -227,6 +247,40 @@ void GameScene::BlockUpdate()
 		//マップ用ブロック
 		for (const std::unique_ptr<Block>& block : blocks) {
 			block->Update();
+		}
+	}
+}
+
+void GameScene::BlockCountCreate()
+{
+	// sizeが同じになったら早期リターン
+	if (blocks.size() == rndcount.size())
+	{
+		return;
+	}
+	// 終わったか
+	bool endFlag = false;
+	while (!endFlag)
+	{
+		// 検索に当たったか
+		bool hitFlag = false;
+		// ランダムに数値を決める
+		int temp = rand() % blocks.size();
+		for (auto& count : rndcount)
+		{
+			// 中に同じ数があるか
+			if (count == temp)
+			{
+				hitFlag = true;
+				break;
+			}
+		}
+
+		// 無かったら
+		if (!hitFlag)
+		{
+			rndcount.push_back(temp);
+			endFlag = true;
 		}
 	}
 }

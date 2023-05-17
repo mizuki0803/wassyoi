@@ -50,9 +50,14 @@ private: //メンバ関数
 	bool LoadMapData(const std::string& fileName);
 
 	/// <summary>
-	/// 
+	/// ブロックの更新
 	/// </summary>
 	void BlockUpdate();
+
+	/// <summary>
+	/// ブロックを上げる番号の生成
+	/// </summary>
+	void BlockCountCreate();
 
 private: //メンバ変数
 	//カメラ
@@ -94,9 +99,10 @@ private: //メンバ変数
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
-
+	// 上げるブロックの番号の保存
+	std::vector<int> rndcount;
 	// ブロックを上げるタイマー
-	int blockActTimer_ = 0;
+	int blockActTimer_ = 100;
 	// ブロックを上げ終わったか
 	bool isBolckUp_ = false;
 };
