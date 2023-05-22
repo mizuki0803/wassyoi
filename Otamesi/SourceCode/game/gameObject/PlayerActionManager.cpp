@@ -1,4 +1,4 @@
-#include "PlayerActionManager.h"
+ï»¿#include "PlayerActionManager.h"
 #include "Input.h"
 #include "MapBlockData.h"
 
@@ -6,18 +6,20 @@ std::vector<std::vector<std::vector<int>>> PlayerActionManager::mapChipNum;
 
 bool PlayerActionManager::PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
-	//”»’è—p‚ÉƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğ‰¼•Ï”‚É“n‚·
+	//åˆ¤å®šç”¨ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã‚’ä»®å¤‰æ•°ã«æ¸¡ã™
 	XMINT3 judgeNumberPlayerPos = mapChipNumberPlayerPos;
 
-	//‘S‚Ä‚ÌÚ’n–Ê‚É‘Î‚·‚éˆÚ“®•ûŒü‚ğİ’è (ƒL[“ü—Í‚É‰‚¶‚ÄƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğˆÚ“® ‚È‚¨ƒJƒƒ‰‚ÌŒü‚«‚É‚æ‚èˆÚ“®•ûŒü‚ğ•ÏX‚³‚¹‚é)
+	//å…¨ã¦ã®æ¥åœ°é¢ã«å¯¾ã™ã‚‹ç§»å‹•æ–¹å‘ã‚’è¨­å®š (ã‚­ãƒ¼å…¥åŠ›ã«å¿œã˜ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã‚’ç§»å‹• ãªãŠã‚«ãƒ¡ãƒ©ã®å‘ãã«ã‚ˆã‚Šç§»å‹•æ–¹å‘ã‚’å¤‰æ›´ã•ã›ã‚‹)
 	PlayerMoveDirection3D(judgeNumberPlayerPos, moveSurfacePhase, cameraXPosPhase, cameraYPosPhase);
 
-	//‘¶İ‚·‚éƒ}ƒbƒv”Ô†“à‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//å­˜åœ¨ã™ã‚‹ãƒãƒƒãƒ—ç•ªå·å†…ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!PlayerMoveMapChipNumWithinRangeCheck(judgeNumberPlayerPos)) { return false; }
-	//ƒuƒƒbƒN‚Ì”z’u‚ªˆÚ“®‰Â”\‚Èó‹µ‚Å‚È‚¢‚È‚ç”²‚¯‚é
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®é…ç½®ãŒç§»å‹•å¯èƒ½ãªçŠ¶æ³ã§ãªã„ãªã‚‰æŠœã‘ã‚‹
 	if (!PlayerMoveBlockCheck3D(judgeNumberPlayerPos, moveSurfacePhase)) { return false; }
+	//ç§»å‹•ã™ã‚‹ãƒ–ãƒ­ãƒƒã‚¯é–“ã«ãƒãƒªãƒœãƒ†ãŒå­˜åœ¨ã—ãŸã‚‰é€šéã§ããšã«æŠœã‘ã‚‹
+	if (!PlayerMovePlaneCheck3D(mapChipNumberPlayerPos, judgeNumberPlayerPos)) { return false; }
 
-	//ˆÚ“®‰Â”\‚È‚ç”»’è—p•Ï”‚Å•ÏX‚µ‚½’l‚ğƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ÉƒZƒbƒg
+	//ç§»å‹•å¯èƒ½ãªã‚‰åˆ¤å®šç”¨å¤‰æ•°ã§å¤‰æ›´ã—ãŸå€¤ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã«ã‚»ãƒƒãƒˆ
 	mapChipNumberPlayerPos = judgeNumberPlayerPos;
 
 	return true;
@@ -25,18 +27,18 @@ bool PlayerActionManager::PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, cons
 
 bool PlayerActionManager::PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase)
 {
-	//”»’è—p‚ÉƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğ‰¼•Ï”‚É“n‚·
+	//åˆ¤å®šç”¨ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã‚’ä»®å¤‰æ•°ã«æ¸¡ã™
 	XMINT3 judgeNumberPlayerPos = mapChipNumberPlayerPos;
 
-	//‘S‚Ä‚ÌÚ’n–Ê‚É‘Î‚·‚éˆÚ“®•ûŒü‚ğİ’è (ƒL[“ü—Í‚É‰‚¶‚ÄƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğˆÚ“® ‚È‚¨ƒJƒƒ‰‚ÌŒü‚«‚É‚æ‚èˆÚ“®•ûŒü‚ğ•ÏX‚³‚¹‚é)
+	//å…¨ã¦ã®æ¥åœ°é¢ã«å¯¾ã™ã‚‹ç§»å‹•æ–¹å‘ã‚’è¨­å®š (ã‚­ãƒ¼å…¥åŠ›ã«å¿œã˜ã¦ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã‚’ç§»å‹• ãªãŠã‚«ãƒ¡ãƒ©ã®å‘ãã«ã‚ˆã‚Šç§»å‹•æ–¹å‘ã‚’å¤‰æ›´ã•ã›ã‚‹)
 	PlayerMoveDirection2D(judgeNumberPlayerPos, moveSurfacePhase, cameraXPosPhase);
 
-	//‘¶İ‚·‚éƒ}ƒbƒv”Ô†“à‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//å­˜åœ¨ã™ã‚‹ãƒãƒƒãƒ—ç•ªå·å†…ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!PlayerMoveMapChipNumWithinRangeCheck(judgeNumberPlayerPos)) { return false; }
-	//ƒuƒƒbƒN‚Ì”z’u‚ªˆÚ“®‰Â”\‚Èó‹µ‚Å‚È‚¢‚È‚ç”²‚¯‚é
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®é…ç½®ãŒç§»å‹•å¯èƒ½ãªçŠ¶æ³ã§ãªã„ãªã‚‰æŠœã‘ã‚‹
 	if (!PlayerMoveBlockCheck2D(judgeNumberPlayerPos, moveSurfacePhase)) { return false; }
 
-	//ˆÚ“®‰Â”\‚È‚ç”»’è—p•Ï”‚Å•ÏX‚µ‚½’l‚ğƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ÉƒZƒbƒg
+	//ç§»å‹•å¯èƒ½ãªã‚‰åˆ¤å®šç”¨å¤‰æ•°ã§å¤‰æ›´ã—ãŸå€¤ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ä½ç½®ã‚’è¡¨ã™ãƒãƒƒãƒ—ç•ªå·ã«ã‚»ãƒƒãƒˆ
 	mapChipNumberPlayerPos = judgeNumberPlayerPos;
 
 	return true;
@@ -44,28 +46,28 @@ bool PlayerActionManager::PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 
 void PlayerActionManager::PlayerFrontmost2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//ƒvƒŒƒCƒ„[‚æ‚è‰æ–Êè‘O‚ÉƒuƒƒbƒN‚ª‘¶İ‚µ‚È‚¯‚ê‚ÎƒvƒŒƒCƒ„[‚ğ‰æ–Ê‚Ìˆê”Ôè‘O‚É”z’u
-	//Ú’n–Ê‚ªuãv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuã‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚ˆã‚Šç”»é¢æ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ãŒå­˜åœ¨ã—ãªã‘ã‚Œã°ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç”»é¢ã®ä¸€ç•ªæ‰‹å‰ã«é…ç½®
+	//æ¥åœ°é¢ãŒã€Œä¸Šã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸Šã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		mapChipNumberPlayerPos.y = (int)mapChipNum[mapChipNumberPlayerPos.x].size() - 1;
 	}
-	//Ú’n–Ê‚ªu‰ºv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰º‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸‹ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸‹ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		mapChipNumberPlayerPos.y = 0;
 	}
-	//Ú’n–Ê‚ªu¶v‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰E‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå·¦ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå³ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		mapChipNumberPlayerPos.x = 0;
 	}
-	//Ú’n–Ê‚ªu‰Ev‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu¶‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå³ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå·¦ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		mapChipNumberPlayerPos.x = (int)mapChipNum.size() - 1;
 	}
-	//Ú’n–Ê‚ªuè‘Ov‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰œ‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œæ‰‹å‰ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå¥¥ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		mapChipNumberPlayerPos.z = 0;
 	}
-	//Ú’n–Ê‚ªu‰œv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuè‘O‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå¥¥ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œæ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		mapChipNumberPlayerPos.z = (int)mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size() - 1;
 	}
@@ -73,183 +75,183 @@ void PlayerActionManager::PlayerFrontmost2D(XMINT3& mapChipNumberPlayerPos, cons
 
 bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//Ú’n–Ê‚ªuãv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuã‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸Šã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸Šã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰ºv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰º‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸‹ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸‹ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu¶v‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu¶‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå·¦ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå·¦ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰Ev‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰E‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå³ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå³ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªuè‘Ov‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuè‘O‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œæ‰‹å‰ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œæ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰œv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰œ‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå¥¥ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå¥¥ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
 			}
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//Ú’n–Ê‚ªuãv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰º‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸Šã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸‹ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰ºv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuã‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸‹ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸Šã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu¶v‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰E‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå·¦ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå³ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰Ev‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu¶‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå³ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå·¦ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return true;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªuè‘Ov‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰œ‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œæ‰‹å‰ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå¥¥ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
 				return true;
 			}
-		}		
+		}
 	}
-	//Ú’n–Ê‚ªu‰œv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuè‘O‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå¥¥ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œæ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
 			}
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//Ú’n–Ê‚ªuãv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰º‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸Šã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸‹ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y; i >= 0; --i) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.y = i + 1;
 
 			return;
 		}
 	}
-	//Ú’n–Ê‚ªu‰ºv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuã‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸‹ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸Šã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.y = i - 1;
 
 			return;
 		}
 	}
-	//Ú’n–Ê‚ªu¶v‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰E‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå·¦ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå³ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.x = i - 1;
 
 			return;
 		}
 	}
-	//Ú’n–Ê‚ªu‰Ev‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu¶‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå³ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå·¦ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x; i >= 0; --i) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.x = i + 1;
 
 			return;
 		}
 	}
-	//Ú’n–Ê‚ªuè‘Ov‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰œ‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œæ‰‹å‰ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå¥¥ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.z = i - 1;
 
 			return;
 		}
 	}
-	//Ú’n–Ê‚ªu‰œv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuè‘O‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå¥¥ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œæ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		for (int i = mapChipNumberPlayerPos.z; i >= 0; --i) {
-			//ƒuƒƒbƒN‚Å‚È‚¯‚ê‚Î”ò‚Î‚·
-			if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i]))) { continue; }
+			//ãƒ–ãƒ­ãƒƒã‚¯ã§ãªã‘ã‚Œã°é£›ã°ã™
+			if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane))) { continue; }
 
-			//Å‰‚ÉŒ©‚Â‚©‚Á‚½ƒuƒƒbƒN‚ÉÚ’n‚·‚é”Ô†‚ÉƒvƒŒƒCƒ„[‚ğƒZƒbƒg‚·‚é
+			//æœ€åˆã«è¦‹ã¤ã‹ã£ãŸãƒ–ãƒ­ãƒƒã‚¯ã«æ¥åœ°ã™ã‚‹ç•ªå·ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆã™ã‚‹
 			mapChipNumberPlayerPos.z = i + 1;
 
 			return;
@@ -259,132 +261,132 @@ void PlayerActionManager::PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos,
 
 bool PlayerActionManager::PlayerGoalCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//‘«ê‚Æ‚È‚éƒuƒƒbƒN‚ªƒS[ƒ‹‚È‚ç‚Îtrue‚ğ•Ô‚·
+	//è¶³å ´ã¨ãªã‚‹ãƒ–ãƒ­ãƒƒã‚¯ãŒã‚´ãƒ¼ãƒ«ãªã‚‰ã°trueã‚’è¿”ã™
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1] == MapBlockData::BlockType::Goal) {
+		if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1] == MapBlockData::MapBlockType::Goal) {
 			return true;
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğƒNƒŠƒA‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’ã‚¯ãƒªã‚¢ã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//ƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚Ì‰º‚É‚ ‚éƒuƒƒbƒN‚ğƒ`ƒFƒbƒN‚µA
-	//ˆê”ÔÅ‰‚É”­Œ©‚µ‚½ƒuƒƒbƒN‚ªƒS[ƒ‹‚Å‚ ‚ê‚Îtrue‚ğ‚µA
-	//‚»‚êˆÈŠO‚ÌƒuƒƒbƒN‚È‚ç‚Îfalse‚ğ•Ô‚·
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã®ä¸‹ã«ã‚ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€
+	//ä¸€ç•ªæœ€åˆã«ç™ºè¦‹ã—ãŸãƒ–ãƒ­ãƒƒã‚¯ãŒã‚´ãƒ¼ãƒ«ã§ã‚ã‚Œã°trueã‚’ã—ã€
+	//ãã‚Œä»¥å¤–ã®ãƒ–ãƒ­ãƒƒã‚¯ãªã‚‰ã°falseã‚’è¿”ã™
 
-	//Ú’n–Ê‚ªuãv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰º‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸Šã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸‹ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return false;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰ºv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuã‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œä¸‹ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œä¸Šã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return false;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu¶v‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰E‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå·¦ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå³ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
-			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return false;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰Ev‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu¶‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå³ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå·¦ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
-			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return false;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªuè‘Ov‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èu‰œ‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œæ‰‹å‰ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œå¥¥ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
 				return false;
 			}
 		}
 	}
-	//Ú’n–Ê‚ªu‰œv‚Ìê‡‚ÍƒvƒŒƒCƒ„[‚Ìƒ}ƒbƒv”Ô†‚æ‚èuè‘O‚ÉƒuƒƒbƒNv‚ª‚ ‚é‚©ƒ`ƒFƒbƒN
+	//æ¥åœ°é¢ãŒã€Œå¥¥ã€ã®å ´åˆã¯ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒãƒƒãƒ—ç•ªå·ã‚ˆã‚Šã€Œæ‰‹å‰ã«ãƒ–ãƒ­ãƒƒã‚¯ã€ãŒã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::BlockType::Goal) {
+			if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::Goal) {
 				return true;
 			}
-			else if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			else if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return false;
 			}
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
-	//ƒvƒŒƒCƒ„[‚ÌÚ’n–Ê‚ªãA‚Ü‚½‚Í‰º‚Ìê‡
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ¥åœ°é¢ãŒä¸Šã€ã¾ãŸã¯ä¸‹ã®å ´åˆ
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward || moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (Input::GetInstance()->PushKey(DIK_W)) {
-			//c²ƒJƒƒ‰ˆÊ’u‚ª‰ºˆÈŠO‚Ì‚Æ‚«
+			//ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãŒä¸‹ä»¥å¤–ã®ã¨ã
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
 			}
-			//c²ƒJƒƒ‰ˆÊ’u‚ª‰º‚Ì‚Æ‚«
+			//ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãŒä¸‹ã®ã¨ã
 			else {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
@@ -393,14 +395,14 @@ void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, 
 			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_S)) {
-			//c²ƒJƒƒ‰ˆÊ’u‚ª‰ºˆÈŠO‚Ì‚Æ‚«
+			//ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãŒä¸‹ä»¥å¤–ã®ã¨ã
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
 			}
-			//c²ƒJƒƒ‰ˆÊ’u‚ª‰º‚Ì‚Æ‚«
+			//ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãŒä¸‹ã®ã¨ã
 			else {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
 				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
@@ -421,13 +423,13 @@ void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, 
 			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z++; }
 		}
 	}
-	//ƒvƒŒƒCƒ„[‚ÌÚ’n–Ê‚ª‘OŒã¶‰E‚Ìê‡
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ¥åœ°é¢ãŒå‰å¾Œå·¦å³ã®å ´åˆ
 	else {
-		//Ú’n–Ê‚ª‘OŒã¶‰E‚Ìê‡‚ÍWS‚Åã‰ºˆÚ“®
+		//æ¥åœ°é¢ãŒå‰å¾Œå·¦å³ã®å ´åˆã¯WSã§ä¸Šä¸‹ç§»å‹•
 		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
 		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
 
-		//¶‰EˆÚ“®‚Ì”»’è
+		//å·¦å³ç§»å‹•ã®åˆ¤å®š
 		else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft || moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 			if (Input::GetInstance()->PushKey(DIK_D)) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
@@ -547,83 +549,146 @@ void PlayerActionManager::PlayerMoveDirection2D(XMINT3& mapChipNumberPlayerPos, 
 
 bool PlayerActionManager::PlayerMoveBlockCheck3D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//ˆÚ“®æ‚Ìƒ}ƒbƒv”Ô†‚ÉƒuƒƒbƒN‚ª‘¶İ‚·‚ê‚ÎˆÚ“®‚Å‚«‚¸‚É”²‚¯‚é
+	//ç§»å‹•å…ˆã®ãƒãƒƒãƒ—ç•ªå·ã«ãƒ–ãƒ­ãƒƒã‚¯ãŒå­˜åœ¨ã™ã‚Œã°ç§»å‹•ã§ããšã«æŠœã‘ã‚‹
 	if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
 		return false;
 	}
 
-	//‘«ê‚Æ‚È‚éƒuƒƒbƒN‚ª‘¶İ‚µ‚È‚¯‚ê‚Î”²‚¯‚é
+	//è¶³å ´ã¨ãªã‚‹ãƒ–ãƒ­ãƒƒã‚¯ãŒå­˜åœ¨ã—ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1], MapBlockData::MapBlockType::ForwardPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		if (!(MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1]))) {
+		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1], MapBlockData::MapBlockType::AwayPlane))) {
 			return false;
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚µ‚½‚çtrue‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã—ãŸã‚‰trueã‚’è¿”ã™
 	return true;
 }
 
 bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//2D•\Œ»‚ğ‚µ‚ÄAˆÚ“®æ‚Ì²‚ÉƒuƒƒbƒN‚ª‘¶İ‚µ‚Ä‚¢‚ê‚Î’Ê‰ß(true)
-	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward || moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+	//2Dè¡¨ç¾ã‚’ã—ã¦ã€ç§»å‹•å…ˆã®è»¸ã«ãƒ–ãƒ­ãƒƒã‚¯ãŒå­˜åœ¨ã—ã¦ã„ã‚Œã°é€šé(true)
+	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
 		}
 	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft || moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
+				return true;
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = 0; i < mapChipNum.size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return true;
 			}
 		}
 	}
-	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward || moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
+		for (int i = 0; i < mapChipNum.size(); i++) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
+				return true;
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i])) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
+				return true;
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
 			}
 		}
 	}
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
+}
+
+bool PlayerActionManager::PlayerMovePlaneCheck3D(const XMINT3& mapChipNumberPlayerBeforePos, const XMINT3& mapChipNumberPlayerAfterPos)
+{
+	//ç§»å‹•å‰ã¨ç§»å‹•å¾Œã‚’æ¯”ã¹ã¦ã€ç§»å‹•æ–¹å‘ã‚’ç®—å‡º
+	const XMINT3 moveDirection = { mapChipNumberPlayerAfterPos.x - mapChipNumberPlayerBeforePos.x,
+		mapChipNumberPlayerAfterPos.y - mapChipNumberPlayerBeforePos.y,
+		mapChipNumberPlayerAfterPos.z - mapChipNumberPlayerBeforePos.z
+	};
+
+	//ç§»å‹•æ–¹å‘ã™ã‚‹æ–¹å‘ã«ãƒãƒªãƒœãƒ†ãŒå­˜åœ¨ã™ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
+	//1.ç§»å‹•å‰ã®ãƒãƒƒãƒ—ä½ç½®ã®è¦ç´ ç•ªå·ãŒã€å£ã«ãªã‚‹ã‚ˆã†ã«è¨­ç½®ã•ã‚Œã¦ã„ã‚‹ãƒãƒªãƒœãƒ†ãªã‚‰false
+	//2.ç§»å‹•å¾Œã®ãƒãƒƒãƒ—ä½ç½®ã®è¦ç´ ç•ªå·ãŒã€å£ã«ãªã‚‹ã‚ˆã†ã«è¨­ç½®ã•ã‚Œã¦ã„ã‚‹ãƒãƒªãƒœãƒ†ãªã‚‰false
+
+	const int moveNum = 1;	//ä¸€åº¦ã®ç§»å‹•ã§å‹•ã‘ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã®é‡ã¯1
+	if (moveDirection.y == moveNum) { //ç§»å‹•æ–¹å‘ãŒä¸Š
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::UpPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::DownPlane) { return false; }
+	}
+	else if (moveDirection.y == -moveNum) { //ç§»å‹•æ–¹å‘ãŒä¸‹
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::DownPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::UpPlane) { return false; }
+	}
+	else if (moveDirection.x == -moveNum) { //ç§»å‹•æ–¹å‘ãŒå·¦
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::LeftPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::RightPlane) { return false; }
+	}
+	else if (moveDirection.x == moveNum) { //ç§»å‹•æ–¹å‘ãŒå³
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::RightPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::LeftPlane) { return false; }
+	}
+	else if (moveDirection.z == -moveNum) { //ç§»å‹•æ–¹å‘ãŒæ‰‹å‰
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::ForwardPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::AwayPlane) { return false; }
+	}
+	else if (moveDirection.z == moveNum) { //ç§»å‹•æ–¹å‘ãŒå¥¥
+		if (mapChipNum[mapChipNumberPlayerBeforePos.x][mapChipNumberPlayerBeforePos.y][mapChipNumberPlayerBeforePos.z] == MapBlockData::MapBlockType::AwayPlane) { return false; }
+		else if (mapChipNum[mapChipNumberPlayerAfterPos.x][mapChipNumberPlayerAfterPos.y][mapChipNumberPlayerAfterPos.z] == MapBlockData::MapBlockType::ForwardPlane) { return false; }
+	}
+
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã§ãã‚Œã°trueã‚’è¿”ã™
+	return true;
 }
 
 bool PlayerActionManager::PlayerMoveMapChipNumWithinRangeCheck(const XMINT3& mapChipNumberPlayerPos)
 {
-	//x,y,z²‘S‚Ä‚ªAƒ}ƒbƒv”Ô†”ÍˆÍ“à‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//x,y,zè»¸å…¨ã¦ãŒã€ãƒãƒƒãƒ—ç•ªå·ç¯„å›²å†…ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!(mapChipNumberPlayerPos.x >= 0 && mapChipNumberPlayerPos.x < mapChipNum.size())) { return false; }
 	if (!(mapChipNumberPlayerPos.y >= 0 && mapChipNumberPlayerPos.y < mapChipNum[mapChipNumberPlayerPos.x].size())) { return false; }
 	if (!(mapChipNumberPlayerPos.z >= 0 && mapChipNumberPlayerPos.z < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size())) { return false; }
 
-	//‘S‚Ä‚Ìƒ`ƒFƒbƒN‚ğ’Ê‰ß‚µ‚½‚çtrue‚ğ•Ô‚·
+	//å…¨ã¦ã®ãƒã‚§ãƒƒã‚¯ã‚’é€šéã—ãŸã‚‰trueã‚’è¿”ã™
 	return true;
 }

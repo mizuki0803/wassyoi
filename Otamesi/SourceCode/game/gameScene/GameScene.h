@@ -50,6 +50,11 @@ private: //メンバ関数
 	bool LoadMapData(const std::string& fileName);
 
 	/// <summary>
+	/// マップ生成
+	/// </summary>
+	void CreateMap();
+
+	/// <summary>
 	/// ブロックの更新
 	/// </summary>
 	void BlockUpdate();
@@ -81,6 +86,7 @@ private: //メンバ変数
 	//objモデル
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelBlock;
+	std::unique_ptr<ObjModel> modelPlane;
 	std::unique_ptr<ObjModel> modelGoal;
 	std::unique_ptr<ObjModel> modelSkydome;
 

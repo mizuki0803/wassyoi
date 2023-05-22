@@ -36,10 +36,10 @@ public: //静的メンバ関数
 	/// 生成処理
 	/// </summary>
 	/// <param name="model">モデル</param>
-	/// <param name="mapChipNumberPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="mapChipNum">プレイヤー位置を表すマップ番号</param>
 	/// <param name="gameCamera">ゲームカメラ</param>
 	/// <returns>プレイヤー</returns>
-	static Player* Create(ObjModel* model, const XMINT3& mapChipNumberPos, GameCamera* gameCamera);
+	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera);
 
 public: //メンバ関数
 	/// <summary>

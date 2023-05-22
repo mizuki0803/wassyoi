@@ -254,6 +254,9 @@
     <ClCompile Include="SourceCode\engine\3d\JsonLoader.cpp">
       <Filter>ソース ファイル\engine\3d\object</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp">
+      <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -472,6 +475,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\engine\3d\JsonLoader.h">
       <Filter>ソース ファイル\engine\3d\object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h">
+      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

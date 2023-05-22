@@ -112,6 +112,14 @@ private: //静的メンバ関数
 	static bool PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
+	/// 3D移動のブロック間にハリボテが存在せず、移動可能かを判定
+	/// </summary>
+	/// <param name="mapChipNumberPlayerBeforePos">移動前プレイヤー位置を表すマップ番号</param>
+	/// <param name="mapChipNumberPlayerAfterPos">移動後プレイヤー位置を表すマップ番号</param>
+	/// <returns>成否</returns>
+	static bool PlayerMovePlaneCheck3D(const XMINT3& mapChipNumberPlayerBeforePos, const XMINT3& mapChipNumberPlayerAfterPos);
+
+	/// <summary>
 	/// プレイヤーの位置を表すマップ番号が範囲内かをチェック
 	/// </summary> 
 	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>

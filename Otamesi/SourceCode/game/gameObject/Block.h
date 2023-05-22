@@ -16,12 +16,24 @@ public: //enum
 		Strat,	//開始
 		None,	//何もしない
 	};
+
+	/// <summary>
+	/// ブロックの種類
+	/// </summary>
+	enum class BlockType
+	{
+		Block,
+		Plane,
+	};
+
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
-	/// </summary>
+	/// </summary>	
+	/// <param name="model">モデル</param>
+	/// <param name="mapChipNum">マップチップの番号</param>
 	/// <returns>ブロック</returns>
-	static Block* Create(ObjModel* model, const Vector3& position);
+	static Block* Create(ObjModel* model, const XMINT3& mapChipNum);
 
 	//getter
 	static float GetBlockSize() { return Block::blockSize; }
@@ -66,11 +78,13 @@ public: //メンバ関数
 	/// <returns></returns>
 	int GetActPhase() { return static_cast<int>(phase_); }
 
-private: //静的メンバ変数
+protected: //静的メンバ変数
 	//ブロック一つの大きさ
 	static const float blockSize;
 
-private: // メンバ変数
+protected: // メンバ変数
+	//ブロックの種類
+	BlockType blockType;
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号

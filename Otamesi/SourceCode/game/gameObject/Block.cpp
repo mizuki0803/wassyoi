@@ -3,7 +3,7 @@
 
 const float Block::blockSize = 5.0f;
 
-Block* Block::Create(ObjModel* model, const Vector3& position)
+Block* Block::Create(ObjModel* model, const XMINT3& mapChipNum)
 {
     //インスタンス生成
     Block* instance = new Block();
@@ -21,17 +21,20 @@ Block* Block::Create(ObjModel* model, const Vector3& position)
 
 	// イージングデータの設定
 	instance->SetEaseData(60);
-	//座標をセット
 	
-	Vector3 temppos = position;
+	//座標をセット
+	Vector3 temppos = { mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() };
 	temppos.y = -100.0f;
 	instance->SetBlockStratPos(temppos);
-	instance->SetBlockEndPos(position);
+	instance->SetBlockEndPos({ mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() });
 	instance->position = temppos;
 	//大きさをセット
 	instance->scale = { blockSize, blockSize, blockSize };
 	// 関数の設定
 	instance->CreateAct();
+
+	//ブロックの種類を「ブロック」に設定
+	instance->blockType = BlockType::Block;
 
     return instance;
 }

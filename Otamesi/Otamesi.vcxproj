@@ -137,6 +137,7 @@
     <ClCompile Include="SourceCode\game\gameCamera\GameCamera.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\Block.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\MapBlockData.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\Player.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\PlayerActionManager.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\BaseGameScene.cpp" />
@@ -280,6 +281,7 @@
     <ClInclude Include="SourceCode\game\gameCamera\GameCamera.h" />
     <ClInclude Include="SourceCode\game\gameObject\Block.h" />
     <ClInclude Include="SourceCode\game\gameObject\MapBlockData.h" />
+    <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\Player.h" />
     <ClInclude Include="SourceCode\game\gameObject\PlayerActionManager.h" />
     <ClInclude Include="SourceCode\game\gameScene\BaseGameScene.h" />

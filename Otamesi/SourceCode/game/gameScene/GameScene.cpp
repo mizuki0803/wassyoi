@@ -8,6 +8,7 @@
 #include "Easing.h"
 #include "PlayerActionManager.h"
 #include "MapBlockData.h"
+#include "PlaneBlock.h"
 #include "JsonLoader.h"
 #include <cassert>
 #include <fstream>
@@ -24,12 +25,13 @@ void GameScene::Initialize()
 	//objからモデルデータを読み込む
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelBlock.reset(ObjModel::LoadFromOBJ("block"));
+	modelPlane.reset(ObjModel::LoadFromOBJ("plane"));
 	modelGoal.reset(ObjModel::LoadFromOBJ("goal"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 
 	//jsonマップデータ読み込み
-	LoadMapData("star");
+	LoadMapData("a");
 
 	//カメラ初期化
 	camera.reset(new GameCamera());
@@ -42,30 +44,8 @@ void GameScene::Initialize()
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	//マップ用ブロック生成
-	for (int i = 0; i < mapChipNum.size(); i++) {
-		for (int j = 0; j < mapChipNum[i].size(); j++) {
-			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
-				//プレイヤー生成
-				if (mapChipNum[i][j][k] == MapBlockData::BlockType::Player) {
-					player.reset(Player::Create(modelPlayer.get(), { i, j, k }, camera.get()));
-				}
-				//ゴール生成
-				else if (mapChipNum[i][j][k] == MapBlockData::BlockType::Goal) {
-					std::unique_ptr<Block> newBlock;
-					const Vector3 pos = { i * Block::GetBlockSize(), j * Block::GetBlockSize(), k * Block::GetBlockSize() };
-					newBlock.reset(Block::Create(modelGoal.get(), pos));
-					blocks.push_back(std::move(newBlock));
-				}
-				//ブロック生成
-				else if (mapChipNum[i][j][k] == MapBlockData::BlockType::Block) {
-					std::unique_ptr<Block> newBlock;
-					const Vector3 pos = { i * Block::GetBlockSize(), j * Block::GetBlockSize(), k * Block::GetBlockSize() };
-					newBlock.reset(Block::Create(modelBlock.get(), pos));
-					blocks.push_back(std::move(newBlock));
-				}
-			}
-		}
-	}
+	CreateMap();
+
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapChipNum);
 
@@ -187,6 +167,76 @@ bool GameScene::LoadMapData(const std::string& fileName)
 	}
 
 	return true;
+}
+
+void GameScene::CreateMap()
+{
+	for (int i = 0; i < mapChipNum.size(); i++) {
+		for (int j = 0; j < mapChipNum[i].size(); j++) {
+			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
+				//マップ番号
+				const XMINT3 chipNum = { i, j, k };
+				//プレイヤー生成
+				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
+					player.reset(Player::Create(modelPlayer.get(), chipNum, camera.get()));
+				}
+				//ゴール生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
+					std::unique_ptr<Block> newBlock;
+					newBlock.reset(Block::Create(modelGoal.get(), chipNum));
+					blocks.push_back(std::move(newBlock));
+				}
+				//ブロック生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
+					std::unique_ptr<Block> newBlock;
+					newBlock.reset(Block::Create(modelBlock.get(), chipNum));
+					blocks.push_back(std::move(newBlock));
+				}
+				//上向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = {};	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+				//下向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = { 180, 0, 0 };	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+				//左向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = { 0, 0, 90 };	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+				//右向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = { 0, 0, -90 };	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+				//正面向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = { -90, 0, 0 };	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+				//奥向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
+					std::unique_ptr<Block> newBlock;
+					const Vector3 rot = { 90, 0, 0 };	//傾ける角度
+					newBlock.reset(PlaneBlock::Create(modelPlane.get(), chipNum, rot));
+					blocks.push_back(std::move(newBlock));
+				}
+			}
+		}
+	}
 }
 
 void GameScene::BlockUpdate()
