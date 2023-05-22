@@ -114,6 +114,9 @@
     <Filter Include="ソース ファイル\game\gameCamera">
       <UniqueIdentifier>{84c72eef-0b46-41e4-9769-4f0a8b3643e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\gameEffect">
+      <UniqueIdentifier>{137d0f6f-11bb-48e6-a36c-2d4040046925}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\main.cpp">
@@ -256,6 +259,12 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -478,6 +487,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

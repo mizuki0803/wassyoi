@@ -6,10 +6,12 @@
 #include "DebugText.h"
 #include "Collision.h"
 #include "Easing.h"
+#include "ParticleEmitter.h"
 #include "PlayerActionManager.h"
 #include "MapBlockData.h"
 #include "PlaneBlock.h"
 #include "JsonLoader.h"
+#include "GamePostEffect.h"
 #include <cassert>
 #include <fstream>
 #include <iomanip>
@@ -60,10 +62,20 @@ void GameScene::Initialize()
 
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
+
+	//パーティクルにカメラをセット
+	ParticleManager::SetCamera(camera.get());
+	//画面にパーティクルが残ることがあるので全て削除しておく
+	ParticleEmitter::GetInstance()->AllDelete();
+
+	//ポストエフェクトのブラーをかけてみる
+	GamePostEffect::GetPostEffect()->SetRadialBlur(true);
 }
 
 void GameScene::Update()
 {
+	//デバッグ用チャージショット演出用パーティクル生成
+	ParticleEmitter::GetInstance()->ChargeShot({ 15,20,20 }, 5);
 	//デバッグ用テキスト
 	DebugText::GetInstance()->Print("CameraMove : arrow", 10, 10);
 	DebugText::GetInstance()->Print("PlayerMove : WASD", 10, 30);
@@ -75,7 +87,7 @@ void GameScene::Update()
 	else {
 		DebugText::GetInstance()->Print("STAGECLEAR", 100, 300, 5);
 	}
-
+	
 	//カメラ更新
 	camera->Update();
 	lightCamera->Update();
@@ -91,6 +103,9 @@ void GameScene::Update()
 
 	//天球
 	skydome->Update();
+
+	//パーティクル更新
+	ParticleEmitter::GetInstance()->Update();
 
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
 		//シーン切り替え
@@ -118,6 +133,13 @@ void GameScene::Draw3D()
 	skydome->Draw();
 
 	///-------Object3d描画ここまで-------///
+
+	///-------パーティクル描画ここから-------///
+
+	//パーティクル描画
+	ParticleEmitter::GetInstance()->DrawAll();
+
+	///-------パーティクル描画ここまで-------///
 }
 
 void GameScene::Draw3DLightView()

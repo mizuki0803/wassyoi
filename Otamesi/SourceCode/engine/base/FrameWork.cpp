@@ -7,7 +7,9 @@
 #include "FbxLoader.h"
 #include "FbxObject3d.h"
 #include "ParticleManager.h"
+#include "ParticleEmitter.h"
 #include "LightGroup.h"
+#include "GamePostEffect.h"
 
 void FrameWork::Run()
 {
@@ -63,6 +65,11 @@ void FrameWork::Initialize()
 	debugText = DebugText::GetInstance();
 	debugText->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::DebugFont));
 
+	//ポストエフェクト共通初期化処理
+	PostEffect::PostEffectCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+	//ゲーム共通ポストエフェクトの初期化
+	GamePostEffect::Initialize();
+
 	//シャドウマップ共通初期化処理
 	ShadowMap::ShadowMapCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	//シャドウマップの初期化
@@ -86,6 +93,8 @@ void FrameWork::Initialize()
 
 	//パーティクル共通初期化処理
 	ParticleManager::ParticleManagerCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+	//パーティクルエミッター初期化
+	ParticleEmitter::GetInstance()->Initialize();
 
 	//全シーンで使用するテクスチャの枚数を確定させる
 	DescHeapSRV::SetAllSceneTextureNum();
@@ -137,14 +146,19 @@ void FrameWork::Draw()
 	SceneManager::GetInstance()->Draw3DLightView();
 	shadowMap->DrawSceneRear();
 
+	//ゲームポストエフェクトへの描画
+	GamePostEffect::DrawScenePrev();
+	SceneManager::GetInstance()->Draw3D();
+	GamePostEffect::DrawSceneRear();
+
 	//グラフィックスコマンド(前)
 	dxbase->GraphicsCommandPrev();
 
 	//シーンの背景スプライト描画
 	SceneManager::GetInstance()->DrawBackSprite();
 
-	//シーンの描画
-	SceneManager::GetInstance()->Draw3D();
+	//ゲームポストエフェクトの描画
+	GamePostEffect::Draw();
 
 	//シーンの前景スプライト描画
 	SceneManager::GetInstance()->DrawFrontSprite();

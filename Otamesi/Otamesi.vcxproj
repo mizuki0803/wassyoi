@@ -135,6 +135,8 @@
     <ClCompile Include="SourceCode\engine\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceCode\engine\scene\SceneManager.cpp" />
     <ClCompile Include="SourceCode\game\gameCamera\GameCamera.cpp" />
+    <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp" />
+    <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\Block.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\MapBlockData.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp" />
@@ -279,6 +281,8 @@
     <ClInclude Include="SourceCode\engine\scene\SceneFactory.h" />
     <ClInclude Include="SourceCode\engine\scene\SceneManager.h" />
     <ClInclude Include="SourceCode\game\gameCamera\GameCamera.h" />
+    <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h" />
+    <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h" />
     <ClInclude Include="SourceCode\game\gameObject\Block.h" />
     <ClInclude Include="SourceCode\game\gameObject\MapBlockData.h" />
     <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h" />

@@ -8,35 +8,45 @@ Block* Block::Create(ObjModel* model, const XMINT3& mapChipNum)
     //インスタンス生成
     Block* instance = new Block();
 
-	//モデルをセット
-	assert(model);
-	instance->model = model;
-
-	// 初期化
-	if (!instance->Initialize()) {
+	//初期化処理
+	if (!instance->Initialize(model, mapChipNum)) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	// イージングデータの設定
-	instance->SetEaseData(60);
-	
-	//座標をセット
-	Vector3 temppos = { mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() };
-	temppos.y = -100.0f;
-	instance->SetBlockStratPos(temppos);
-	instance->SetBlockEndPos({ mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() });
-	instance->position = temppos;
-	//大きさをセット
-	instance->scale = { blockSize, blockSize, blockSize };
-	// 関数の設定
-	instance->CreateAct();
-
 	//ブロックの種類を「ブロック」に設定
 	instance->blockType = BlockType::Block;
 
     return instance;
+}
+
+bool Block::Initialize(ObjModel* model, const XMINT3& mapChipNum)
+{
+	//モデルをセット
+	assert(model);
+	this->model = model;
+
+	//object3Dの初期化
+	if (!ObjObject3d::Initialize()) {
+		return false;
+	}
+
+	// イージングデータの設定
+	SetEaseData(60);
+
+	//座標をセット
+	Vector3 temppos = { mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() };
+	SetBlockEndPos(temppos);
+	temppos.y = -100.0f;
+	SetBlockStratPos(temppos);
+	position = temppos;
+	//大きさをセット
+	scale = { blockSize, blockSize, blockSize };
+	// 関数の設定
+	CreateAct();
+
+	return true;
 }
 
 void Block::Update()

@@ -40,6 +40,14 @@ public: //静的メンバ関数
 
 public: //メンバ関数
 	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="model">モデル</param>
+	/// <param name="mapChipNum">マップチップの番号</param>
+	/// <returns>成否</returns>
+	bool Initialize(ObjModel* model, const XMINT3& mapChipNum);
+
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
