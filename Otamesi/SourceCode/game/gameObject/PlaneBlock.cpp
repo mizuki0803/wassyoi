@@ -12,6 +12,9 @@ PlaneBlock* PlaneBlock::Create(ObjModel* model, const XMINT3& mapChipNum, const 
 		return nullptr;
 	}
 
+	//角度をセット
+	instance->rotation = rotation;
+
 	//ブロックの種類を「ハリボテ」に設定
 	instance->blockType = BlockType::Plane;
 

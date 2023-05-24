@@ -1,5 +1,6 @@
 #include "BaseGameScene.h"
 #include "SceneManager.h"
+#include "SceneChangeEffect.h"
 
 void BaseGameScene::SceneChangeStart(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime, const std::string& nextSceneName)
 {
@@ -13,6 +14,8 @@ void BaseGameScene::SceneChangeStart(const DirectX::XMFLOAT4& color, int32_t dee
 	//次のシーン名をセット
 	this->nextSceneName = nextSceneName;
 
+	//シーン変更用演出生成
+	SceneChangeEffect::CreateSceneChangeEffect(color, deepenTime, waitTime, returnTime);
 }
 
 void BaseGameScene::SceneChangeMode()

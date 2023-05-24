@@ -266,6 +266,21 @@
     <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp">
       <Filter>ソース ファイル\game\gameEffect</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp">
+      <Filter>ソース ファイル\game\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp">
+      <Filter>ソース ファイル\game\gameScene</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp">
+      <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -493,6 +508,21 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h">
       <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameScene\TitleScene.h">
+      <Filter>ソース ファイル\game\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h">
+      <Filter>ソース ファイル\game\gameScene</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\StageManager.h">
+      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

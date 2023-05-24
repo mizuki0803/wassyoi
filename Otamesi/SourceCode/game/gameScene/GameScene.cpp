@@ -4,13 +4,12 @@
 #include "Audio.h"
 #include "SpriteCommon.h"
 #include "DebugText.h"
-#include "Collision.h"
-#include "Easing.h"
 #include "ParticleEmitter.h"
 #include "PlayerActionManager.h"
 #include "MapBlockData.h"
 #include "PlaneBlock.h"
 #include "JsonLoader.h"
+#include "SceneChangeEffect.h"
 #include "GamePostEffect.h"
 #include <cassert>
 #include <fstream>
@@ -107,10 +106,19 @@ void GameScene::Update()
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
 
+
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
 		//シーン切り替え
-		SceneManager::GetInstance()->ChangeScene("GAME");
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 	}
+	if (Input::GetInstance()->TriggerKey(DIK_P)) {
+		//シーン切り替え
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
+	}
+	//シーン変更状態
+	SceneChangeMode();
+	//シーン変更演出更新
+	SceneChangeEffect::Update();
 }
 
 void GameScene::DrawBackSprite()
@@ -151,6 +159,9 @@ void GameScene::DrawFrontSprite()
 	//スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
+
+	//シーン変更演出描画
+	SceneChangeEffect::Draw();
 
 
 	///-------スプライト描画ここまで-------///

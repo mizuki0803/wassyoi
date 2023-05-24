@@ -13,7 +13,7 @@ void AndosGame::Initialize()
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory.get());
 
 	//シーンマネージャーに最初のシーンをセット
-	SceneManager::GetInstance()->ChangeScene("GAME");
+	SceneManager::GetInstance()->ChangeScene("TITLE");
 }
 
 void AndosGame::Finalize()
