@@ -75,10 +75,13 @@ void PlayerActionManager::PlayerFrontmost2D(XMINT3& mapChipNumberPlayerPos, cons
 
 bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
+	//ブロックより先に裏面のハリボテが検出されたらfalseを返す
+
 	//接地面が「上」の場合はプレイヤーのマップ番号より「上にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane) ||
+				mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::DownPlane) {
 				return true;
 			}
 		}
@@ -86,7 +89,8 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	//接地面が「下」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane) ||
+				mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::UpPlane) {
 				return true;
 			}
 		}
@@ -94,7 +98,8 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	//接地面が「左」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane) ||
+				mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::RightPlane) {
 				return true;
 			}
 		}
@@ -102,7 +107,8 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	//接地面が「右」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane) ||
+				mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::LeftPlane) {
 				return true;
 			}
 		}
@@ -110,7 +116,8 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	//接地面が「手前」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
 		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane) ||
+				mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::AwayPlane) {
 				return true;
 			}
 		}
@@ -118,7 +125,8 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	//接地面が「奥」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
 		for (int i = mapChipNumberPlayerPos.z; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
-			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
+			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane) ||
+				mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::ForwardPlane) {
 				return true;
 			}
 		}
@@ -130,11 +138,16 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 
 bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
+	//ブロックより先に裏面のハリボテが検出されたらfalseを返す
+
 	//接地面が「上」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
+			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::DownPlane) {
+				return false;
 			}
 		}
 	}
@@ -144,6 +157,9 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return true;
 			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::UpPlane) {
+				return false;
+			}
 		}
 	}
 	//接地面が「左」の場合はプレイヤーのマップ番号より「右にブロック」があるかチェック
@@ -151,6 +167,9 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 		for (int i = mapChipNumberPlayerPos.x; i < mapChipNum.size(); i++) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return true;
+			}
+			else if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::RightPlane) {
+				return false;
 			}
 		}
 	}
@@ -160,6 +179,9 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return true;
 			}
+			else if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::LeftPlane) {
+				return false;
+			}
 		}
 	}
 	//接地面が「手前」の場合はプレイヤーのマップ番号より「奥にブロック」があるかチェック
@@ -168,6 +190,9 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
 				return true;
 			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::AwayPlane) {
+				return false;
+			}
 		}
 	}
 	//接地面が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
@@ -175,6 +200,9 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
+			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::ForwardPlane) {
+				return false;
 			}
 		}
 	}
@@ -549,39 +577,54 @@ void PlayerActionManager::PlayerMoveDirection2D(XMINT3& mapChipNumberPlayerPos, 
 
 bool PlayerActionManager::PlayerMoveBlockCheck3D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)
 {
-	//移動先のマップ番号にブロックが存在すれば移動できずに抜ける
-	if (MapBlockData::MapChipNumBlockCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z])) {
-		return false;
-	}
-
+	//移動先のマップ番号にブロックが存在すれば移動できずに抜ける(裏向きハリボテも踏めないので不可)
 	//足場となるブロックが存在しなければ抜ける
+
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y - 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y + 1][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x + 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x - 1][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1], MapBlockData::MapBlockType::ForwardPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::AwayPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z + 1], MapBlockData::MapBlockType::ForwardPlane))) {
 			return false;
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1], MapBlockData::MapBlockType::AwayPlane))) {
+		if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::ForwardPlane)) {
+			return false;
+		}
+		else if (!(MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z - 1], MapBlockData::MapBlockType::AwayPlane))) {
 			return false;
 		}
 	}
@@ -598,12 +641,18 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::DownPlane) {
+				return false;
+			}
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+		for (int i = (int)mapChipNum[mapChipNumberPlayerPos.x].size() - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return true;
+			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::UpPlane) {
+				return false;
 			}
 		}
 	}
@@ -612,12 +661,18 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane)) {
 				return true;
 			}
+			else if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::RightPlane) {
+				return false;
+			}
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		for (int i = 0; i < mapChipNum.size(); i++) {
+		for (int i = (int)mapChipNum.size() - 1; i >= 0; i--) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return true;
+			}
+			else if (mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::LeftPlane) {
+				return false;
 			}
 		}
 	}
@@ -626,12 +681,18 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane)) {
 				return true;
 			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::AwayPlane) {
+				return false;
+			}
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size(); i++) {
+		for (int i = (int)mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y].size() - 1; i >= 0; i--) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
+			}
+			else if (mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::ForwardPlane) {
+				return false;
 			}
 		}
 	}
