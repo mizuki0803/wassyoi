@@ -15,6 +15,11 @@ SceneManager* SceneManager::GetInstance()
 	return &instance;
 }
 
+void SceneManager::Finalize()
+{
+	scene->Finalize();
+}
+
 void SceneManager::Update()
 {
 	//ƒV[ƒ“Ø‚è‘Ö‚¦‚ª‚ ‚é‚È‚ç

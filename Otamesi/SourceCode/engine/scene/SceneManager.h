@@ -27,6 +27,11 @@ public: //メンバ関数
 	static SceneManager* GetInstance();
 
 	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void Finalize();
+
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();

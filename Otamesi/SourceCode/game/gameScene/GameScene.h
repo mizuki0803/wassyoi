@@ -18,6 +18,11 @@ public: //メンバ関数
 	void Initialize() override;
 
 	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void Finalize() override;
+
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
@@ -111,4 +116,14 @@ private: //メンバ変数
 	int blockActTimer_ = 100;
 	// ブロックを上げ終わったか
 	bool isBolckUp_ = false;
+
+#pragma region
+	//現在の手順
+	int orderNum;
+	//現在の最大手順
+	int orderMaxNum;
+	//消去時の最大番号
+	int deleteOrderMaxNum;
+#pragma endregion undo redo用
+
 };

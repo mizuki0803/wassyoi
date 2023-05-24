@@ -102,6 +102,7 @@ void FrameWork::Initialize()
 
 void FrameWork::Finalize()
 {
+	SceneManager::GetInstance()->Finalize();
 	//FBXLoader‰ð•ú
 	FbxLoader::GetInstance()->Finalize();
 

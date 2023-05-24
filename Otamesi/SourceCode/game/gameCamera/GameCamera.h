@@ -80,6 +80,10 @@ public: //ƒƒ“ƒoŠÖ”
 	const int GetCameraYPosPhase() { return cameraYPosPhase; };
 	const bool GetIs2D() { return is2D; }
 	const bool GetIsTriggerDimensionChange() { return isTriggerDimensionChange; }
+	//setter
+	void SetIs2D(const bool _is2D) { is2D = _is2D; }
+	void SetCameraXPosPhase(const int _cameraXPosPhase) { cameraXPosPhase = _cameraXPosPhase; };
+	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
 
 private: //ƒƒ“ƒoŠÖ”
 	/// <summary>

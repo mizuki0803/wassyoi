@@ -1,9 +1,9 @@
 #include <JsonLoader.h>
 
-void JsonLoader::SerializeTest(const std::string& _fileName, const float _cameraDist,
+void JsonLoader::SerializeJson(const std::string& _fileName, const float _cameraDist,
     const std::array<int, 3> _mapSize, std::vector<std::vector<std::vector<int>>> _map)
 {
-    Person x;
+    Json x;
     x.name = _fileName;
     x.cameraDist = 30.0f;
 	x.mapSize = _mapSize;
@@ -12,20 +12,12 @@ void JsonLoader::SerializeTest(const std::string& _fileName, const float _camera
     std::ofstream os(_fileName, std::ios::out);
     cereal::JSONOutputArchive archiveFile(os);
     x.serialize(archiveFile);
-
-    // 標準出力
-    std::stringstream ss;
-    {
-        cereal::JSONOutputArchive archiveStdout(ss);
-        x.serialize(archiveStdout);
-    }
-    std::cout << ss.str() << std::endl;
 }
 
-bool JsonLoader::DeserializeTest(const std::string _fileName,
+bool JsonLoader::DeserializeJson(const std::string _fileName,
     float* _cameraDist, std::vector<std::vector<std::vector<int>>>* _map)
 {
-    Person x;
+    Json x;
 
     std::ifstream os(_fileName, std::ios::in);
     if (!os.is_open()) {
@@ -36,6 +28,45 @@ bool JsonLoader::DeserializeTest(const std::string _fileName,
 
     *_cameraDist = x.cameraDist;
     *_map = x.map;
+
+    return true;
+}
+
+void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D, const int _moveSurface,
+    const std::array<int, 3>& _mapChip, const std::array<float, 3>& _cameraPos, const std::array<int, 2>& _cameraPosPhase, const std::array<float, 3>& _playerPos)
+{
+    Binary x;
+    x.is2D = int(_is2D);
+    x.moveSurface = _moveSurface;
+    x.mapChip = _mapChip;
+    x.cameraPos = _cameraPos;
+    x.cameraPosPhase = _cameraPosPhase;
+    x.playerPos = _playerPos;
+
+    // ファイル出力
+    std::ofstream os("Resources/binary/" + _fileName + ".binary", std::ios::out | std::ios::binary);
+    cereal::BinaryOutputArchive archive(os);
+    x.serialize(archive);
+}
+
+bool JsonLoader::DeserializeBinary(const std::string _fileName, bool* _is2D, int* _moveSurface,
+    std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase, std::array<float, 3>* _playerPos)
+{
+    Binary x;
+
+    std::ifstream os("Resources/binary/" + _fileName + ".binary", std::ios::in | std::ios::binary);
+    if (!os.is_open()) {
+        return false;
+    }
+    cereal::BinaryInputArchive archive(os);
+    x.serialize(archive);
+
+    *_is2D = bool(x.is2D);
+    *_moveSurface = x.moveSurface;
+    *_mapChip = x.mapChip;
+    *_cameraPos = x.cameraPos;
+    *_cameraPosPhase = x.cameraPosPhase;
+    *_playerPos = x.playerPos;
 
     return true;
 }

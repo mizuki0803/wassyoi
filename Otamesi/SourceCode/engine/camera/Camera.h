@@ -78,7 +78,8 @@ public:
 	void SetTarget(const Vector3& target) { this->target = target; dirtyView = true; }
 	void SetAngle(const Vector3& angle) { this->angle = angle; dirtyAngle = true; }
 	void SetDistance(const float distance) { this->distance = distance; dirtyAngle = true; }
-	
+	void SetDirtyProjection(const bool _dirtyProjection) { dirtyProjection = _dirtyProjection; }
+
 protected:
 	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
 	XMMATRIX matWorld = {};

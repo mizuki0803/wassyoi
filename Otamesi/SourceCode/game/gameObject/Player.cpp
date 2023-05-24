@@ -40,6 +40,9 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 
 void Player::Update()
 {
+	//frame最初の初期化
+	isMove = false;
+
 	//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
 	if (gameCamera->GetIsTriggerDimensionChange()) {
 		//2次元状態なら、プレイヤーの位置を画面手前に移動させる
@@ -113,6 +116,9 @@ void Player::MovePos()
 
 	//タイマーが指定した時間に満たなければ抜ける
 	if (actionTimer < moveTime) { return; }
+
+	//移動したのでtrue
+	isMove = true;
 
 	//ゴールしたのかを判定
 	StageClearCheck();

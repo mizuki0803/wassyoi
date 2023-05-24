@@ -47,6 +47,10 @@ void StageSelectScene::Initialize()
 	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
 }
 
+void StageSelectScene::Finalize()
+{
+}
+
 void StageSelectScene::Update()
 {
 	//デバッグ用テキスト

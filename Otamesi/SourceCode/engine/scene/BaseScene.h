@@ -20,6 +20,11 @@ public:
 	virtual void Initialize() = 0;
 
 	/// <summary>
+	/// I—¹ˆ—
+	/// </summary>
+	virtual void Finalize() = 0;
+
+	/// <summary>
 	/// XV
 	/// </summary>
 	virtual void Update() = 0;

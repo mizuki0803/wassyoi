@@ -16,6 +16,11 @@ public: //メンバ関数
 	void Initialize() override;
 
 	/// <summary>
+	/// 終了処理
+	/// </summary>
+	void Finalize() override;
+
+	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;

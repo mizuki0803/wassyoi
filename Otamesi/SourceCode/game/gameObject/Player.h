@@ -49,6 +49,13 @@ public: //メンバ関数
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
+	const bool GetIsMove() { return isMove; }
+	const bool GetNowMove() { return bool(actionPhase); }
+	const int GetMoveSurfacePhase() { return int(moveSurfacePhase); }
+	const XMINT3 GetMapChipNumberPos() { return mapChipNumberPos; }
+	//setter
+	void SetMoveSurfacePhase(const int _moveSurfacePhase) { moveSurfacePhase = MoveSurfacePhase(_moveSurfacePhase); }
+	void SetMapChipNumberPos(const XMINT3& _mapChipNumberPos) { mapChipNumberPos = _mapChipNumberPos; }
 
 private: //メンバ関数
 	/// <summary>
@@ -125,4 +132,7 @@ private: //メンバ変数
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
 #pragma endregion イージング関係
+
+	//移動処理が終わったタイミング
+	bool isMove;
 };
