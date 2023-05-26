@@ -156,8 +156,10 @@
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\Menu.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
+    <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli" />
@@ -328,7 +330,9 @@
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\TitleScene.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\Menu.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

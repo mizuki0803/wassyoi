@@ -131,9 +131,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SourceCode\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\engine\2d\DebugText.cpp">
       <Filter>ソース ファイル\engine\2d\debugText</Filter>
     </ClCompile>
@@ -316,6 +313,15 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp">
       <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\Menu.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\main.cpp">
+      <Filter>ソース ファイル\game</Filter>
+    </ClCompile>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -592,6 +598,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h">
       <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\Menu.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

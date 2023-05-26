@@ -12,4 +12,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[DebugFont], directoryPath, "debugFont.png");
 	TextureManager::LoadTexture(textures[White], directoryPath, "white1x1.png");
 	TextureManager::LoadTexture(textures[Block], directoryPath, "block.png");
+	//ƒƒjƒ…[ŠÖŒW
+	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
+	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
 }

@@ -5,6 +5,7 @@
 #include "LightCamera.h"
 #include "Player.h"
 #include "MapDataStage.h"
+#include "UserInterface.h"
 
 /// <summary>
 /// ゲームシーン
@@ -76,6 +77,9 @@ private: //メンバ変数
 	std::unique_ptr<MapDataStage> mapData;
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
+
+	//メニュー関係
+	std::unique_ptr<UserInterface> userInterface_;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;

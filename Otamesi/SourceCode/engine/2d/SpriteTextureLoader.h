@@ -11,6 +11,8 @@ public: //テクスチャ名
 		DebugFont,		//デバッグ用フォント
 		White,			//真っ白
 		Block,			//ブロック
+		MenuBackScreen, //メニュー画面用の背景
+		MenuFrame,		//メニューの枠組み
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数
 	};

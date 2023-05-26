@@ -79,6 +79,8 @@ void GameScene::Initialize()
 	JsonLoader::SerializeBinary(std::to_string(orderNum), camera->GetIs2D(), player->GetMoveSurfacePhase(),
 		{ mapChip.x,mapChip.y,mapChip.z }, { cameraPos.x,cameraPos.y,cameraPos.z },
 		{ camera->GetCameraXPosPhase(),camera->GetCameraYPosPhase() }, { playerPos.x, playerPos.y, playerPos.z });
+
+	userInterface_ = UserInterface::Create();
 }
 
 void GameScene::Finalize()
@@ -129,9 +131,24 @@ void GameScene::Update()
 	mapData->Update();
 	//天球
 	skydome->Update();
+	//UIの更新
+	userInterface_->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_M))
+	{
+		if (!userInterface_->GetMenuFlag())
+		{
+			userInterface_->SetMenuFlag(true);
+		}
+		else
+		{
+			userInterface_->SetMenuFlag(false);
+		}
+	}
+	
 
 	//binary出力
 	if (player->GetIsMove() || camera->GetIsTriggerDimensionChange()) {
@@ -259,6 +276,8 @@ void GameScene::DrawFrontSprite()
 	//スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
+
+	userInterface_->Draw();
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();
