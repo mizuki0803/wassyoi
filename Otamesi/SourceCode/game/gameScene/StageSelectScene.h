@@ -3,6 +3,7 @@
 #include "LightGroup.h"
 #include "ObjObject3d.h"
 #include "Camera.h"
+#include "MapDataStageSelectManager.h"
 
 /// <summary>
 /// ステージ選択シーン
@@ -63,6 +64,9 @@ private: //メンバ変数
 
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 0,0,1 };
+
+	//マップデータ
+	std::unique_ptr<MapDataStageSelectManager> mapDataManager;
 
 	//objモデル
 	std::unique_ptr<ObjModel> modelSkydome;

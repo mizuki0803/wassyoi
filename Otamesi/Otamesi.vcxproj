@@ -60,7 +60,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameCamera\sortieCamera;$(ProjectDir)SourceCode\game\gameCamera\stageCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\background;$(ProjectDir)SourceCode\game\gameObject\boss;$(ProjectDir)SourceCode\game\gameObject\boss\galaxy;$(ProjectDir)SourceCode\game\gameObject\boss\medaman;$(ProjectDir)SourceCode\game\gameObject\boss\medaman\medamanAvatar;$(ProjectDir)SourceCode\game\gameObject\enemy;$(ProjectDir)SourceCode\game\gameObject\enemy\enemyBullet;$(ProjectDir)SourceCode\game\gameObject\item;$(ProjectDir)SourceCode\game\gameObject\sortiePlayer;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameObject\player\playerBullet;$(ProjectDir)SourceCode\game\gameObject\player\reticle;$(ProjectDir)SourceCode\game\gameObject\player\reticle\playerReticle;$(ProjectDir)SourceCode\game\gameObject\player\stagePlayer;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameScene\sortieScene;$(ProjectDir)SourceCode\game\gameScene\stageScene;$(ProjectDir)SourceCode\game\gameSprite;$(ProjectDir)SourceCode\game\gameSprite\UI;$(ProjectDir)SourceCode\game\gameSprite\UI\bossUI\bossHPUI;$(ProjectDir)SourceCode\game\gameSprite\UI\bossUI\bossNameUI;$(ProjectDir)SourceCode\game\gameSprite\UI\playerUI\playerHPUI;$(ProjectDir)SourceCode\game\gameSprite\UI\playerUI\playerSpeedChangeUI;$(ProjectDir)SourceCode\game\gameSprite\UI\warningUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -81,7 +81,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameCamera\sortieCamera;$(ProjectDir)SourceCode\game\gameCamera\stageCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\background;$(ProjectDir)SourceCode\game\gameObject\boss;$(ProjectDir)SourceCode\game\gameObject\boss\galaxy;$(ProjectDir)SourceCode\game\gameObject\boss\medaman;$(ProjectDir)SourceCode\game\gameObject\boss\medaman\medamanAvatar;$(ProjectDir)SourceCode\game\gameObject\enemy;$(ProjectDir)SourceCode\game\gameObject\enemy\enemyBullet;$(ProjectDir)SourceCode\game\gameObject\item;$(ProjectDir)SourceCode\game\gameObject\sortiePlayer;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameObject\player\playerBullet;$(ProjectDir)SourceCode\game\gameObject\player\reticle;$(ProjectDir)SourceCode\game\gameObject\player\reticle\playerReticle;$(ProjectDir)SourceCode\game\gameObject\player\stagePlayer;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameScene\sortieScene;$(ProjectDir)SourceCode\game\gameScene\stageScene;$(ProjectDir)SourceCode\game\gameSprite;$(ProjectDir)SourceCode\game\gameSprite\UI;$(ProjectDir)SourceCode\game\gameSprite\UI\bossUI\bossHPUI;$(ProjectDir)SourceCode\game\gameSprite\UI\bossUI\bossNameUI;$(ProjectDir)SourceCode\game\gameSprite\UI\playerUI\playerHPUI;$(ProjectDir)SourceCode\game\gameSprite\UI\playerUI\playerSpeedChangeUI;$(ProjectDir)SourceCode\game\gameSprite\UI\warningUI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -138,11 +138,17 @@
     <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp" />
-    <ClCompile Include="SourceCode\game\gameObject\Block.cpp" />
-    <ClCompile Include="SourceCode\game\gameObject\MapBlockData.cpp" />
-    <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp" />
-    <ClCompile Include="SourceCode\game\gameObject\Player.cpp" />
-    <ClCompile Include="SourceCode\game\gameObject\PlayerActionManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\Block.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\MapBlockData.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\StageBlock.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlock.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlockManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\map\MapData.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStage.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelect.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\player\Player.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\player\PlayerActionManager.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\BaseGameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp" />
@@ -289,11 +295,17 @@
     <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h" />
     <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h" />
     <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h" />
-    <ClInclude Include="SourceCode\game\gameObject\Block.h" />
-    <ClInclude Include="SourceCode\game\gameObject\MapBlockData.h" />
-    <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h" />
-    <ClInclude Include="SourceCode\game\gameObject\Player.h" />
-    <ClInclude Include="SourceCode\game\gameObject\PlayerActionManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\Block.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\MapBlockData.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\StageBlock.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlock.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlockManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\map\MapData.h" />
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStage.h" />
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelect.h" />
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\player\Player.h" />
+    <ClInclude Include="SourceCode\game\gameObject\player\PlayerActionManager.h" />
     <ClInclude Include="SourceCode\game\gameObject\StageManager.h" />
     <ClInclude Include="SourceCode\game\gameScene\BaseGameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h" />

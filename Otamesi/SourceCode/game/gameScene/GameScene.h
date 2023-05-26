@@ -4,7 +4,7 @@
 #include "GameCamera.h"
 #include "LightCamera.h"
 #include "Player.h"
-#include "Block.h"
+#include "MapDataStage.h"
 
 /// <summary>
 /// ゲームシーン
@@ -47,28 +47,6 @@ public: //メンバ関数
 	/// </summary>
 	void DrawFrontSprite() override;
 
-private: //メンバ関数
-	/// <summary>
-	/// マップデータ読み込み
-	/// </summary>
-	/// <param name="fileName">ファイル名</param>
-	bool LoadMapData(const std::string& fileName);
-
-	/// <summary>
-	/// マップ生成
-	/// </summary>
-	void CreateMap();
-
-	/// <summary>
-	/// ブロックの更新
-	/// </summary>
-	void BlockUpdate();
-
-	/// <summary>
-	/// ブロックを上げる番号の生成
-	/// </summary>
-	void BlockCountCreate();
-
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<GameCamera> camera;
@@ -90,32 +68,17 @@ private: //メンバ変数
 
 	//objモデル
 	std::unique_ptr<ObjModel> modelPlayer;
-	std::unique_ptr<ObjModel> modelBlock;
-	std::unique_ptr<ObjModel> modelPlane;
-	std::unique_ptr<ObjModel> modelGoal;
 	std::unique_ptr<ObjModel> modelSkydome;
 
 	//プレイヤー
 	std::unique_ptr<Player> player;
-
-	//マップのサイズ
-	XMINT3 mapSize;
-	//3次元マップ用の3次元配列
-	std::vector<std::vector<std::vector<int>>> mapChipNum;
-	//マップ用ブロック
-	std::vector<std::unique_ptr<Block>> blocks;
-
+	//ステージ用マップデータ
+	std::unique_ptr<MapDataStage> mapData;
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
-	// 上げるブロックの番号の保存
-	std::vector<int> rndcount;
-	// ブロックを上げるタイマー
-	int blockActTimer_ = 100;
-	// ブロックを上げ終わったか
-	bool isBolckUp_ = false;
 
 #pragma region
 	//現在の手順

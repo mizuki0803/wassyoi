@@ -6,42 +6,46 @@
 /// </summary>
 class StageManager
 {
-public: //enum
-	/// <summary>
-	/// ステージ名
-	/// </summary>
-	enum StageName
-	{
-		Stage1,
-		Stage2,
-		Stage3,
-
-		StageNum,	//ステージ数
-	};
-
 public: //静的メンバ関数
 	/// <summary>
 	/// 指定したステージがクリアしているか
 	/// </summary>
 	/// <param name="stageName">ステージ名</param>
 	/// <returns>ステージがクリアしているか</returns>
-	static bool GetIsClear(const StageName stageName);
+	static bool GetIsClear(const int selectStage);
 
 	/// <summary>
-	/// 指定したステージをクリア状態にする
+	/// 現在選択中のステージをクリア状態にする
 	/// </summary>
-	/// <param name="stageName">ステージ名</param>
-	static void StageClear(const StageName stageName);
+	static void StageClear();
 
-	//getter
-	static StageName GetSelectStage() { return StageManager::selectStage; }
+	/// <summary>
+	/// 現在選択中のステージのgetter
+	/// </summary>
+	/// <returns>現在選択中のステージ</returns>
+	static int GetSelectStage() { return StageManager::selectStage; }
 
-	//setter
-	static void SetSelectStage(const StageName stageName) { StageManager::selectStage = selectStage; }
+	/// <summary>
+	/// 現在選択中のステージのsetter
+	/// </summary>
+	static void SetSelectStage(const int selectStage);
+
+	/// <summary>
+	/// 選択中のステージを次に移動させる
+	/// </summary>
+	static bool NextStageSelect();
+
+	/// <summary>
+	/// 選択中のステージを前に移動させる
+	/// </summary>
+	static bool PrevStageSelect();
+
+private: //静的メンバ変数(定数)
+	static const int stageNum = 6;
 
 private: //静的メンバ変数
-	//選択中のステージ名
-	static StageName selectStage;
+	//選択中のステージ
+	static int selectStage;
 	//ステージクリアしているか
-	static std::array<bool, StageNum> isClear;
+	static std::array<bool, stageNum> isClear;
 };

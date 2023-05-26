@@ -117,6 +117,15 @@
     <Filter Include="ソース ファイル\game\gameEffect">
       <UniqueIdentifier>{137d0f6f-11bb-48e6-a36c-2d4040046925}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\gameObject\map">
+      <UniqueIdentifier>{6dd0211e-527e-4894-990b-4b8a9e1e4cdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\gameObject\player">
+      <UniqueIdentifier>{42a6b42b-fbd8-4127-aeaf-b4eab3c45f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\game\gameObject\block">
+      <UniqueIdentifier>{37790baa-f899-47ae-b12d-7e00624b09bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\main.cpp">
@@ -236,29 +245,14 @@
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp">
       <Filter>ソース ファイル\game\gameScene</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\game\gameObject\Player.cpp">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\game\gameCamera\GameCamera.cpp">
       <Filter>ソース ファイル\game\gameCamera</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameObject\Block.cpp">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameObject\PlayerActionManager.cpp">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameObject\MapBlockData.cpp">
-      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\engine\math\EaseData.cpp">
       <Filter>ソース ファイル\engine\math</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\engine\3d\JsonLoader.cpp">
       <Filter>ソース ファイル\engine\3d\object</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameObject\PlaneBlock.cpp">
-      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp">
       <Filter>ソース ファイル\game\gameEffect</Filter>
@@ -280,6 +274,39 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\Block.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\MapBlockData.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\StageBlock.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlock.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlockManager.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\player\Player.cpp">
+      <Filter>ソース ファイル\game\gameObject\player</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\player\PlayerActionManager.cpp">
+      <Filter>ソース ファイル\game\gameObject\player</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\map\MapData.cpp">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStage.cpp">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelect.cpp">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.cpp">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -479,29 +506,14 @@
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h">
       <Filter>ソース ファイル\game\gameScene</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\game\gameObject\Player.h">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\game\gameCamera\GameCamera.h">
       <Filter>ソース ファイル\game\gameCamera</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameObject\Block.h">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameObject\PlayerActionManager.h">
-      <Filter>ソース ファイル\game\gameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameObject\MapBlockData.h">
-      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\engine\math\EaseData.h">
       <Filter>ソース ファイル\engine\math</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\engine\3d\JsonLoader.h">
       <Filter>ソース ファイル\engine\3d\object</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameObject\PlaneBlock.h">
-      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h">
       <Filter>ソース ファイル\game\gameEffect</Filter>
@@ -523,6 +535,39 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\StageManager.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\Block.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\MapBlockData.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\StageBlock.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlock.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlockManager.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\player\Player.h">
+      <Filter>ソース ファイル\game\gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\player\PlayerActionManager.h">
+      <Filter>ソース ファイル\game\gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\map\MapData.h">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStage.h">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelect.h">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.h">
+      <Filter>ソース ファイル\game\gameObject\map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

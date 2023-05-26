@@ -1,12 +1,10 @@
-#include "Block.h"
+#include "StageBlock.h"
 #include "Easing.h"
 
-const float Block::blockSize = 5.0f;
-
-Block* Block::Create(ObjModel* model, const XMINT3& mapChipNum)
+StageBlock* StageBlock::Create(ObjModel* model, const XMINT3& mapChipNum)
 {
-    //インスタンス生成
-    Block* instance = new Block();
+	//インスタンス生成
+	StageBlock* instance = new StageBlock();
 
 	//初期化処理
 	if (!instance->Initialize(model, mapChipNum)) {
@@ -18,10 +16,10 @@ Block* Block::Create(ObjModel* model, const XMINT3& mapChipNum)
 	//ブロックの種類を「ブロック」に設定
 	instance->blockType = BlockType::Block;
 
-    return instance;
+	return instance;
 }
 
-bool Block::Initialize(ObjModel* model, const XMINT3& mapChipNum)
+bool StageBlock::Initialize(ObjModel* model, const XMINT3& mapChipNum)
 {
 	//モデルをセット
 	assert(model);
@@ -36,7 +34,7 @@ bool Block::Initialize(ObjModel* model, const XMINT3& mapChipNum)
 	SetEaseData(60);
 
 	//座標をセット
-	Vector3 temppos = { mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() };
+	Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
 	SetBlockEndPos(temppos);
 	temppos.y = -100.0f;
 	SetBlockStratPos(temppos);
@@ -49,17 +47,18 @@ bool Block::Initialize(ObjModel* model, const XMINT3& mapChipNum)
 	return true;
 }
 
-void Block::Update()
+void StageBlock::Update()
 {
 	if (phase_ != static_cast<int>(GamePhase::None))
 	{
 		func_[phase_]();
 	}
+
 	//オブジェクト更新
 	ObjObject3d::Update();
 }
 
-void Block::PlayStratMove()
+void StageBlock::PlayStratMove()
 {
 	Vector3 easePos = {};
 	// イージングの計算
@@ -78,7 +77,7 @@ void Block::PlayStratMove()
 	easeData_->Update();
 }
 
-void Block::SetEaseData(const int count)
+void StageBlock::SetEaseData(const int count)
 {
 	if (easeData_ == nullptr)
 	{
@@ -90,7 +89,7 @@ void Block::SetEaseData(const int count)
 	}
 }
 
-void Block::CreateAct()
+void StageBlock::CreateAct()
 {
-	func_.push_back([this] { return PlayStratMove(); });
+    func_.push_back([this] { return PlayStratMove(); });
 }

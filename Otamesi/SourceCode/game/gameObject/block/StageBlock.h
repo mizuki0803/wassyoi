@@ -1,11 +1,11 @@
 #pragma once
-#include "ObjObject3d.h"
+#include "Block.h"
 #include "EaseData.h"
 
 /// <summary>
-/// マップ用ブロック
+/// ステージ用ブロック
 /// </summary>
-class Block : public ObjObject3d
+class StageBlock : public Block
 {
 public: //enum
 	/// <summary>
@@ -13,17 +13,8 @@ public: //enum
 	/// </summary>
 	enum class GamePhase
 	{
-		Strat,	//開始
+		Start,	//開始
 		None,	//何もしない
-	};
-
-	/// <summary>
-	/// ブロックの種類
-	/// </summary>
-	enum class BlockType
-	{
-		Block,
-		Plane,
 	};
 
 public: //静的メンバ関数
@@ -32,11 +23,8 @@ public: //静的メンバ関数
 	/// </summary>	
 	/// <param name="model">モデル</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
-	/// <returns>ブロック</returns>
-	static Block* Create(ObjModel* model, const XMINT3& mapChipNum);
-
-	//getter
-	static float GetBlockSize() { return Block::blockSize; }
+	/// <returns>ステージ用ブロック</returns>
+	static StageBlock* Create(ObjModel* model, const XMINT3& mapChipNum);
 
 public: //メンバ関数
 	/// <summary>
@@ -51,6 +39,7 @@ public: //メンバ関数
 	/// 更新
 	/// </summary>
 	void Update();
+
 	/// <summary>
 	/// ゲーム開始時
 	/// </summary>
@@ -86,17 +75,11 @@ public: //メンバ関数
 	/// <returns></returns>
 	int GetActPhase() { return static_cast<int>(phase_); }
 
-protected: //静的メンバ変数
-	//ブロック一つの大きさ
-	static const float blockSize;
-
 protected: // メンバ変数
-	//ブロックの種類
-	BlockType blockType;
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_ = static_cast<int>(GamePhase::Strat);
+	size_t phase_ = static_cast<int>(GamePhase::Start);
 
 #pragma region
 	// 開始位置

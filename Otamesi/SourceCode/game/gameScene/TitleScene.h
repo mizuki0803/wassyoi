@@ -1,7 +1,10 @@
 #pragma once
 #include "BaseGameScene.h"
 #include "LightGroup.h"
-#include "ObjObject3d.h"
+#include "GameCamera.h"
+#include "LightCamera.h"
+#include "Player.h"
+#include "MapDataStage.h"
 
 /// <summary>
 /// タイトルシーン
@@ -45,6 +48,10 @@ public: //メンバ関数
 	void DrawFrontSprite() override;
 
 private: //メンバ変数
+	//カメラ
+	std::unique_ptr<GameCamera> camera;
+	//影用光源カメラ
+	std::unique_ptr<LightCamera> lightCamera;
 
 	//ライト
 	std::unique_ptr<LightGroup> lightGroup;
@@ -60,8 +67,18 @@ private: //メンバ変数
 	float lightColor2[3] = { 0,0,1 };
 
 	//objモデル
+	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelSkydome;
+
+	//プレイヤー
+	std::unique_ptr<Player> player;
+
+	//ステージ用マップデータ
+	std::unique_ptr<MapDataStage> mapData;
 
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
+
+	//ステージクリアフラグ
+	bool isStageClear = false;
 };

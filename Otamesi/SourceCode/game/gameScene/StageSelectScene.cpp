@@ -7,6 +7,7 @@
 #include "MapBlockData.h"
 #include "SceneChangeEffect.h"
 #include "GamePostEffect.h"
+#include "MapDataStageSelect.h"
 
 void StageSelectScene::Initialize()
 {
@@ -17,11 +18,15 @@ void StageSelectScene::Initialize()
 	lightGroup->SetDirLightActive(2, false);
 
 	//objからモデルデータを読み込む
-	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage02", true));
+	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeBase", true));
+
+	//マップ管理生成
+	mapDataManager.reset(MapDataStageSelectManager::Create());
 
 	//カメラ初期化
 	camera.reset(new Camera());
 	camera->Initialize();
+	camera->SetEye({ 0, 5, -70 });
 	//影用光源カメラ初期化
 	lightCamera.reset(new LightCamera());
 	lightCamera->Initialize({ -100, 100, -300 });
@@ -54,8 +59,8 @@ void StageSelectScene::Finalize()
 void StageSelectScene::Update()
 {
 	//デバッグ用テキスト
-	DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 200, 5);
-	DebugText::GetInstance()->Print("PRESS SPACE", 600, 600);
+	DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
+	DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
 
 
 	//カメラ更新
@@ -66,11 +71,13 @@ void StageSelectScene::Update()
 	lightGroup->Update();
 
 	//オブジェクト更新
+	//マップ用ブロック
+	mapDataManager->Update();
 	//天球
 	skydome->Update();
 
 
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 	}
@@ -90,6 +97,8 @@ void StageSelectScene::Draw3D()
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
 
+	//マップ用ブロック
+	mapDataManager->Draw();
 	//天球
 	skydome->Draw();
 

@@ -637,7 +637,7 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 {
 	//2D表現をして、移動先の軸にブロックが存在していれば通過(true)
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
-		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
+		for (int i = (int)mapChipNum[mapChipNumberPlayerPos.x].size() - 1; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
@@ -647,7 +647,7 @@ bool PlayerActionManager::PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlay
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		for (int i = (int)mapChipNum[mapChipNumberPlayerPos.x].size() - 1; i >= 0; --i) {
+		for (int i = 0; i < mapChipNum[mapChipNumberPlayerPos.x].size(); i++) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane)) {
 				return true;
 			}
