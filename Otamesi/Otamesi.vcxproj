@@ -105,6 +105,7 @@
     <ClCompile Include="SourceCode\engine\3d\FbxLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\FbxModel.cpp" />
     <ClCompile Include="SourceCode\engine\3d\FbxObject3d.cpp" />
+    <ClCompile Include="SourceCode\engine\3d\InstanceObject.cpp" />
     <ClCompile Include="SourceCode\engine\3d\JsonLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\LevelDataLoader.cpp" />
     <ClCompile Include="SourceCode\engine\3d\ObjModel.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\Block.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\MapBlockData.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\StageBlock.cpp" />
@@ -159,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli" />
+    <None Include="Resources\shaders\InstanceObject.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\ObjLightView.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
@@ -176,6 +179,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjLightViewPS.hlsl">
@@ -255,6 +270,7 @@
     <ClInclude Include="SourceCode\engine\3d\FbxLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\FbxModel.h" />
     <ClInclude Include="SourceCode\engine\3d\FbxObject3d.h" />
+    <ClInclude Include="SourceCode\engine\3d\InstanceObject.h" />
     <ClInclude Include="SourceCode\engine\3d\JsonLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\LevelDataLoader.h" />
     <ClInclude Include="SourceCode\engine\3d\ObjModel.h" />
@@ -295,6 +311,7 @@
     <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h" />
     <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h" />
     <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h" />
+    <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\Block.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\MapBlockData.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\StageBlock.h" />

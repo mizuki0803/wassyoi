@@ -10,6 +10,7 @@
 #include "ParticleEmitter.h"
 #include "LightGroup.h"
 #include "GamePostEffect.h"
+#include "InstanceObject.h"
 
 void FrameWork::Run()
 {
@@ -79,6 +80,9 @@ void FrameWork::Initialize()
 	ObjObject3d::Object3dCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	ObjModel::SetShadowMapTexture(shadowMap->GetTexture());
 
+	//objオブジェクト3d共通初期化処理
+	InstanceObject::InstanceObjectCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+
 	//FBXLoader初期化
 	FbxLoader::GetInstance()->Initialize(dxbase->GetDevice());
 
@@ -134,7 +138,7 @@ void FrameWork::Update()
 	SceneManager::GetInstance()->Update();
 
 	//フレームレート確認
-	FpsCheck::Display();
+	//FpsCheck::Display();
 }
 
 void FrameWork::Draw()

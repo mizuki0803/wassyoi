@@ -349,8 +349,7 @@ void ObjModel::CalculateSmoothedVertexNormals()
 	}
 }
 
-
-void ObjModel::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
+void ObjModel::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum)
 {
 	//頂点バッファビューの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
@@ -368,10 +367,10 @@ void ObjModel::Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMater
 	}
 
 	//描画コマンド
-	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+	cmdList->DrawIndexedInstanced((UINT)indices.size(), _instanceDrawNum, 0, 0, 0);
 }
 
-void ObjModel::DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial)
+void ObjModel::DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum)
 {
 	//頂点バッファビューの設定
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
@@ -387,5 +386,5 @@ void ObjModel::DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT root
 	}
 
 	//描画コマンド
-	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+	cmdList->DrawIndexedInstanced((UINT)indices.size(), _instanceDrawNum, 0, 0, 0);
 }

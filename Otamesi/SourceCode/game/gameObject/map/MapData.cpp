@@ -1,14 +1,10 @@
 #include "MapData.h"
+#include "Block.h"
 #include "JsonLoader.h"
 #include <sstream>
 
 bool MapData::CreateMap(const int selectStageNum)
 {
-	//ブロックモデル読み込み
-	modelBlock.reset(ObjModel::LoadFromOBJ("block"));
-	modelPlane.reset(ObjModel::LoadFromOBJ("plane"));
-	modelGoal.reset(ObjModel::LoadFromOBJ("goal"));
-
 	//jsonマップデータ読み込み
 	std::ostringstream  fileName;
 	fileName << selectStageNum;
@@ -17,6 +13,8 @@ bool MapData::CreateMap(const int selectStageNum)
 	}
 	//マップブロック生成
 	CreateMapBlock();
+
+	Block::StaticInitialize();
 
 	return true;
 }

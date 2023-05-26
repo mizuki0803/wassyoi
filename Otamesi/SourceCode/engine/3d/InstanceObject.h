@@ -8,11 +8,12 @@
 #include "Camera.h"
 #include "LightCamera.h"
 #include "Vector3.h"
+#include "ObjObject3d.h"
 
 /// <summary>
-/// obj3Dオブジェクト
+/// インスタンスオブジェクト
 /// </summary>
-class ObjObject3d
+class InstanceObject
 {
 protected: // エイリアス
 	// Microsoft::WRL::を省略
@@ -27,14 +28,23 @@ public: //サブクラス
 	//定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		XMFLOAT4 color;		//色
 		XMMATRIX viewproj;	//ビュープロジェクション行列
-		XMMATRIX world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 		XMMATRIX lightViewproj;	//ライトビュープロジェクション行列
 		XMMATRIX topLightViewproj;	//頭上ライトビュープロジェクション行列
 		unsigned int isShadowMap;	//影を付けるか
+		float pad;
+		float pad1;
 	};
+
+	//定数バッファ用データ構造体B0
+	static const int draw_max_num = 512;
+	struct ConstBufferDataB1
+	{
+		XMFLOAT4 color[draw_max_num];		//色
+		XMMATRIX world[draw_max_num];		//ワールド行列
+	};
+
 	//影用
 	struct ConstBufferDataLightViewB0
 	{
@@ -43,6 +53,10 @@ public: //サブクラス
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 	};
 
+	struct ConstBufferDataLightViewB1
+	{
+		XMMATRIX world[draw_max_num];		//ワールド行列
+	};
 
 public: //静的メンバ関数
 	/// <summary>
@@ -50,7 +64,7 @@ public: //静的メンバ関数
 	/// </summary>
 	/// <param name="dev">デバイス</param>
 	/// <param name="cmdList">コマンドリスト</param>
-	static void Object3dCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
+	static void InstanceObjectCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
 	/// パイプライン生成
@@ -77,7 +91,7 @@ public: //静的メンバ関数
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <returns>object3d</returns>
-	static ObjObject3d* Create(ObjModel* model);
+	static InstanceObject* Create(ObjModel* model);
 
 
 public: //メンバ関数
@@ -93,6 +107,17 @@ public: //メンバ関数
 	virtual void Update();
 
 	/// <summary>
+	/// 描画セット
+	/// </summary>
+	/// <param name="_pos">座標</param>
+	/// <param name="_scale">大きさ</param>
+	/// <param name="_rotation">回転角</param>
+	/// <param name="_color">色</param>
+	/// <param name="_parentWorld">親オブジェクトワールド行列</param>
+	void DrawInstance(const XMFLOAT3& _pos, const XMFLOAT3& _scale,
+		const XMFLOAT3& _rotation, const XMFLOAT4& _color, const XMMATRIX* _parentWorld = nullptr);
+
+	/// <summary>
 	/// 描画
 	/// </summary>
 	virtual void Draw();
@@ -102,25 +127,13 @@ public: //メンバ関数
 	/// </summary>
 	virtual void DrawLightCameraView();
 
-	//getter
-	const Vector3 GetWorldPos();
-	const Vector3& GetPosition() { return position; }
-	const Vector3& GetRotation() { return rotation; }
-	const Vector3& GetScale() { return scale; }
-	const XMFLOAT4& GetColor() { return color; }
-	const XMMATRIX& GetMatWorld() { return matWorld; };
-
 	//setter
-	void SetPosition(const Vector3& position) { this->position = position; }
-	void SetRotation(const Vector3& rotation) { this->rotation = rotation; }
-	void SetScale(const Vector3& scale) { this->scale = scale; }
-	void SetColor(const XMFLOAT4& color) { this->color = color; }
 	void SetModel(ObjModel* model) { this->model = model; }
 	void SetIsCameraFollow(bool isCameraFollow) { this->isCameraFollow = isCameraFollow; }
 	void SetIsShadowMap(bool isShadowMap) { this->isShadowMap = isShadowMap; }
-	static void SetLightGroup(LightGroup* lightGroup) { ObjObject3d::lightGroup = lightGroup; }
-	static void SetCamera(Camera* camera) { ObjObject3d::camera = camera; }
-	static void SetLightCamera(LightCamera* lightCamera) { ObjObject3d::lightCamera = lightCamera; }
+	static void SetLightGroup(LightGroup* lightGroup) { InstanceObject::lightGroup = lightGroup; }
+	static void SetCamera(Camera* camera) { InstanceObject::camera = camera; }
+	static void SetLightCamera(LightCamera* lightCamera) { InstanceObject::lightCamera = lightCamera; }
 
 
 protected: //静的メンバ変数
@@ -139,20 +152,16 @@ protected: //静的メンバ変数
 	//影用光源カメラ
 	static LightCamera* lightCamera;
 
-
 protected: //メンバ変数
 	//定数バッファ
 	ComPtr<ID3D12Resource> constBuffB0;
+	ComPtr<ID3D12Resource> constBuffB1;
 	ComPtr<ID3D12Resource> constBuffLightViewB0;
+	ComPtr<ID3D12Resource> constBuffLightViewB1;
 	//アフィン変換情報
-	Vector3 scale = { 1, 1, 1 };
-	Vector3 rotation = { 0, 0, 0 };
-	Vector3 position = { 0, 0, 0 };
-	XMFLOAT4 color = { 1, 1, 1, 1 };
-	//ワールド変換行列
-	XMMATRIX matWorld = {};
-	//親子構造
-	ObjObject3d* parent = nullptr;
+	ConstBufferDataB1 objInform;
+	//インスタンシング描画個数
+	int instanceDrawNum = 0;
 	//モデル
 	ObjModel* model = nullptr;
 	//カメラに追従するか

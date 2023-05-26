@@ -31,3 +31,12 @@ void BaseGameScene::SceneChangeMode()
 	//ƒV[ƒ“Ø‚è‘Ö‚¦
 	SceneManager::GetInstance()->ChangeScene(nextSceneName);
 }
+
+void BaseGameScene::DeleteBinary()
+{
+	const int deleteNum = deleteOrderMaxNum + 2;
+	for (int i = 0; i < deleteNum; i++) {
+		std::string name = "Resources/binary/" + std::to_string(i) + ".binary";
+		remove(name.c_str());
+	}
+}

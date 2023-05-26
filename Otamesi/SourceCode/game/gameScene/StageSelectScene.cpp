@@ -45,6 +45,13 @@ void StageSelectScene::Initialize()
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
+	//objオブジェクトにカメラをセット
+	InstanceObject::SetCamera(camera.get());
+	InstanceObject::SetLightCamera(lightCamera.get());
+
+	//objオブジェクトにライトをセット
+	InstanceObject::SetLightGroup(lightGroup.get());
+
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
@@ -97,12 +104,18 @@ void StageSelectScene::Draw3D()
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
 
-	//マップ用ブロック
-	mapDataManager->Draw();
 	//天球
 	skydome->Draw();
 
 	///-------Object3d描画ここまで-------///
+
+	///-------Instance描画ここから-------///
+
+	InstanceObject::DrawPrev();
+	//マップ用ブロック
+	mapDataManager->Draw();
+
+	///-------Instance描画ここまで-------///
 
 	///-------パーティクル描画ここから-------///
 

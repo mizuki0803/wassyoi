@@ -121,14 +121,14 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="cmdList">コマンドリスト</param>
 	/// <param name="rootOaramIndexMaterial">ルートパラメータの数字</param>
-	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
+	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
 	/// <summary>
 	/// 影用光源ライトから見た視点での描画
 	/// </summary>
 	/// <param name="cmdList">コマンドリスト</param>
 	/// <param name="rootOaramIndexMaterial">ルートパラメータの数字</param>
-	void DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial);
+	void DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
 private: //メンバ変数
 	//テクスチャ

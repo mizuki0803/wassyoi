@@ -1,33 +1,24 @@
 #include "StageSelectBlock.h"
 
-StageSelectBlock* StageSelectBlock::Create(ObjModel* model, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
+StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
 {
 	//インスタンス生成
 	StageSelectBlock* instance = new StageSelectBlock();
 
 	//初期化処理
-	if (!instance->Initialize(model, mapChipNum, mapSize, parent)) {
+	if (!instance->Initialize(_blockType, mapChipNum, mapSize, parent)) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	//ブロックの種類を「ブロック」に設定
-	instance->blockType = BlockType::Block;
-
 	return instance;
 }
 
-bool StageSelectBlock::Initialize(ObjModel* model, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
+bool StageSelectBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
 {
-	//モデルをセット
-	assert(model);
-	this->model = model;
-
-	//object3Dの初期化
-	if (!ObjObject3d::Initialize()) {
-		return false;
-	}
+	//ブロックの種類を「ブロック」に設定
+	blockType = BROCK_TYPE(_blockType);
 
 	//座標をセット
 	Vector3 pos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };

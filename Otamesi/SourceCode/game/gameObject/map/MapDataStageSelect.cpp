@@ -23,8 +23,6 @@ bool MapDataStageSelect::Initialize(const int selectStageNum, const StageSelectB
 	//ブロック管理生成
 	blockManager.reset(StageSelectBlockManager::Create(positionPhase));
 
-	//ブロックモデル読み込み
-	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	//マップ生成
 	CreateMap(selectStageNum);
 
@@ -53,9 +51,7 @@ void MapDataStageSelect::Update()
 void MapDataStageSelect::Draw()
 {
 	//ブロック描画
-	for (const std::unique_ptr<StageSelectBlock>& block : blocks) {
-		block->Draw();
-	}
+	Block::Draw();
 }
 
 void MapDataStageSelect::CreateMapBlock()
@@ -69,66 +65,66 @@ void MapDataStageSelect::CreateMapBlock()
 				//プレイヤーの生成用マップ番号を保存
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(modelPlayer.get(), chipNum, mapSize, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(3, chipNum, mapSize, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ゴール生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(modelGoal.get(), chipNum, mapSize, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(2, chipNum, mapSize, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ブロック生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(modelBlock.get(), chipNum, mapSize, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(0, chipNum, mapSize, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//上向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = {};	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = {};	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
 				//下向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = { 180, 0, 0 };	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = { 180, 0, 0 };	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
 				//左向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = { 0, 0, 90 };	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = { 0, 0, 90 };	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
 				//右向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = { 0, 0, -90 };	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = { 0, 0, -90 };	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
 				//正面向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = { -90, 0, 0 };	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = { -90, 0, 0 };	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
 				//奥向きハリボテ生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const Vector3 rot = { 90, 0, 0 };	//傾ける角度
-					newBlock.reset(StageSelectBlock::Create(modelPlane.get(), chipNum, mapSize, blockManager.get()));
+					const XMFLOAT3 rot = { 90, 0, 0 };	//傾ける角度
+					newBlock.reset(StageSelectBlock::Create(1, chipNum, mapSize, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}

@@ -126,6 +126,9 @@
     <Filter Include="ソース ファイル\game\gameObject\block">
       <UniqueIdentifier>{37790baa-f899-47ae-b12d-7e00624b09bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\InstanceObject">
+      <UniqueIdentifier>{e8e88127-8067-43ac-869d-a1427a7a6602}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\main.cpp">
@@ -308,6 +311,12 @@
     <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.cpp">
       <Filter>ソース ファイル\game\gameObject\map</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\engine\3d\InstanceObject.cpp">
+      <Filter>ソース ファイル\engine\3d\object</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -327,6 +336,9 @@
     </None>
     <None Include="Resources\shaders\ObjLightView.hlsli">
       <Filter>リソース ファイル\ObjLightView</Filter>
+    </None>
+    <None Include="Resources\shaders\InstanceObject.hlsli">
+      <Filter>リソース ファイル\InstanceObject</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -368,6 +380,12 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjLightViewVS.hlsl">
       <Filter>リソース ファイル\ObjLightView</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectPS.hlsl">
+      <Filter>リソース ファイル\InstanceObject</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectVS.hlsl">
+      <Filter>リソース ファイル\InstanceObject</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +586,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.h">
       <Filter>ソース ファイル\game\gameObject\map</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\3d\InstanceObject.h">
+      <Filter>ソース ファイル\engine\3d\object</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h">
+      <Filter>ソース ファイル\game\gameObject\block</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

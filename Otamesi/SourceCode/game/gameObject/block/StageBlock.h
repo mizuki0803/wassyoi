@@ -21,19 +21,19 @@ public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
 	/// </summary>	
-	/// <param name="model">モデル</param>
+	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
 	/// <returns>ステージ用ブロック</returns>
-	static StageBlock* Create(ObjModel* model, const XMINT3& mapChipNum);
+	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum);
 
 public: //メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	/// <param name="model">モデル</param>
+	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
 	/// <returns>成否</returns>
-	bool Initialize(ObjModel* model, const XMINT3& mapChipNum);
+	bool Initialize(const int _blockType, const XMINT3& mapChipNum);
 
 	/// <summary>
 	/// 更新

@@ -1,34 +1,25 @@
 #include "StageBlock.h"
 #include "Easing.h"
 
-StageBlock* StageBlock::Create(ObjModel* model, const XMINT3& mapChipNum)
+StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum)
 {
 	//インスタンス生成
 	StageBlock* instance = new StageBlock();
 
 	//初期化処理
-	if (!instance->Initialize(model, mapChipNum)) {
+	if (!instance->Initialize(_blockType, mapChipNum)) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	//ブロックの種類を「ブロック」に設定
-	instance->blockType = BlockType::Block;
-
 	return instance;
 }
 
-bool StageBlock::Initialize(ObjModel* model, const XMINT3& mapChipNum)
+bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum)
 {
-	//モデルをセット
-	assert(model);
-	this->model = model;
-
-	//object3Dの初期化
-	if (!ObjObject3d::Initialize()) {
-		return false;
-	}
+	//ブロックの種類を「ブロック」に設定
+	blockType = BROCK_TYPE(_blockType);
 
 	// イージングデータの設定
 	SetEaseData(60);
@@ -54,19 +45,15 @@ void StageBlock::Update()
 		func_[phase_]();
 	}
 
-	//オブジェクト更新
-	ObjObject3d::Update();
+	Block::Update();
 }
 
 void StageBlock::PlayStratMove()
 {
-	Vector3 easePos = {};
 	// イージングの計算
-	easePos.x = Easing::InOutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
-	easePos.y = Easing::InOutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
-	easePos.z = Easing::InOutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
-	// 位置の設定
-	SetPosition(easePos);
+	position.x = Easing::InOutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
+	position.y = Easing::InOutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InOutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
 	if (easeData_->GetEndFlag())
 	{

@@ -79,14 +79,4 @@ private: //メンバ変数
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
-
-#pragma region
-	//現在の手順
-	int orderNum;
-	//現在の最大手順
-	int orderMaxNum;
-	//消去時の最大番号
-	int deleteOrderMaxNum;
-#pragma endregion undo redo用
-
 };

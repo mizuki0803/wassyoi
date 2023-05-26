@@ -2,6 +2,9 @@
 #include "BaseScene.h"
 #include <DirectXMath.h>
 
+class Player;
+class GameCamera;
+
 /// <summary>
 /// ゲーム固有の基底シーン
 /// </summary>
@@ -33,6 +36,11 @@ protected: //メンバ関数
 	/// </summary>
 	void SceneChangeMode();
 
+	/// <summary>
+	/// binary削除
+	/// </summary>
+	void DeleteBinary();
+
 protected: //メンバ変数
 	//シーン変更にかかる時間
 	int32_t sceneChangeTime = 0;
@@ -42,4 +50,13 @@ protected: //メンバ変数
 	bool isSceneChange = false;
 	//次のシーン
 	std::string nextSceneName;
+#pragma region
+	//現在の手順
+	int orderNum;
+	//現在の最大手順
+	int orderMaxNum;
+	//消去時の最大番号
+	int deleteOrderMaxNum;
+#pragma endregion undo redo用
+
 };

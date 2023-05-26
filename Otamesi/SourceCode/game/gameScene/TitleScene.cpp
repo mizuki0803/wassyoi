@@ -9,6 +9,7 @@
 #include "SceneChangeEffect.h"
 #include "GamePostEffect.h"
 #include "StageManager.h"
+#include "JsonLoader.h"
 
 void TitleScene::Initialize()
 {
@@ -56,14 +57,31 @@ void TitleScene::Initialize()
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
+	//objオブジェクトにカメラをセット
+	InstanceObject::SetCamera(camera.get());
+	InstanceObject::SetLightCamera(lightCamera.get());
+
+	//objオブジェクトにライトをセット
+	InstanceObject::SetLightGroup(lightGroup.get());
+
 	//パーティクルにカメラをセット
 	ParticleManager::SetCamera(camera.get());
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
+
+	//初期状態をbinary保存
+	Vector3 cameraPos = camera->GetEye();
+	Vector3 playerPos = player->GetPosition();
+	XMINT3 mapChip = player->GetMapChipNumberPos();
+
+	JsonLoader::SerializeBinary(std::to_string(orderNum), camera->GetIs2D(), player->GetMoveSurfacePhase(),
+		{ mapChip.x,mapChip.y,mapChip.z }, { cameraPos.x,cameraPos.y,cameraPos.z },
+		{ camera->GetCameraXPosPhase(),camera->GetCameraYPosPhase() }, { playerPos.x, playerPos.y, playerPos.z });
 }
 
 void TitleScene::Finalize()
 {
+	DeleteBinary();
 }
 
 void TitleScene::Update()
@@ -101,10 +119,73 @@ void TitleScene::Update()
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
 
+	//binary出力
+	if (player->GetIsMove() || camera->GetIsTriggerDimensionChange()) {
+		orderNum++;
+		orderMaxNum = orderNum;
+		if (deleteOrderMaxNum < orderMaxNum) {
+			deleteOrderMaxNum = orderMaxNum;
+		}
+		Vector3 cameraPos = camera->GetEye();
+		Vector3 playerPos = player->GetPosition();
+		XMINT3 mapChip = player->GetMapChipNumberPos();
+		JsonLoader::SerializeBinary(std::to_string(orderNum), camera->GetIs2D(), player->GetMoveSurfacePhase(),
+			{ mapChip.x,mapChip.y,mapChip.z }, { cameraPos.x,cameraPos.y,cameraPos.z },
+			{ camera->GetCameraXPosPhase(),camera->GetCameraYPosPhase() }, { playerPos.x,playerPos.y,playerPos.z });
+	}
+
+	//undo
+	if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+		if (orderNum != 0) {
+			orderNum--;
+			bool is2D = false;
+			int moveSurface = 0;
+			std::array<int, 3> mapChip{};
+			std::array<float, 3> cameraPos{}, playerPos{};
+			std::array<int, 2> cameraPosPhase{};
+			JsonLoader::DeserializeBinary(std::to_string(orderNum), &is2D, &moveSurface, &mapChip, &cameraPos, &cameraPosPhase, &playerPos);
+
+			if (camera->GetIs2D() != is2D) {
+				camera->SetIs2D(is2D);
+				camera->SetDirtyProjection(true);
+			}
+			player->SetMoveSurfacePhase(moveSurface);
+			player->SetMapChipNumberPos({ mapChip[0],mapChip[1],mapChip[2] });
+			camera->SetEye({ cameraPos[0],cameraPos[1],cameraPos[2] });
+			camera->SetCameraXPosPhase(cameraPosPhase[0]);
+			camera->SetCameraYPosPhase(cameraPosPhase[1]);
+			player->SetPosition({ playerPos[0],playerPos[1],playerPos[2] });
+		}
+	}
+	//redo
+	else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+		if (orderNum != orderMaxNum) {
+			orderNum++;
+			bool is2D = false;
+			int moveSurface = 0;
+			std::array<int, 3> mapChip{};
+			std::array<float, 3> cameraPos{}, playerPos{};
+			std::array<int, 2> cameraPosPhase{};
+			JsonLoader::DeserializeBinary(std::to_string(orderNum), &is2D, &moveSurface, &mapChip, &cameraPos, &cameraPosPhase, &playerPos);
+
+			if (camera->GetIs2D() != is2D) {
+				camera->SetIs2D(is2D);
+				camera->SetDirtyProjection(true);
+			}
+			player->SetMoveSurfacePhase(moveSurface);
+			player->SetMapChipNumberPos({ mapChip[0],mapChip[1],mapChip[2] });
+			camera->SetEye({ cameraPos[0],cameraPos[1],cameraPos[2] });
+			camera->SetCameraXPosPhase(cameraPosPhase[0]);
+			camera->SetCameraYPosPhase(cameraPosPhase[1]);
+			player->SetPosition({ playerPos[0],playerPos[1],playerPos[2] });
+		}
+	}
 
 	if (Input::GetInstance()->TriggerKey(DIK_RETURN) && !isSceneChange) {
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+		//binary削除
+		DeleteBinary();
 		//次のステージへ
 		StageManager::NextStageSelect();
 	}
@@ -126,12 +207,18 @@ void TitleScene::Draw3D()
 
 	//プレイヤー
 	player->Draw();
-	//マップ用ブロック
-	mapData->Draw();
 	//天球
 	skydome->Draw();
 
 	///-------Object3d描画ここまで-------///
+
+	///-------Instance描画ここから-------///
+
+	InstanceObject::DrawPrev();
+	//マップ用ブロック
+	mapData->Draw();
+
+	///-------Instance描画ここまで-------///
 
 	///-------パーティクル描画ここから-------///
 

@@ -46,9 +46,6 @@ private: //メンバ関数
 	void CreateMapBlock() override;
 
 private: //メンバ変数
-	//プレイヤーモデル
-	std::unique_ptr<ObjModel> modelPlayer;
-
 	//ステージ選択用ブロック
 	std::vector<std::unique_ptr<StageSelectBlock>> blocks;
 	//ステージ選択用ブロック管理

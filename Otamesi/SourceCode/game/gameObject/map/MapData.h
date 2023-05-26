@@ -1,8 +1,8 @@
 #pragma once
-#include "ObjModel.h"
 #include <DirectXMath.h>
 #include <vector>
 #include <memory>
+#include <string>
 
 /// <summary>
 /// マップデータ
@@ -51,11 +51,6 @@ protected: //メンバ関数
 	virtual void CreateMapBlock() = 0;
 
 protected: //メンバ変数
-	//objモデル
-	std::unique_ptr<ObjModel> modelBlock;
-	std::unique_ptr<ObjModel> modelPlane;
-	std::unique_ptr<ObjModel> modelGoal;
-
 	//マップのサイズ
 	XMINT3 mapSize;
 	//3次元マップ用の3次元配列

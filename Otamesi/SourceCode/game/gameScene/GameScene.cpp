@@ -59,6 +59,13 @@ void GameScene::Initialize()
 	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
+	//objオブジェクトにカメラをセット
+	InstanceObject::SetCamera(camera.get());
+	InstanceObject::SetLightCamera(lightCamera.get());
+
+	//objオブジェクトにライトをセット
+	InstanceObject::SetLightGroup(lightGroup.get());
+
 	//パーティクルにカメラをセット
 	ParticleManager::SetCamera(camera.get());
 	//画面にパーティクルが残ることがあるので全て削除しておく
@@ -76,11 +83,7 @@ void GameScene::Initialize()
 
 void GameScene::Finalize()
 {
-	const int deleteNum = deleteOrderMaxNum + 2;
-	for (int i = 0; i < deleteNum; i++) {
-		std::string name = "Resources/binary/" + std::to_string(i) + ".binary";
-		remove(name.c_str());
-	}
+	DeleteBinary();
 }
 
 void GameScene::Update()
@@ -105,6 +108,8 @@ void GameScene::Update()
 		if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+			//binary削除
+			DeleteBinary();
 			//次のステージへ
 			StageManager::NextStageSelect();
 		}
@@ -196,10 +201,14 @@ void GameScene::Update()
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+		//binary削除
+		DeleteBinary();
 	}
 	if (Input::GetInstance()->TriggerKey(DIK_P)) {
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
+		//binary削除
+		DeleteBinary();
 	}
 	//シーン変更状態
 	SceneChangeMode();
@@ -219,12 +228,19 @@ void GameScene::Draw3D()
 
 	//プレイヤー
 	player->Draw();
-	//マップ用ブロック
-	mapData->Draw();
+
 	//天球
 	skydome->Draw();
 
 	///-------Object3d描画ここまで-------///
+
+	///-------Instance描画ここから-------///
+
+	InstanceObject::DrawPrev();
+	//マップ用ブロック
+	mapData->Draw();
+
+	///-------Instance描画ここまで-------///
 
 	///-------パーティクル描画ここから-------///
 
