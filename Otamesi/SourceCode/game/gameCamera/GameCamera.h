@@ -161,11 +161,34 @@ private: //メンバ関数
 	/// <param name="count">フレームのカウント</param>
 	void SetEaseData(const int count);
 
+	/// <summary>
+	/// 2dになる際のイージング
+	/// </summary>
+	/// <param name="_mat1">イージング前</param>
+	/// <param name="_mat2">イージング後</param>
+	/// <param name="_timer">イージング用タイマー</param>
+	/// <returns>現在座標</returns>
+	XMMATRIX Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer);
+
+	/// <summary>
+	/// 3dになる際のイージング
+	/// </summary>
+	/// <param name="_mat1">イージング前</param>
+	/// <param name="_mat2">イージング後</param>
+	/// <param name="_timer">イージング用タイマー</param>
+	/// <returns>現在座標</returns>
+	XMMATRIX Ease4x4_out(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer);
+
+
 private: //静的メンバ変数
 	//一度の回転にかかる時間
 	static const int32_t rotateTime = 40;
 	//3Dでの視点時にカメラを傾ける量
 	static const float rotate3DDistance;
+	//2dのプロジェクション行列
+	static const XMMATRIX matProj2D;
+	//3dのプロジェクション行列
+	static const XMMATRIX matProj3D;
 
 private:
 	//回転角

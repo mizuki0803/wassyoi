@@ -4,6 +4,18 @@
 
 const float GameCamera::rotate3DDistance = 2.0f;
 
+const DirectX::XMMATRIX GameCamera::matProj2D = XMMatrixOrthographicOffCenterLH(
+	-128, 128,
+	-72, 72,
+	0.1f, 2000.0f
+);
+
+const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
+	XMConvertToRadians(60.0f),
+	(float)WindowApp::window_width / WindowApp::window_height,
+	0.1f, 2000.0f
+);
+
 GameCamera* GameCamera::Create(float distanceStageCenter, const Vector3& stageCenterPos)
 {
 	//インスタンス生成
@@ -77,17 +89,15 @@ void GameCamera::ChanegeDimensionStart()
 
 void GameCamera::UpdateMatProjection()
 {
+	if (actionPhase == ActionPhase::ChangeDimension) { return; }
+
 	//2D状態の場合は平行投影
 	if (is2D) {
-		matProjection = XMMatrixOrthographicOffCenterLH(
-			-128, 128,
-			-72, 72,
-			0.1f, 2000.0f
-		);
+		matProjection = matProj2D;
 	}
 	//3D状態の場合は透視投影
 	else {
-		Camera::UpdateMatProjection();
+		matProjection = matProj3D;
 	}
 }
 
@@ -277,6 +287,13 @@ void GameCamera::ChanegeDimension()
 	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
 	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
 
+	//プロジェクション行列のイージング
+	if (is2D) {
+		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
+	} else {
+		matProjection = Ease4x4_in(matProj3D, matProj2D, time);
+	}
+
 	//タイマーが指定した時間に満たなければ抜ける
 	if (actionTimer < rotTime) { return; }
 
@@ -377,4 +394,61 @@ void GameCamera::SetEaseData(const int count)
 	{
 		easeData_->SetCount(count);
 	}
+}
+
+XMMATRIX GameCamera::Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer)
+{
+	//4x4に変換
+	XMFLOAT4X4 a,b;
+	XMStoreFloat4x4(&a, _mat1);
+	XMStoreFloat4x4(&b, _mat2);
+
+	//イージング
+	XMFLOAT4X4 out4x4 = {};
+	out4x4._11 = Easing::OutQuart(a._11, b._11, _timer);
+	out4x4._12 = Easing::OutQuart(a._12, b._12, _timer);
+	out4x4._13 = Easing::OutQuart(a._13, b._13, _timer);
+	out4x4._14 = Easing::OutQuart(a._14, b._14, _timer);
+	out4x4._21 = Easing::OutQuart(a._21, b._21, _timer);
+	out4x4._22 = Easing::OutQuart(a._22, b._22, _timer);
+	out4x4._23 = Easing::OutQuart(a._23, b._23, _timer);
+	out4x4._24 = Easing::OutQuart(a._24, b._24, _timer);
+	out4x4._31 = Easing::OutQuart(a._31, b._31, _timer);
+	out4x4._32 = Easing::OutQuart(a._32, b._32, _timer);
+	out4x4._33 = Easing::OutQuart(a._33, b._33, _timer);
+	out4x4._34 = Easing::OutQuart(a._34, b._34, _timer);
+	out4x4._41 = Easing::OutQuart(a._41, b._41, _timer);
+	out4x4._42 = Easing::OutQuart(a._42, b._42, _timer);
+	out4x4._43 = Easing::OutQuart(a._43, b._43, _timer);
+	out4x4._44 = Easing::OutQuart(a._44, b._44, _timer);
+
+	return XMLoadFloat4x4(&out4x4);
+}
+
+XMMATRIX GameCamera::Ease4x4_out(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer)
+{
+	//4x4に変換
+	XMFLOAT4X4 a, b;
+	XMStoreFloat4x4(&a, _mat1);
+	XMStoreFloat4x4(&b, _mat2);
+
+	XMFLOAT4X4 out4x4 = {};
+	out4x4._11 = Easing::InQuart(a._11, b._11, _timer);
+	out4x4._12 = Easing::InQuart(a._12, b._12, _timer);
+	out4x4._13 = Easing::InQuart(a._13, b._13, _timer);
+	out4x4._14 = Easing::InQuart(a._14, b._14, _timer);
+	out4x4._21 = Easing::InQuart(a._21, b._21, _timer);
+	out4x4._22 = Easing::InQuart(a._22, b._22, _timer);
+	out4x4._23 = Easing::InQuart(a._23, b._23, _timer);
+	out4x4._24 = Easing::InQuart(a._24, b._24, _timer);
+	out4x4._31 = Easing::InQuart(a._31, b._31, _timer);
+	out4x4._32 = Easing::InQuart(a._32, b._32, _timer);
+	out4x4._33 = Easing::InQuart(a._33, b._33, _timer);
+	out4x4._34 = Easing::InQuart(a._34, b._34, _timer);
+	out4x4._41 = Easing::InQuart(a._41, b._41, _timer);
+	out4x4._42 = Easing::InQuart(a._42, b._42, _timer);
+	out4x4._43 = Easing::InQuart(a._43, b._43, _timer);
+	out4x4._44 = Easing::InQuart(a._44, b._44, _timer);
+
+	return XMLoadFloat4x4(&out4x4);
 }
