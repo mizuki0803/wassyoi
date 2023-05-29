@@ -35,12 +35,14 @@ private:
 		std::array<int, 3> mapChip;
 		std::array<float, 3> cameraPos;
 		std::array<int ,2> cameraPosPhase;
+		std::array<float,3> cameraRota;
 		std::array<float, 3> playerPos;
 
 		template<class Archive>
 		void serialize(Archive& archive)
 		{
-			archive(CEREAL_NVP(is2D), CEREAL_NVP(moveSurface), CEREAL_NVP(mapChip), CEREAL_NVP(cameraPos), CEREAL_NVP(cameraPosPhase), CEREAL_NVP(playerPos));
+			archive(CEREAL_NVP(is2D), CEREAL_NVP(moveSurface), CEREAL_NVP(mapChip),
+				CEREAL_NVP(cameraPos), CEREAL_NVP(cameraPosPhase), CEREAL_NVP(cameraRota), CEREAL_NVP(playerPos));
 		}
 	};
 
@@ -74,10 +76,11 @@ public:
 	/// <param name="_mapChip">プレイヤーマップチップ</param>
 	/// <param name="_cameraPos">カメラ座標</param>
 	/// <param name="_cameraPosPhase">カメラの方向</param>
+	/// <param name="_cameraRota">カメラ角度</param>
 	/// <param name="_playerPos">プレイヤー座標</param>
 	static void SerializeBinary(const std::string& _fileName, const bool _is2D, const int _moveSurface,
-		const std::array<int, 3>& _mapChip, const std::array<float, 3>& _cameraPos, 
-		const std::array<int, 2>& _cameraPosPhase, const std::array<float, 3>& _playerPos);
+		const std::array<int, 3>& _mapChip, const std::array<float, 3>& _cameraPos, const std::array<int, 2>& _cameraPosPhase,
+		const std::array<float, 3>& _cameraRota, const std::array<float, 3>& _playerPos);
 
 	/// <summary>
 	/// 入力
@@ -88,9 +91,10 @@ public:
 	/// <param name="_mapChip">プレイヤーマップチップ</param>
 	/// <param name="_cameraPos">カメラ座標</param>
 	/// <param name="_cameraPosPhase">カメラの方向</param>
+	/// <param name="_cameraRota">カメラ角度</param>
 	/// <param name="_playerPos">プレイヤー座標</param>
 	static bool DeserializeBinary(const std::string _fileName, bool* _is2D, int* _moveSurface,
-		std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos,
-		std::array<int, 2>* _cameraPosPhase, std::array<float, 3>* _playerPos);
+		std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase,
+		std::array<float, 3>* _cameraRota, std::array<float, 3>* _playerPos);
 
 };

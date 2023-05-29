@@ -81,10 +81,12 @@ public: //ƒƒ“ƒoŠÖ”
 	const int GetCameraYPosPhase() { return cameraYPosPhase; };
 	const bool GetIs2D() { return is2D; }
 	const bool GetIsTriggerDimensionChange() { return isTriggerDimensionChange; }
+	const Vector3 GetRotation() { return rotation; }
 	//setter
 	void SetIs2D(const bool _is2D) { is2D = _is2D; }
 	void SetCameraXPosPhase(const int _cameraXPosPhase) { cameraXPosPhase = _cameraXPosPhase; };
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
+	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 
 private: //ƒƒ“ƒoŠÖ”
 	/// <summary>

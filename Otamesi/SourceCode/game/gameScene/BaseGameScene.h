@@ -2,8 +2,8 @@
 #include "BaseScene.h"
 #include <DirectXMath.h>
 
-class Player;
 class GameCamera;
+class Player;
 
 /// <summary>
 /// ゲーム固有の基底シーン
@@ -40,6 +40,27 @@ protected: //メンバ関数
 	/// binary削除
 	/// </summary>
 	void DeleteBinary();
+
+	/// <summary>
+	/// 状態の保存
+	/// </summary>
+	/// <param name="_camera">カメラクラス</param>
+	/// <param name="_player">プレイヤークラス</param>
+	void KeepBinary(GameCamera& _camera, Player& _player);
+
+	/// <summary>
+	/// undo
+	/// </summary>
+	/// <param name="_camera">カメラクラス</param>
+	/// <param name="_player">プレイヤークラス</param>
+	void Undo(GameCamera* _camera, Player* _player);
+
+	/// <summary>
+	/// redo
+	/// </summary>
+	/// <param name="_camera">カメラクラス</param>
+	/// <param name="_player">プレイヤークラス</param>
+	void Redo(GameCamera* _camera, Player* _player);
 
 protected: //メンバ変数
 	//シーン変更にかかる時間

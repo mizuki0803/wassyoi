@@ -32,8 +32,8 @@ bool JsonLoader::DeserializeJson(const std::string _fileName,
     return true;
 }
 
-void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D, const int _moveSurface,
-    const std::array<int, 3>& _mapChip, const std::array<float, 3>& _cameraPos, const std::array<int, 2>& _cameraPosPhase, const std::array<float, 3>& _playerPos)
+void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D, const int _moveSurface, const std::array<int, 3>& _mapChip,
+    const std::array<float, 3>& _cameraPos, const std::array<int, 2>& _cameraPosPhase, const std::array<float, 3>& _cameraRota, const std::array<float, 3>& _playerPos)
 {
     Binary x;
     x.is2D = int(_is2D);
@@ -41,6 +41,7 @@ void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D,
     x.mapChip = _mapChip;
     x.cameraPos = _cameraPos;
     x.cameraPosPhase = _cameraPosPhase;
+    x.cameraRota = _cameraRota;
     x.playerPos = _playerPos;
 
     // ファイル出力
@@ -49,8 +50,8 @@ void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D,
     x.serialize(archive);
 }
 
-bool JsonLoader::DeserializeBinary(const std::string _fileName, bool* _is2D, int* _moveSurface,
-    std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase, std::array<float, 3>* _playerPos)
+bool JsonLoader::DeserializeBinary(const std::string _fileName, bool* _is2D, int* _moveSurface, std::array<int, 3>* _mapChip,
+    std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase, std::array<float, 3>* _cameraRota, std::array<float, 3>* _playerPos)
 {
     Binary x;
 
@@ -66,6 +67,7 @@ bool JsonLoader::DeserializeBinary(const std::string _fileName, bool* _is2D, int
     *_mapChip = x.mapChip;
     *_cameraPos = x.cameraPos;
     *_cameraPosPhase = x.cameraPosPhase;
+    *_cameraRota = x.cameraRota;
     *_playerPos = x.playerPos;
 
     return true;

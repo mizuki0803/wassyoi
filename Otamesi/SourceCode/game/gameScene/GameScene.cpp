@@ -72,13 +72,7 @@ void GameScene::Initialize()
 	ParticleEmitter::GetInstance()->AllDelete();
 
 	//‰Šúó‘Ô‚ðbinary•Û‘¶
-	Vector3 cameraPos = camera->GetEye();
-	Vector3 playerPos = player->GetPosition();
-	XMINT3 mapChip = player->GetMapChipNumberPos();
-
-	JsonLoader::SerializeBinary(std::to_string(orderNum), camera->GetIs2D(), player->GetMoveSurfacePhase(),
-		{ mapChip.x,mapChip.y,mapChip.z }, { cameraPos.x,cameraPos.y,cameraPos.z },
-		{ camera->GetCameraXPosPhase(),camera->GetCameraYPosPhase() }, { playerPos.x, playerPos.y, playerPos.z });
+	KeepBinary(*camera, *player);
 
 	userInterface_ = UserInterface::Create();
 }
@@ -151,65 +145,23 @@ void GameScene::Update()
 	
 
 	//binaryo—Í
-	if (player->GetIsMove() || camera->GetIsTriggerDimensionChange()) {
+	if (player->GetIsMove() || (player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
 		orderNum++;
 		orderMaxNum = orderNum;
 		if (deleteOrderMaxNum < orderMaxNum) {
 			deleteOrderMaxNum = orderMaxNum;
 		}
-		Vector3 cameraPos = camera->GetEye();
-		Vector3 playerPos = player->GetPosition();
-		XMINT3 mapChip = player->GetMapChipNumberPos();
-		JsonLoader::SerializeBinary(std::to_string(orderNum), camera->GetIs2D(), player->GetMoveSurfacePhase(),
-			{ mapChip.x,mapChip.y,mapChip.z }, { cameraPos.x,cameraPos.y,cameraPos.z },
-			{ camera->GetCameraXPosPhase(),camera->GetCameraYPosPhase() }, { playerPos.x,playerPos.y,playerPos.z });
+
+		KeepBinary(*camera, *player);
 	}
 
 	//undo
 	if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
-		if (orderNum != 0) {
-			orderNum--;
-			bool is2D = false;
-			int moveSurface = 0;
-			std::array<int, 3> mapChip{};
-			std::array<float, 3> cameraPos{}, playerPos{};
-			std::array<int, 2> cameraPosPhase{};
-			JsonLoader::DeserializeBinary(std::to_string(orderNum), &is2D, &moveSurface, &mapChip, &cameraPos, &cameraPosPhase, &playerPos);
-
-			if (camera->GetIs2D() != is2D) {
-				camera->SetIs2D(is2D);
-				camera->SetDirtyProjection(true);
-			}
-			player->SetMoveSurfacePhase(moveSurface);
-			player->SetMapChipNumberPos({ mapChip[0],mapChip[1],mapChip[2] });
-			camera->SetEye({ cameraPos[0],cameraPos[1],cameraPos[2] });
-			camera->SetCameraXPosPhase(cameraPosPhase[0]);
-			camera->SetCameraYPosPhase(cameraPosPhase[1]);
-			player->SetPosition({ playerPos[0],playerPos[1],playerPos[2] });
-		}
+		Undo(camera.get(), player.get());
 	}
 	//redo
 	else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
-		if (orderNum != orderMaxNum) {
-			orderNum++;
-			bool is2D = false;
-			int moveSurface = 0;
-			std::array<int, 3> mapChip{};
-			std::array<float, 3> cameraPos{}, playerPos{};
-			std::array<int, 2> cameraPosPhase{};
-			JsonLoader::DeserializeBinary(std::to_string(orderNum), &is2D, &moveSurface, &mapChip, &cameraPos, &cameraPosPhase, &playerPos);
-
-			if (camera->GetIs2D() != is2D) {
-				camera->SetIs2D(is2D);
-				camera->SetDirtyProjection(true);
-			}
-			player->SetMoveSurfacePhase(moveSurface);
-			player->SetMapChipNumberPos({ mapChip[0],mapChip[1],mapChip[2] });
-			camera->SetEye({ cameraPos[0],cameraPos[1],cameraPos[2] });
-			camera->SetCameraXPosPhase(cameraPosPhase[0]);
-			camera->SetCameraYPosPhase(cameraPosPhase[1]);
-			player->SetPosition({ playerPos[0],playerPos[1],playerPos[2] });
-		}
+		Redo(camera.get(), player.get());
 	}
 
 	DebugText::GetInstance()->Print("move surface" + std::to_string(player->GetMoveSurfacePhase()), 10, 90);
