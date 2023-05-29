@@ -9,13 +9,13 @@
 /// <summary>
 /// ゲームカメラ
 /// </summary>
-class GameCamera : public Camera 
+class GameCamera : public Camera
 {
 public: //enum
 	/// <summary>
 	/// ステージから見ての横軸カメラ位置フェーズ
 	/// </summary>
-	enum class CameraXPosPhase
+	enum CameraXPosPhase
 	{
 		Front,	//手前
 		Right,	//右
@@ -28,11 +28,12 @@ public: //enum
 	/// <summary>
 	/// ステージから見ての縦軸カメラ位置フェーズ
 	/// </summary>
-	enum class CameraYPosPhase
+	enum CameraYPosPhase
 	{
-		Top,	//上
-		Side,	//横
-		Buttom,	//下
+		Top,		//上
+		Side,		//横
+		Buttom,		//下
+		ReverseSide,//逆向きの横
 
 		YPosPhaseNum	//フェーズの数(3)
 	};
@@ -43,7 +44,7 @@ public: //enum
 	enum class ActionPhase
 	{
 		None,			//何もしない
-		MoveEye,		//視点移動
+		Rotation,		//カメラ回転
 		ChangeDimension,//次元切り替え
 	};
 
@@ -92,26 +93,48 @@ private: //メンバ関数
 	void UpdateMatProjection() override;
 
 	/// <summary>
-	/// カメラ位置移動開始
+	/// ワールド行列を更新
 	/// </summary>
-	void ChanegeCameraPosStart();
+	/// <param name="matTrans">平行移動行列</param>
+	void UpdateMatWorld(const XMMATRIX& matTrans);
 
 	/// <summary>
-	/// 横軸カメラ位置移動開始
+	/// 視点と注視点を更新
 	/// </summary>
-	/// <returns>横軸カメラ位置移動開始を開始するか</returns>
-	bool ChanegeCameraXPosStart();
+	void UpdateEyeTarget();
 
 	/// <summary>
-	/// 縦軸カメラ位置移動開始
+	/// 座標更新
 	/// </summary>
-	/// <returns>縦軸カメラ位置移動開始を開始するか</returns>
-	bool ChanegeCameraYPosStart();
+	void UpdatePosition();
 
 	/// <summary>
-	/// カメラ位置移動
+	/// 回転開始時の入力による回転方向設定
 	/// </summary>
-	void ChanegeCameraPos();
+	/// <returns></returns>
+	Vector3 InputRotateNum();
+
+	/// <summary>
+	/// 回転開始
+	/// </summary>
+	/// <param name="is2D">2次元状態か</param>
+	void RotateStart();
+
+	/// <summary>
+	/// 回転処理
+	/// </summary>
+	void Rotate();
+
+	/// <summary>
+	/// 回転角が大きすぎたり小さすぎたりしないよう、0～360内に収まる用ように調整
+	/// </summary>
+	/// <param name="rotation">回転角</param>
+	void MaxMinRotate(float& rotation);
+
+	/// <summary>
+	///	カメラの回転角の傾きからカメラ位置フェーズを返す
+	/// </summary>
+	void CameraPosPhaseCheck();
 
 	/// <summary>
 	/// 次元切り替え
@@ -123,7 +146,11 @@ private: //メンバ関数
 	/// </summary>
 	void CameraSetMove();
 
+	/// <summary>
+	/// 
+	/// </summary>
 	void GamePlayStratCameraSetMove();
+
 	/// <summary>
 	/// カメラのシェイク
 	/// </summary>
@@ -134,7 +161,19 @@ private: //メンバ関数
 	/// <param name="count">フレームのカウント</param>
 	void SetEaseData(const int count);
 
+private: //静的メンバ変数
+	//一度の回転にかかる時間
+	static const int32_t rotateTime = 40;
+	//3Dでの視点時にカメラを傾ける量
+	static const float rotate3DDistance;
+
 private:
+	//回転角
+	Vector3 rotation = { 0, 0, 0 };
+	//座標
+	Vector3 position = { 0, 0, 0 };
+	//実際にカメラの視点,注視点,上ベクトルに使用するワールド変換行列
+	XMMATRIX cameraMatWorld = {};
 	//ステージ中央座標
 	Vector3 stageCenterPos;
 	//ステージから見ての横軸カメラ位置フェーズ
@@ -143,18 +182,14 @@ private:
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
 	//ステージ中央からの距離
 	float distanceStageCenter;
-	//カメラ位置フェーズ全パターンの視点位置3D
-	std::array<std::array<Vector3, (int)CameraXPosPhase::XPosPhaseNum>, (int)CameraYPosPhase::YPosPhaseNum> phaseEyePositions3D;
-	//カメラ位置フェーズ全パターンの視点位置2D
-	std::array<std::array<Vector3, (int)CameraXPosPhase::XPosPhaseNum>, (int)CameraYPosPhase::YPosPhaseNum> phaseEyePositions2D;
 	//アクション
 	ActionPhase actionPhase = ActionPhase::None;
 	//アクション用タイマー
 	int32_t actionTimer = 0;
-	//移動前視点
-	Vector3 moveBeforeEye;
-	//移動目標視点
-	Vector3 moveAfterEye;
+	//回転前回転角
+	Vector3 rotateBefore;
+	//回転後回転角
+	Vector3 rotateAfter;
 	//2次元状態か
 	bool is2D = false;
 	//次元変更が完了した瞬間か

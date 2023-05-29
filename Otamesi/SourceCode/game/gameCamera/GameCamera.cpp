@@ -2,6 +2,8 @@
 #include "Input.h"
 #include "Easing.h"
 
+const float GameCamera::rotate3DDistance = 2.0f;
+
 GameCamera* GameCamera::Create(float distanceStageCenter, const Vector3& stageCenterPos)
 {
 	//インスタンス生成
@@ -20,57 +22,13 @@ void GameCamera::Initialize(float distanceStageCenter, const Vector3& stageCente
 
 	//ステージ中央からの距離をセット
 	this->distanceStageCenter = distanceStageCenter;
-	//ステージ中央座標をセット
+	//ステージの中央座標をセット
 	this->stageCenterPos = stageCenterPos;
-	SetTarget(stageCenterPos);
 
-	//ステージ中央の座標をカメラの基準にする
-	for (int i = 0; i < (int)CameraYPosPhase::YPosPhaseNum; i++) {
-		for (int j = 0; j < (int)CameraXPosPhase::XPosPhaseNum; j++) {
-			phaseEyePositions3D[i][j] = stageCenterPos;
-			phaseEyePositions2D[i][j] = stageCenterPos;
-		}
-	}
-
-	const float eyeYRatio = 0.1f; //ステージ中央からの距離に対するY座標の割合
-	const float topButtomDifference3D = 0.01f;	//完全な真上や真下{ 0, 〇〇, 0 }にしてしまうと正しく描画されないので差分を設定
-	const float topButtomDifference2D = 0.5f;	//完全な真上や真下{ 0, 〇〇, 0 }にしてしまうと正しく描画されないので差分を設定
-
-	//ステージ中央からの距離を基準に視点位置を設定
-	//縦軸カメラ位置がTopの場合の視点位置3D
-	phaseEyePositions3D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Front] += { 0, distanceStageCenter, -topButtomDifference3D };
-	phaseEyePositions3D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Right] += { topButtomDifference3D, distanceStageCenter, 0 };
-	phaseEyePositions3D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Back] += { 0, distanceStageCenter, topButtomDifference3D };
-	phaseEyePositions3D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Left] += { -topButtomDifference3D, distanceStageCenter, 0 };
-	//縦軸カメラ位置がSideの場合の視点位置3D
-	phaseEyePositions3D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Front] += { 0, distanceStageCenter* eyeYRatio, -distanceStageCenter };
-	phaseEyePositions3D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Right] += { distanceStageCenter, distanceStageCenter* eyeYRatio, 0 };
-	phaseEyePositions3D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Back] += { 0, distanceStageCenter* eyeYRatio, distanceStageCenter };
-	phaseEyePositions3D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Left] += { -distanceStageCenter, distanceStageCenter* eyeYRatio, 0 };
-	//縦軸カメラ位置がButtomの場合の視点位置3D
-	phaseEyePositions3D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Front] += { 0, -distanceStageCenter, -topButtomDifference3D };
-	phaseEyePositions3D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Right] += { topButtomDifference3D, -distanceStageCenter, 0 };
-	phaseEyePositions3D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Back] += { 0, -distanceStageCenter, topButtomDifference3D };
-	phaseEyePositions3D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Left] += { -topButtomDifference3D, -distanceStageCenter, 0 };
-
-	//縦軸カメラ位置がTopの場合の視点位置2D
-	phaseEyePositions2D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Front] += { 0, distanceStageCenter, -topButtomDifference2D };
-	phaseEyePositions2D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Right] += { topButtomDifference2D, distanceStageCenter, 0 };
-	phaseEyePositions2D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Back] += { 0, distanceStageCenter, topButtomDifference2D };
-	phaseEyePositions2D[(int)CameraYPosPhase::Top][(int)CameraXPosPhase::Left] += { -topButtomDifference2D, distanceStageCenter, 0 };
-	//縦軸カメラ位置がSideの場合の視点位置2D
-	phaseEyePositions2D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Front] += { 0, 0, -distanceStageCenter };
-	phaseEyePositions2D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Right] += { distanceStageCenter, 0, 0 };
-	phaseEyePositions2D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Back] += { 0, 0, distanceStageCenter };
-	phaseEyePositions2D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Left] += { -distanceStageCenter, 0, 0 };
-	//縦軸カメラ位置がButtomの場合の視点位置2D
-	phaseEyePositions2D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Front] += { 0, -distanceStageCenter, -topButtomDifference2D };
-	phaseEyePositions2D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Right] += { topButtomDifference2D, -distanceStageCenter, 0 };
-	phaseEyePositions2D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Back] += { 0, -distanceStageCenter, topButtomDifference2D };
-	phaseEyePositions2D[(int)CameraYPosPhase::Buttom][(int)CameraXPosPhase::Left] += { -topButtomDifference2D, -distanceStageCenter, 0 };
-
-	//開始時の視点をセット(X:手前 Y:横)
-	SetEye(phaseEyePositions3D[(int)CameraYPosPhase::Side][(int)CameraXPosPhase::Front]);
+	//初期の回転角をセット
+	rotation.x = rotate3DDistance;
+	//カメラ位置フェーズを更新する
+	CameraPosPhaseCheck();
 }
 
 void GameCamera::Update()
@@ -78,35 +36,37 @@ void GameCamera::Update()
 	//トリガーフラグがtrue状態ならばfalseに直しておく
 	if (isTriggerDimensionChange) { isTriggerDimensionChange = false; }
 
-	//カメラ位置移動開始
-	ChanegeCameraPosStart();
-	//カメラ位置移動
-	ChanegeCameraPos();
+	//カメラ回転開始
+	RotateStart();
+	//カメラ回転
+	Rotate();
 
 	//次元切り替え
 	ChanegeDimension();
 
-	//カメラ更新
-	Camera::Update();
+	//座標更新
+	UpdatePosition();
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
 }
 
 void GameCamera::ChanegeDimensionStart()
 {
-	//2D状態かフラグを切り替える
-	if (is2D) {
-		//is2D = false;
-		//移動目標視点をセット
-		moveAfterEye = phaseEyePositions3D[cameraYPosPhase][cameraXPosPhase];
-	}
-	else {
-		//is2D = true;
-		//移動目標視点をセット
-		moveAfterEye = phaseEyePositions2D[cameraYPosPhase][cameraXPosPhase];
-	}
-	dirtyProjection = true;
+	//回転前回転角をセット
+	rotateBefore = rotation;
 
-	//移動前視点をセット
-	moveBeforeEye = eye;
+	//回転後回転角をセット
+	if (is2D) { rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z }; }
+	else { rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z }; }
+	dirtyProjection = true;
 
 	//アクション用タイマーを初期化しておく
 	actionTimer = 0;
@@ -131,113 +91,173 @@ void GameCamera::UpdateMatProjection()
 	}
 }
 
-void GameCamera::ChanegeCameraPosStart()
+void GameCamera::UpdateMatWorld(const XMMATRIX& matTrans)
+{
+	//回転　
+	XMMATRIX matRot;
+	matRot = XMMatrixIdentity();
+	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
+	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
+	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
+	//子である自機用のワールド行列の合成
+	matWorld = XMMatrixIdentity();	//変形をリセット
+	matWorld *= matRot;		//ワールド行列に回転を反映
+	matWorld *= matTrans;	//ワールド行列に平行移動を反映
+}
+
+void GameCamera::UpdateEyeTarget()
+{
+	//視点をワールド座標に設定
+	eye = { matWorld.r[3].m128_f32[0], matWorld.r[3].m128_f32[1], matWorld.r[3].m128_f32[2] };
+	//ワールド前方ベクトル
+	Vector3 forward(0, 0, 1);
+	//カメラの回転を反映させる
+	forward = MatrixTransformDirection(forward, matWorld);
+	//視点から前方に進んだ位置を注視点に設定
+	target = eye + forward;
+	//天地が反転してもいいように上方向ベクトルも回転させる
+	Vector3 baseUp(0, 1, 0);
+	up = MatrixTransformDirection(baseUp, matWorld);
+}
+
+void GameCamera::UpdatePosition()
+{
+	//X,Y回転角をラジアンに直す
+	const double angleX = XMConvertToRadians(rotation.x);
+	const double angleY = XMConvertToRadians(rotation.y);
+	//アンダーフローする可能性があるので、小数点を切り捨てる
+	const double divNum = 1000;
+	const double roundAngleX = floor(angleX * divNum) / divNum;
+	const double roundAngleY = floor(angleY * divNum) / divNum;
+
+	//X,Yラジアンを使用し、sin,cosを算出
+	const double sinfAngleY = sin(roundAngleY);
+	const double cosfAngleY = cos(roundAngleY);
+	const double sinfAngleX = sin(roundAngleX);
+	const double cosfAngleX = cos(roundAngleX);
+
+	//計算結果を割り当てて座標をセット
+	//Y座標はX回転角のsinを使用
+	//X,Z座標はY回転角のsin,cosで計算し、X回転角(Y座標)のcosを乗算して算出
+	position.x = (float)(-sinfAngleY * cosfAngleX) * distanceStageCenter + stageCenterPos.x;
+	position.y = (float)sinfAngleX * distanceStageCenter + stageCenterPos.y;
+	position.z = (float)(-cosfAngleY * cosfAngleX) * distanceStageCenter + stageCenterPos.z;
+}
+
+Vector3 GameCamera::InputRotateNum()
+{
+	//回転角に加算する値
+	Vector3 addRot;
+	//一度の回転で回る量
+	const float rotNum = 90;
+
+	//キー入力による回る量を設定
+	if (Input::GetInstance()->PushKey(DIK_UP)) { addRot = { rotNum, 0, 0 }; }
+	else if (Input::GetInstance()->PushKey(DIK_DOWN)) { addRot = { -rotNum, 0, 0 }; }
+	else if (Input::GetInstance()->PushKey(DIK_LEFT)) { addRot = { 0, rotNum, 0 }; }
+	else if (Input::GetInstance()->PushKey(DIK_RIGHT)) { addRot = { 0, -rotNum, 0 }; }
+
+	//縦軸カメラ位置フェーズが逆さの横またはならば左右が逆になるので反転させておく
+	if (cameraYPosPhase == CameraYPosPhase::ReverseSide || cameraYPosPhase == CameraYPosPhase::Buttom) { addRot.y = -addRot.y; }
+
+	//現在の回転角に加算する量を足した値を返す
+	return rotation + addRot;
+}
+
+void GameCamera::RotateStart()
 {
 	//行動が「何もしない」以外なら抜ける
 	if (!(actionPhase == ActionPhase::None)) { return; }
 	//2D状態なら抜ける
 	if (is2D) { return; }
 
-	//横軸移動も縦軸も開始しなければ抜ける
-	if (!(ChanegeCameraXPosStart() || ChanegeCameraYPosStart())) { return; }
+	//入力がなければ抜ける
+	if (!(Input::GetInstance()->PushKey(DIK_UP) || Input::GetInstance()->PushKey(DIK_DOWN) || Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_RIGHT))) { return; }
 
-	//移動前視点をセット
-	moveBeforeEye = eye;
-	//移動目標視点をセット
-	moveAfterEye = phaseEyePositions3D[cameraYPosPhase][cameraXPosPhase];
+	//回転前回転角をセット
+	rotateBefore = rotation;
+	//回転後回転角をセット
+	rotateAfter = InputRotateNum();
 
 	//アクション用タイマーを初期化しておく
 	actionTimer = 0;
 
-	//行動を「視点移動」にする
-	actionPhase = ActionPhase::MoveEye;
+	//行動を「カメラ回転」にする
+	actionPhase = ActionPhase::Rotation;
 }
 
-bool GameCamera::ChanegeCameraXPosStart()
+void GameCamera::Rotate()
 {
-	//縦軸カメラ位置フェーズが「Side」でなければ抜ける
-	//if (!(cameraYPosPhase == (int)CameraYPosPhase::Side)) { return false; }
-	//移動キー入力がなければfalseを返し抜ける
-	if (!(Input::GetInstance()->TriggerKey(DIK_LEFT) || Input::GetInstance()->TriggerKey(DIK_RIGHT))) { return false; }
-
-	//キー入力に応じてステージから見ての横軸カメラ位置フェーズを変更
-	if (Input::GetInstance()->TriggerKey(DIK_LEFT)) {
-		//ステージから見ての横軸カメラ位置フェーズが0(Front)の場合は一周した扱いにして、3(Left)にしておく
-		if (cameraXPosPhase == (int)CameraXPosPhase::Front) { cameraXPosPhase = (int)CameraXPosPhase::Left; }
-		//それ以外の場合は現在いるカメラ位置から左に移動させる
-		else { cameraXPosPhase--; }
-	}
-	else if (Input::GetInstance()->TriggerKey(DIK_RIGHT)) {
-		//ステージから見ての横軸カメラ位置フェーズが3(Left)の場合は一周した扱いにして、0(Front)にしておく
-		if (cameraXPosPhase == (int)CameraXPosPhase::Left) { cameraXPosPhase = (int)CameraXPosPhase::Front; }
-		//それ以外の場合は現在いるカメラ位置から右に移動させる
-		else { cameraXPosPhase++; }
-	}
-
-	//横軸カメラ移動を開始するのでtrueを返す
-	return true;
-}
-
-bool GameCamera::ChanegeCameraYPosStart()
-{
-	//移動キー入力がなければfalseを返し抜ける
-	if (!(Input::GetInstance()->TriggerKey(DIK_UP) || Input::GetInstance()->TriggerKey(DIK_DOWN))) { return false; }
-
-	//キー入力に応じてステージから見ての縦軸カメラ位置フェーズを変更
-	if (Input::GetInstance()->TriggerKey(DIK_UP)) {
-		//ステージから見ての縦軸カメラ位置フェーズが0(Top)の場合はこれ以上上を向かないので、falseを返し抜ける
-		if (cameraYPosPhase == (int)CameraYPosPhase::Top) {
-			if (cameraXPosPhase == (int)CameraXPosPhase::Front) { cameraXPosPhase = (int)CameraXPosPhase::Back; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Right) { cameraXPosPhase = (int)CameraXPosPhase::Left; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Back) { cameraXPosPhase = (int)CameraXPosPhase::Front; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Left) { cameraXPosPhase = (int)CameraXPosPhase::Right; }
-
-			cameraYPosPhase = (int)CameraYPosPhase::Side;
-		}
-		//それ以外の場合は現在いるカメラ位置から上に移動させる
-		else { cameraYPosPhase--; }
-	}
-	else if (Input::GetInstance()->TriggerKey(DIK_DOWN)) {
-		//ステージから見ての縦軸カメラ位置フェーズが2(Buttom)の場合はこれ以上下を向かないので、falseを返し抜ける
-		if (cameraYPosPhase == (int)CameraYPosPhase::Buttom) {
-			if (cameraXPosPhase == (int)CameraXPosPhase::Front) { cameraXPosPhase = (int)CameraXPosPhase::Back; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Right) { cameraXPosPhase = (int)CameraXPosPhase::Left; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Back) { cameraXPosPhase = (int)CameraXPosPhase::Front; }
-			else if (cameraXPosPhase == (int)CameraXPosPhase::Left) { cameraXPosPhase = (int)CameraXPosPhase::Right; }
-
-			cameraYPosPhase = (int)CameraYPosPhase::Side;
-		}
-		//それ以外の場合は現在いるカメラ位置から下に移動させる
-		else { cameraYPosPhase++; }
-	}
-
-	//横軸カメラ移動を開始するのでtrueを返す
-	return true;
-}
-
-void GameCamera::ChanegeCameraPos()
-{
-	//行動が「視点移動」以外なら抜ける
-	if (!(actionPhase == ActionPhase::MoveEye)) { return; }
+	//行動が「カメラ回転」以外なら抜ける
+	if (!(actionPhase == ActionPhase::Rotation)) { return; }
 
 	//タイマー更新
 	actionTimer++;
-	const float moveTime = 30; //視点移動にかかる時間
+	//回転イージングに使用する変数(0～1を算出)
+	const float time = (float)actionTimer / rotateTime;
 
-	//視点移動イージングに使用する変数(0～1を算出)
-	const float time = actionTimer / moveTime;
-	//視点を移動させる
-	Vector3 easeEye;
-	easeEye.x = Easing::OutQuad(moveBeforeEye.x, moveAfterEye.x, time);
-	easeEye.y = Easing::OutQuad(moveBeforeEye.y, moveAfterEye.y, time);
-	easeEye.z = Easing::OutQuad(moveBeforeEye.z, moveAfterEye.z, time);
-	SetEye(easeEye);
+	//回転させる
+	rotation.x = Easing::OutQuart(rotateBefore.x, rotateAfter.x, time);
+	rotation.y = Easing::OutQuart(rotateBefore.y, rotateAfter.y, time);
+	rotation.z = Easing::OutQuart(rotateBefore.z, rotateAfter.z, time);
+
+	//回転角が0～360以内に収まるように調整
+	MaxMinRotate(rotation.x);
+	MaxMinRotate(rotation.y);
+	MaxMinRotate(rotation.z);
 
 	//タイマーが指定した時間に満たなければ抜ける
-	if (actionTimer < moveTime) { return; }
+	if (actionTimer < rotateTime) { return; }
+
+	//カメラ位置フェーズを更新する
+	CameraPosPhaseCheck();
 
 	//行動を「何もしない」に戻す
 	actionPhase = ActionPhase::None;
+}
+
+void GameCamera::MaxMinRotate(float& rotation)
+{
+	//0～360以内に収まるように調整
+	const float rotMax = 360.0f;
+	if (rotation >= rotMax) {
+		rotation -= rotMax;
+	}
+	else if (rotation < 0) {
+		rotation += rotMax;
+	}
+}
+
+void GameCamera::CameraPosPhaseCheck()
+{
+	//3Dでの視点時にカメラを傾ける量を除いた角度
+	const float rotX = rotation.x - rotate3DDistance;
+
+	//X軸回転による縦軸カメラ位置フェーズを設定
+	if ((int)(rotX) == 0) { cameraYPosPhase = CameraYPosPhase::Side; }
+	else if ((int)(rotX) == 90) { cameraYPosPhase = CameraYPosPhase::Top; }
+	else if ((int)(rotX) == 180) { cameraYPosPhase = CameraYPosPhase::ReverseSide; }
+	else if ((int)(rotX) == 270) { cameraYPosPhase = CameraYPosPhase::Buttom; }
+	else { assert(0); }
+
+	//Y軸回転による横軸カメラ位置フェーズを設定
+	if ((int)(rotX) == 0 || (int)(rotX) == 90 || (int)(rotX) == 270) {
+		if ((int)rotation.y == 0) { cameraXPosPhase = CameraXPosPhase::Front; }
+		else if ((int)rotation.y == 90) { cameraXPosPhase = CameraXPosPhase::Left; }
+		else if ((int)rotation.y == 180) { cameraXPosPhase = CameraXPosPhase::Back; }
+		else if ((int)rotation.y == 270) { cameraXPosPhase = CameraXPosPhase::Right; }
+		else { assert(0); }
+	}
+	else if ((int)(rotX) == 180) {//X軸回転で180度を向いているときのみは上下が逆になる
+		if ((int)rotation.y == 0) { cameraXPosPhase = CameraXPosPhase::Back; }
+		else if ((int)rotation.y == 90) { cameraXPosPhase = CameraXPosPhase::Right; }
+		else if ((int)rotation.y == 180) { cameraXPosPhase = CameraXPosPhase::Front; }
+		else if ((int)rotation.y == 270) { cameraXPosPhase = CameraXPosPhase::Left; }
+		else { assert(0); }
+	}
+	else {
+		assert(0);
+	}
 }
 
 void GameCamera::ChanegeDimension()
@@ -247,19 +267,18 @@ void GameCamera::ChanegeDimension()
 
 	//タイマー更新
 	actionTimer++;
-	const float moveTime = 40; //次元切り替え移動にかかる時間
+	const float rotTime = 40; //次元切り替え回転にかかる時間
 
 	//イージングに使用する変数(0～1を算出)
-	const float time = actionTimer / moveTime;
-	//視点を移動させる
-	Vector3 easeEye;
-	easeEye.x = Easing::OutCubic(moveBeforeEye.x, moveAfterEye.x, time);
-	easeEye.y = Easing::OutCubic(moveBeforeEye.y, moveAfterEye.y, time);
-	easeEye.z = Easing::OutCubic(moveBeforeEye.z, moveAfterEye.z, time);
-	SetEye(easeEye);
+	const float time = actionTimer / rotTime;
+
+	//回転させる
+	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
+	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
+	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
 
 	//タイマーが指定した時間に満たなければ抜ける
-	if (actionTimer < moveTime) { return; }
+	if (actionTimer < rotTime) { return; }
 
 	//2D状態かフラグを切り替える
 	if (is2D) { is2D = false; }

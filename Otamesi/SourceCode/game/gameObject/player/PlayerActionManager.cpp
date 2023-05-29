@@ -4,13 +4,23 @@
 
 std::vector<std::vector<std::vector<int>>> PlayerActionManager::mapChipNum;
 
+// XMINT3同士の加算処理
+const DirectX::XMINT3 operator+(const DirectX::XMINT3& lhs, const DirectX::XMINT3& rhs)
+{
+	XMINT3 result;
+	result.x = lhs.x + rhs.x;
+	result.y = lhs.y + rhs.y;
+	result.z = lhs.z + rhs.z;
+	return result;
+}
+
 bool PlayerActionManager::PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
 	//判定用にプレイヤー位置を表すマップ番号を仮変数に渡す
 	XMINT3 judgeNumberPlayerPos = mapChipNumberPlayerPos;
 
 	//全ての接地面に対する移動方向を設定 (キー入力に応じてプレイヤー位置を表すマップ番号を移動 なおカメラの向きにより移動方向を変更させる)
-	PlayerMoveDirection3D(judgeNumberPlayerPos, moveSurfacePhase, cameraXPosPhase, cameraYPosPhase);
+	judgeNumberPlayerPos = judgeNumberPlayerPos + PlayerMoveDirection3D(moveSurfacePhase, cameraXPosPhase, cameraYPosPhase);
 
 	//存在するマップ番号内でなければ抜ける
 	if (!PlayerMoveMapChipNumWithinRangeCheck(judgeNumberPlayerPos)) { return false; }
@@ -25,13 +35,13 @@ bool PlayerActionManager::PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, cons
 	return true;
 }
 
-bool PlayerActionManager::PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase)
+bool PlayerActionManager::PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
 	//判定用にプレイヤー位置を表すマップ番号を仮変数に渡す
 	XMINT3 judgeNumberPlayerPos = mapChipNumberPlayerPos;
 
 	//全ての接地面に対する移動方向を設定 (キー入力に応じてプレイヤー位置を表すマップ番号を移動 なおカメラの向きにより移動方向を変更させる)
-	PlayerMoveDirection2D(judgeNumberPlayerPos, moveSurfacePhase, cameraXPosPhase);
+	judgeNumberPlayerPos = judgeNumberPlayerPos + PlayerMoveDirection2D(moveSurfacePhase, cameraXPosPhase, cameraYPosPhase);
 
 	//存在するマップ番号内でなければ抜ける
 	if (!PlayerMoveMapChipNumWithinRangeCheck(judgeNumberPlayerPos)) { return false; }
@@ -402,177 +412,241 @@ bool PlayerActionManager::PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, cons
 	return false;
 }
 
-void PlayerActionManager::PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
+XMINT3 PlayerActionManager::PlayerMoveDirection3D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
+	//返り値になる値
+	XMINT3 moveNum{};
+
 	//プレイヤーの接地面が上、または下の場合
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward || moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (Input::GetInstance()->PushKey(DIK_W)) {
 			//縦軸カメラ位置が下以外のとき
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x++; }
 			}
 			//縦軸カメラ位置が下のとき
 			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x--; }
 			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_S)) {
 			//縦軸カメラ位置が下以外のとき
 			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x--; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x--; }
 			}
 			//縦軸カメラ位置が下のとき
 			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.x++; }
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z++; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z--; }
+				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x++; }
 			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_D)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z--; }
+			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.x++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.z++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.x--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.z--; }
+
+			//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
+			if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
+				moveNum.x = -moveNum.x;
+				moveNum.z = -moveNum.z;
+			}
 		}
 		else if (Input::GetInstance()->PushKey(DIK_A)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { mapChipNumberPlayerPos.x--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { mapChipNumberPlayerPos.z--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { mapChipNumberPlayerPos.x++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { mapChipNumberPlayerPos.z++; }
+			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.x--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.z--; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.x++; }
+			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.z++; }
+
+			//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
+			if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
+				moveNum.x = -moveNum.x;
+				moveNum.z = -moveNum.z;
+			}
 		}
 	}
 	//プレイヤーの接地面が前後左右の場合
 	else {
 		//接地面が前後左右の場合はWSで上下移動
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
-
-		//左右移動の判定
-		else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft || moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-			if (Input::GetInstance()->PushKey(DIK_D)) {
+		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+		//左右移動はカメラが向いている方向によって異なる
+		else if (Input::GetInstance()->PushKey(DIK_D)) {
+			if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
 					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.z++;
+					moveNum.z++;
 				}
-				else { mapChipNumberPlayerPos.z--; }
-
+				else { moveNum.z--; }
 			}
-			else if (Input::GetInstance()->PushKey(DIK_A)) {
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.z--;
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+					moveNum.z--;
 				}
-				else { mapChipNumberPlayerPos.z++; }
+				else { moveNum.z++; }
+			}
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+					moveNum.x++;
+				}
+				else { moveNum.x--; }
+			}
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+					moveNum.x--;
+				}
+				else { moveNum.x++; }
 			}
 		}
-		else {
-			if (Input::GetInstance()->PushKey(DIK_D)) {
+		else if (Input::GetInstance()->PushKey(DIK_A)) {
+			if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
 				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
 					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.x++;
+					moveNum.z--;
 				}
-				else { mapChipNumberPlayerPos.x--; }
+				else { moveNum.z++; }
+			}
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
+					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+					moveNum.z++;
+				}
+				else { moveNum.z--; }
+			}
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+					moveNum.x--;
+				}
+				else { moveNum.x++; }
+			}
+			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+					moveNum.x++;
+				}
+				else { moveNum.x--; }
+			}
+		}
 
-			}
-			else if (Input::GetInstance()->PushKey(DIK_A)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					mapChipNumberPlayerPos.x--;
-				}
-				else { mapChipNumberPlayerPos.x++; }
-			}
+
+		//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
+		if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
+			moveNum.x = -moveNum.x;
+			moveNum.y = -moveNum.y;
+			moveNum.z = -moveNum.z;
 		}
 	}
+
+	//移動させた値を返す
+	return moveNum;
 }
 
-void PlayerActionManager::PlayerMoveDirection2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase)
+XMINT3 PlayerActionManager::PlayerMoveDirection2D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase)
 {
+	//返り値になる値
+	XMINT3 moveNum{};
+
 	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
 		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
 		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.z++; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
 		}
 		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-			if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.x--; }
-			else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.x++; }
-			else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-			else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+			if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+			else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+			else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+			else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
 		}
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z--; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.z++; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.z--; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x++; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x--; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 	}
 	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-		if (Input::GetInstance()->PushKey(DIK_W)) { mapChipNumberPlayerPos.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { mapChipNumberPlayerPos.y--; }
-		else if (Input::GetInstance()->PushKey(DIK_D)) { mapChipNumberPlayerPos.x--; }
-		else if (Input::GetInstance()->PushKey(DIK_A)) { mapChipNumberPlayerPos.x++; }
+		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+		else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+		else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
 	}
+
+	//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
+	if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
+		moveNum.x = -moveNum.x;
+		moveNum.y = -moveNum.y;
+		moveNum.z = -moveNum.z;
+	}
+
+	//移動させた値を返す
+	return moveNum;
 }
 
 bool PlayerActionManager::PlayerMoveBlockCheck3D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase)

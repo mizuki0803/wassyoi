@@ -28,8 +28,9 @@ public: //静的メンバ関数
 	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
 	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
 	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
 	/// <returns>成否</returns>
-	static bool PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase);
+	static bool PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
 	/// 2D視点で一番手前にプレイヤーがいた場合、どのブロックよりも手前にいる状態にする
@@ -81,19 +82,18 @@ private: //静的メンバ関数
 	/// <summary>
 	/// キー入力に対するプレイヤー3D移動の方向を設定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
 	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
 	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
 	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
-	static void PlayerMoveDirection3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
+	static XMINT3 PlayerMoveDirection3D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
 	/// キー入力に対するプレイヤー2D移動の方向を設定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
-	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
 	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
-	static void PlayerMoveDirection2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase);
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
+	static XMINT3 PlayerMoveDirection2D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
 	/// 3D移動可能なブロック状況かを判定
