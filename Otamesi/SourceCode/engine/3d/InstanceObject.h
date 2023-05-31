@@ -9,6 +9,7 @@
 #include "LightCamera.h"
 #include "Vector3.h"
 #include "ObjObject3d.h"
+#include <array>
 
 /// <summary>
 /// インスタンスオブジェクト
@@ -58,6 +59,13 @@ public: //サブクラス
 		XMMATRIX world[draw_max_num];		//ワールド行列
 	};
 
+	enum class PipelineType
+	{
+		Alpha,
+		Add,
+		Size,
+	};
+
 public: //静的メンバ関数
 	/// <summary>
 	/// Object3d共通部分の初期化
@@ -69,7 +77,12 @@ public: //静的メンバ関数
 	/// <summary>
 	/// パイプライン生成
 	/// </summary>
-	static void CreatePipeline();
+	static void CreateAlphaPipeline();
+
+	/// <summary>
+	/// パイプライン生成
+	/// </summary>
+	static void CreateAddPipeline();
 
 	/// <summary>
 	/// パイプライン生成
@@ -79,7 +92,7 @@ public: //静的メンバ関数
 	/// <summary>
 	/// 描画前処理
 	/// </summary>
-	static void DrawPrev();
+	static void DrawPrev(PipelineType _type = PipelineType::Alpha);
 
 	/// <summary>
 	/// 描画前処理
@@ -142,7 +155,7 @@ protected: //静的メンバ変数
 	//コマンドリスト
 	static ID3D12GraphicsCommandList* cmdList;
 	//パイプラインセット
-	static PipelineSet pipelineSet;
+	static std::array<PipelineSet, int(PipelineType::Size)> pipelineSet;
 	//パイプラインセット
 	static PipelineSet pipelineSetLightView;
 	//ライト
