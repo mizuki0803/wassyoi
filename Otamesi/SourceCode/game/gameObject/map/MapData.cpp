@@ -25,7 +25,7 @@ bool MapData::LoadMapData(const std::string& fileName)
 	std::vector<std::vector<std::vector<int>>> inputmap;
 	float _cameraDist;	//Ç±ÇÍÇÕç°ä÷åWÇ»Ç¢
 
-	if (!JsonLoader::DeserializeJson("Resources/mapdata/" + fileName + ".json", &_cameraDist, &inputmap)) {
+	if (!JsonLoader::DeserializeJsonMap("Resources/mapdata/" + fileName + ".json", &_cameraDist, &inputmap)) {
 		return false;
 	}
 

@@ -554,6 +554,8 @@ void InstanceObject::Draw()
 	//モデルがセットされていなければ描画をスキップして抜ける
 	if (model == nullptr) { return; }
 
+	Update();
+
 	//定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffB0->GetGPUVirtualAddress());
 	cmdList->SetGraphicsRootConstantBufferView(5, constBuffB1->GetGPUVirtualAddress());

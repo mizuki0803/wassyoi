@@ -46,7 +46,21 @@ private:
 		}
 	};
 
+	enum class transform {
+		translation,
+		rotation,
+		scaling,
+		size,
+	};
+
 public:
+
+	/// <summary>
+	/// jsonの読み込み
+	/// </summary>
+	/// <param name="_fileName">ファイル名</param>
+	/// <param name="_object">オブジェクト情報</param>
+	static void LoadNlohmannJson(const std::string& _fileName, std::vector<std::array<DirectX::XMFLOAT3, int(transform::size)>>* _object);
 
 	/// <summary>
 	/// 出力
@@ -55,7 +69,7 @@ public:
 	/// <param name="_cameraDist">カメラの距離</param>
 	/// <param name="_mapSize">マップサイズ</param>
 	/// <param name="_map">マップチップ</param>
-	static void SerializeJson(const std::string& _fileName = "out.json", const float _cameraDist = 30.0f,
+	static void SerializeJsonMap(const std::string& _fileName = "out.json", const float _cameraDist = 30.0f,
 		const std::array<int, 3> _mapSize = { 10,10,10 }, std::vector<std::vector<std::vector<int>>> _map = { {{}} });
 
 	/// <summary>
@@ -64,7 +78,7 @@ public:
 	/// <param name="_fileName">ファイルの名前</param>
 	/// <param name="_cameraDist">カメラの距離</param>
 	/// <param name="_map">マップチップ</param>
-	static bool DeserializeJson(const std::string _fileName, float* _cameraDist,
+	static bool DeserializeJsonMap(const std::string _fileName, float* _cameraDist,
 		std::vector<std::vector<std::vector<int>>>* _map);
 
 	/// <summary>
@@ -97,4 +111,7 @@ public:
 		std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase,
 		std::array<float, 3>* _cameraRota, std::array<float, 3>* _playerPos);
 
+private:
+
+	static const std::string base_directory;
 };
