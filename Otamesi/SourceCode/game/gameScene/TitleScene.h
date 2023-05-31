@@ -5,6 +5,7 @@
 #include "LightCamera.h"
 #include "Player.h"
 #include "MapDataStage.h"
+#include "BackGround.h"
 
 /// <summary>
 /// タイトルシーン
@@ -78,6 +79,9 @@ private: //メンバ変数
 
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
+
+	//背景オブジェクト
+	std::unique_ptr<BackGround> backGround;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;

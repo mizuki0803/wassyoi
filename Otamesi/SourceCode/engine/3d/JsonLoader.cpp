@@ -1,6 +1,61 @@
 #include <JsonLoader.h>
+#include <json.hpp>
 
-void JsonLoader::SerializeJson(const std::string& _fileName, const float _cameraDist,
+using njson = nlohmann::json;
+const std::string JsonLoader::base_directory = "Resources/";
+
+void JsonLoader::LoadNlohmannJson(const std::string& _fileName, std::vector<std::array<DirectX::XMFLOAT3, int(transform::size)>>* _object)
+{
+    const std::string fullpath = base_directory + _fileName + ".json";
+
+	//ファイルストリーム
+	std::ifstream file;
+
+	//ファイルを開く
+	file.open(fullpath);
+	if (file.fail()) {
+		assert(0);
+	}
+
+	//解凍データ保存先
+	njson deserialized;
+
+	//解凍
+	file >> deserialized;
+
+	//データが正しいかのチェック
+	assert(deserialized.is_object());
+	assert(deserialized.contains("name"));
+	assert(deserialized["name"].is_string());
+
+	//"name"を文字列として取得
+	std::string name = deserialized["name"].get<std::string>();
+	//正しいレベルデータファイルかチェック
+	assert(name.compare("scene") == 0);
+
+	//"objects"の全オブジェクトを走査
+	for (njson& object : deserialized["objects"]) {
+        std::array<DirectX::XMFLOAT3, int(transform::size)> addObject{};
+        //トランスフォーム情報
+		njson& transform = object["transform"];
+		// 平行移動
+        addObject[int(transform::translation)].x = float(transform["translation"][0]) * 5.0f;
+        addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 5.0f) - 50.0f;
+        addObject[int(transform::translation)].z = float(transform["translation"][1]) * 5.0f;
+		// 回転角
+		addObject[int(transform::rotation)].x = -float(transform["rotation"][1]);
+		addObject[int(transform::rotation)].y = -float(transform["rotation"][2]);
+		addObject[int(transform::rotation)].z = float(transform["rotation"][0]);
+		// スケーリング
+        addObject[int(transform::scaling)].x = float(transform["scaling"][1]) * 5.0f;
+        addObject[int(transform::scaling)].y = float(transform["scaling"][2]) * 5.0f;
+        addObject[int(transform::scaling)].z = float(transform["scaling"][0]) * 5.0f;
+
+        _object->emplace_back(addObject);
+    }
+}
+
+void JsonLoader::SerializeJsonMap(const std::string& _fileName, const float _cameraDist,
     const std::array<int, 3> _mapSize, std::vector<std::vector<std::vector<int>>> _map)
 {
     Json x;
@@ -14,7 +69,7 @@ void JsonLoader::SerializeJson(const std::string& _fileName, const float _camera
     x.serialize(archiveFile);
 }
 
-bool JsonLoader::DeserializeJson(const std::string _fileName,
+bool JsonLoader::DeserializeJsonMap(const std::string _fileName,
     float* _cameraDist, std::vector<std::vector<std::vector<int>>>* _map)
 {
     Json x;

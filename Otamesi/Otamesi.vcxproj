@@ -139,6 +139,7 @@
     <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\BackGround.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\Block.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\MapBlockData.cpp" />
@@ -313,6 +314,7 @@
     <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h" />
     <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h" />
     <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h" />
+    <ClInclude Include="SourceCode\game\gameObject\BackGround.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\Block.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\MapBlockData.h" />

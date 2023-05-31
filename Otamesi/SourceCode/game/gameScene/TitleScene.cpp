@@ -50,6 +50,9 @@ void TitleScene::Initialize()
 	skydome->SetPosition({});
 	skydome->SetScale({ 2, 2, 2 });
 
+	//背景オブジェクト生成
+	backGround.reset(BackGround::Create());
+
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
 	ObjObject3d::SetLightCamera(lightCamera.get());
@@ -109,6 +112,8 @@ void TitleScene::Update()
 	mapData->Update();
 	//天球
 	skydome->Update();
+	//背景オブジェクト
+	backGround->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
@@ -170,6 +175,9 @@ void TitleScene::Draw3D()
 	InstanceObject::DrawPrev();
 	//マップ用ブロック
 	mapData->Draw();
+
+	//背景オブジェクト
+	backGround->Draw();
 
 	///-------Instance描画ここまで-------///
 

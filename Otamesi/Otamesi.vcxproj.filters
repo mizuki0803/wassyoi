@@ -323,6 +323,9 @@
     <ClCompile Include="UserInterface.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\BackGround.cpp">
+      <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\BackGround.h">
+      <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
