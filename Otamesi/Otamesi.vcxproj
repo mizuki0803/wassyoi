@@ -129,7 +129,9 @@
     <ClCompile Include="SourceCode\engine\light\LightGroup.cpp" />
     <ClCompile Include="SourceCode\engine\math\EaseData.cpp" />
     <ClCompile Include="SourceCode\engine\math\Easing.cpp" />
+    <ClCompile Include="SourceCode\engine\math\Singleton.cpp" />
     <ClCompile Include="SourceCode\engine\math\Spline.cpp" />
+    <ClCompile Include="SourceCode\engine\math\Timer.cpp" />
     <ClCompile Include="SourceCode\engine\math\Vector2.cpp" />
     <ClCompile Include="SourceCode\engine\math\Vector3.cpp" />
     <ClCompile Include="SourceCode\engine\scene\BaseScene.cpp" />
@@ -302,7 +304,9 @@
     <ClInclude Include="SourceCode\engine\light\SpotLight.h" />
     <ClInclude Include="SourceCode\engine\math\EaseData.h" />
     <ClInclude Include="SourceCode\engine\math\Easing.h" />
+    <ClInclude Include="SourceCode\engine\math\Singleton.h" />
     <ClInclude Include="SourceCode\engine\math\Spline.h" />
+    <ClInclude Include="SourceCode\engine\math\Timer.h" />
     <ClInclude Include="SourceCode\engine\math\Vector2.h" />
     <ClInclude Include="SourceCode\engine\math\Vector3.h" />
     <ClInclude Include="SourceCode\engine\scene\AbstractSceneFactory.h" />

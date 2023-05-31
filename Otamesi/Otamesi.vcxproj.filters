@@ -323,6 +323,12 @@
     <ClCompile Include="UserInterface.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\engine\math\Timer.cpp">
+      <Filter>ソース ファイル\engine\math</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\engine\math\Singleton.cpp">
+      <Filter>ソース ファイル\engine\math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -604,6 +610,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\math\Timer.h">
+      <Filter>ソース ファイル\engine\math</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\math\Singleton.h">
+      <Filter>ソース ファイル\engine\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

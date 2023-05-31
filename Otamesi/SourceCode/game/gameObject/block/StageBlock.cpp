@@ -80,3 +80,20 @@ void StageBlock::CreateAct()
 {
     func_.push_back([this] { return PlayStratMove(); });
 }
+
+void StageBlock::ReAction()
+{
+	switch (blockType)
+	{
+	case Block::BROCK_TYPE::block:
+		break;
+	case Block::BROCK_TYPE::plane:
+		break;
+	case Block::BROCK_TYPE::goal:
+		break;
+	case Block::BROCK_TYPE::size:
+		break;
+	default:
+		break;
+	}
+}

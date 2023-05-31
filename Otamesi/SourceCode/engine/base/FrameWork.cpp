@@ -11,6 +11,7 @@
 #include "LightGroup.h"
 #include "GamePostEffect.h"
 #include "InstanceObject.h"
+#include "math/Timer.h"
 
 void FrameWork::Run()
 {
@@ -102,6 +103,9 @@ void FrameWork::Initialize()
 
 	//全シーンで使用するテクスチャの枚数を確定させる
 	DescHeapSRV::SetAllSceneTextureNum();
+
+	// タイマーsingleton生成
+	Timer::CreateSingleton();
 }
 
 void FrameWork::Finalize()
@@ -109,6 +113,9 @@ void FrameWork::Finalize()
 	SceneManager::GetInstance()->Finalize();
 	//FBXLoader解放
 	FbxLoader::GetInstance()->Finalize();
+
+	// singleton解放
+	SingletonFinalizer::Finalize();
 
 	//audio解放
 	audio->Finalize();
@@ -119,6 +126,9 @@ void FrameWork::Finalize()
 
 void FrameWork::Update()
 {
+	// タイマー計測開始
+	Timer::GetInstance().InstrumentationStart();
+
 	//メッセージ
 	//×ボタンで終了メッセージが来たらゲームループを抜ける
 	if (win->MessageProc()) {
@@ -175,4 +185,7 @@ void FrameWork::Draw()
 
 	//グラフィックスコマンド(後)
 	dxbase->GraphicsCommandRear();
+
+	Timer::GetInstance().InstrumentationEnd();
+
 }

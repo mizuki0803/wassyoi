@@ -75,6 +75,11 @@ public: //メンバ関数
 	/// <returns></returns>
 	int GetActPhase() { return static_cast<int>(phase_); }
 
+	/// <summary>
+	/// プレイヤーからのコールバック
+	/// </summary>
+	void ReAction();
+
 protected: // メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
