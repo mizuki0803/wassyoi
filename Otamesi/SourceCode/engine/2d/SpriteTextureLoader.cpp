@@ -15,4 +15,6 @@ void SpriteTextureLoader::TextureLoad()
 	//ƒƒjƒ…[ŠÖŒW
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
 	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
+
+	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");
 }

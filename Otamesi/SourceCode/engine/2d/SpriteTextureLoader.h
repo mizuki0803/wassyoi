@@ -13,6 +13,7 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		ParanomaSky,	// スカイドーム用
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数
 	};

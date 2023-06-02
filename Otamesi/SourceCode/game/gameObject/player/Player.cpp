@@ -4,9 +4,10 @@
 #include "Block.h"
 #include "PlayerActionManager.h"
 
+
 const float Player::playerSize = 5.0f;
 
-Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera)
+Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera, ObjModel *effectModel)
 {
 	//インスタンスを生成
 	Player* instance = new Player();
@@ -34,6 +35,12 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 	instance->scale = { playerSize, playerSize, playerSize };
 	//ゲームカメラをセット
 	instance->gameCamera = gameCamera;
+
+	// エフェクト読み込み
+	for (int i = 0;i< instance->effect.size(); ++i)
+	{
+		instance->effect[i].reset(PlayerEffect::Create(effectModel, static_cast<float>(i)));
+	}
 
 	return instance;
 }
@@ -64,6 +71,25 @@ void Player::Update()
 
 	//オブジェクト更新
 	ObjObject3d::Update();
+
+
+	// エフェクト更新
+	for (auto &e : effect)
+	{
+		e->Update(this);
+	}
+}
+
+void Player::Draw()
+{
+
+	// エフェクト読み込み
+	for (auto &e : effect)
+	{
+		e->Draw();
+	}
+
+	ObjObject3d::Draw();
 }
 
 void Player::MovePosStart()

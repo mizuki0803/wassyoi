@@ -2,13 +2,18 @@
 #include "ObjObject3d.h"
 #include "GameCamera.h"
 #include "EaseData.h"
+#include "PlayerEffect.h"
+
 
 /// <summary>
 /// プレイヤー
 /// </summary>
 class Player : public ObjObject3d
 {
-public: //enum
+public:
+	friend class PlayerEffect;
+	
+	//enum
 	/// <summary>
 	/// 行動フェーズ
 	/// </summary>
@@ -39,13 +44,15 @@ public: //静的メンバ関数
 	/// <param name="mapChipNum">プレイヤー位置を表すマップ番号</param>
 	/// <param name="gameCamera">ゲームカメラ</param>
 	/// <returns>プレイヤー</returns>
-	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera);
+	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera, ObjModel *effectModel);
 
 public: //メンバ関数
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update();
+
+	void Draw();
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
@@ -104,6 +111,10 @@ private: //静的メンバ変数
 	static const float playerSize;
 
 private: //メンバ変数
+
+	std::array<std::unique_ptr<PlayerEffect>, 4> effect;
+
+
 	//プレイヤー位置を表すマップ番号
 	XMINT3 mapChipNumberPos;
 	//ゲームカメラ

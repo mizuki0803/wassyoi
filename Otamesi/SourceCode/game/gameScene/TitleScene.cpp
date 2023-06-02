@@ -21,6 +21,7 @@ void TitleScene::Initialize()
 
 	//objからモデルデータを読み込む
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
+	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 	//選択中のステージ番号を0にセット
@@ -40,7 +41,7 @@ void TitleScene::Initialize()
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	//プレイヤー生成
-	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get()));
+	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get(), modelPlayerEffect.get()));
 
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());

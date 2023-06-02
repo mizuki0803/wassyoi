@@ -70,6 +70,7 @@ private: //メンバ変数
 	//objモデル
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelSkydome;
+	std::unique_ptr<ObjModel> modelPlayerEffect;
 
 	//プレイヤー
 	std::unique_ptr<Player> player;

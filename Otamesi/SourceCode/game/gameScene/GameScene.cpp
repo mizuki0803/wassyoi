@@ -11,9 +11,11 @@
 #include "SceneChangeEffect.h"
 #include "GamePostEffect.h"
 #include "StageManager.h"
+#include "SpriteTextureLoader.h"
 #include <cassert>
 #include <fstream>
 #include <iomanip>
+
 
 void GameScene::Initialize()
 {
@@ -25,10 +27,14 @@ void GameScene::Initialize()
 
 	//objからモデルデータを読み込む
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
+	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 	//マップ生成
 	mapData.reset(MapDataStage::Create(StageManager::GetSelectStage()));
+
+	//背景オブジェクト生成
+	backGround.reset(BackGround::Create());
 
 	//カメラ初期化
 	camera.reset(new GameCamera());
@@ -42,7 +48,7 @@ void GameScene::Initialize()
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	//プレイヤー生成
-	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get()));
+	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get(), modelPlayerEffect.get()));
 
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
@@ -75,6 +81,9 @@ void GameScene::Initialize()
 	KeepBinary(*camera, *player);
 
 	userInterface_ = UserInterface::Create();
+
+	// スカイドーム生成
+	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
 }
 
 void GameScene::Finalize()
@@ -118,6 +127,9 @@ void GameScene::Update()
 	//ライト更新
 	lightGroup->Update();
 
+	// スカイドーム更新
+	//paranomaSkyDorm->Update();
+	
 	//オブジェクト更新
 	//プレイヤー
 	player->Update();
@@ -125,6 +137,8 @@ void GameScene::Update()
 	mapData->Update();
 	//天球
 	skydome->Update();
+	//背景オブジェクト
+	backGround->Update();
 	//UIの更新
 	userInterface_->Update();
 
@@ -187,6 +201,8 @@ void GameScene::Update()
 
 void GameScene::DrawBackSprite()
 {
+	/*SpriteCommon::GetInstance()->DrawPrev("SkyDorm");
+	paranomaSkyDorm->Draw();*/
 }
 
 void GameScene::Draw3D()
@@ -208,6 +224,8 @@ void GameScene::Draw3D()
 	InstanceObject::DrawPrev();
 	//マップ用ブロック
 	mapData->Draw();
+	//背景オブジェクト
+	backGround->Draw();
 
 	///-------Instance描画ここまで-------///
 
