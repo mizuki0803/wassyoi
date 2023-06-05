@@ -341,6 +341,12 @@
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerEffect.cpp">
       <Filter>ソース ファイル\game\gameObject\player</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\NumberSprite.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -646,6 +652,12 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerEffect.h">
       <Filter>ソース ファイル\game\gameObject\player</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\NumberSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

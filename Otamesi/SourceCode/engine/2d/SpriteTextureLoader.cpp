@@ -11,6 +11,7 @@ void SpriteTextureLoader::TextureLoad()
 	//スプライト用テクスチャ読み込み
 	TextureManager::LoadTexture(textures[DebugFont], directoryPath, "debugFont.png");
 	TextureManager::LoadTexture(textures[White], directoryPath, "white1x1.png");
+	TextureManager::LoadTexture(textures[Number], directoryPath, "number.png");
 	TextureManager::LoadTexture(textures[Block], directoryPath, "block.png");
 	//メニュー関係
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");

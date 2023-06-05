@@ -66,7 +66,7 @@ void StageSelectScene::Finalize()
 void StageSelectScene::Update()
 {
 	//デバッグ用テキスト
-	DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
+	//DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
 	DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
 
 
@@ -134,6 +134,9 @@ void StageSelectScene::DrawFrontSprite()
 	//スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
+
+	//ステージ番号
+	mapDataManager->DrawUI();
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();
