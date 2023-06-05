@@ -31,18 +31,22 @@ public: //メンバ関数
 	//getter
 	const XMINT3& GetMapSize() { return mapSize; }
 	const std::vector<std::vector<std::vector<int>>>& GetMapChipNum() { return mapChipNum; }
+	const XMFLOAT3 GetCameraDist() { return cameraDist; }
+	const int GetInstallationSurface() { return installationSurface; }
 
 protected: //メンバ関数
 	/// <summary>
 	/// マップ生成
 	/// </summary>
-	/// <param name="fileName">ファイル名</param>
+	/// <param name="selectStageNum">ステージ番号</param>
+	/// <returns></returns>
 	bool CreateMap(const int selectStageNum);
 
 	/// <summary>
 	/// マップデータ読み込み
 	/// </summary>
 	/// <param name="fileName">ファイル名</param>
+	/// <returns></returns>
 	bool LoadMapData(const std::string& fileName);
 
 	/// <summary>
@@ -55,4 +59,8 @@ protected: //メンバ変数
 	XMINT3 mapSize;
 	//3次元マップ用の3次元配列
 	std::vector<std::vector<std::vector<int>>> mapChipNum;
+	//カメラ距離
+	XMFLOAT3 cameraDist;
+	//プレイヤーの初期設置面
+	int installationSurface;
 };

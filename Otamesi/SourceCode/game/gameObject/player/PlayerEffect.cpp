@@ -41,12 +41,12 @@ void PlayerEffect::Update(Player *player)
 		SetRotation({ 180,0,0 });
 		break;
 	case Player::MoveSurfacePhase::FacingLeft:
-		offset = { -2.5f,0,0 };
-		SetRotation({ 0,0,90 });
-		break;
-	case Player::MoveSurfacePhase::FacingRight:
 		offset = { 2.5f,0,0 };
 		SetRotation({ 0,0,-90 });
+		break;
+	case Player::MoveSurfacePhase::FacingRight:
+		offset = { -2.5f,0,0 };
+		SetRotation({ 0,0,90 });
 		break;
 	case Player::MoveSurfacePhase::FacingForward:
 		offset = { 0,0,2.5f };

@@ -5,9 +5,9 @@
 const float GameCamera::rotate3DDistance = 2.0f;
 
 const DirectX::XMMATRIX GameCamera::matProj2D = XMMatrixOrthographicOffCenterLH(
-	-128, 128,
-	-72, 72,
-	0.1f, 2000.0f
+	-(float)WindowApp::window_width/14.0f, (float)WindowApp::window_width/ 14.0f,
+	-WindowApp::window_height/ 14.0f, WindowApp::window_height/ 14.0f,
+	0.0f, 1000.0f
 );
 
 const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
@@ -16,7 +16,7 @@ const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
 	0.1f, 2000.0f
 );
 
-GameCamera* GameCamera::Create(float distanceStageCenter, const Vector3& stageCenterPos)
+GameCamera* GameCamera::Create(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos)
 {
 	//インスタンス生成
 	GameCamera* instance = new GameCamera();
@@ -27,7 +27,7 @@ GameCamera* GameCamera::Create(float distanceStageCenter, const Vector3& stageCe
 	return instance;
 }
 
-void GameCamera::Initialize(float distanceStageCenter, const Vector3& stageCenterPos)
+void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos)
 {
 	//カメラ初期化
 	Camera::Initialize();
@@ -76,8 +76,11 @@ void GameCamera::ChanegeDimensionStart()
 	rotateBefore = rotation;
 
 	//回転後回転角をセット
-	if (is2D) { rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z }; }
-	else { rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z }; }
+	if (is2D) {
+		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
+	} else {
+		rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z };
+	}
 	dirtyProjection = true;
 
 	//アクション用タイマーを初期化しておく
@@ -149,9 +152,9 @@ void GameCamera::UpdatePosition()
 	//計算結果を割り当てて座標をセット
 	//Y座標はX回転角のsinを使用
 	//X,Z座標はY回転角のsin,cosで計算し、X回転角(Y座標)のcosを乗算して算出
-	position.x = (float)(-sinfAngleY * cosfAngleX) * distanceStageCenter + stageCenterPos.x;
-	position.y = (float)sinfAngleX * distanceStageCenter + stageCenterPos.y;
-	position.z = (float)(-cosfAngleY * cosfAngleX) * distanceStageCenter + stageCenterPos.z;
+	position.x = (float)(-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
+	position.y = (float)sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
+	position.z = (float)(-cosfAngleY * cosfAngleX) * distanceStageCenter.z + stageCenterPos.z;
 }
 
 Vector3 GameCamera::InputRotateNum()

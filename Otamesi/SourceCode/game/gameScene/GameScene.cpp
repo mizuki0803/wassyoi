@@ -38,7 +38,7 @@ void GameScene::Initialize()
 
 	//カメラ初期化
 	camera.reset(new GameCamera());
-	const float distanceStageCenter = 60.0f; //カメラ視点のステージ中央からの距離
+	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //カメラ視点のステージ中央からの距離
 	const XMINT3 mapSize = mapData->GetMapSize(); //マップの大きさ
 	const Vector3 stageCenterPos = { Block::GetBlockSize() / 2 * (mapSize.x - 1), Block::GetBlockSize() / 2 * (mapSize.y - 1), Block::GetBlockSize() / 2 * (mapSize.z - 1) }; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
@@ -49,6 +49,7 @@ void GameScene::Initialize()
 
 	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get(), modelPlayerEffect.get()));
+	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
 
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());

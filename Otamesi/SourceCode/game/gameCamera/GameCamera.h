@@ -55,7 +55,7 @@ public: //静的メンバ関数
 	/// <param name="distanceStageCenter">ステージ中央からの距離</param>
 	/// <param name="stageCenterPos">ステージ中央座標</param>
 	/// <returns>ゲームカメラ</returns>
-	GameCamera* Create(float distanceStageCenter, const Vector3& stageCenterPos);
+	GameCamera* Create(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
 public: //メンバ関数
 	/// <summary>
@@ -63,7 +63,7 @@ public: //メンバ関数
 	/// </summary> 
 	/// <param name="distanceStageCenter">ステージ中央からの距離</param>
 	/// <param name="stageCenterPos">ステージ中央座標</param>
-	void Initialize(float distanceStageCenter, const Vector3& stageCenterPos);
+	void Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
 	/// <summary>
 	/// 更新
@@ -206,7 +206,7 @@ private:
 	//ステージから見ての縦軸カメラ位置フェーズ
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
 	//ステージ中央からの距離
-	float distanceStageCenter;
+	XMFLOAT3 distanceStageCenter;
 	//アクション
 	ActionPhase actionPhase = ActionPhase::None;
 	//アクション用タイマー
