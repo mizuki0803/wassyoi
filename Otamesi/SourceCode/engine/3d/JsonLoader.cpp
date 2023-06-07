@@ -40,7 +40,7 @@ void JsonLoader::LoadNlohmannJson(const std::string& _fileName, std::vector<std:
 		njson& transform = object["transform"];
 		// •½sˆÚ“®
         addObject[int(transform::translation)].x = float(transform["translation"][0]) * 5.0f;
-        addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 5.0f) - 50.0f;
+        addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 5.0f) - 100.0f;
         addObject[int(transform::translation)].z = float(transform["translation"][1]) * 5.0f;
 		// ‰ñ“]Šp
 		addObject[int(transform::rotation)].x = -float(transform["rotation"][1]);
