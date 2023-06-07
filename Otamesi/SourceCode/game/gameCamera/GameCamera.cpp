@@ -5,8 +5,8 @@
 const float GameCamera::rotate3DDistance = 2.0f;
 
 const DirectX::XMMATRIX GameCamera::matProj2D = XMMatrixOrthographicOffCenterLH(
-	-(float)WindowApp::window_width/14.0f, (float)WindowApp::window_width/ 14.0f,
-	-WindowApp::window_height/ 14.0f, WindowApp::window_height/ 14.0f,
+	-(float)WindowApp::window_width / 14.0f, (float)WindowApp::window_width / 14.0f,
+	-WindowApp::window_height / 14.0f, WindowApp::window_height / 14.0f,
 	0.0f, 1000.0f
 );
 
@@ -45,6 +45,9 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 
 void GameCamera::Update()
 {
+	//ステージクリア状態なら抜ける
+	if (isStageClear) { return; }
+
 	//トリガーフラグがtrue状態ならばfalseに直しておく
 	if (isTriggerDimensionChange) { isTriggerDimensionChange = false; }
 
@@ -78,7 +81,8 @@ void GameCamera::ChanegeDimensionStart()
 	//回転後回転角をセット
 	if (is2D) {
 		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
-	} else {
+	}
+	else {
 		rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z };
 	}
 	dirtyProjection = true;
@@ -293,7 +297,8 @@ void GameCamera::ChanegeDimension()
 	//プロジェクション行列のイージング
 	if (is2D) {
 		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
-	} else {
+	}
+	else {
 		matProjection = Ease4x4_in(matProj3D, matProj2D, time);
 	}
 
@@ -402,7 +407,7 @@ void GameCamera::SetEaseData(const int count)
 XMMATRIX GameCamera::Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer)
 {
 	//4x4に変換
-	XMFLOAT4X4 a,b;
+	XMFLOAT4X4 a, b;
 	XMStoreFloat4x4(&a, _mat1);
 	XMStoreFloat4x4(&b, _mat2);
 

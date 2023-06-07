@@ -12,7 +12,7 @@ class Player : public ObjObject3d
 {
 public:
 	friend class PlayerEffect;
-	
+
 	//enum
 	/// <summary>
 	/// 行動フェーズ
@@ -42,9 +42,10 @@ public: //静的メンバ関数
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <param name="mapChipNum">プレイヤー位置を表すマップ番号</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <param name="gameCamera">ゲームカメラ</param>
 	/// <returns>プレイヤー</returns>
-	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera, ObjModel *effectModel);
+	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel);
 
 public: //メンバ関数
 	/// <summary>
@@ -117,6 +118,8 @@ private: //メンバ変数
 
 	//プレイヤー位置を表すマップ番号
 	XMINT3 mapChipNumberPos;
+	//マップの中心にずらす値
+	Vector3 shiftPos;
 	//ゲームカメラ
 	GameCamera* gameCamera = nullptr;
 	//アクション

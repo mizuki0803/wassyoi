@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include "Vector3.h"
 
 /// <summary>
 /// マップデータ
@@ -31,6 +32,7 @@ public: //メンバ関数
 	//getter
 	const XMINT3& GetMapSize() { return mapSize; }
 	const std::vector<std::vector<std::vector<int>>>& GetMapChipNum() { return mapChipNum; }
+	const Vector3& GetShiftPos() { return shiftPos; }
 	const XMFLOAT3 GetCameraDist() { return cameraDist; }
 	const int GetInstallationSurface() { return installationSurface; }
 
@@ -59,6 +61,8 @@ protected: //メンバ変数
 	XMINT3 mapSize;
 	//3次元マップ用の3次元配列
 	std::vector<std::vector<std::vector<int>>> mapChipNum;
+	//マップの中心をずらす値
+	Vector3 shiftPos;
 	//カメラ距離
 	XMFLOAT3 cameraDist;
 	//プレイヤーの初期設置面

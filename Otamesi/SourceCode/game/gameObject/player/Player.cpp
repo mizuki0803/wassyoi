@@ -7,7 +7,7 @@
 
 const float Player::playerSize = 5.0f;
 
-Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera, ObjModel *effectModel)
+Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
 	//インスタンスを生成
 	Player* instance = new Player();
@@ -25,11 +25,12 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 
 	//プレイヤー位置を表すマップ番号をセット
 	instance->mapChipNumberPos = mapChipNum;
+	//マップの中心をずらす値をセット
+	instance->shiftPos = shiftPos;
 	//初期座標をセット
 	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNum));
 	Vector3 tempPos = instance->GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
-
 	instance->position = tempPos;
 	//大きさをセット
 	instance->scale = { playerSize, playerSize, playerSize };
@@ -37,7 +38,7 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 	instance->gameCamera = gameCamera;
 
 	// エフェクト読み込み
-	for (int i = 0;i< instance->effect.size(); ++i)
+	for (int i = 0; i < instance->effect.size(); ++i)
 	{
 		instance->effect[i].reset(PlayerEffect::Create(effectModel, static_cast<float>(i)));
 	}
@@ -47,34 +48,36 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 
 void Player::Update()
 {
-	//frame最初の初期化
-	isMove = false;
+	//ゴールしていないときに動きをする
+	if (!isGoal) {
+		//frame最初の初期化
+		isMove = false;
 
-	//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
-	if (gameCamera->GetIsTriggerDimensionChange()) {
-		//2次元状態なら、プレイヤーの位置を画面手前に移動させる
-		if (gameCamera->GetIs2D()) {
-			PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
-			position = GetMapChipPos(mapChipNumberPos);
+		//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
+		if (gameCamera->GetIsTriggerDimensionChange()) {
+			//2次元状態なら、プレイヤーの位置を画面手前に移動させる
+			if (gameCamera->GetIs2D()) {
+				PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
+				position = GetMapChipPos(mapChipNumberPos);
+			}
+			//ゴールしたのかを判定
+			StageClearCheck();
 		}
-		//ゴールしたのかを判定
-		StageClearCheck();
+
+		//座標移動開始
+		MovePosStart();
+		//座標移動
+		MovePos();
+
+		//次元切り替え開始
+		ChanegeDimensionStart();
+
+		//オブジェクト更新
+		ObjObject3d::Update();
 	}
 
-	//座標移動開始
-	MovePosStart();
-	//座標移動
-	MovePos();
-
-	//次元切り替え開始
-	ChanegeDimensionStart();
-
-	//オブジェクト更新
-	ObjObject3d::Update();
-
-
 	// エフェクト更新
-	for (auto &e : effect)
+	for (auto& e : effect)
 	{
 		e->Update(this);
 	}
@@ -84,7 +87,7 @@ void Player::Draw()
 {
 
 	// エフェクト読み込み
-	for (auto &e : effect)
+	for (auto& e : effect)
 	{
 		e->Draw();
 	}
@@ -209,7 +212,8 @@ void Player::StageClearCheck()
 
 Vector3 Player::GetMapChipPos(const XMINT3& mapChipNumberPos)
 {
-	return { mapChipNumberPos.x * Block::GetBlockSize(), mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.z * Block::GetBlockSize() };
+	Vector3 mapChipPos = { mapChipNumberPos.x * Block::GetBlockSize(), mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.z * Block::GetBlockSize() };
+	return mapChipPos - shiftPos;
 }
 
 void Player::SetEaseData(const int count)

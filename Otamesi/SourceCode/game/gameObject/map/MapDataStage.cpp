@@ -107,20 +107,20 @@ void MapDataStage::CreateMapBlock()
 				//ÉSÅ[Éãê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(2, chipNum));
+					newBlock.reset(StageBlock::Create(2, chipNum, shiftPos));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ÉuÉçÉbÉNê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(0, chipNum));
+					newBlock.reset(StageBlock::Create(0, chipNum, shiftPos));
 					blocks.push_back(std::move(newBlock));
 				}
 				//è„å¸Ç´ÉnÉäÉ{Éeê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = {};	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -128,7 +128,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 180, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -136,7 +136,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, 90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -144,7 +144,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, -90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -152,7 +152,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { -90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -160,7 +160,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -172,7 +172,7 @@ void MapDataStage::CreateMapBlock()
 void MapDataStage::ReCreateMapBlock()
 {
 	int count = 0;
-	int oldSize = blocks.size();
+	int oldSize = static_cast<int>(blocks.size());
 
 	for (int i = 0; i < mapChipNum.size(); i++) {
 		for (int j = 0; j < mapChipNum[i].size(); j++) {
@@ -197,14 +197,14 @@ void MapDataStage::ReCreateMapBlock()
 				//ÉSÅ[Éãê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(2, chipNum));
+					newBlock.reset(StageBlock::Create(2, chipNum, shiftPos));
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
 				}
 				//ÉuÉçÉbÉNê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(0, chipNum));
+					newBlock.reset(StageBlock::Create(0, chipNum, shiftPos));
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
 				}
@@ -212,7 +212,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = {};	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
@@ -221,7 +221,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 180, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
@@ -230,7 +230,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, 90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
@@ -239,7 +239,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, -90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
@@ -248,7 +248,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { -90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));
@@ -257,7 +257,7 @@ void MapDataStage::ReCreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos));
 					newBlock->SetRotation(rot);
 
 					blocks.insert(blocks.begin() + count, std::move(newBlock));

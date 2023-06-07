@@ -87,6 +87,7 @@ public: //メンバ関数
 	void SetCameraXPosPhase(const int _cameraXPosPhase) { cameraXPosPhase = _cameraXPosPhase; };
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
+	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
 
 private: //メンバ関数
 	/// <summary>
@@ -235,4 +236,6 @@ private:
 	int attenuation_ = 0;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
+	//ステージクリア状態か
+	bool isStageClear = false;
 };

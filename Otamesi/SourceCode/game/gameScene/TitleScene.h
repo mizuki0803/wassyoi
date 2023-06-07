@@ -7,6 +7,7 @@
 #include "MapDataStage.h"
 #include "BackGround.h"
 #include "HowToPlayUI.h"
+#include "StageClearUI.h"
 
 /// <summary>
 /// タイトルシーン
@@ -87,6 +88,11 @@ private: //メンバ変数
 
 	//操作方法UI
 	std::unique_ptr<HowToPlayUI> howToPlayUI;
+	//ステージクリアUI
+	std::unique_ptr<StageClearUI> stageClearUI;
+
+	//タイトルロゴ
+	std::unique_ptr<Sprite> titleLogo;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;

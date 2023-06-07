@@ -7,6 +7,7 @@
 #include "MapDataStage.h"
 #include "UserInterface.h"
 #include "HowToPlayUI.h"
+#include "StageClearUI.h"
 #include "BackGround.h"
 #include "game/gameSprite/ParanomaSkyDorm.h"
 
@@ -86,6 +87,8 @@ private: //メンバ変数
 	std::unique_ptr<UserInterface> userInterface_;
 	//操作方法UI
 	std::unique_ptr<HowToPlayUI> howToPlayUI;
+	//ステージクリアUI
+	std::unique_ptr<StageClearUI> stageClearUI;
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;

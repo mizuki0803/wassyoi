@@ -16,13 +16,16 @@ void HowToPlayUI::Initialize(bool isDrawPause)
 {
 	//UI生成
 	Vector2 leftTopPos = { 20, 20 };
-	const float sizeRatio = 0.3f;	//テクスチャサイズに対する大きさの比率
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), leftTopPos, { 690, 110 }, sizeRatio);		//移動
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), leftTopPos, { 800, 110 }, sizeRatio);	//カメラ
+	const float sizeRatio = 0.4f;	//テクスチャサイズに対する大きさの比率
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), leftTopPos, { 465, 84 }, sizeRatio);	//移動
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), leftTopPos, { 545, 84 }, sizeRatio);	//カメラ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), leftTopPos, { 573, 84 }, sizeRatio);	//アンドゥ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), leftTopPos, { 574, 84 }, sizeRatio);	//リドゥ
 
 	//ポーズの描画をしないなら抜ける
 	if (!isDrawPause) { return; }
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPause), leftTopPos, { 533, 110 }, sizeRatio);		//ポーズ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayReset), leftTopPos, { 400, 84 }, sizeRatio);	//リセット
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), leftTopPos, { 674, 84 }, sizeRatio);		//ポーズ
 }
 
 void HowToPlayUI::Update()

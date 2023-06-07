@@ -55,5 +55,9 @@ bool MapData::LoadMapData(const std::string& fileName)
 		}
 	}
 
+	//マップの中心をずらす値をセット
+	const float blockSize = Block::GetBlockSize();
+	shiftPos = { blockSize / 2 * (mapSize.x - 1), blockSize / 2 * (mapSize.y - 1), blockSize / 2 * (mapSize.z - 1) };
+
 	return true;
 }

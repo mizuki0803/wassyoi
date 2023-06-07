@@ -40,7 +40,7 @@ void GameScene::Initialize()
 	camera.reset(new GameCamera());
 	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //カメラ視点のステージ中央からの距離
 	const XMINT3 mapSize = mapData->GetMapSize(); //マップの大きさ
-	const Vector3 stageCenterPos = { Block::GetBlockSize() / 2 * (mapSize.x - 1), Block::GetBlockSize() / 2 * (mapSize.y - 1), Block::GetBlockSize() / 2 * (mapSize.z - 1) }; //ステージ中央座標
+	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
 	//影用光源カメラ初期化
 	lightCamera.reset(new LightCamera());
@@ -48,7 +48,7 @@ void GameScene::Initialize()
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	//プレイヤー生成
-	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get(), modelPlayerEffect.get()));
+	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
 
 	//プレイヤーの移動可能判定用にマップ番号をセット
@@ -84,6 +84,8 @@ void GameScene::Initialize()
 	userInterface_ = UserInterface::Create();
 	//操作方法UI生成
 	howToPlayUI.reset(HowToPlayUI::Create(true));
+	//ステージクリアUI生成
+	stageClearUI.reset(StageClearUI::Create());
 
 	// スカイドーム生成
 	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
@@ -96,23 +98,37 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
-	//デバッグ用テキスト
-	/*DebugText::GetInstance()->Print("CameraMove : arrow", 10, 10);
-	DebugText::GetInstance()->Print("PlayerMove : WASD", 10, 30);
-	DebugText::GetInstance()->Print("StageReset : R", 10, 50);
-	DebugText::GetInstance()->Print("StageSelect: P", 10, 70);*/
-
-	//プレイヤーがゴールをしたらステージクリア
 	if (!isStageClear) {
+		//undo
+		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+			Undo(camera.get(), player.get());
+		}
+		//redo
+		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+			Redo(camera.get(), player.get());
+		}
+
+		if (Input::GetInstance()->TriggerKey(DIK_R)) {
+			//シーン切り替え
+			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+			//binary削除
+			DeleteBinary();
+		}
+		if (Input::GetInstance()->TriggerKey(DIK_P)) {
+			//シーン切り替え
+			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
+			//binary削除
+			DeleteBinary();
+		}
+
+		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
 			isStageClear = true;
 			StageManager::StageClear();
+			camera->SetIsStageClear(true);
 		}
 	}
 	else if (!isSceneChange) {
-		DebugText::GetInstance()->Print("STAGECLEAR", 100, 300, 5);
-		DebugText::GetInstance()->Print("NEXTSTAGE : PRESS ENTER", 500, 600);
-
 		if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
@@ -132,7 +148,7 @@ void GameScene::Update()
 
 	// スカイドーム更新
 	//paranomaSkyDorm->Update();
-	
+
 	//オブジェクト更新
 	//プレイヤー
 	player->Update();
@@ -148,6 +164,8 @@ void GameScene::Update()
 	userInterface_->Update();
 	//操作方法
 	howToPlayUI->Update();
+	//ステージクリアUI更新
+	stageClearUI->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
@@ -163,7 +181,7 @@ void GameScene::Update()
 			userInterface_->SetMenuFlag(false);
 		}
 	}
-	
+
 
 	//binary出力
 	if (player->GetIsMove() || (player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
@@ -176,30 +194,6 @@ void GameScene::Update()
 		KeepBinary(*camera, *player);
 	}
 
-	//undo
-	if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
-		Undo(camera.get(), player.get());
-	}
-	//redo
-	else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
-		Redo(camera.get(), player.get());
-	}
-
-	//DebugText::GetInstance()->Print("move surface" + std::to_string(player->GetMoveSurfacePhase()), 10, 90);
-
-
-	if (Input::GetInstance()->TriggerKey(DIK_R)) {
-		//シーン切り替え
-		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-		//binary削除
-		DeleteBinary();
-	}
-	if (Input::GetInstance()->TriggerKey(DIK_P)) {
-		//シーン切り替え
-		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
-		//binary削除
-		DeleteBinary();
-	}
 	//シーン変更状態
 	SceneChangeMode();
 	//シーン変更演出更新
@@ -258,6 +252,11 @@ void GameScene::DrawFrontSprite()
 	howToPlayUI->Draw();
 
 	userInterface_->Draw();
+
+	//ステージクリアUI
+	if (isStageClear) {
+		stageClearUI->Draw();
+	}
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();

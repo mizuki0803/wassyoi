@@ -2,13 +2,13 @@
 #include "Easing.h"
 #include <random>
 
-StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum)
+StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	//インスタンス生成
 	StageBlock* instance = new StageBlock();
 
 	//初期化処理
-	if (!instance->Initialize(_blockType, mapChipNum)) {
+	if (!instance->Initialize(_blockType, mapChipNum, shiftPos)) {
 		delete instance;
 		assert(0);
 		return nullptr;
@@ -17,7 +17,7 @@ StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum)
 	return instance;
 }
 
-bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum)
+bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	//ブロックの種類を「ブロック」に設定
 	blockType = BROCK_TYPE(_blockType);
@@ -28,6 +28,7 @@ bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum)
 
 	//座標をセット
 	Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
+	temppos -= shiftPos;
 	SetBlockEndPos(temppos);
 	temppos.y = -100.0f;
 	SetBlockStratPos(temppos);
