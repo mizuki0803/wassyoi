@@ -32,6 +32,8 @@ bool PlayerActionManager::PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, cons
 	//移動可能なら判定用変数で変更した値をプレイヤー位置を表すマップ番号にセット
 	mapChipNumberPlayerPos = judgeNumberPlayerPos;
 
+	// 移動先のブロックをアクション
+
 	return true;
 }
 

@@ -41,7 +41,7 @@ private:
 	std::unique_ptr<ObjModel> model;
 
 	//描画用クラス
-	std::unique_ptr<InstanceObject> block;
+	std::unique_ptr<InstanceObject> block[3];
 
 	//オブジェクトの状態
 	std::vector<std::array<DirectX::XMFLOAT3, int(transform::size)>> info;
