@@ -60,6 +60,12 @@ public: //メンバ関数
 	/// </summary>
 	void Update();
 
+	/// <summary>
+	/// ブロックタイプの取得
+	/// </summary>
+	/// <returns>ブロックタイプ</returns>
+	BROCK_TYPE GetBlockType() { return blockType; }
+
 protected: //静的メンバ変数
 	//ブロック一つの大きさ
 	static const float blockSize;

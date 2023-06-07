@@ -37,6 +37,11 @@ protected: //メンバ関数
 	void CreateMapBlock() override;
 
 	/// <summary>
+	/// マップブロック再生成
+	/// </summary>
+	void ReCreateMapBlock();
+
+	/// <summary>
 	/// ブロックを上げる番号の生成
 	/// </summary>
 	void BlockCountCreate();

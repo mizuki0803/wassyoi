@@ -56,12 +56,20 @@ void MapDataStage::Update()
 
 		// 検索が当たったか
 		bool hitFlag = false;
+		int count = 0;
 		for (auto& block : blocks)
 		{
 			if (!block->IsEaseEndFlag())
 			{
 				hitFlag = true;
 			}
+
+			if (block->GetDeleteFlag())
+			{
+				blocks.erase(blocks.begin() + count);
+			}
+
+			count++;
 		}
 
 		if (!hitFlag)
@@ -159,6 +167,116 @@ void MapDataStage::CreateMapBlock()
 			}
 		}
 	}
+}
+
+void MapDataStage::ReCreateMapBlock()
+{
+	int count = 0;
+	int oldSize = static_cast<int>(blocks.size());
+
+	for (int i = 0; i < mapChipNum.size(); i++) {
+		for (int j = 0; j < mapChipNum[i].size(); j++) {
+			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
+				//何もない時はリターン
+				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::None)
+				{
+					continue;
+				}
+
+				//マップ番号
+				const XMINT3 chipNum = { i, j, k };
+
+				if (mapChipNum[i][j][k] == static_cast<int>(blocks[count]->GetBlockType()))
+				{
+					blocks[count]->ReCreate(StageBlock::GamePhase::Move, chipNum);
+				}
+				//プレイヤーの生成用マップ番号を保存
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
+					playerCreateMapChipNum = chipNum;
+				}
+				//ゴール生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
+					std::unique_ptr<StageBlock> newBlock;
+					newBlock.reset(StageBlock::Create(2, chipNum));
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//ブロック生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
+					std::unique_ptr<StageBlock> newBlock;
+					newBlock.reset(StageBlock::Create(0, chipNum));
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//上向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = {};	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//下向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = { 180, 0, 0 };	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//左向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = { 0, 0, 90 };	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//右向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = { 0, 0, -90 };	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//正面向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = { -90, 0, 0 };	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+				//奥向きハリボテ生成
+				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
+					std::unique_ptr<StageBlock> newBlock;
+					const XMFLOAT3 rot = { 90, 0, 0 };	//傾ける角度
+					newBlock.reset(StageBlock::Create(1, chipNum));
+					newBlock->SetRotation(rot);
+
+					blocks.insert(blocks.begin() + count, std::move(newBlock));
+				}
+
+				if (mapChipNum[i][j][k] != MapBlockData::MapBlockType::Player)
+				{
+					count++;
+				}
+			}
+		}
+	}
+
+	for (int i = count; i < blocks.size(); i++)
+	{
+		blocks[i]->ReCreate(StageBlock::GamePhase::Delete, {});
+	}
+
+	isBolckUp_ = false;
 }
 
 void MapDataStage::BlockCountCreate()
