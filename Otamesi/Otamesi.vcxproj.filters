@@ -347,6 +347,9 @@
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -657,6 +660,9 @@
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>

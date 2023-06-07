@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "MapDataStage.h"
 #include "BackGround.h"
+#include "HowToPlayUI.h"
 
 /// <summary>
 /// タイトルシーン
@@ -83,6 +84,9 @@ private: //メンバ変数
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;
+
+	//操作方法UI
+	std::unique_ptr<HowToPlayUI> howToPlayUI;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;

@@ -14,6 +14,9 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		HowToPlayMove,	//操作方法(移動)
+		HowToPlayCamera,//操作方法(カメラ)
+		HowToPlayPause,	//操作方法(ポーズ)
 		ParanomaSky,	// スカイドーム用
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数

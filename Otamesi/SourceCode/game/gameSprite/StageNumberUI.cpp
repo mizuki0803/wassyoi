@@ -19,7 +19,7 @@ StageNumberUI* StageNumberUI::Create(const Vector2& position, const float size, 
 bool StageNumberUI::Initialize(const Vector2& position, const float size, const int stageNum)
 {
 	//表示用サイズをセット
-	const Vector2 texSize = { 32, 48 };
+	const Vector2 texSize = { 80, 90 };
 	const Vector2 showsize = texSize * size;
 	
 	//桁数の分、数字スプライト生成

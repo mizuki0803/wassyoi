@@ -25,8 +25,8 @@ bool MapDataStageSelectManager::Initialize()
 	mapDatas.push_back(std::move(newMapData));
 
 	//ステージ番号表示用UI生成
-	const Vector2 uiPos = { 500, 85 };
-	const float uiSize = 2;
+	const Vector2 uiPos = { 450, 85 };
+	const float uiSize = 1;
 	stageNumberUI.reset(StageNumberUI::Create(uiPos, uiSize, StageManager::GetSelectStage()));
 
 	return true;

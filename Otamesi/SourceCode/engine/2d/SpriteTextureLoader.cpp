@@ -16,6 +16,10 @@ void SpriteTextureLoader::TextureLoad()
 	//ƒƒjƒ…[ŠÖŒW
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
 	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
+	//‘€ì•û–@ŠÖŒW
+	TextureManager::LoadTexture(textures[HowToPlayMove], directoryPath, "move.png");
+	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "camera.png");
+	TextureManager::LoadTexture(textures[HowToPlayPause], directoryPath, "pause.png");
 
 	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");
 }

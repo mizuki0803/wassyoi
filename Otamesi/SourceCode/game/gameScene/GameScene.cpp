@@ -82,6 +82,8 @@ void GameScene::Initialize()
 	KeepBinary(*camera, *player);
 
 	userInterface_ = UserInterface::Create();
+	//操作方法UI生成
+	howToPlayUI.reset(HowToPlayUI::Create(true));
 
 	// スカイドーム生成
 	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
@@ -95,10 +97,10 @@ void GameScene::Finalize()
 void GameScene::Update()
 {
 	//デバッグ用テキスト
-	DebugText::GetInstance()->Print("CameraMove : arrow", 10, 10);
+	/*DebugText::GetInstance()->Print("CameraMove : arrow", 10, 10);
 	DebugText::GetInstance()->Print("PlayerMove : WASD", 10, 30);
 	DebugText::GetInstance()->Print("StageReset : R", 10, 50);
-	DebugText::GetInstance()->Print("StageSelect: P", 10, 70);
+	DebugText::GetInstance()->Print("StageSelect: P", 10, 70);*/
 
 	//プレイヤーがゴールをしたらステージクリア
 	if (!isStageClear) {
@@ -140,8 +142,12 @@ void GameScene::Update()
 	skydome->Update();
 	//背景オブジェクト
 	backGround->Update();
+
+	//スプライト
 	//UIの更新
 	userInterface_->Update();
+	//操作方法
+	howToPlayUI->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
@@ -179,7 +185,7 @@ void GameScene::Update()
 		Redo(camera.get(), player.get());
 	}
 
-	DebugText::GetInstance()->Print("move surface" + std::to_string(player->GetMoveSurfacePhase()), 10, 90);
+	//DebugText::GetInstance()->Print("move surface" + std::to_string(player->GetMoveSurfacePhase()), 10, 90);
 
 
 	if (Input::GetInstance()->TriggerKey(DIK_R)) {
@@ -247,6 +253,9 @@ void GameScene::DrawFrontSprite()
 	//スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
+
+	//操作方法
+	howToPlayUI->Draw();
 
 	userInterface_->Draw();
 

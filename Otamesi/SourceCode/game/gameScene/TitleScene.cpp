@@ -74,6 +74,9 @@ void TitleScene::Initialize()
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
+	//操作方法UI生成
+	howToPlayUI.reset(HowToPlayUI::Create(false));
+
 	////初期状態をbinary保存
 	KeepBinary(*camera, *player);
 }
@@ -86,7 +89,7 @@ void TitleScene::Finalize()
 void TitleScene::Update()
 {
 	//デバッグ用テキスト
-	DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
+	//DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
 	DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
 
 	//プレイヤーがゴールをしたらステージクリア
@@ -116,6 +119,10 @@ void TitleScene::Update()
 	skydome->Update();
 	//背景オブジェクト
 	backGround->Update();
+
+	//スプライト更新
+	//操作方法
+	howToPlayUI->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
@@ -201,7 +208,10 @@ void TitleScene::DrawFrontSprite()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//シーン変更演出描画
+	//操作方法
+	howToPlayUI->Draw();
+
+	//シーン変更演出
 	SceneChangeEffect::Draw();
 
 
