@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "EaseData.h"
+#include <memory>
 
 /// <summary>
 /// ステージ用ブロック
@@ -14,6 +15,9 @@ public: //enum
 	enum class GamePhase
 	{
 		Start,	//開始
+		Move,	//移動
+		Delete,	//削除
+		ReStart,//再度生成
 		None,	//何もしない
 	};
 
@@ -44,6 +48,25 @@ public: //メンバ関数
 	/// ゲーム開始時
 	/// </summary>
 	void PlayStratMove();
+	/// <summary>
+	/// 再生成時の移動
+	/// </summary>
+	void ReStratMove();
+	/// <summary>
+	/// 削除時の移動
+	/// </summary>
+	void DeleteMove();
+	/// <summary>
+	/// 再生成時の追加したブロックの移動
+	/// </summary>
+	void ReCreateMove();
+
+	/// <summary>
+	/// 再生成の設定
+	/// </summary>
+	/// <param name="phase">行動タイプ</param>
+	/// <param name="mapChipNum">マップチップの番号</param>
+	void ReCreate(const GamePhase phase, const XMINT3& mapChipNum);
 
 	/// <summary>
 	/// イージングが終わったか
@@ -76,22 +99,47 @@ public: //メンバ関数
 	int GetActPhase() { return static_cast<int>(phase_); }
 
 	/// <summary>
+	/// 削除フラグの取得
+	/// </summary>
+	/// <returns>削除フラグ</returns>
+	bool GetDeleteFlag() { return deleteFlag_; }
+
+	/// <summary>
+	/// 行動タイプの設定
+	/// </summary>
+	/// <param name="phase">行動タイプ</param>
+	void SetGamePhase(GamePhase phase) { phase_ = static_cast<int>(phase); }
+
+	/// <summary>
 	/// プレイヤーからのコールバック
 	/// </summary>
 	void ReAction();
+
+	/// <summary>
+	/// ランダムの計算
+	/// </summary>
+	/// <param name="a">最小値</param>
+	/// <param name="b">最大値</param>
+	const float RandCalculate(float a, float b);
 
 protected: // メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_ = static_cast<int>(GamePhase::Start);
+	size_t phase_;
+	//削除用のフラグ
+	bool deleteFlag_ = false;
 
 #pragma region
 	// 開始位置
 	Vector3 blockStratPos_;
 	// 終了位置
 	Vector3 blockEndPos_;
+	// 移動量
+	Vector3 vec_ = {};
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
+	// 移動量用イージングデータ
+	std::unique_ptr<EaseData> vecEaseData_;
 #pragma endregion イージング関係
 };
