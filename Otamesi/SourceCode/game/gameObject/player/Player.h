@@ -2,30 +2,25 @@
 #include "ObjObject3d.h"
 #include "GameCamera.h"
 #include "EaseData.h"
+#include "PlayerEffect.h"
+
 
 /// <summary>
 /// プレイヤー
 /// </summary>
 class Player : public ObjObject3d
 {
-public: //enum
+public:
+	friend class PlayerEffect;
+
+	//enum
 	/// <summary>
 	/// 行動フェーズ
 	/// </summary>
 	enum class ActionPhase
 	{
 		None,	//何もしない
-		MovePos,//座標移動
-	};
-
-	/// <summary>
-	/// ゲームフェーズ
-	/// </summary>
-	enum class GamePhase
-	{
-		GamePlay,	//ゲーム
-		Start,		//開始
-		ReStart,	//再開始
+		MovePos,	//座標移動
 	};
 
 	/// <summary>
@@ -47,9 +42,10 @@ public: //静的メンバ関数
 	/// </summary>
 	/// <param name="model">モデル</param>
 	/// <param name="mapChipNum">プレイヤー位置を表すマップ番号</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <param name="gameCamera">ゲームカメラ</param>
 	/// <returns>プレイヤー</returns>
-	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera);
+	static Player* Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel);
 
 public: //メンバ関数
 	/// <summary>
@@ -57,23 +53,7 @@ public: //メンバ関数
 	/// </summary>
 	void Update();
 
-	/// <summary>
-	/// ゲーム中
-	/// </summary>
-	void PlayGame();
-	/// <summary>
-	/// ゲーム開始
-	/// </summary>
-	void GameStart();
-	/// <summary>
-	/// ゲーム再開始
-	/// </summary>
-	void GameReStart();
-
-	/// <summary>
-	/// 関数の設定
-	/// </summary>
-	void CreateAct();
+	void Draw();
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
@@ -126,19 +106,20 @@ private: //メンバ関数
 	/// </summary>
 	/// <param name="position"></param>
 	void SetPlayerEndPos(const Vector3& position) { playerEndPos_ = position; }
-	/// <summary>
-	/// 行動の設定
-	/// </summary>
-	/// <param name="gamePhase"></param>
-	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
 
 private: //静的メンバ変数
 	//プレイヤーの大きさ
 	static const float playerSize;
 
 private: //メンバ変数
+
+	std::array<std::unique_ptr<PlayerEffect>, 4> effect;
+
+
 	//プレイヤー位置を表すマップ番号
 	XMINT3 mapChipNumberPos;
+	//マップの中心にずらす値
+	Vector3 shiftPos;
 	//ゲームカメラ
 	GameCamera* gameCamera = nullptr;
 	//アクション
@@ -156,7 +137,7 @@ private: //メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_ = static_cast<int>(GamePhase::Start);
+	size_t phase_ = 0;
 #pragma region
 	// 開始位置
 	Vector3 playerStratPos_;
@@ -164,8 +145,6 @@ private: //メンバ変数
 	Vector3 playerEndPos_;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
-	// イージングのリセットフラグ
-	bool resetFlag_ = false;
 #pragma endregion イージング関係
 
 	//移動処理が終わったタイミング

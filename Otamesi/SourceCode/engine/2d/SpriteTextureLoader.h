@@ -10,9 +10,20 @@ public: //テクスチャ名
 	enum TextureName {
 		DebugFont,		//デバッグ用フォント
 		White,			//真っ白
+		Number,			//数字
+		TitleLogo,		//タイトルロゴ
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		HowToPlayMove,	//操作方法(移動)
+		HowToPlayCamera,//操作方法(カメラ)
+		HowToPlayUndo,	//操作方法(戻る)
+		HowToPlayRedo,	//操作方法(戻る戻る)
+		HowToPlayReset,	//操作方法(リセット)
+		HowToPlayStageSelect,	//操作方法(ステージセレクト)
+		StageClear,		//ステージクリア
+		PressEnter,		//PRESS ENTER
+		ParanomaSky,	// スカイドーム用
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数
 	};

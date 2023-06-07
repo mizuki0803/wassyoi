@@ -12,10 +12,10 @@ public: //静的メンバ関数
 	/// </summary>	
 	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
-	/// <param name="mapSize">マップの大きさ</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <param name="parent">中心点用の親オブジェクト</param>
 	/// <returns>ステージ選択用ブロック</returns>
-	static StageSelectBlock* Create(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent);
+	static StageSelectBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent);
 
 public: //メンバ関数
 	/// <summary>
@@ -23,8 +23,8 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
-	/// <param name="mapSize">マップの大きさ</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <param name="parent">中心点用の親オブジェクト</param>
 	/// <returns>成否</returns>
-	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent);
+	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent);
 };

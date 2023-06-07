@@ -1,12 +1,12 @@
 #include "StageSelectBlock.h"
 
-StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
+StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent)
 {
 	//インスタンス生成
 	StageSelectBlock* instance = new StageSelectBlock();
 
 	//初期化処理
-	if (!instance->Initialize(_blockType, mapChipNum, mapSize, parent)) {
+	if (!instance->Initialize(_blockType, mapChipNum, shiftPos, parent)) {
 		delete instance;
 		assert(0);
 		return nullptr;
@@ -15,14 +15,14 @@ StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& m
 	return instance;
 }
 
-bool StageSelectBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const XMINT3& mapSize, ObjObject3d* parent)
+bool StageSelectBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent)
 {
 	//ブロックの種類を「ブロック」に設定
 	blockType = BROCK_TYPE(_blockType);
 
 	//座標をセット
 	Vector3 pos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
-	pos -= { blockSize / 2 * (mapSize.x - 1), blockSize / 2 * (mapSize.y - 1), blockSize / 2 * (mapSize.z - 1) };
+	pos -= shiftPos;
 	position = pos;
 	//大きさをセット
 	scale = { blockSize, blockSize, blockSize };

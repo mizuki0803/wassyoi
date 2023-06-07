@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "MapDataStage.h"
 #include "BackGround.h"
+#include "HowToPlayUI.h"
+#include "StageClearUI.h"
 
 /// <summary>
 /// タイトルシーン
@@ -70,6 +72,7 @@ private: //メンバ変数
 	//objモデル
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelSkydome;
+	std::unique_ptr<ObjModel> modelPlayerEffect;
 
 	//プレイヤー
 	std::unique_ptr<Player> player;
@@ -82,6 +85,14 @@ private: //メンバ変数
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;
+
+	//操作方法UI
+	std::unique_ptr<HowToPlayUI> howToPlayUI;
+	//ステージクリアUI
+	std::unique_ptr<StageClearUI> stageClearUI;
+
+	//タイトルロゴ
+	std::unique_ptr<Sprite> titleLogo;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;

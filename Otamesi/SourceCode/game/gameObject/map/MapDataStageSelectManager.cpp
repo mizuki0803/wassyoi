@@ -24,6 +24,11 @@ bool MapDataStageSelectManager::Initialize()
 	newMapData.reset(MapDataStageSelect::Create(StageManager::GetSelectStage(), StageSelectBlockManager::BlockManagerPositionPhase::Center));
 	mapDatas.push_back(std::move(newMapData));
 
+	//ステージ番号表示用UI生成
+	const Vector2 uiPos = { 450, 85 };
+	const float uiSize = 1;
+	stageNumberUI.reset(StageNumberUI::Create(uiPos, uiSize, StageManager::GetSelectStage()));
+
 	return true;
 }
 
@@ -38,10 +43,13 @@ void MapDataStageSelectManager::Update()
 	//選択するステージを変更する
 	ChangeStage();
 
-	//更新
+	//マップ更新
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		mapData->Update();
 	}
+
+	//ステージ番号表示用UI更新
+	stageNumberUI->Update();
 }
 
 void MapDataStageSelectManager::Draw()
@@ -50,6 +58,12 @@ void MapDataStageSelectManager::Draw()
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		mapData->Draw();
 	}
+}
+
+void MapDataStageSelectManager::DrawUI()
+{
+	//ステージ番号表示用UI描画
+	stageNumberUI->Draw();
 }
 
 void MapDataStageSelectManager::ChangeStage()
@@ -88,4 +102,7 @@ void MapDataStageSelectManager::ChangeStage()
 		}
 	}	
 	mapDatas.push_back(std::move(newMapData));
+
+	//ステージ番号の更新
+	stageNumberUI->ChengeStageNum(StageManager::GetSelectStage());
 }

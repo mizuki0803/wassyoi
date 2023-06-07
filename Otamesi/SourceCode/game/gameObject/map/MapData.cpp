@@ -23,11 +23,15 @@ bool MapData::LoadMapData(const std::string& fileName)
 {
 	//マップデータ情報読み取り
 	std::vector<std::vector<std::vector<int>>> inputmap;
-	float _cameraDist;	//これは今関係ない
 
-	if (!JsonLoader::DeserializeJsonMap("Resources/mapdata/" + fileName + ".json", &_cameraDist, &inputmap)) {
+	std::array<float, 3> inCameraDist = {};
+	if (!JsonLoader::DeserializeJsonMap("Resources/mapdata/" + fileName + ".json",
+		&inCameraDist, &installationSurface, &inputmap)) {
 		return false;
 	}
+
+	//カメラ距離保存
+	cameraDist = { inCameraDist[0],inCameraDist[1], inCameraDist[2] };
 
 	//マップのサイズを取得
 	const int marginNum = 2; //ゲームの仕様上、上下左右前後に1マスの余白を作る
@@ -50,6 +54,10 @@ bool MapData::LoadMapData(const std::string& fileName)
 			}
 		}
 	}
+
+	//マップの中心をずらす値をセット
+	const float blockSize = Block::GetBlockSize();
+	shiftPos = { blockSize / 2 * (mapSize.x - 1), blockSize / 2 * (mapSize.y - 1), blockSize / 2 * (mapSize.z - 1) };
 
 	return true;
 }

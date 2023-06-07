@@ -4,9 +4,10 @@
 #include "Block.h"
 #include "PlayerActionManager.h"
 
+
 const float Player::playerSize = 5.0f;
 
-Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* gameCamera)
+Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
 	//インスタンスを生成
 	Player* instance = new Player();
@@ -21,97 +22,77 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 		assert(0);
 		return nullptr;
 	}
-	// 関数の設定
-	instance->CreateAct();
-	// イージングの設定
-	instance->easeData_ = std::make_unique<EaseData>(60);
+
 	//プレイヤー位置を表すマップ番号をセット
 	instance->mapChipNumberPos = mapChipNum;
+	//マップの中心をずらす値をセット
+	instance->shiftPos = shiftPos;
 	//初期座標をセット
 	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNum));
 	Vector3 tempPos = instance->GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
-	//instance->position = tempPos;
-
-	instance->playerEndPos_ = tempPos;
-	tempPos.y -= 100.0f;
-	instance->playerStratPos_ = tempPos;
+	instance->position = tempPos;
 	//大きさをセット
 	instance->scale = { playerSize, playerSize, playerSize };
 	//ゲームカメラをセット
 	instance->gameCamera = gameCamera;
+
+	// エフェクト読み込み
+	for (int i = 0; i < instance->effect.size(); ++i)
+	{
+		instance->effect[i].reset(PlayerEffect::Create(effectModel, static_cast<float>(i)));
+	}
 
 	return instance;
 }
 
 void Player::Update()
 {
-	func_[phase_]();
+	//ゴールしていないときに動きをする
+	if (!isGoal) {
+		//frame最初の初期化
+		isMove = false;
 
-	//オブジェクト更新
-	ObjObject3d::Update();
-}
-
-void Player::PlayGame()
-{
-	//frame最初の初期化
-	isMove = false;
-
-	//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
-	if (gameCamera->GetIsTriggerDimensionChange()) {
-		//2次元状態なら、プレイヤーの位置を画面手前に移動させる
-		if (gameCamera->GetIs2D()) {
-			PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
-			position = GetMapChipPos(mapChipNumberPos);
+		//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
+		if (gameCamera->GetIsTriggerDimensionChange()) {
+			//2次元状態なら、プレイヤーの位置を画面手前に移動させる
+			if (gameCamera->GetIs2D()) {
+				PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
+				position = GetMapChipPos(mapChipNumberPos);
+			}
+			//ゴールしたのかを判定
+			StageClearCheck();
 		}
-		//ゴールしたのかを判定
-		StageClearCheck();
+
+		//座標移動開始
+		MovePosStart();
+		//座標移動
+		MovePos();
+
+		//次元切り替え開始
+		ChanegeDimensionStart();
+
+		//オブジェクト更新
+		ObjObject3d::Update();
 	}
 
-	//座標移動開始
-	MovePosStart();
-	//座標移動
-	MovePos();
-
-	//次元切り替え開始
-	ChanegeDimensionStart();
-}
-
-void Player::GameStart()
-{
-	// イージングの計算
-	position.x = Easing::OutBack(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::OutBack(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
-	position.z = Easing::OutBack(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
-
-	if (easeData_->GetEndFlag())
+	// エフェクト更新
+	for (auto& e : effect)
 	{
-		phase_ = static_cast<int>(GamePhase::GamePlay);
+		e->Update(this);
 	}
-	easeData_->Update();
-	resetFlag_ = true;
 }
 
-void Player::GameReStart()
+void Player::Draw()
 {
-	// イージングの計算
-	position.x = Easing::InCubic(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InCubic(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
-	position.z = Easing::InCubic(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
 
-	if (easeData_->GetEndFlag())
+	// エフェクト読み込み
+	for (auto& e : effect)
 	{
-		phase_ = static_cast<int>(GamePhase::GamePlay);
+		e->Draw();
 	}
-	easeData_->Update();
-	resetFlag_ = true;
-}
 
-void Player::CreateAct()
-{
-	func_.push_back([this] { return PlayGame(); });
-	func_.push_back([this] { return GameStart(); });
-	func_.push_back([this] { return GameReStart(); });
+	ObjObject3d::Draw();
 }
 
 void Player::MovePosStart()
@@ -141,12 +122,6 @@ void Player::MovePosStart()
 
 	//アクション用タイマーを初期化しておく
 	actionTimer = 0;
-
-	if (resetFlag_)
-	{
-		easeData_->Reset();
-		resetFlag_ = false;
-	}
 
 	//行動を「座標移動」にする
 	actionPhase = ActionPhase::MovePos;
@@ -237,7 +212,8 @@ void Player::StageClearCheck()
 
 Vector3 Player::GetMapChipPos(const XMINT3& mapChipNumberPos)
 {
-	return { mapChipNumberPos.x * Block::GetBlockSize(), mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.z * Block::GetBlockSize() };
+	Vector3 mapChipPos = { mapChipNumberPos.x * Block::GetBlockSize(), mapChipNumberPos.y * Block::GetBlockSize(), mapChipNumberPos.z * Block::GetBlockSize() };
+	return mapChipPos - shiftPos;
 }
 
 void Player::SetEaseData(const int count)

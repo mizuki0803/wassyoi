@@ -154,13 +154,19 @@
     <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\Player.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerActionManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\player\PlayerEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\BaseGameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\Menu.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\NumberSprite.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\ParanomaSkyDorm.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\StageClearUI.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
@@ -169,6 +175,7 @@
     <None Include="Resources\shaders\InstanceObject.hlsli" />
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\ObjLightView.hlsli" />
+    <None Include="Resources\shaders\ParanoiaSkyDome.hlsli" />
     <None Include="Resources\shaders\Particle.hlsli" />
     <None Include="Resources\shaders\PostEffect.hlsli" />
     <None Include="Resources\shaders\Sprite.hlsli" />
@@ -217,6 +224,18 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParanoiaSkyDomePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ParanoiaSkyDomeVS.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -331,13 +350,19 @@
     <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelectManager.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\Player.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerActionManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\player\PlayerEffect.h" />
     <ClInclude Include="SourceCode\game\gameObject\StageManager.h" />
     <ClInclude Include="SourceCode\game\gameScene\BaseGameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\TitleScene.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\Menu.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\NumberSprite.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\ParanomaSkyDorm.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\StageClearUI.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

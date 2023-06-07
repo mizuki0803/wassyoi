@@ -55,12 +55,12 @@ void JsonLoader::LoadNlohmannJson(const std::string& _fileName, std::vector<std:
     }
 }
 
-void JsonLoader::SerializeJsonMap(const std::string& _fileName, const float _cameraDist,
+void JsonLoader::SerializeJsonMap(const std::string& _fileName, const std::array<float, 3> _cameraDist,
     const std::array<int, 3> _mapSize, std::vector<std::vector<std::vector<int>>> _map)
 {
     Json x;
     x.name = _fileName;
-    x.cameraDist = 30.0f;
+    x.cameraDist = _cameraDist;
 	x.mapSize = _mapSize;
 	x.map = _map;
 	// ファイル出力
@@ -69,8 +69,8 @@ void JsonLoader::SerializeJsonMap(const std::string& _fileName, const float _cam
     x.serialize(archiveFile);
 }
 
-bool JsonLoader::DeserializeJsonMap(const std::string _fileName,
-    float* _cameraDist, std::vector<std::vector<std::vector<int>>>* _map)
+bool JsonLoader::DeserializeJsonMap(const std::string _fileName, std::array<float, 3>* _cameraDist,
+    int* _installationSurface, std::vector<std::vector<std::vector<int>>>* _map)
 {
     Json x;
 
@@ -82,6 +82,7 @@ bool JsonLoader::DeserializeJsonMap(const std::string _fileName,
     x.serialize(archive);
 
     *_cameraDist = x.cameraDist;
+    *_installationSurface = x.installationSurface;
     *_map = x.map;
 
     return true;

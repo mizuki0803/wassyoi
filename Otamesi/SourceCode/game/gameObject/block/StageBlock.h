@@ -27,8 +27,9 @@ public: //静的メンバ関数
 	/// </summary>	
 	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <returns>ステージ用ブロック</returns>
-	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum);
+	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos);
 
 public: //メンバ関数
 	/// <summary>
@@ -36,8 +37,9 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="_blockType">モデル番号</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
+	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <returns>成否</returns>
-	bool Initialize(const int _blockType, const XMINT3& mapChipNum);
+	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos);
 
 	/// <summary>
 	/// 更新

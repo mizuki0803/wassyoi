@@ -1,4 +1,5 @@
 #include "TitleScene.h"
+#include "WindowApp.h"
 #include "Input.h"
 #include "Audio.h"
 #include "SpriteCommon.h"
@@ -10,6 +11,7 @@
 #include "GamePostEffect.h"
 #include "StageManager.h"
 #include "JsonLoader.h"
+#include "SpriteTextureLoader.h"
 
 void TitleScene::Initialize()
 {
@@ -21,6 +23,7 @@ void TitleScene::Initialize()
 
 	//objからモデルデータを読み込む
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
+	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 	//選択中のステージ番号を0にセット
@@ -30,9 +33,9 @@ void TitleScene::Initialize()
 
 	//カメラ初期化
 	camera.reset(new GameCamera());
-	const float distanceStageCenter = 60.0f; //カメラ視点のステージ中央からの距離
+	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //カメラ視点のステージ中央からの距離
 	const XMINT3 mapSize = mapData->GetMapSize(); //マップの大きさ
-	const Vector3 stageCenterPos = { Block::GetBlockSize() / 2 * (mapSize.x - 1), Block::GetBlockSize() / 2 * (mapSize.y - 1), Block::GetBlockSize() / 2 * (mapSize.z - 1) }; //ステージ中央座標
+	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
 	//影用光源カメラ初期化
 	lightCamera.reset(new LightCamera());
@@ -40,7 +43,8 @@ void TitleScene::Initialize()
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	//プレイヤー生成
-	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), camera.get()));
+	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
+	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
 
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
@@ -72,7 +76,17 @@ void TitleScene::Initialize()
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	////初期状態をbinary保存
+	//操作方法UI生成
+	howToPlayUI.reset(HowToPlayUI::Create(false));
+	//ステージクリアUI生成
+	stageClearUI.reset(StageClearUI::Create());
+	//タイトルロゴ生成
+	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
+	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
+	titleLogo->SetTexSize({1658, 518});
+	titleLogo->SetSize(titleLogo->GetTexSize() * 0.4f);
+
+	//初期状態をbinary保存
 	KeepBinary(*camera, *player);
 }
 
@@ -84,18 +98,35 @@ void TitleScene::Finalize()
 void TitleScene::Update()
 {
 	//デバッグ用テキスト
-	DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
-	DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
+	//DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
 
-	//プレイヤーがゴールをしたらステージクリア
 	if (!isStageClear) {
+		//undo
+		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+			Undo(camera.get(), player.get());
+
+		}
+		//redo
+		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+			Redo(camera.get(), player.get());
+		}
+
+		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
 			isStageClear = true;
 			StageManager::StageClear();
+			camera->SetIsStageClear(true);
 		}
 	}
 	else {
-		DebugText::GetInstance()->Print("STAGECLEAR", 100, 300, 5);
+		if (Input::GetInstance()->TriggerKey(DIK_RETURN) && !isSceneChange) {
+			//シーン切り替え
+			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+			//binary削除
+			DeleteBinary();
+			//次のステージへ
+			StageManager::NextStageSelect();
+		}
 	}
 
 	//カメラ更新
@@ -115,6 +146,14 @@ void TitleScene::Update()
 	//背景オブジェクト
 	backGround->Update();
 
+	//スプライト更新
+	//操作方法
+	howToPlayUI->Update();
+	//ステージクリアUI更新
+	stageClearUI->Update();
+	//タイトルロゴ
+	titleLogo->Update();
+
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
 
@@ -129,24 +168,6 @@ void TitleScene::Update()
 		KeepBinary(*camera, *player);
 	}
 
-	//undo
-	if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
-		Undo(camera.get(), player.get());
-
-	}
-	//redo
-	else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
-		Redo(camera.get(), player.get());
-	}
-
-	if (Input::GetInstance()->TriggerKey(DIK_RETURN) && !isSceneChange) {
-		//シーン切り替え
-		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-		//binary削除
-		DeleteBinary();
-		//次のステージへ
-		StageManager::NextStageSelect();
-	}
 	//シーン変更状態
 	SceneChangeMode();
 	//シーン変更演出更新
@@ -199,7 +220,18 @@ void TitleScene::DrawFrontSprite()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//シーン変更演出描画
+	//操作方法
+	howToPlayUI->Draw();
+
+	//ステージクリアUI
+	if (isStageClear) {
+		stageClearUI->Draw();
+	}
+
+	//タイトルロゴ
+	titleLogo->Draw();
+
+	//シーン変更演出
 	SceneChangeEffect::Draw();
 
 

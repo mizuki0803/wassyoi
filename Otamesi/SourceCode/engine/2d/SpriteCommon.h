@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include <DirectXMath.h>
 #include <string>
+#include <map>
 
 /// <summary>
 /// スプライト共通部分
@@ -49,13 +50,18 @@ public: //メンバ関数
 	/// <summary>
 	/// 描画前処理	
 	/// </summary>
-	void DrawPrev();
+	void DrawPrev(const std::string &name = "Default");
 
 private: //メンバ関数
 	/// <summary>
 	/// パイプライン生成
 	/// </summary>
 	void CreatePipeline();
+
+	/// <summary>
+	/// スカイドーム用パイプライン
+	/// </summary>
+	void CreateSkyDormPipeline();
 
 public: //getter
 	/// <summary>
@@ -80,7 +86,7 @@ public: //getter
 	/// パイプラインステート取得
 	/// </summary>
 	/// <returns>パイプラインステート</returns>
-	const PipelineSet& GetPipelineSet() { return pipelineSet; }
+	const PipelineSet& GetPipelineSet(const std::string &name = "Default") { return pipelineSet[name]; }
 
 private: //メンバ変数
 	//デバイス
@@ -88,7 +94,7 @@ private: //メンバ変数
 	//コマンドリスト
 	ID3D12GraphicsCommandList* cmdList = nullptr;
 	//パイプラインセット
-	PipelineSet pipelineSet;
+	std::map<std::string,PipelineSet> pipelineSet;
 	//射影行列
 	XMMATRIX matProjection;
 };

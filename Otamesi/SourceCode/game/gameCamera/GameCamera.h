@@ -55,7 +55,7 @@ public: //静的メンバ関数
 	/// <param name="distanceStageCenter">ステージ中央からの距離</param>
 	/// <param name="stageCenterPos">ステージ中央座標</param>
 	/// <returns>ゲームカメラ</returns>
-	GameCamera* Create(float distanceStageCenter, const Vector3& stageCenterPos);
+	GameCamera* Create(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
 public: //メンバ関数
 	/// <summary>
@@ -63,7 +63,7 @@ public: //メンバ関数
 	/// </summary> 
 	/// <param name="distanceStageCenter">ステージ中央からの距離</param>
 	/// <param name="stageCenterPos">ステージ中央座標</param>
-	void Initialize(float distanceStageCenter, const Vector3& stageCenterPos);
+	void Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
 	/// <summary>
 	/// 更新
@@ -87,6 +87,7 @@ public: //メンバ関数
 	void SetCameraXPosPhase(const int _cameraXPosPhase) { cameraXPosPhase = _cameraXPosPhase; };
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
+	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
 
 private: //メンバ関数
 	/// <summary>
@@ -206,7 +207,7 @@ private:
 	//ステージから見ての縦軸カメラ位置フェーズ
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
 	//ステージ中央からの距離
-	float distanceStageCenter;
+	XMFLOAT3 distanceStageCenter;
 	//アクション
 	ActionPhase actionPhase = ActionPhase::None;
 	//アクション用タイマー
@@ -235,4 +236,6 @@ private:
 	int attenuation_ = 0;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
+	//ステージクリア状態か
+	bool isStageClear = false;
 };

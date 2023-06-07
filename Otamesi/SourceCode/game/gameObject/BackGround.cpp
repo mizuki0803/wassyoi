@@ -14,10 +14,11 @@ BackGround* BackGround::Create()
 
 void BackGround::Initialize()
 {
-	model.reset(ObjModel::LoadFromOBJ("block"));
+	model.reset(ObjModel::LoadFromOBJ("backBlock"));
 	block.reset(InstanceObject::Create(model.get()));
 
 	JsonLoader::LoadNlohmannJson("back", &info);
+
 }
 
 void BackGround::Update()
