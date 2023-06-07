@@ -99,6 +99,12 @@ public: //メンバ関数
 	int GetActPhase() { return static_cast<int>(phase_); }
 
 	/// <summary>
+	/// 削除フラグの取得
+	/// </summary>
+	/// <returns>削除フラグ</returns>
+	bool GetDeleteFlag() { return deleteFlag_; }
+
+	/// <summary>
 	/// 行動タイプの設定
 	/// </summary>
 	/// <param name="phase">行動タイプ</param>
