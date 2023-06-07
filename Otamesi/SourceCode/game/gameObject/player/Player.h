@@ -15,7 +15,17 @@ public: //enum
 	enum class ActionPhase
 	{
 		None,	//何もしない
-		MovePos,	//座標移動
+		MovePos,//座標移動
+	};
+
+	/// <summary>
+	/// ゲームフェーズ
+	/// </summary>
+	enum class GamePhase
+	{
+		GamePlay,	//ゲーム
+		Start,		//開始
+		ReStart,	//再開始
 	};
 
 	/// <summary>
@@ -46,6 +56,24 @@ public: //メンバ関数
 	/// 更新
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// ゲーム中
+	/// </summary>
+	void PlayGame();
+	/// <summary>
+	/// ゲーム開始
+	/// </summary>
+	void GameStart();
+	/// <summary>
+	/// ゲーム再開始
+	/// </summary>
+	void GameReStart();
+
+	/// <summary>
+	/// 関数の設定
+	/// </summary>
+	void CreateAct();
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
@@ -98,6 +126,11 @@ private: //メンバ関数
 	/// </summary>
 	/// <param name="position"></param>
 	void SetPlayerEndPos(const Vector3& position) { playerEndPos_ = position; }
+	/// <summary>
+	/// 行動の設定
+	/// </summary>
+	/// <param name="gamePhase"></param>
+	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
 
 private: //静的メンバ変数
 	//プレイヤーの大きさ
@@ -123,7 +156,7 @@ private: //メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_ = 0;
+	size_t phase_ = static_cast<int>(GamePhase::Start);
 #pragma region
 	// 開始位置
 	Vector3 playerStratPos_;
@@ -131,6 +164,8 @@ private: //メンバ変数
 	Vector3 playerEndPos_;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
+	// イージングのリセットフラグ
+	bool resetFlag_ = false;
 #pragma endregion イージング関係
 
 	//移動処理が終わったタイミング

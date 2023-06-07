@@ -172,7 +172,7 @@ void MapDataStage::CreateMapBlock()
 void MapDataStage::ReCreateMapBlock()
 {
 	int count = 0;
-	int oldSize = blocks.size();
+	int oldSize = static_cast<int>(blocks.size());
 
 	for (int i = 0; i < mapChipNum.size(); i++) {
 		for (int j = 0; j < mapChipNum[i].size(); j++) {

@@ -21,15 +21,21 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 		assert(0);
 		return nullptr;
 	}
-
+	// 関数の設定
+	instance->CreateAct();
+	// イージングの設定
+	instance->easeData_ = std::make_unique<EaseData>(60);
 	//プレイヤー位置を表すマップ番号をセット
 	instance->mapChipNumberPos = mapChipNum;
 	//初期座標をセット
 	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNum));
 	Vector3 tempPos = instance->GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
+	//instance->position = tempPos;
 
-	instance->position = tempPos;
+	instance->playerEndPos_ = tempPos;
+	tempPos.y -= 100.0f;
+	instance->playerStratPos_ = tempPos;
 	//大きさをセット
 	instance->scale = { playerSize, playerSize, playerSize };
 	//ゲームカメラをセット
@@ -39,6 +45,14 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, GameCamera* ga
 }
 
 void Player::Update()
+{
+	func_[phase_]();
+
+	//オブジェクト更新
+	ObjObject3d::Update();
+}
+
+void Player::PlayGame()
 {
 	//frame最初の初期化
 	isMove = false;
@@ -61,9 +75,43 @@ void Player::Update()
 
 	//次元切り替え開始
 	ChanegeDimensionStart();
+}
 
-	//オブジェクト更新
-	ObjObject3d::Update();
+void Player::GameStart()
+{
+	// イージングの計算
+	position.x = Easing::OutBack(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
+	position.y = Easing::OutBack(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::OutBack(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
+
+	if (easeData_->GetEndFlag())
+	{
+		phase_ = static_cast<int>(GamePhase::GamePlay);
+	}
+	easeData_->Update();
+	resetFlag_ = true;
+}
+
+void Player::GameReStart()
+{
+	// イージングの計算
+	position.x = Easing::InCubic(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
+	position.y = Easing::InCubic(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
+
+	if (easeData_->GetEndFlag())
+	{
+		phase_ = static_cast<int>(GamePhase::GamePlay);
+	}
+	easeData_->Update();
+	resetFlag_ = true;
+}
+
+void Player::CreateAct()
+{
+	func_.push_back([this] { return PlayGame(); });
+	func_.push_back([this] { return GameStart(); });
+	func_.push_back([this] { return GameReStart(); });
 }
 
 void Player::MovePosStart()
@@ -93,6 +141,12 @@ void Player::MovePosStart()
 
 	//アクション用タイマーを初期化しておく
 	actionTimer = 0;
+
+	if (resetFlag_)
+	{
+		easeData_->Reset();
+		resetFlag_ = false;
+	}
 
 	//行動を「座標移動」にする
 	actionPhase = ActionPhase::MovePos;
