@@ -85,9 +85,6 @@ void TitleScene::Initialize()
 	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
 	titleLogo->SetTexSize({1658, 518});
 	titleLogo->SetSize(titleLogo->GetTexSize() * 0.4f);
-
-	//初期状態をbinary保存
-	KeepBinary(*camera, *player);
 }
 
 void TitleScene::Finalize()
@@ -109,6 +106,17 @@ void TitleScene::Update()
 		//redo
 		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
 			Redo(camera.get(), player.get());
+		}
+
+		//binary出力
+		if (player->GetIsMove() || (player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
+			orderNum++;
+			orderMaxNum = orderNum;
+			if (deleteOrderMaxNum < orderMaxNum) {
+				deleteOrderMaxNum = orderMaxNum;
+			}
+
+			KeepBinary(*camera, *player);
 		}
 
 		//プレイヤーがゴールをしたらステージクリア
@@ -154,19 +162,13 @@ void TitleScene::Update()
 	//タイトルロゴ
 	titleLogo->Update();
 
-	//パーティクル更新
-	ParticleEmitter::GetInstance()->Update();
-
-	//binary出力
-	if (player->GetIsMove() || camera->GetIsTriggerDimensionChange()) {
-		orderNum++;
-		orderMaxNum = orderNum;
-		if (deleteOrderMaxNum < orderMaxNum) {
-			deleteOrderMaxNum = orderMaxNum;
-		}
-
+	//初期状態をbinary保存
+	if (player->GetIsStartMove()) {
 		KeepBinary(*camera, *player);
 	}
+
+	//パーティクル更新
+	ParticleEmitter::GetInstance()->Update();
 
 	//シーン変更状態
 	SceneChangeMode();

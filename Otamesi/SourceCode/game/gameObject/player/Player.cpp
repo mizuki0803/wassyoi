@@ -42,6 +42,8 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3&
 	instance->scale = { playerSize, playerSize, playerSize };
 	//ゲームカメラをセット
 	instance->gameCamera = gameCamera;
+	//最初の移動が終わったかのフラグ
+	instance->isStartMove = false;
 
 	// エフェクト読み込み
 	for (int i = 0; i < instance->effect.size(); ++i)
@@ -105,6 +107,7 @@ void Player::GameStart()
 
 	if (easeData_->GetEndFlag())
 	{
+		isStartMove = true;
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 	}
 	easeData_->Update();
@@ -142,6 +145,8 @@ void Player::Draw()
 	}
 
 	ObjObject3d::Draw();
+
+	isStartMove = false;
 }
 
 void Player::MovePosStart()
