@@ -27,6 +27,11 @@ public: //メンバ関数
 	/// </summary>
 	void Draw() override;
 
+	/// <summary>
+	/// マップブロック再生成
+	/// </summary>
+	void ReCreateMapBlock();
+
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
 
@@ -35,11 +40,6 @@ protected: //メンバ関数
 	/// マップブロック生成
 	/// </summary>
 	void CreateMapBlock() override;
-
-	/// <summary>
-	/// マップブロック再生成
-	/// </summary>
-	void ReCreateMapBlock();
 
 	/// <summary>
 	/// ブロックを上げる番号の生成

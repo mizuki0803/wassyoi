@@ -67,6 +67,21 @@ void Player::Update()
 	}
 }
 
+void Player::ReCreate(const XMINT3& mapChipNum)
+{
+	SetGamePhase(GamePhase::ReStart);
+
+	//初期座標をセット
+	SetPlayerEndPos(GetMapChipPos(mapChipNum));
+	Vector3 tempPos = GetMapChipPos(mapChipNum);
+	//位置をずらしてイージング
+	playerEndPos_ = tempPos;
+	tempPos.x += 100.0f;
+	playerStratPos_ = tempPos;
+
+	easeData_->Reset();
+}
+
 void Player::PlayGame()
 {
 	//ゴールしていないときに動きをする

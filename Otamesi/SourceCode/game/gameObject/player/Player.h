@@ -81,6 +81,8 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void CreateAct();
 
+	void ReCreate(const XMINT3& mapChipNum);
+
 	void Draw();
 
 	//getter

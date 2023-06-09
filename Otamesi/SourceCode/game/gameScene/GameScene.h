@@ -52,6 +52,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void DrawFrontSprite() override;
 
+	/// <summary>
+	/// Ä¶¬
+	/// </summary>
+	void ReCreate();
+
 private: //ƒƒ“ƒo•Ï”
 	//ƒJƒƒ‰
 	std::unique_ptr<GameCamera> camera;

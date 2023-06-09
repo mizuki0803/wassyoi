@@ -136,6 +136,8 @@ void GameScene::Update()
 			DeleteBinary();
 			//次のステージへ
 			StageManager::NextStageSelect();
+			//再生成
+			//ReCreate();
 		}
 	}
 
@@ -263,4 +265,10 @@ void GameScene::DrawFrontSprite()
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void GameScene::ReCreate()
+{
+	mapData->ReCreateMapBlock();
+	player->ReCreate(mapData->GetPlayerCreateMapChipNum());
 }
