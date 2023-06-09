@@ -1,6 +1,7 @@
 #include "GameCamera.h"
 #include "Input.h"
 #include "Easing.h"
+#include "Player.h"
 
 const float GameCamera::rotate3DDistance = 2.0f;
 
@@ -183,6 +184,8 @@ Vector3 GameCamera::InputRotateNum()
 
 void GameCamera::RotateStart()
 {
+	//プレイヤーの行動が「何もしない」以外なら抜ける
+	if (!(player->GetActionPhase() == Player::ActionPhase::None)) { return; }
 	//行動が「何もしない」以外なら抜ける
 	if (!(actionPhase == ActionPhase::None)) { return; }
 	//2D状態なら抜ける

@@ -50,9 +50,10 @@ void GameScene::Initialize()
 	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
-
 	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
+	//カメラに生成したプレイヤーをセット
+	camera->SetPlayer(player.get());
 
 	//天球生成
 	skydome.reset(ObjObject3d::Create(modelSkydome.get()));

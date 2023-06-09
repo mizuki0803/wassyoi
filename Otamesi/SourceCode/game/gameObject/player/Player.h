@@ -90,6 +90,7 @@ public: //ƒƒ“ƒoŠÖ”
 	const bool GetIsMove() { return isMove; }
 	const bool GetNowMove() { return bool(actionPhase); }
 	const bool GetIsStartMove() { return isStartMove; }
+	const ActionPhase GetActionPhase() { return actionPhase; }
 	const int GetMoveSurfacePhase() { return int(moveSurfacePhase); }
 	const XMINT3 GetMapChipNumberPos() { return mapChipNumberPos; }
 	//setter

@@ -6,6 +6,9 @@
 #include <vector>
 #include <functional>
 
+//プレイヤークラスの前方宣言
+class Player;
+
 /// <summary>
 /// ゲームカメラ
 /// </summary>
@@ -83,6 +86,7 @@ public: //メンバ関数
 	const bool GetIsTriggerDimensionChange() { return isTriggerDimensionChange; }
 	const Vector3 GetRotation() { return rotation; }
 	//setter
+	void SetPlayer(Player* _player) { player = _player; }
 	void SetIs2D(const bool _is2D) { is2D = _is2D; }
 	void SetCameraXPosPhase(const int _cameraXPosPhase) { cameraXPosPhase = _cameraXPosPhase; };
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
@@ -193,7 +197,9 @@ private: //静的メンバ変数
 	//3dのプロジェクション行列
 	static const XMMATRIX matProj3D;
 
-private:
+private: //メンバ変数
+	//プレイヤーの情報
+	Player* player;
 	//回転角
 	Vector3 rotation = { 0, 0, 0 };
 	//座標
