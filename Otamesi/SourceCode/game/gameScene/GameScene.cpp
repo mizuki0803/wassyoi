@@ -122,7 +122,7 @@ void GameScene::Update()
 		}
 
 		//binaryo—Í
-		if (player->GetIsMove() || (player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
+		if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
 			orderNum++;
 			orderMaxNum = orderNum;
 			if (deleteOrderMaxNum < orderMaxNum) {
