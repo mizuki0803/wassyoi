@@ -121,6 +121,17 @@ void GameScene::Update()
 			DeleteBinary();
 		}
 
+		//binary出力
+		if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
+			orderNum++;
+			orderMaxNum = orderNum;
+			if (deleteOrderMaxNum < orderMaxNum) {
+				deleteOrderMaxNum = orderMaxNum;
+			}
+
+			KeepBinary(*camera, *player);
+		}
+
 		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
 			isStageClear = true;
@@ -184,15 +195,8 @@ void GameScene::Update()
 		}
 	}
 
-
-	//binary出力
-	if (player->GetIsMove() || (player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
-		orderNum++;
-		orderMaxNum = orderNum;
-		if (deleteOrderMaxNum < orderMaxNum) {
-			deleteOrderMaxNum = orderMaxNum;
-		}
-
+	//初期状態をbinary保存
+	if (player->GetIsStartMove()) {
 		KeepBinary(*camera, *player);
 	}
 

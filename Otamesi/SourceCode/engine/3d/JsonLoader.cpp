@@ -39,17 +39,17 @@ void JsonLoader::LoadNlohmannJson(const std::string& _fileName, std::vector<std:
         //トランスフォーム情報
 		njson& transform = object["transform"];
 		// 平行移動
-        addObject[int(transform::translation)].x = float(transform["translation"][0]) * 5.0f;
-        addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 5.0f) - 100.0f;
-        addObject[int(transform::translation)].z = float(transform["translation"][1]) * 5.0f;
+        addObject[int(transform::translation)].x = float(transform["translation"][0]) * 10.0f;
+        addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 10.0f) - 100.0f;
+        addObject[int(transform::translation)].z = float(transform["translation"][1]) * 10.0f;
 		// 回転角
 		addObject[int(transform::rotation)].x = -float(transform["rotation"][1]);
 		addObject[int(transform::rotation)].y = -float(transform["rotation"][2]);
 		addObject[int(transform::rotation)].z = float(transform["rotation"][0]);
 		// スケーリング
-        addObject[int(transform::scaling)].x = float(transform["scaling"][1]) * 5.0f;
-        addObject[int(transform::scaling)].y = float(transform["scaling"][2]) * 5.0f;
-        addObject[int(transform::scaling)].z = float(transform["scaling"][0]) * 5.0f;
+        addObject[int(transform::scaling)].x = float(transform["scaling"][1]) * 10.0f;
+        addObject[int(transform::scaling)].y = float(transform["scaling"][2]) * 10.0f;
+        addObject[int(transform::scaling)].z = float(transform["scaling"][0]) * 10.0f;
 
         _object->emplace_back(addObject);
     }

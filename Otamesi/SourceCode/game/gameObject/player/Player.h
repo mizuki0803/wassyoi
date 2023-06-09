@@ -89,6 +89,7 @@ public: //メンバ関数
 	const bool GetIsGoal() { return isGoal; }
 	const bool GetIsMove() { return isMove; }
 	const bool GetNowMove() { return bool(actionPhase); }
+	const bool GetIsStartMove() { return isStartMove; }
 	const int GetMoveSurfacePhase() { return int(moveSurfacePhase); }
 	const XMINT3 GetMapChipNumberPos() { return mapChipNumberPos; }
 	//setter
@@ -186,4 +187,7 @@ private: //メンバ変数
 
 	//移動処理が終わったタイミング
 	bool isMove;
+
+	//最初の移動が終わったかのフラグ
+	bool isStartMove;
 };
