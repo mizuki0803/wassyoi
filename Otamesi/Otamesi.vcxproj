@@ -148,6 +148,7 @@
     <ClCompile Include="SourceCode\game\gameObject\block\StageBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\StageSelectBlockManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\map\MapData.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\map\MapDataStage.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\map\MapDataStageSelect.cpp" />
@@ -344,6 +345,7 @@
     <ClInclude Include="SourceCode\game\gameObject\block\StageBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\StageSelectBlockManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h" />
     <ClInclude Include="SourceCode\game\gameObject\map\MapData.h" />
     <ClInclude Include="SourceCode\game\gameObject\map\MapDataStage.h" />
     <ClInclude Include="SourceCode\game\gameObject\map\MapDataStageSelect.h" />
