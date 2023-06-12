@@ -8,7 +8,7 @@ class SceneManager;
 /// </summary>
 class BaseScene
 {
-public:
+public: //メンバ関数
 	/// <summary>
 	/// 仮想デストラクタ
 	/// </summary>
@@ -49,10 +49,17 @@ public:
 	/// </summary>
 	virtual void DrawFrontSprite() = 0;
 
+	//getter
+	bool GetIsEndRequest() { return isEndRequest; }
+
 	//setter
 	static void SetDirectXbase(DirectXBase* dxbase) { BaseScene::dxbase = dxbase; }
 
-protected:
+protected: //静的メンバ変数
 	static DirectXBase* dxbase;
+
+protected: //メンバ変数
+	//ゲームループ終了リクエスト
+	bool isEndRequest = false;
 };
 

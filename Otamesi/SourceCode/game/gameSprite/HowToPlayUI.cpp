@@ -19,6 +19,7 @@ void HowToPlayUI::Initialize(bool isDrawPause)
 	const float sizeRatio = 0.4f;	//テクスチャサイズに対する大きさの比率
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), leftTopPos, { 465, 84 }, sizeRatio);	//移動
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), leftTopPos, { 545, 84 }, sizeRatio);	//カメラ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), leftTopPos, { 1101, 85 }, sizeRatio);	//次元変更
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), leftTopPos, { 573, 84 }, sizeRatio);	//アンドゥ
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), leftTopPos, { 574, 84 }, sizeRatio);	//リドゥ
 

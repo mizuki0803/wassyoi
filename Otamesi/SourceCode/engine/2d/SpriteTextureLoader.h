@@ -17,12 +17,13 @@ public: //テクスチャ名
 		MenuFrame,		//メニューの枠組み
 		HowToPlayMove,	//操作方法(移動)
 		HowToPlayCamera,//操作方法(カメラ)
+		HowToPlayChengeDemension,//操作方法(次元変更)
 		HowToPlayUndo,	//操作方法(戻る)
 		HowToPlayRedo,	//操作方法(戻る戻る)
 		HowToPlayReset,	//操作方法(リセット)
 		HowToPlayStageSelect,	//操作方法(ステージセレクト)
 		StageClear,		//ステージクリア
-		PressEnter,		//PRESS ENTER
+		PressSpace,		//PRESS SPACE
 		ParanomaSky,	// スカイドーム用
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数

@@ -68,6 +68,9 @@ public: //メンバ関数
 	/// <param name="sceneFactory">シーン工場</param>
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { this->sceneFactory = sceneFactory; }
 
+	//getter
+	bool GetIsEndRequest() { return scene->GetIsEndRequest(); }
+
 private: //メンバ変数
 	//今のシーン
 	BaseScene* scene = nullptr;

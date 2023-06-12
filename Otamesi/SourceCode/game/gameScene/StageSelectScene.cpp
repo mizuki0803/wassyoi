@@ -67,7 +67,7 @@ void StageSelectScene::Update()
 {
 	//デバッグ用テキスト
 	//DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
-	DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
+	//DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
 
 
 	//カメラ更新
@@ -83,11 +83,17 @@ void StageSelectScene::Update()
 	//天球
 	skydome->Update();
 
-
-	if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
+	//スペースキーでステージを確定し、ゲームシーンへ
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 	}
+	//エスケープキーでタイトルシーンへ
+	else if (Input::GetInstance()->PushKey(DIK_ESCAPE)) {
+		//シーン切り替え
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
+	}
+
 	//シーン変更状態
 	SceneChangeMode();
 	//シーン変更演出更新

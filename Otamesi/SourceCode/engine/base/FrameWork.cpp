@@ -38,7 +38,7 @@ void FrameWork::Initialize()
 {
 	//ウインドウ作成
 	win.reset(new WindowApp());
-	win->WindowCreate(L"おためし");
+	win->WindowCreate(L"チェンジゲン");
 
 	//DirectX初期化
 	dxbase.reset(new DirectXBase());
@@ -129,23 +129,23 @@ void FrameWork::Update()
 	// タイマー計測開始
 	Timer::GetInstance().InstrumentationStart();
 
+	//入力の更新
+	input->Update();
+
+	//シーン更新
+	SceneManager::GetInstance()->Update();
+
 	//メッセージ
 	//×ボタンで終了メッセージが来たらゲームループを抜ける
 	if (win->MessageProc()) {
 		isEndRequest = true;
 		return;
 	}
-	//エスケープキーでゲームループ終了
-	if (input->PushKey(DIK_ESCAPE)) {
+	//各シーンから終了リクエストがあればゲームループ終了
+	if (SceneManager::GetInstance()->GetIsEndRequest()) {
 		isEndRequest = true;
 		return;
 	}
-
-	//入力の更新
-	input->Update();
-
-	//シーン更新
-	SceneManager::GetInstance()->Update();
 
 	//フレームレート確認
 	//FpsCheck::Display();
