@@ -17,7 +17,7 @@ void StageClearUI::Initialize()
 {
 	//UI生成
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::StageClear), { WindowApp::window_width / 2, 300 }, { 513, 84 }, 2.0f);	//ステージクリア
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::PressEnter), { WindowApp::window_width / 2, 660 }, { 533, 84 }, 0.5f);	//PRESS ENTER
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::PressSpace), { WindowApp::window_width / 2, 660 }, { 550, 85 }, 0.5f);	//PRESS SPACE
 }
 
 void StageClearUI::Update()

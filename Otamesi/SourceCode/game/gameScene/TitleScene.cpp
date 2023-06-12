@@ -119,16 +119,13 @@ void TitleScene::Update()
 
 			KeepBinary(*camera, *player);
 		}
-
+		
 		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetIsStageClear(true);
-		}
-	}
-	else {
-		if (Input::GetInstance()->TriggerKey(DIK_RETURN) && !isSceneChange) {
+
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
@@ -136,6 +133,12 @@ void TitleScene::Update()
 			//次のステージへ
 			StageManager::NextStageSelect();
 		}
+	}
+
+	//エスケープキーでゲームループ終了
+	if (Input::GetInstance()->PushKey(DIK_ESCAPE)) {
+		isEndRequest = true;
+		return;
 	}
 
 	//カメラ更新

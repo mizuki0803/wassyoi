@@ -21,13 +21,14 @@ void SpriteTextureLoader::TextureLoad()
 	//操作方法関係
 	TextureManager::LoadTexture(textures[HowToPlayMove], directoryPath, "move.png");
 	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "camera.png");
+	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
 	TextureManager::LoadTexture(textures[HowToPlayUndo], directoryPath, "undo.png");
 	TextureManager::LoadTexture(textures[HowToPlayRedo], directoryPath, "redo.png");
 	TextureManager::LoadTexture(textures[HowToPlayReset], directoryPath, "reset.png");
 	TextureManager::LoadTexture(textures[HowToPlayStageSelect], directoryPath, "stageSelect.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "stageClear.png");
-	TextureManager::LoadTexture(textures[PressEnter], directoryPath, "pressEnter.png");
+	TextureManager::LoadTexture(textures[PressSpace], directoryPath, "pressSpace.png");
 
 	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");
 }

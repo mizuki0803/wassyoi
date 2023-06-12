@@ -109,13 +109,15 @@ void GameScene::Update()
 			Redo(camera.get(), player.get());
 		}
 
+		//Rキーでリセット
 		if (Input::GetInstance()->TriggerKey(DIK_R)) {
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
 			DeleteBinary();
 		}
-		if (Input::GetInstance()->TriggerKey(DIK_P)) {
+		//エスケープキーでメニュー画面(今は即ステージセレクトへ)
+		else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
 			//binary削除
@@ -141,7 +143,7 @@ void GameScene::Update()
 		}
 	}
 	else if (!isSceneChange) {
-		if (Input::GetInstance()->TriggerKey(DIK_RETURN)) {
+		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
