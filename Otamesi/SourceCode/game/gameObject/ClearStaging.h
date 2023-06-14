@@ -53,6 +53,15 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="movePhase">行動</param>
 	void SetMovePhase(MovePhase movePhase) { phase_ = static_cast<int>(movePhase); }
+	/// <summary>
+	/// 終了フラグの取得
+	/// </summary>
+	/// <returns>終了フラグ</returns>
+	bool GetEndFlag() { return endFlag_; }
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
 
 private: //メンバ関数
 	/// <summary>
@@ -85,5 +94,7 @@ private: //メンバ変数
 	size_t phase_;
 	// ボタンを押したか
 	bool pushFlag_ = false;
+	// 終了フラグ
+	bool endFlag_ = false;
 };
 

@@ -57,6 +57,13 @@ void ClearStaging::Draw()
 	backScreen_->Draw();
 }
 
+void ClearStaging::Reset()
+{
+	easeData_->Reset();
+	pushFlag_ = false;
+	endFlag_ = false;
+}
+
 void ClearStaging::StartMove()
 {
 	Vector2 position = backScreen_->GetPosition();
@@ -144,6 +151,7 @@ void ClearStaging::EndMove()
 	{
 		easeData_->Reset();
 		phase_ = static_cast<int>(MovePhase::None);
+		endFlag_ = true;
 	}
 
 	// イージングデータ更新
