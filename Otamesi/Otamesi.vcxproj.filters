@@ -132,6 +132,9 @@
     <Filter Include="リソース ファイル\Paranoma">
       <UniqueIdentifier>{64cc5f04-5a5b-47e1-ae93-b020753c154a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\InstanceObjectLightView">
+      <UniqueIdentifier>{ae56402a-d9cc-40b4-bbc2-dc876b042f5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\engine\2d\DebugText.cpp">
@@ -385,6 +388,9 @@
     <None Include="Resources\shaders\ParanoiaSkyDome.hlsli">
       <Filter>リソース ファイル\Paranoma</Filter>
     </None>
+    <None Include="Resources\shaders\InstanceObjectLightView.hlsli">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\FBXPS.hlsl">
@@ -437,6 +443,12 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParanoiaSkyDomeVS.hlsl">
       <Filter>リソース ファイル\Paranoma</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewPS.hlsl">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewVS.hlsl">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

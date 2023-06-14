@@ -58,7 +58,8 @@ void GameScene::Initialize()
 	//天球生成
 	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
 	skydome->SetPosition({});
-	skydome->SetScale({ 2, 2, 2 });
+	const float skydomeSize = 10;
+	skydome->SetScale({ skydomeSize, skydomeSize, skydomeSize });
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -253,6 +254,14 @@ void GameScene::Draw3D()
 
 void GameScene::Draw3DLightView()
 {
+	///-------Instance描画ここから-------///
+
+	InstanceObject::DrawLightViewPrev();
+
+	//背景オブジェクト
+	backGround->DrawLightCameraView();
+
+	///-------Instance描画ここまで-------///
 }
 
 void GameScene::DrawFrontSprite()
