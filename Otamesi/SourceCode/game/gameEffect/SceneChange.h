@@ -54,7 +54,7 @@ namespace
 	};
 }
 
-class SceneChange
+class SceneChange final
 {
 private: // エイリアス
 	// DirectX::を省略
@@ -67,11 +67,24 @@ private: // エイリアス
 public: // サブクラス
 
 
+private:
+	SceneChange() = default;
+	~SceneChange() = default;
+
+public:
+	SceneChange(const SceneChange& fbxFactory) = delete;
+	SceneChange& operator=(const SceneChange& fbxFactory) = delete;
+
 public: // メンバ関数
 	/// <summary>
-	/// コンストラクタ
+	/// シングルトンインスタンスの取得
 	/// </summary>
-	SceneChange();
+	/// <returns>シングルトンインスタンス</returns>
+	static SceneChange* GetInstance();
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize();
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>

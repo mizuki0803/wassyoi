@@ -1,8 +1,15 @@
 #include "SceneChange.h"
 #include "Easing.h"
 #include "SpriteTextureLoader.h"
+#include "SceneManager.h"
 
-SceneChange::SceneChange()
+SceneChange* SceneChange::GetInstance()
+{
+	static SceneChange instance;
+	return &instance;
+}
+
+void SceneChange::Initialize()
 {
 	type_ = TYPE::FadeIn;
 
@@ -11,6 +18,7 @@ SceneChange::SceneChange()
 	// êF
 	XMFLOAT4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+	blackBox_.clear();
 	for (int x = 0; x < static_cast<int>(SIZEMAX::Width); x++)
 	{
 		std::vector<std::unique_ptr<BlackBox>> tempX;
@@ -18,8 +26,9 @@ SceneChange::SceneChange()
 		{
 			std::unique_ptr<BlackBox> tempY = std::make_unique<BlackBox>();
 
-			tempY->sprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen)));
+			tempY->sprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White)));
 			tempY->sprite_->SetPosition(Vector2(static_cast<float>(20 + x * 40), static_cast<float>(20 + y * 40)));
+			tempY->sprite_->SetScale(64.0f);
 			tempY->offsetTimer_ = (31 - x + y);
 
 			tempX.push_back(std::move(tempY));
@@ -45,8 +54,10 @@ void SceneChange::Update()
 			}
 			else
 			{
-				blackBox_[x][y]->AddOffsetTimer(-1);
+				blackBox_[x][y]->AddOffsetTimer(-2);
 			}
+
+			blackBox_[x][y]->sprite_->Update();
 
 		}
 	}
@@ -59,7 +70,7 @@ void SceneChange::Update()
 	if (blackBox_[0][17]->outEnd_)
 	{
 		outEndFlag_ = true;
-		//
+		SceneManager::GetInstance()->ChangeScene(sceneName_);
 	}
 }
 
@@ -116,11 +127,11 @@ void BlackBox::Spin(TYPE type)
 	float scale = 0.0f;
 	if (type == TYPE::FadeIn)
 	{
-		scale = Easing::InOutQuart(1.0f, 0.0f, timeRate);
+		scale = Easing::InOutQuart(64.0f, 0.0f, timeRate);
 	}
 	else if (type == TYPE::FadeOut)
 	{
-		scale = Easing::InOutQuart(0.0f, 1.0f, timeRate);
+		scale = Easing::InOutQuart(0.0f, 64.0f, timeRate);
 	}
 
 	//å©Ç¶Ç»Ç≠Ç»Ç¡ÇΩÇÁèIóπ
@@ -132,7 +143,7 @@ void BlackBox::Spin(TYPE type)
 	}
 	else if (type == TYPE::FadeOut && easeTimer_ > countNum)
 	{
-		scale = 1.0f;
+		scale = 64.0f;
 		easeTimer_ = 0.0f;
 		outEnd_ = true;
 	}

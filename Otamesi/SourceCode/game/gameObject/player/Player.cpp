@@ -5,7 +5,7 @@
 #include "PlayerActionManager.h"
 
 
-const float Player::playerSize = 5.0f;
+const float Player::playerSize = 3.5f;
 
 Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
