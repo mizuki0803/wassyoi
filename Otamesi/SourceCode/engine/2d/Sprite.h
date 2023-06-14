@@ -80,18 +80,20 @@ public: //メンバ関数
 	const Vector2& GetAnchorpoint() { return anchorpoint; }
 	const bool GetIsFlipX() { return isFlipX; }
 	const bool GetIsFlipY() { return isFlipY; }
+	const float GetScale() { return scale_; }
 
 	//setter
 	void SetTexture(const Texture& texture) { this->texture = texture; }
 	void SetPosition(const Vector2& position) { this->position = position; }
 	void SetRotation(float rotation) { this->rotation = rotation; }
-	void SetSize(const Vector2& size) { this->size = size; }
+	void SetSize(const Vector2& size) { this->size = size * scale_; }
 	void SetTexSize(const Vector2& texSize) { this->texSize = texSize; }
 	void SetTexLeftTop(const Vector2& texLeftTop) { this->texLeftTop = texLeftTop; }
 	void SetColor(const XMFLOAT4& color) { this->color = color; }
 	void SetAnchorpoint(const Vector2& anchorpoint) { this->anchorpoint = anchorpoint; }
 	void SetIsFlipX(bool isFlipX) { this->isFlipX = isFlipX; }
 	void SetIsFlipY(bool isFlipY) { this->isFlipY = isFlipY; }
+	void SetScale(float scale);
 
 
 protected: //メンバ変数
@@ -113,6 +115,8 @@ protected: //メンバ変数
 	Texture texture;
 	//大きさ
 	Vector2 size = { 100, 100 };
+	// 元の大きさ
+	Vector2 defSize_ = { 100.0f, 100.0f };
 	//アンカーポイント
 	Vector2 anchorpoint = { 0.5f, 0.5f };
 	//左右反転
@@ -123,4 +127,6 @@ protected: //メンバ変数
 	Vector2 texLeftTop = { 0, 0 };
 	//テクスチャ切り出しサイズ
 	Vector2 texSize = { 100, 100 };
+	//スケール
+	float scale_ = 1.0f;
 };

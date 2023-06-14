@@ -52,7 +52,7 @@ bool Sprite::Initialize(const Texture& texture, const Vector2& anchorpoint, bool
 		//テクスチャ情報取得
 		D3D12_RESOURCE_DESC resDesc = texture.texBuff.Get()->GetDesc();
 		//スプライトの大きさを画像の解像度に合わせる
-		size = { (float)resDesc.Width, (float)resDesc.Height };
+		size = defSize_ = { (float)resDesc.Width, (float)resDesc.Height };
 		texSize = { (float)resDesc.Width, (float)resDesc.Height };
 	}
 
@@ -196,4 +196,10 @@ void Sprite::Draw()
 
 	//ポリゴンの描画(4頂点で四角形)
 	cmdList->DrawInstanced(4, 1, 0, 0);
+}
+
+void Sprite::SetScale(float scale)
+{
+	scale_ = scale;
+	size = { defSize_.x * scale, defSize_.y * scale };
 }

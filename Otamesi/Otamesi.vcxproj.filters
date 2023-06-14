@@ -356,6 +356,9 @@
     <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameEffect\SceneChange.cpp">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -676,6 +679,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameEffect\SceneChange.h">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
