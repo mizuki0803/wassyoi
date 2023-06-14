@@ -53,7 +53,8 @@ void TitleScene::Initialize()
 	//“V‹…¶¬
 	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
 	skydome->SetPosition({});
-	skydome->SetScale({ 2, 2, 2 });
+	const float skydomeSize = 10;
+	skydome->SetScale({ skydomeSize, skydomeSize, skydomeSize });
 
 	//”wŒiƒIƒuƒWƒFƒNƒg¶¬
 	backGround.reset(BackGround::Create());
@@ -218,6 +219,14 @@ void TitleScene::Draw3D()
 
 void TitleScene::Draw3DLightView()
 {
+	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+
+	InstanceObject::DrawLightViewPrev();
+
+	//”wŒiƒIƒuƒWƒFƒNƒg
+	backGround->DrawLightCameraView();
+
+	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
 }
 
 void TitleScene::DrawFrontSprite()

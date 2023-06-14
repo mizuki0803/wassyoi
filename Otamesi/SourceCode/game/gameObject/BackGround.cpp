@@ -18,6 +18,7 @@ void BackGround::Initialize()
 	for (int i = 0; i < 3; ++i)
 	{
 		block[i].reset(InstanceObject::Create(model.get()));
+		block[i]->SetIsShadowMap(true);
 	}
 
 	JsonLoader::LoadNlohmannJson("back", &info);
@@ -33,7 +34,7 @@ void BackGround::Update()
 		{
 			block[0]->DrawInstance(itr[int(transform::translation)], itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
-		else if (index < 512*2)
+		else if (index < 512 * 2)
 		{
 			block[1]->DrawInstance(itr[int(transform::translation)], itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
@@ -55,4 +56,13 @@ void BackGround::Draw()
 
 	}
 
+}
+
+void BackGround::DrawLightCameraView()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		block[i]->DrawLightCameraView();
+
+	}
 }

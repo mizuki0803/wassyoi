@@ -32,10 +32,7 @@ public: //サブクラス
 		XMMATRIX viewproj;	//ビュープロジェクション行列
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 		XMMATRIX lightViewproj;	//ライトビュープロジェクション行列
-		XMMATRIX topLightViewproj;	//頭上ライトビュープロジェクション行列
 		unsigned int isShadowMap;	//影を付けるか
-		float pad;
-		float pad1;
 	};
 
 	//定数バッファ用データ構造体B0
@@ -50,7 +47,6 @@ public: //サブクラス
 	struct ConstBufferDataLightViewB0
 	{
 		XMMATRIX viewproj;	//ビュープロジェクション行列
-		XMMATRIX world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 	};
 

@@ -8,7 +8,7 @@ const float GameCamera::rotate3DDistance = 2.0f;
 const DirectX::XMMATRIX GameCamera::matProj2D = XMMatrixOrthographicOffCenterLH(
 	-(float)WindowApp::window_width / 14.0f, (float)WindowApp::window_width / 14.0f,
 	-WindowApp::window_height / 14.0f, WindowApp::window_height / 14.0f,
-	0.0f, 1000.0f
+	0.0f, 2000.0f
 );
 
 const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
