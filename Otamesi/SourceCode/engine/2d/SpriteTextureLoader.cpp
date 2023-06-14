@@ -27,7 +27,8 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[HowToPlayReset], directoryPath, "reset.png");
 	TextureManager::LoadTexture(textures[HowToPlayStageSelect], directoryPath, "stageSelect.png");
 	//ステージクリア関係
-	TextureManager::LoadTexture(textures[StageClear], directoryPath, "stageClear.png");
+	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");
+	TextureManager::LoadTexture(textures[ClearBack], directoryPath, "Clear_Back.png");
 	TextureManager::LoadTexture(textures[PressSpace], directoryPath, "pressSpace.png");
 
 	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");

@@ -10,6 +10,7 @@
 #include "StageClearUI.h"
 #include "BackGround.h"
 #include "game/gameSprite/ParanomaSkyDorm.h"
+#include "ClearStaging.h"
 
 /// <summary>
 /// ゲームシーン
@@ -94,6 +95,7 @@ private: //メンバ変数
 	std::unique_ptr<HowToPlayUI> howToPlayUI;
 	//ステージクリアUI
 	std::unique_ptr<StageClearUI> stageClearUI;
+	std::unique_ptr<ClearStaging> stageClear_;
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;

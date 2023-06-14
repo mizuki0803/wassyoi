@@ -20,18 +20,20 @@ std::unique_ptr<ClearStaging> ClearStaging::Create()
 void ClearStaging::Initialize()
 {
 	Vector2 position = { -1000.0f, static_cast<float>(WindowApp::window_height / 2) };
-	backScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0.5f, 0.5f }, false, false));
+	backScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ClearBack), { 0.5f, 0.5f }, false, false));
 	backScreen_->SetPosition(position);
+	backScreen_->SetScale(0.3f);
 
 	position.x = static_cast<float>(WindowApp::window_width) + 1000.0f;
-	textSprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0.5f, 0.5f }, false, false));
+	textSprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::StageClear), { 0.5f, 0.5f }, false, false));
 	textSprite_->SetPosition(position);
+	textSprite_->SetScale(0.3f);
 
 	phase_ = static_cast<int>(MovePhase::None);
 
+	easeData_ = std::make_unique<EaseData>(60);
+
 	func_.push_back([this] { return StartMove(); });
-	func_.push_back([this] { return Intermediate1Move(); });
-	func_.push_back([this] { return Intermediate2Move(); });
 	func_.push_back([this] { return EndMove(); });
 }
 
@@ -42,8 +44,8 @@ void ClearStaging::Update()
 		func_[phase_]();
 	}
 
-	textSprite_->Update();
 	backScreen_->Update();
+	textSprite_->Update();
 }
 
 void ClearStaging::Draw()
@@ -53,14 +55,13 @@ void ClearStaging::Draw()
 		return;
 	}
 
-	textSprite_->Draw();
 	backScreen_->Draw();
+	textSprite_->Draw();
 }
 
 void ClearStaging::Reset()
 {
 	easeData_->Reset();
-	pushFlag_ = false;
 	endFlag_ = false;
 }
 
@@ -68,65 +69,19 @@ void ClearStaging::StartMove()
 {
 	Vector2 position = backScreen_->GetPosition();
 	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>((WindowApp::window_width / 2) - 5.0f), easeData_->GetTimeRate());
+	position.x = Easing::OutExpo(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
 	backScreen_->SetPosition(position);
 
 	position = textSprite_->GetPosition();
 	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>((WindowApp::window_width / 2) + 5.0f), easeData_->GetTimeRate());
+	position.x = Easing::OutExpo(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
 	textSprite_->SetPosition(position);
 
 
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		phase_ = static_cast<int>(MovePhase::intermediate1);
-	}
-
-	// イージングデータ更新
-	easeData_->Update();
-}
-
-void ClearStaging::Intermediate1Move()
-{
-	Vector2 position = backScreen_->GetPosition();
-	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
-	backScreen_->SetPosition(position);
-
-	position = textSprite_->GetPosition();
-	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
-	textSprite_->SetPosition(position);
-
-
-	if (easeData_->GetEndFlag() && pushFlag_)
-	{
-		easeData_->Reset();
-		pushFlag_ = false;
-		phase_ = static_cast<int>(MovePhase::intermediate2);
-	}
-
-	// イージングデータ更新
-	easeData_->Update();
-}
-
-void ClearStaging::Intermediate2Move()
-{
-	Vector2 position = backScreen_->GetPosition();
-	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>((WindowApp::window_width / 2) + 5.0f), easeData_->GetTimeRate());
-	backScreen_->SetPosition(position);
-
-	position = textSprite_->GetPosition();
-	// イージングの計算
-	position.x = Easing::OutQuad(position.x, static_cast<float>((WindowApp::window_width / 2) - 5.0f), easeData_->GetTimeRate());
-	textSprite_->SetPosition(position);
-
-
-	if (easeData_->GetEndFlag())
-	{
-		easeData_->Reset();
+		easeData_->SetCount(20);
 		phase_ = static_cast<int>(MovePhase::End);
 	}
 
@@ -138,12 +93,12 @@ void ClearStaging::EndMove()
 {
 	Vector2 position = backScreen_->GetPosition();
 	// イージングの計算
-	position.x = Easing::OutQuad(position.x, 1000.0f, easeData_->GetTimeRate());
+	position.x = Easing::InExpo(position.x, 3000.0f, easeData_->GetTimeRate());
 	backScreen_->SetPosition(position);
 
 	position = textSprite_->GetPosition();
 	// イージングの計算
-	position.x = Easing::OutQuad(position.x, -1000.0f, easeData_->GetTimeRate());
+	position.x = Easing::InExpo(position.x, -1000.0f, easeData_->GetTimeRate());
 	textSprite_->SetPosition(position);
 
 

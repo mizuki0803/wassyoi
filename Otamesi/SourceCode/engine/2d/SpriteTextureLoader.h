@@ -23,6 +23,7 @@ public: //テクスチャ名
 		HowToPlayReset,	//操作方法(リセット)
 		HowToPlayStageSelect,	//操作方法(ステージセレクト)
 		StageClear,		//ステージクリア
+		ClearBack,		//ステージクリアの背景
 		PressSpace,		//PRESS SPACE
 		ParanomaSky,	// スカイドーム用
 

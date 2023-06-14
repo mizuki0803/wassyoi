@@ -87,6 +87,7 @@ void GameScene::Initialize()
 	howToPlayUI.reset(HowToPlayUI::Create(true));
 	//ステージクリアUI生成
 	stageClearUI.reset(StageClearUI::Create());
+	stageClear_ = ClearStaging::Create();
 
 	// スカイドーム生成
 	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
@@ -140,10 +141,12 @@ void GameScene::Update()
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetIsStageClear(true);
+			stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
 		}
 	}
 	else if (!isSceneChange) {
-		if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+		if (stageClear_->GetEndFlag())
+		{
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
@@ -182,6 +185,7 @@ void GameScene::Update()
 	howToPlayUI->Update();
 	//ステージクリアUI更新
 	stageClearUI->Update();
+	stageClear_->Update();
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
@@ -263,9 +267,11 @@ void GameScene::DrawFrontSprite()
 	userInterface_->Draw();
 
 	//ステージクリアUI
-	if (isStageClear) {
+	/*if (isStageClear) {
 		stageClearUI->Draw();
-	}
+	}*/
+
+	stageClear_->Draw();
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();
