@@ -20,6 +20,14 @@ void MapDataStage::Update()
 {
 	if (!isBolckUp_)
 	{
+		for (int i = 0; i < blocks.size(); i++)
+		{
+			if (blocks[i]->GetDeleteFlag())
+			{
+				blocks.erase(blocks.begin() + i);
+			}
+		}
+
 		// ‰½ŒÂ‚¸‚Âã‚°‚é‚©‚ÌŒvZ(‘S‘Ì‚Ì30%)
 		int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
 
@@ -63,13 +71,6 @@ void MapDataStage::Update()
 			{
 				hitFlag = true;
 			}
-
-			if (block->GetDeleteFlag())
-			{
-				blocks.erase(blocks.begin() + count);
-			}
-
-			count++;
 		}
 
 		if (!hitFlag)
