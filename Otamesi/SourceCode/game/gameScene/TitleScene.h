@@ -2,7 +2,7 @@
 #include "BaseGameScene.h"
 #include "LightGroup.h"
 #include "GameCamera.h"
-#include "LightCamera.h"
+#include "GameLightCamera.h"
 #include "Player.h"
 #include "MapDataStage.h"
 #include "BackGround.h"
@@ -54,7 +54,7 @@ private: //メンバ変数
 	//カメラ
 	std::unique_ptr<GameCamera> camera;
 	//影用光源カメラ
-	std::unique_ptr<LightCamera> lightCamera;
+	std::unique_ptr<GameLightCamera> lightCamera;
 
 	//ライト
 	std::unique_ptr<LightGroup> lightGroup;

@@ -362,6 +362,9 @@
     <ClCompile Include="SourceCode\game\gameEffect\SceneChange.cpp">
       <Filter>ソース ファイル\game\gameEffect</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameCamera\GameLightCamera.cpp">
+      <Filter>ソース ファイル\game\gameCamera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -694,6 +697,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameEffect\SceneChange.h">
       <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameCamera\GameLightCamera.h">
+      <Filter>ソース ファイル\game\gameCamera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
