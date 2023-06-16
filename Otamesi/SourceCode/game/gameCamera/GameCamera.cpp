@@ -41,7 +41,7 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	// 最初に動かす関数の設定
 	phase_ = static_cast<int>(GamePhase::Play);
 	// イージングの初期化
-	easeData_ = std::make_unique<EaseData>(60);
+	easeData_ = std::make_unique<EaseData>(58);
 	//関数の設定
 	CreateAct();
 
@@ -53,6 +53,10 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 
 void GameCamera::Update()
 {
+	if (phase_ == static_cast<int>(GamePhase::None))
+	{
+		return;
+	}
 	func_[phase_]();
 }
 
@@ -75,10 +79,6 @@ void GameCamera::PlayGame()
 	//座標更新
 	UpdatePosition();
 
-	// 保存する座標の更新
-	easePos_ = position;
-	easePos_.x += 100;
-
 	//平行移動行列の計算
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 	//ワールド行列を更新
@@ -94,15 +94,77 @@ void GameCamera::GameStart()
 {
 }
 
+void GameCamera::SetClearMode()
+{
+	//既に3Dの場合は抜ける
+	if (!is2D) { return; }
+
+	//回転前回転角をセット
+	rotateBefore = rotation;
+
+	//回転後回転角をセット
+	if (is2D) {
+		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
+	}
+	else {
+		rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z };
+	}
+	dirtyProjection = true;
+
+	//アクション用タイマーを初期化しておく
+	actionTimer = 0;
+
+	//クリア時に3次元に戻す状態にする
+	phase_ = static_cast<int>(GamePhase::ClearReturn3D);
+}
+
+void GameCamera::ClearReturn3D()
+{
+	//タイマー更新
+	actionTimer++;
+	const float rotTime = 40; //次元切り替え回転にかかる時間
+
+	//イージングに使用する変数(0～1を算出)
+	const float time = actionTimer / rotTime;
+
+	//回転させる
+	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
+	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
+	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
+
+	//プロジェクション行列のイージング
+	if (is2D) {
+		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
+	}
+
+	//タイマーが指定した時間に満たなければ抜ける
+	if (actionTimer < rotTime) { return; }
+
+	//2D状態かフラグを切り替える
+	if (is2D) { is2D = false; }
+	else { is2D = true; }
+
+	dirtyProjection = true;
+
+	//次元に変更が完了したトリガーを立てる
+	isTriggerDimensionChange = true;
+
+	//行動を「何もしない」に戻す
+	phase_ = static_cast<int>(GamePhase::None);
+}
+
 void GameCamera::GameReStart()
 {
+	position.x = Easing::InCubic(stratPos_.x, endPos_.x, easeData_->GetTimeRate());
+	position.y = Easing::InCubic(stratPos_.y, endPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(stratPos_.z, endPos_.z, easeData_->GetTimeRate());
+
 	//平行移動行列の計算
-	const XMMATRIX matTrans = XMMatrixTranslation(
-		Easing::InQuint(position.x, easePos_.x, easeData_->GetTimeRate()),
-		Easing::InQuint(position.y, easePos_.y, easeData_->GetTimeRate()),
-		Easing::InQuint(position.z, easePos_.z, easeData_->GetTimeRate()));
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 	//ワールド行列を更新
 	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
 	//ビュー行列と射影行列の更新
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
@@ -110,7 +172,7 @@ void GameCamera::GameReStart()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		phase_ = static_cast<int>(GamePhase::Play);
+		phase_ = static_cast<int>(GamePhase::None);
 	}
 
 	easeData_->Update();
@@ -120,6 +182,7 @@ void GameCamera::CreateAct()
 {
 	func_.push_back([this] { return GameStart(); });
 	func_.push_back([this] { return PlayGame(); });
+	func_.push_back([this] { return ClearReturn3D(); });
 	func_.push_back([this] { return GameReStart(); });
 }
 
@@ -142,6 +205,14 @@ void GameCamera::ChanegeDimensionStart()
 
 	//行動を「次元切り替え」にする
 	actionPhase = ActionPhase::ChangeDimension;
+}
+
+void GameCamera::SetReCreateMove()
+{
+	// 保存する座標の更新
+	stratPos_ = endPos_ = position;
+	endPos_.x += 100;
+	phase_ = static_cast<int>(GamePhase::ReStart);
 }
 
 void GameCamera::UpdateMatProjection()

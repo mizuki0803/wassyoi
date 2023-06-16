@@ -76,7 +76,7 @@ private: //メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> func_;
 	// 関数の番号
-	size_t phase_;
+	size_t phase_ = 0;
 	// 終了フラグ
 	bool endFlag_ = false;
 };

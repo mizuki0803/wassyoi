@@ -141,21 +141,22 @@ void GameScene::Update()
 		if (player->GetIsGoal()) {
 			isStageClear = true;
 			StageManager::StageClear();
-			camera->SetIsStageClear(true);
+			camera->SetClearMode();
 			stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
 		}
 	}
-	else if (!isSceneChange) {
+	else {
 		if (stageClear_->GetEndFlag())
 		{
 			//シーン切り替え
-			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+			//SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
 			DeleteBinary();
 			//次のステージへ
 			StageManager::NextStageSelect();
 			//再生成
-			//ReCreate();
+			ReCreate();
+			stageClear_->Reset();
 		}
 	}
 
@@ -291,7 +292,8 @@ void GameScene::DrawFrontSprite()
 
 void GameScene::ReCreate()
 {
-	mapData->ReCreateMapBlock();
-	player->ReCreate(mapData->GetPlayerCreateMapChipNum());
-	camera->SetGamePhase(GameCamera::GamePhase::ReStart);
+	mapData->ReCreateMapBlock(StageManager::GetSelectStage());
+	player->ReCreate(mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos());
+	camera->SetReCreateMove();
+	camera->SetSaveDistanceStageCenter(mapData->GetCameraDist());
 }

@@ -81,7 +81,7 @@ void ClearStaging::StartMove()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		easeData_->SetCount(20);
+		easeData_->SetCount(30);
 		phase_ = static_cast<int>(MovePhase::End);
 	}
 
@@ -93,12 +93,12 @@ void ClearStaging::EndMove()
 {
 	Vector2 position = backScreen_->GetPosition();
 	// イージングの計算
-	position.x = Easing::InExpo(position.x, 3000.0f, easeData_->GetTimeRate());
+	position.x = Easing::InExpo(position.x, 10000.0f, easeData_->GetTimeRate());
 	backScreen_->SetPosition(position);
 
 	position = textSprite_->GetPosition();
 	// イージングの計算
-	position.x = Easing::InExpo(position.x, -1000.0f, easeData_->GetTimeRate());
+	position.x = Easing::InExpo(position.x, -5000.0f, easeData_->GetTimeRate());
 	textSprite_->SetPosition(position);
 
 

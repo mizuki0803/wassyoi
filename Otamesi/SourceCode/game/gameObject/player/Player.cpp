@@ -69,17 +69,19 @@ void Player::Update()
 	}
 }
 
-void Player::ReCreate(const XMINT3& mapChipNum)
+void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	SetGamePhase(GamePhase::ReStart);
 
+	//マップの中心をずらす値をセット
+	this->shiftPos = shiftPos;
 	//初期座標をセット
 	SetPlayerEndPos(GetMapChipPos(mapChipNum));
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
-	playerEndPos_ = tempPos;
+	playerStratPos_ = position;
 	tempPos.x += 100.0f;
-	playerStratPos_ = tempPos;
+	playerEndPos_ = tempPos;
 
 	easeData_->Reset();
 }

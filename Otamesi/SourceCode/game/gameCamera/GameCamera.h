@@ -58,6 +58,7 @@ public: //enum
 	{
 		Start,	//開始
 		Play,	//ゲーム中
+		ClearReturn3D,	//クリアに3次元に戻す
 		ReStart,//再度生成
 		None,	//何もしない
 	};
@@ -93,6 +94,14 @@ public: //メンバ関数
 	/// </summary>
 	void GameStart();
 	/// <summary>
+	/// クリア時開始の処理
+	/// </summary>
+	void SetClearMode();
+	/// <summary>
+	/// クリア時に3次元に戻す処理
+	/// </summary>
+	void ClearReturn3D();
+	/// <summary>
 	/// ゲーム再開始
 	/// </summary>
 	void GameReStart();
@@ -105,6 +114,10 @@ public: //メンバ関数
 	/// 次元切り替え開始
 	/// </summary>
 	void ChanegeDimensionStart();
+	/// <summary>
+	/// 再生成時に動かすための処理
+	/// </summary>
+	void SetReCreateMove();
 
 	//getter
 	ActionPhase GetActionPhase() { return actionPhase; };
@@ -121,6 +134,7 @@ public: //メンバ関数
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
 	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
+	void SetSaveDistanceStageCenter(XMFLOAT3 saveDistanceStageCenter) { saveDistanceStageCenter_ = saveDistanceStageCenter; }
 
 private: //メンバ関数
 	/// <summary>
@@ -262,7 +276,12 @@ private: //メンバ変数
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
 	// イージング用に保存する座標
-	Vector3 easePos_ = {};
+	// 開始位置
+	Vector3 stratPos_ = {};
+	// 終了位置
+	Vector3 endPos_ = {};
+	//
+	XMFLOAT3 saveDistanceStageCenter_;
 	// シェイクしているか
 	bool isShake_ = false;
 	// シェイクが終わったか
