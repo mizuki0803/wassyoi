@@ -51,6 +51,17 @@ public: //enum
 		ChangeDimension,//次元切り替え
 	};
 
+	/// <summary>
+	/// ゲームの全体
+	/// </summary>
+	enum class GamePhase
+	{
+		Start,	//開始
+		Play,	//ゲーム中
+		ReStart,//再度生成
+		None,	//何もしない
+	};
+
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
@@ -74,6 +85,23 @@ public: //メンバ関数
 	void Update() override;
 
 	/// <summary>
+	/// ゲーム中
+	/// </summary>
+	void PlayGame();
+	/// <summary>
+	/// ゲーム開始
+	/// </summary>
+	void GameStart();
+	/// <summary>
+	/// ゲーム再開始
+	/// </summary>
+	void GameReStart();
+	/// <summary>
+	/// 関数の設定
+	/// </summary>
+	void CreateAct();
+
+	/// <summary>
 	/// 次元切り替え開始
 	/// </summary>
 	void ChanegeDimensionStart();
@@ -92,6 +120,7 @@ public: //メンバ関数
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
+	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
 
 private: //メンバ関数
 	/// <summary>
@@ -232,6 +261,8 @@ private: //メンバ変数
 	size_t phase_ = 0;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
+	// イージング用に保存する座標
+	Vector3 easePos_ = {};
 	// シェイクしているか
 	bool isShake_ = false;
 	// シェイクが終わったか

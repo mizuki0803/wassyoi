@@ -38,6 +38,13 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	//ステージの中央座標をセット
 	this->stageCenterPos = stageCenterPos;
 
+	// 最初に動かす関数の設定
+	phase_ = static_cast<int>(GamePhase::Play);
+	// イージングの初期化
+	easeData_ = std::make_unique<EaseData>(60);
+	//関数の設定
+	CreateAct();
+
 	//初期の回転角をセット
 	rotation.x = rotate3DDistance;
 	//カメラ位置フェーズを更新する
@@ -45,6 +52,11 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 }
 
 void GameCamera::Update()
+{
+	func_[phase_]();
+}
+
+void GameCamera::PlayGame()
 {
 	//ステージクリア状態なら抜ける
 	if (isStageClear) { return; }
@@ -63,6 +75,10 @@ void GameCamera::Update()
 	//座標更新
 	UpdatePosition();
 
+	// 保存する座標の更新
+	easePos_ = position;
+	easePos_.x += 100;
+
 	//平行移動行列の計算
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
 	//ワールド行列を更新
@@ -72,6 +88,39 @@ void GameCamera::Update()
 	//ビュー行列と射影行列の更新
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
+}
+
+void GameCamera::GameStart()
+{
+}
+
+void GameCamera::GameReStart()
+{
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(
+		Easing::InQuint(position.x, easePos_.x, easeData_->GetTimeRate()),
+		Easing::InQuint(position.y, easePos_.y, easeData_->GetTimeRate()),
+		Easing::InQuint(position.z, easePos_.z, easeData_->GetTimeRate()));
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+
+	if (easeData_->GetEndFlag())
+	{
+		easeData_->Reset();
+		phase_ = static_cast<int>(GamePhase::Play);
+	}
+
+	easeData_->Update();
+}
+
+void GameCamera::CreateAct()
+{
+	func_.push_back([this] { return GameStart(); });
+	func_.push_back([this] { return PlayGame(); });
+	func_.push_back([this] { return GameReStart(); });
 }
 
 void GameCamera::ChanegeDimensionStart()

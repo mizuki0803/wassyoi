@@ -293,4 +293,5 @@ void GameScene::ReCreate()
 {
 	mapData->ReCreateMapBlock();
 	player->ReCreate(mapData->GetPlayerCreateMapChipNum());
+	camera->SetGamePhase(GameCamera::GamePhase::ReStart);
 }
