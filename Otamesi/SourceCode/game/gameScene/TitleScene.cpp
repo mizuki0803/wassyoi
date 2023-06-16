@@ -38,9 +38,9 @@ void TitleScene::Initialize()
 	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
 	//影用光源カメラ初期化
-	lightCamera.reset(new LightCamera());
-	lightCamera->Initialize({ -100, 100, -300 });
-	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
+	const float lightCameraCenterDistance = 80;
+	lightCamera.reset(GameLightCamera::Create(lightCameraCenterDistance));
+	lightCamera->SetProjectionNum({ 250, 250 }, { -250, -250 });
 
 	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
