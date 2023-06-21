@@ -60,6 +60,9 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void ReCreateMapBlock(const int selectStageNum);
 
+	void BlockCreate(const MapBlockData::MapBlockType type, const XMINT3 chipNum, const int count);
+	void BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 chipNum);
+
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
 	const bool GetIsReCreateEnd() { return isReCreateEnd; }
