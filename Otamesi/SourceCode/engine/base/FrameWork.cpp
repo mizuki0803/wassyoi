@@ -49,8 +49,9 @@ void FrameWork::Initialize()
 	input->Initialize(win.get());
 
 	//音声初期化
-	audio = Audio::GetInstance();
+	Audio* audio = Audio::GetInstance();
 	audio->Initialize();
+	audio->PlayWave(Audio::SoundName::bgm, true);
 
 	//SRV用デスクリプタヒープの初期化
 	DescHeapSRV::Initialize(dxbase->GetDevice(), dxbase->GetCmdList());
@@ -118,7 +119,7 @@ void FrameWork::Finalize()
 	SingletonFinalizer::Finalize();
 
 	//audio解放
-	audio->Finalize();
+	Audio::GetInstance()->Finalize();
 
 	//ウインドウ解放
 	win->WindowRelease();

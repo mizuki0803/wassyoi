@@ -3,7 +3,8 @@
 #include <xaudio2.h>
 #include <cstdint>
 #include <string>
-#include <map>
+#include <unordered_map>
+#include <vector>
 
 #pragma comment(lib, "xaudio2.lib")
 
@@ -16,7 +17,8 @@ public: //エイリアス
 	//namespace省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: //サブクラス
+private: //サブクラス
+
 	//チャンクヘッダ
 	struct ChunkHeader
 	{
@@ -49,6 +51,26 @@ public: //サブクラス
 		unsigned int bufferSize;
 		//SourceVoice
 		IXAudio2SourceVoice* pSourceVoice;
+	};
+
+public:
+
+	enum class SoundName{
+		bgm,//
+		button,//ボタン
+		stage_change,//ステージセレクトでの変更
+		d2_d3,//2dから3d変換
+		d3_d2,//3dから2d変換
+		clear,//クリア
+	};
+
+	std::vector<std::string> name = {
+		"bgm",
+		"button",
+		"stage_change",
+		"d2_d3",
+		"d3_d2",
+		"clear",
 	};
 
 private: //シングルトン化
@@ -97,13 +119,13 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="soundData">サウンドデータ</param>
 	/// <param name="isLoop">ループ再生か</param>
-	void PlayWave(const std::string& filename, const bool isLoop);
+	void PlayWave(const SoundName filename, const bool isLoop = false);
 
 	/// <summary>
 	/// 音声停止	
 	/// </summary>
 	/// <param name="filename">サウンドデータ</param>
-	void StopWave(const std::string& filename);
+	void StopWave(const SoundName filename);
 
 	/// <summary>
 	/// 音量変更
@@ -117,7 +139,7 @@ private: //メンバ変数
 	//マスターボイス
 	IXAudio2MasteringVoice* masterVoice;
 	//サウンドデータの連想配列
-	std::map<std::string, SoundData> soundDatas;
+	std::unordered_map<std::string, SoundData> soundDatas;
 	//サウンド格納ディレクトリ
 	std::string directoryPath;
 };

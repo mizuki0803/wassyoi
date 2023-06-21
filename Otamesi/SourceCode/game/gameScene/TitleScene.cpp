@@ -123,6 +123,9 @@ void TitleScene::Update()
 		
 		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
+			//クリア音
+			Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
+
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetIsStageClear(true);

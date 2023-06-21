@@ -85,6 +85,9 @@ void StageSelectScene::Update()
 
 	//スペースキーでステージを確定し、ゲームシーンへ
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 	}

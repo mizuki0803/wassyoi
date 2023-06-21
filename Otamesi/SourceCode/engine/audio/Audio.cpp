@@ -23,7 +23,11 @@ void Audio::Initialize(const std::string& directoryPath)
 	result = xAudio2->CreateMasteringVoice(&masterVoice);
 
 	//音が大きすぎて耳が痛くなるので、予め小さくしておく
-	ChangeVolume(0.1f);
+	ChangeVolume(1.0f);
+
+	for (auto& i : name) {
+		LoadWave(i);
+	}
 }
 
 void Audio::Finalize()
@@ -32,7 +36,7 @@ void Audio::Finalize()
 	xAudio2.Reset();
 
 	//サウンドデータ解放
-	std::map<std::string, SoundData>::iterator it = soundDatas.begin();
+	std::unordered_map<std::string, SoundData>::iterator it = soundDatas.begin();
 	for (; it != soundDatas.end(); ++it) {
 		SoundDataUnload(&it->second);
 	}
@@ -46,7 +50,7 @@ void Audio::LoadWave(const std::string& filename)
 	if (soundDatas.find(filename) != soundDatas.end()) { return; }
 
 	//ディレクトリパスとファイル名を連結してフルパスを得る
-	std::string fullPath = directoryPath + filename;
+	std::string fullPath = directoryPath + filename + ".wav";
 
 	//ファイル入力ストリームのインスタンス
 	std::ifstream file;
@@ -117,11 +121,11 @@ void Audio::SoundDataUnload(SoundData* soundData)
 	soundData->wfex = {};
 }
 
-void Audio::PlayWave(const std::string& filename, const bool isLoop)
+void Audio::PlayWave(const SoundName filename, const bool isLoop)
 {
 	HRESULT result;
 
-	std::map<std::string, SoundData>::iterator it = soundDatas.find(filename);
+	std::unordered_map<std::string, SoundData>::iterator it = soundDatas.find(name[int(filename)]);
 	//未読み込みの検出
 	assert(it != soundDatas.end());
 	//サウンドデータの参照を取得
@@ -141,23 +145,23 @@ void Audio::PlayWave(const std::string& filename, const bool isLoop)
 	if (isLoop) {
 		buf.LoopCount = XAUDIO2_LOOP_INFINITE;
 	}
-	//ループしない
-	else {
-		buf.LoopCount = 0;
-		buf.LoopBegin = 0;
-		buf.LoopLength = 0;
-	}
+	////ループしない
+	//else {
+	//	buf.LoopCount = 0;
+	//	buf.LoopBegin = 0;
+	//	buf.LoopLength = 0;
+	//}
 
 	//波形データの再生
 	result = soundData.pSourceVoice->SubmitSourceBuffer(&buf);
 	result = soundData.pSourceVoice->Start();
 }
 
-void Audio::StopWave(const std::string& filename)
+void Audio::StopWave(const SoundName filename)
 {
 	HRESULT result;
 
-	std::map<std::string, SoundData>::iterator it = soundDatas.find(filename);
+	std::unordered_map<std::string, SoundData>::iterator it = soundDatas.find(name[int(filename)]);
 	//未読み込みの検出
 	assert(it != soundDatas.end());
 	//サウンドデータの参照を取得

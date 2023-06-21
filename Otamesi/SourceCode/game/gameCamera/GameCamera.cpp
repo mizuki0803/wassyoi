@@ -2,6 +2,7 @@
 #include "Input.h"
 #include "Easing.h"
 #include "Player.h"
+#include "Audio.h"
 
 const float GameCamera::rotate3DDistance = 2.0f;
 
@@ -215,6 +216,12 @@ void GameCamera::ChanegeDimensionStart()
 
 	//s“®‚ðuŽŸŒ³Ø‚è‘Ö‚¦v‚É‚·‚é
 	actionPhase = ActionPhase::ChangeDimension;
+
+	if (is2D) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::d2_d3);
+	} else {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::d3_d2);
+	}
 }
 
 void GameCamera::SetReCreateMove()

@@ -120,6 +120,8 @@ void GameScene::Update()
 		}
 		//エスケープキーでメニュー画面(今は即ステージセレクトへ)
 		else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
+			//se再生
+			Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 			//シーン切り替え
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
 			//binary削除
@@ -139,6 +141,9 @@ void GameScene::Update()
 
 		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
+			//クリア音
+			Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
+
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetClearMode();
