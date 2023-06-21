@@ -82,7 +82,6 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
 	playerStratPos_ = position;
-	tempPos.x += 100.0f;
 	playerEndPos_ = tempPos;
 
 	easeData_->Reset();
@@ -141,23 +140,7 @@ void Player::GameReStart()
 
 	if (easeData_->GetEndFlag())
 	{
-		playerStratPos_ = playerEndPos_;
-		playerEndPos_.x -= 100;
 		easeData_->Reset();
-		phase_ = static_cast<int>(GamePhase::BackBased);
-	}
-	easeData_->Update();
-}
-
-void Player::BackBasedMove()
-{
-	// イージングの計算
-	position.x = Easing::InCubic(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InCubic(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
-	position.z = Easing::InCubic(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
-
-	if (easeData_->GetEndFlag())
-	{
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 	}
 	easeData_->Update();
@@ -168,7 +151,6 @@ void Player::CreateAct()
 	func_.push_back([this] { return PlayGame(); });
 	func_.push_back([this] { return GameStart(); });
 	func_.push_back([this] { return GameReStart(); });
-	func_.push_back([this] { return BackBasedMove(); });
 }
 
 void Player::Draw()

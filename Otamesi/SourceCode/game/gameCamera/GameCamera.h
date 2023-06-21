@@ -60,7 +60,6 @@ public: //enum
 		Play,	//ゲーム中
 		ClearReturn3D,	//クリアに3次元に戻す
 		ReStart,//再度生成
-		BackBased,
 		None,	//何もしない
 	};
 
@@ -110,8 +109,6 @@ public: //メンバ関数
 	/// 何もしない
 	/// </summary>
 	void StayGame();
-
-	void BackBasedMove();
 	/// <summary>
 	/// 関数の設定
 	/// </summary>

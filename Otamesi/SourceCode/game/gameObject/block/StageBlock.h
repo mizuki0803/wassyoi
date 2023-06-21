@@ -19,7 +19,6 @@ public: //enum
 		Move,	//移動
 		Delete,	//削除
 		ReStart,//再度生成
-		BackBased,
 		None,	//何もしない
 	};
 
@@ -64,8 +63,6 @@ public: //メンバ関数
 	/// 再生成時の追加したブロックの移動
 	/// </summary>
 	void ReCreateMove();
-
-	void BackBasedMove();
 
 	/// <summary>
 	/// 再生成の設定

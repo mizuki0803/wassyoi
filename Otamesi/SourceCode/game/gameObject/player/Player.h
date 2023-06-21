@@ -31,7 +31,6 @@ public:
 		GamePlay,	//ゲーム
 		Start,		//開始
 		ReStart,	//再開始
-		BackBased,
 	};
 
 	/// <summary>
@@ -76,8 +75,6 @@ public: //メンバ関数
 	/// ゲーム再開始
 	/// </summary>
 	void GameReStart();
-
-	void BackBasedMove();
 
 	/// <summary>
 	/// 関数の設定
