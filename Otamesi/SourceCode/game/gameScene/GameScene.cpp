@@ -148,8 +148,6 @@ void GameScene::Update()
 	else {
 		if (stageClear_->GetEndFlag())
 		{
-			//シーン切り替え
-			//SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 			//binary削除
 			DeleteBinary();
 			//次のステージへ

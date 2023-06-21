@@ -106,6 +106,10 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void GameReStart();
 	/// <summary>
+	/// ‰½‚à‚µ‚È‚¢
+	/// </summary>
+	void StayGame();
+	/// <summary>
 	/// ŠÖ”‚Ìİ’è
 	/// </summary>
 	void CreateAct();

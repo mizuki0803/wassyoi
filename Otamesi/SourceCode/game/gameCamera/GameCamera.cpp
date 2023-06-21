@@ -41,7 +41,7 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	// 最初に動かす関数の設定
 	phase_ = static_cast<int>(GamePhase::Play);
 	// イージングの初期化
-	easeData_ = std::make_unique<EaseData>(58);
+	easeData_ = std::make_unique<EaseData>(60);
 	//関数の設定
 	CreateAct();
 
@@ -53,10 +53,6 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 
 void GameCamera::Update()
 {
-	if (phase_ == static_cast<int>(GamePhase::None))
-	{
-		return;
-	}
 	func_[phase_]();
 }
 
@@ -178,12 +174,26 @@ void GameCamera::GameReStart()
 	easeData_->Update();
 }
 
+void GameCamera::StayGame()
+{
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+}
+
 void GameCamera::CreateAct()
 {
 	func_.push_back([this] { return GameStart(); });
 	func_.push_back([this] { return PlayGame(); });
 	func_.push_back([this] { return ClearReturn3D(); });
 	func_.push_back([this] { return GameReStart(); });
+	func_.push_back([this] { return StayGame(); });
 }
 
 void GameCamera::ChanegeDimensionStart()
