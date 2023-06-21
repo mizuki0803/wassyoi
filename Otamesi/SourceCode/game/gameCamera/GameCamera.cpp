@@ -169,7 +169,9 @@ void GameCamera::GameReStart()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		phase_ = static_cast<int>(GamePhase::None);
+		stratPos_ = endPos_ = position;
+		endPos_.x -= 100;
+		phase_ = static_cast<int>(GamePhase::BackBased);
 	}
 
 	easeData_->Update();
@@ -188,12 +190,38 @@ void GameCamera::StayGame()
 	if (dirtyProjection) { UpdateMatProjection(); }
 }
 
+void GameCamera::BackBasedMove()
+{
+	position.x = Easing::InCubic(stratPos_.x, endPos_.x, easeData_->GetTimeRate());
+	position.y = Easing::InCubic(stratPos_.y, endPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(stratPos_.z, endPos_.z, easeData_->GetTimeRate());
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+
+	if (easeData_->GetEndFlag())
+	{
+		easeData_->Reset();
+		phase_ = static_cast<int>(GamePhase::None);
+	}
+
+	easeData_->Update();
+}
+
 void GameCamera::CreateAct()
 {
 	func_.push_back([this] { return GameStart(); });
 	func_.push_back([this] { return PlayGame(); });
 	func_.push_back([this] { return ClearReturn3D(); });
 	func_.push_back([this] { return GameReStart(); });
+	func_.push_back([this] { return BackBasedMove(); });
 	func_.push_back([this] { return StayGame(); });
 }
 

@@ -19,6 +19,7 @@ public: //enum
 		Move,	//移動
 		Delete,	//削除
 		ReStart,//再度生成
+		BackBased,
 		None,	//何もしない
 	};
 
@@ -63,6 +64,8 @@ public: //メンバ関数
 	/// 再生成時の追加したブロックの移動
 	/// </summary>
 	void ReCreateMove();
+
+	void BackBasedMove();
 
 	/// <summary>
 	/// 再生成の設定
@@ -145,6 +148,8 @@ protected: // メンバ変数
 	bool deleteFlag_ = false;
 	// ブロックのタイプ
 	MapBlockData::MapBlockType mapBlockType_;
+	// ステージでの位置
+	Vector3 stagePos_;
 
 #pragma region
 	// 開始位置

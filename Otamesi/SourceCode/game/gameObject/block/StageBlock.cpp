@@ -70,12 +70,13 @@ void StageBlock::ReStratMove()
 {
 	// イージングの計算
 	position.x = Easing::InCubic(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InCubic(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate()) + Easing::InCubic(vec_.y, 0.0f, vecEaseData_->GetTimeRate());
-	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate()) + Easing::InCubic(vec_.z, 0.0f, vecEaseData_->GetTimeRate());
+	position.y = Easing::InCubic(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
 	if (easeData_->GetEndFlag())
 	{
-		phase_ = static_cast<int>(GamePhase::None);
+		easeData_->Reset();
+		phase_ = static_cast<int>(GamePhase::BackBased);
 	}
 
 	// イージングデータ更新
@@ -87,8 +88,8 @@ void StageBlock::DeleteMove()
 {
 	// イージングの計算
 	position.x = Easing::InCubic(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InQuart(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate()) + Easing::InCubic(vec_.y, 0.0f, vecEaseData_->GetTimeRate());
-	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate()) + Easing::InCubic(vec_.z, 0.0f, vecEaseData_->GetTimeRate());
+	position.y = Easing::InQuart(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
 	rotation.x += vec_.x;
 	rotation.y += vec_.y;
@@ -114,6 +115,24 @@ void StageBlock::ReCreateMove()
 
 	if (easeData_->GetEndFlag())
 	{
+		blockStratPos_ = blockEndPos_;
+		easeData_->Reset();
+		phase_ = static_cast<int>(GamePhase::BackBased);
+	}
+
+	// イージングデータ更新
+	easeData_->Update();
+}
+
+void StageBlock::BackBasedMove()
+{
+	// イージングの計算
+	position.x = Easing::InCubic(blockEndPos_.x, stagePos_.x, easeData_->GetTimeRate());
+	position.y = Easing::InCubic(blockEndPos_.y, stagePos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(blockEndPos_.z, stagePos_.z, easeData_->GetTimeRate());
+
+	if (easeData_->GetEndFlag())
+	{
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
@@ -131,6 +150,7 @@ void StageBlock::ReCreate(const GamePhase phase, const XMINT3& mapChipNum, const
 	float speed = 5.0f;
 	Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
 	temppos -= shiftPos;
+	stagePos_ = temppos;
 
 	if (phase == GamePhase::Start)
 	{
@@ -190,6 +210,7 @@ void StageBlock::CreateAct()
 	func_.push_back([this] { return ReStratMove(); });
 	func_.push_back([this] { return DeleteMove(); });
 	func_.push_back([this] { return ReCreateMove(); });
+	func_.push_back([this] { return BackBasedMove(); });
 }
 
 void StageBlock::ReAction()
