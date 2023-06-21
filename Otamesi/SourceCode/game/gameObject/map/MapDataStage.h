@@ -62,7 +62,10 @@ public: //メンバ関数
 
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
-	const GamePhase GetGamePhase() { return static_cast<GamePhase>(phase_); }
+	const bool GetIsReCreateEnd() { return isReCreateEnd; }
+
+	//setter
+	void SetIsReCreateEnd(const bool isReCreateEnd) { this->isReCreateEnd = isReCreateEnd; }
 
 protected: //メンバ関数
 	/// <summary>
@@ -91,4 +94,6 @@ protected: //メンバ変数
 	std::vector<int> rndcount;
 	// ブロックを上げるタイマー
 	int blockActTimer_ = 100;
+	//マップ再生成が終了したか
+	bool isReCreateEnd = false;
 };

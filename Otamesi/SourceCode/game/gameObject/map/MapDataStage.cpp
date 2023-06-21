@@ -156,6 +156,7 @@ void MapDataStage::GameReStart()
 	if (!hitFlag)
 	{
 		phase_ = static_cast<int>(GamePhase::GamePlay);
+		isReCreateEnd = true;
 	}
 }
 

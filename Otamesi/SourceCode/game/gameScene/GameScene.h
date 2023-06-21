@@ -58,6 +58,11 @@ public: //メンバ関数
 	/// </summary>
 	void ReCreate();
 
+	/// <summary>
+	/// ゲームを開始状態に戻す
+	/// </summary>
+	void RestartGame();
+
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<GameCamera> camera;

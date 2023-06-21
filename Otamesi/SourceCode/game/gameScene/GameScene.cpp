@@ -155,6 +155,11 @@ void GameScene::Update()
 			//再生成
 			ReCreate();
 			stageClear_->Reset();
+
+		}
+		//マップが再生成を終えたら、次のステージを開始するためにフラグなどをリセット
+		if (mapData->GetIsReCreateEnd()) {
+			RestartGame();
 		}
 	}
 
@@ -292,6 +297,17 @@ void GameScene::ReCreate()
 {
 	mapData->ReCreateMapBlock(StageManager::GetSelectStage());
 	player->ReCreate(mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos());
+	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
+	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
 	camera->SetReCreateMove();
 	camera->SetSaveDistanceStageCenter(mapData->GetCameraDist());
+}
+
+void GameScene::RestartGame()
+{
+	//次のステージを開始するためにフラグなどをリセット
+	isStageClear = false;
+	player->Reset();
+	camera->Reset();
+	mapData->SetIsReCreateEnd(false);
 }

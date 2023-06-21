@@ -85,6 +85,11 @@ public: //ƒƒ“ƒoŠÖ”
 
 	void Draw();
 
+	/// <summary>
+	/// ŠJnó‘Ô‚É–ß‚·
+	/// </summary>
+	void Reset();
+
 	//getter
 	const bool GetIsGoal() { return isGoal; }
 	const bool GetIsMove() { return isMove; }

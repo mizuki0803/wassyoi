@@ -225,6 +225,21 @@ void GameCamera::SetReCreateMove()
 	phase_ = static_cast<int>(GamePhase::ReStart);
 }
 
+void GameCamera::Reset()
+{
+	cameraXPosPhase = (int)CameraXPosPhase::Front;
+	cameraYPosPhase = (int)CameraYPosPhase::Side;
+	phase_ = static_cast<int>(GamePhase::Play);
+	is2D = false;
+	isTriggerDimensionChange = false;
+	isShake_ = false;
+	shakeEnd_ = false;
+	shakeTimer_ = 0;
+	attenuation_ = 0;
+	cameraEaseChangeFlag_ = false;
+	isStageClear = false;
+}
+
 void GameCamera::UpdateMatProjection()
 {
 	if (actionPhase == ActionPhase::ChangeDimension) { return; }

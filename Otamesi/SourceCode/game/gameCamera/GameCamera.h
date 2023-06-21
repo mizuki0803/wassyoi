@@ -123,6 +123,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void SetReCreateMove();
 
+	/// <summary>
+	/// ŠJnó‘Ô‚É–ß‚·
+	/// </summary>
+	void Reset();
+
 	//getter
 	ActionPhase GetActionPhase() { return actionPhase; };
 	const int GetCameraXPosPhase() { return cameraXPosPhase; };

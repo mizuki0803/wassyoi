@@ -75,6 +75,8 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 
 	//マップの中心をずらす値をセット
 	this->shiftPos = shiftPos;
+	//プレイヤー位置を表すマップ番号をセット
+	mapChipNumberPos = mapChipNum;
 	//初期座標をセット
 	SetPlayerEndPos(GetMapChipPos(mapChipNum));
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
@@ -164,6 +166,13 @@ void Player::Draw()
 	ObjObject3d::Draw();
 
 	isStartMove = false;
+}
+
+void Player::Reset()
+{
+	//開始状態に戻すためにフラグなどをリセット
+	isGoal = false;
+	phase_ = static_cast<int>(GamePhase::GamePlay);
 }
 
 void Player::MovePosStart()
