@@ -62,6 +62,7 @@ public: //ƒƒ“ƒoŠÖ”
 
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
+	const GamePhase GetGamePhase() { return static_cast<GamePhase>(phase_); }
 
 protected: //ƒƒ“ƒoŠÖ”
 	/// <summary>
