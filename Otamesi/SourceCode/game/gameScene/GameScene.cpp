@@ -56,10 +56,7 @@ void GameScene::Initialize()
 	camera->SetPlayer(player.get());
 
 	//天球生成
-	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
-	skydome->SetPosition({});
-	const float skydomeSize = 10;
-	skydome->SetScale({ skydomeSize, skydomeSize, skydomeSize });
+	skydome.reset(Skydome::Create(modelSkydome.get()));
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -306,13 +303,15 @@ void GameScene::ReCreate()
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
 	camera->SetReCreateMove();
 	camera->SetSaveDistanceStageCenter(mapData->GetCameraDist());
+	skydome->SetIsRotate(true);
 }
 
 void GameScene::RestartGame()
 {
 	//次のステージを開始するためにフラグなどをリセット
 	isStageClear = false;
+	mapData->SetIsReCreateEnd(false);
 	player->Reset();
 	camera->Reset();
-	mapData->SetIsReCreateEnd(false);
+	skydome->SetIsRotate(false);
 }

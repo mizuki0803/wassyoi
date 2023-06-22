@@ -9,7 +9,7 @@
 #include "HowToPlayUI.h"
 #include "StageClearUI.h"
 #include "BackGround.h"
-#include "game/gameSprite/ParanomaSkyDorm.h"
+#include "Skydome.h"
 #include "ClearStaging.h"
 
 /// <summary>
@@ -92,7 +92,7 @@ private: //メンバ変数
 	//ステージ用マップデータ
 	std::unique_ptr<MapDataStage> mapData;
 	//天球
-	std::unique_ptr<ObjObject3d> skydome;
+	std::unique_ptr<Skydome> skydome;
 
 	//メニュー関係
 	std::unique_ptr<UserInterface> userInterface_;

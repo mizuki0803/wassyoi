@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "MapDataStage.h"
 #include "BackGround.h"
+#include "Skydome.h"
 #include "HowToPlayUI.h"
 #include "StageClearUI.h"
 
@@ -81,7 +82,7 @@ private: //メンバ変数
 	std::unique_ptr<MapDataStage> mapData;
 
 	//天球
-	std::unique_ptr<ObjObject3d> skydome;
+	std::unique_ptr<Skydome> skydome;
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;

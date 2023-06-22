@@ -158,6 +158,7 @@
     <ClCompile Include="SourceCode\game\gameObject\player\Player.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerActionManager.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerEffect.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\Skydome.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\BaseGameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="SourceCode\game\gameObject\player\Player.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerActionManager.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerEffect.h" />
+    <ClInclude Include="SourceCode\game\gameObject\Skydome.h" />
     <ClInclude Include="SourceCode\game\gameObject\StageManager.h" />
     <ClInclude Include="SourceCode\game\gameScene\BaseGameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h" />

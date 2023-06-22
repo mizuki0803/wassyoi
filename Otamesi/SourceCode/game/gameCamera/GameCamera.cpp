@@ -74,7 +74,7 @@ void GameCamera::PlayGame()
 	ChanegeDimension();
 
 	//座標更新
-	UpdatePosition();
+	position = UpdatePosition();
 
 	//平行移動行列の計算
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
@@ -152,9 +152,16 @@ void GameCamera::ClearReturn3D()
 
 void GameCamera::GameReStart()
 {
-	position.x = Easing::InCubic(stratPos_.x, endPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InCubic(stratPos_.y, endPos_.y, easeData_->GetTimeRate());
-	position.z = Easing::InCubic(stratPos_.z, endPos_.z, easeData_->GetTimeRate());
+	//次のステージ開始のため、正面を向くようにイージングで回転させる
+	rotation.x = Easing::InCubic(rotateBefore.x, rotateAfter.x, easeData_->GetTimeRate());
+	rotation.y = Easing::InCubic(rotateBefore.y, rotateAfter.y, easeData_->GetTimeRate());
+	rotation.z = Easing::InCubic(rotateBefore.z, rotateAfter.z, easeData_->GetTimeRate());
+	Vector3 moveNum;
+	moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate());
+	moveNum.y = Easing::InCubic(stratMoveNum_.y, endMoveNum_.y, easeData_->GetTimeRate());
+	moveNum.z = Easing::InCubic(stratMoveNum_.z, endMoveNum_.z, easeData_->GetTimeRate());
+	//回転角から計算した座標に移動量を加えて正式な座標を算出
+	position = moveNum + UpdatePosition();
 
 	//平行移動行列の計算
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
@@ -227,9 +234,20 @@ void GameCamera::ChanegeDimensionStart()
 void GameCamera::SetReCreateMove()
 {
 	// 保存する座標の更新
-	stratPos_ = position;
-	endPos_ = position;
+	stratMoveNum_ = {};
+	endMoveNum_ = {};
 	phase_ = static_cast<int>(GamePhase::ReStart);
+
+	//回転前回転角をセット
+	rotateBefore = rotation;
+	//回転後回転角をセット(0または360に近いほうに)
+	const float aroundMax = 360;
+	if (rotation.x - rotate3DDistance <= aroundMax/ 2) { rotateAfter.x = rotate3DDistance; }
+	else { rotateAfter.x = aroundMax + rotate3DDistance; }
+	if (rotation.y <= aroundMax / 2) { rotateAfter.y = 0; }
+	else { rotateAfter.y = aroundMax; }
+	if (rotation.z <= aroundMax / 2) { rotateAfter.z = 0; }
+	else { rotateAfter.z = aroundMax; }
 }
 
 void GameCamera::Reset()
@@ -290,28 +308,31 @@ void GameCamera::UpdateEyeTarget()
 	up = MatrixTransformDirection(baseUp, matWorld);
 }
 
-void GameCamera::UpdatePosition()
+Vector3 GameCamera::UpdatePosition()
 {
 	//X,Y回転角をラジアンに直す
-	const double angleX = XMConvertToRadians(rotation.x);
-	const double angleY = XMConvertToRadians(rotation.y);
+	const float angleX = XMConvertToRadians(rotation.x);
+	const float angleY = XMConvertToRadians(rotation.y);
 	//アンダーフローする可能性があるので、小数点を切り捨てる
-	const double divNum = 1000;
-	const double roundAngleX = floor(angleX * divNum) / divNum;
-	const double roundAngleY = floor(angleY * divNum) / divNum;
+	const float divNum = 1000;
+	const float roundAngleX = floorf(angleX * divNum) / divNum;
+	const float roundAngleY = floorf(angleY * divNum) / divNum;
 
 	//X,Yラジアンを使用し、sin,cosを算出
-	const double sinfAngleY = sin(roundAngleY);
-	const double cosfAngleY = cos(roundAngleY);
-	const double sinfAngleX = sin(roundAngleX);
-	const double cosfAngleX = cos(roundAngleX);
+	const float sinfAngleY = sinf(roundAngleY);
+	const float cosfAngleY = cosf(roundAngleY);
+	const float sinfAngleX = sinf(roundAngleX);
+	const float cosfAngleX = cosf(roundAngleX);
 
 	//計算結果を割り当てて座標をセット
 	//Y座標はX回転角のsinを使用
 	//X,Z座標はY回転角のsin,cosで計算し、X回転角(Y座標)のcosを乗算して算出
-	position.x = (float)(-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
-	position.y = (float)sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
-	position.z = (float)(-cosfAngleY * cosfAngleX) * distanceStageCenter.z + stageCenterPos.z;
+	Vector3 pos;
+	pos.x = (-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
+	pos.y = sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
+	pos.z = (-cosfAngleY * cosfAngleX) * distanceStageCenter.z + stageCenterPos.z;
+
+	return pos;
 }
 
 Vector3 GameCamera::InputRotateNum()

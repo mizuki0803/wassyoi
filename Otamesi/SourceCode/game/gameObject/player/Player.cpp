@@ -278,6 +278,11 @@ void Player::StageClearCheck()
 	if (gameCamera->GetIs2D()) {
 		if (PlayerActionManager::PlayerGoalCheck2D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;
+
+			//2Dから3Dへ戻る場合、足場となるブロックに接地するマップ番号にプレイヤーを移動させる
+			PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
+			//更新したマップ番号の座標に移動
+			position = GetMapChipPos(mapChipNumberPos);
 		}
 	}
 	//3次元状態ゴールしたのかを判定

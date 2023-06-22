@@ -165,7 +165,7 @@ private: //メンバ関数
 	/// <summary>
 	/// 座標更新
 	/// </summary>
-	void UpdatePosition();
+	Vector3 UpdatePosition();
 
 	/// <summary>
 	/// 回転開始時の入力による回転方向設定
@@ -285,10 +285,10 @@ private: //メンバ変数
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
 	// イージング用に保存する座標
-	// 開始位置
-	Vector3 stratPos_ = {};
-	// 終了位置
-	Vector3 endPos_ = {};
+	// クリア時にカメラを移動させる量(開始時)
+	Vector3 stratMoveNum_ = {};
+	// クリア時にカメラを移動させる量(終了時)
+	Vector3 endMoveNum_ = {};
 	//
 	XMFLOAT3 saveDistanceStageCenter_;
 	// シェイクしているか

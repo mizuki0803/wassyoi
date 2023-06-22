@@ -51,10 +51,7 @@ void TitleScene::Initialize()
 	camera->SetPlayer(player.get());
 
 	//天球生成
-	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
-	skydome->SetPosition({});
-	const float skydomeSize = 10;
-	skydome->SetScale({ skydomeSize, skydomeSize, skydomeSize });
+	skydome.reset(Skydome::Create(modelSkydome.get()));
 
 	//背景オブジェクト生成
 	backGround.reset(BackGround::Create());

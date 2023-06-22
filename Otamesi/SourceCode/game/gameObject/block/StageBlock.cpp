@@ -75,7 +75,6 @@ void StageBlock::ReStratMove()
 
 	if (easeData_->GetEndFlag())
 	{
-		easeData_->Reset();
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
@@ -109,9 +108,8 @@ void StageBlock::ReCreateMove()
 	position.y = Easing::OutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::OutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
-	if (easeData_->GetEndFlag() && vecEaseData_->GetEndFlag())
+	if (easeData_->GetEndFlag())
 	{
-		easeData_->Reset();
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
