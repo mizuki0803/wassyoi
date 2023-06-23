@@ -43,7 +43,7 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	phase_ = static_cast<int>(GamePhase::Play);
 	// イージングの初期化
 	easeData_ = std::make_unique<EaseData>(29);
-	reStartEaseData_ = std::make_unique<EaseData>(39);
+	reStartEaseData_ = std::make_unique<EaseData>(29);
 	//関数の設定
 	CreateAct();
 
@@ -192,7 +192,7 @@ void GameCamera::ClearReturnRotate()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		easeData_->SetCount(50);
+		easeData_->SetCount(39);
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
