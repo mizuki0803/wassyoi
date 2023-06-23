@@ -211,20 +211,6 @@ private: //メンバ関数
 	void ChanegeDimension();
 
 	/// <summary>
-	/// 開始時の位置調整
-	/// </summary>
-	void CameraSetMove();
-
-	/// <summary>
-	/// 
-	/// </summary>
-	void GamePlayStratCameraSetMove();
-
-	/// <summary>
-	/// カメラのシェイク
-	/// </summary>
-	void ShakeMove();
-	/// <summary>
 	/// イージングデータの設定
 	/// </summary>
 	/// <param name="count">フレームのカウント</param>
@@ -302,14 +288,6 @@ private: //メンバ変数
 	Vector3 endMoveNum_ = {};
 	//
 	XMFLOAT3 saveDistanceStageCenter_;
-	// シェイクしているか
-	bool isShake_ = false;
-	// シェイクが終わったか
-	bool shakeEnd_ = false;
-	// シェイクタイマー
-	int shakeTimer_ = 0;
-	// 減衰値
-	int attenuation_ = 0;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
 	// カメラのイージングの切り替えし
