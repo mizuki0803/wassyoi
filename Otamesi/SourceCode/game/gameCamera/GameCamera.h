@@ -58,7 +58,8 @@ public: //enum
 	{
 		Start,	//開始
 		Play,	//ゲーム中
-		ClearReturn3D,	//クリアに3次元に戻す
+		ClearReturn3D,	//クリア時に3次元に戻す
+		ClearReturnRotate,	//クリア時に回転角を戻す
 		ReStart,//再度生成
 		None,	//何もしない
 	};
@@ -102,6 +103,10 @@ public: //メンバ関数
 	/// </summary>
 	void ClearReturn3D();
 	/// <summary>
+	/// クリア時に回転角に戻す処理
+	/// </summary>
+	void ClearReturnRotate();
+	/// <summary>
 	/// ゲーム再開始
 	/// </summary>
 	void GameReStart();
@@ -118,6 +123,11 @@ public: //メンバ関数
 	/// 次元切り替え開始
 	/// </summary>
 	void ChanegeDimensionStart();
+
+	/// <summary>
+	/// 再生成時に動かすための処理
+	/// </summary>
+	void SetClearResetAround();
 	/// <summary>
 	/// 再生成時に動かすための処理
 	/// </summary>

@@ -59,11 +59,20 @@ void ClearStaging::Draw()
 	textSprite_->Draw();
 }
 
+bool ClearStaging::GetIntermediateTrigger()
+{
+	//フラグがfalseなら抜ける
+	if (!intermediateFlag_) { return false; }
+	//トリガー判定を行いたいので、falseに戻しておく
+	intermediateFlag_ = false;
+
+	return true;
+}
+
 void ClearStaging::Reset()
 {
 	easeData_->Reset();
 	endFlag_ = false;
-	intermediateFlag_ = false;
 }
 
 void ClearStaging::StartMove()
@@ -107,6 +116,7 @@ void ClearStaging::EndMove()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
+		easeData_->SetCount(60);
 		phase_ = static_cast<int>(MovePhase::None);
 		endFlag_ = true;
 	}

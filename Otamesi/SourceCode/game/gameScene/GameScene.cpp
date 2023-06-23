@@ -148,17 +148,22 @@ void GameScene::Update()
 		}
 	}
 	else {
-		if (stageClear_->GetEndFlag())
+		if (stageClear_->GetIntermediateTrigger())
 		{
 			//binary削除
 			DeleteBinary();
+			//カメラの回転を元に戻す状態にする
+			camera->SetClearResetAround();
+		}
+		else if (stageClear_->GetEndFlag())
+		{
 			//次のステージへ
 			StageManager::NextStageSelect();
 			//再生成
 			ReCreate();
 			stageClear_->Reset();
-
 		}
+
 		//マップが再生成を終えたら、次のステージを開始するためにフラグなどをリセット
 		if (mapData->GetIsReCreateEnd()) {
 			RestartGame();

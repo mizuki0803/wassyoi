@@ -46,16 +46,19 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="movePhase">行動</param>
 	void SetMovePhase(MovePhase movePhase) { phase_ = static_cast<int>(movePhase); }
+
 	/// <summary>
 	/// 終了フラグの取得
 	/// </summary>
 	/// <returns>終了フラグ</returns>
 	bool GetEndFlag() { return endFlag_; }
+
 	/// <summary>
 	/// 途中経過のフラグの取得
 	/// </summary>
 	/// <returns>途中経過のフラグ</returns>
-	bool GetIntermediateFlag() { return intermediateFlag_; }
+	bool GetIntermediateTrigger();
+
 	/// <summary>
 	/// リセット
 	/// </summary>
