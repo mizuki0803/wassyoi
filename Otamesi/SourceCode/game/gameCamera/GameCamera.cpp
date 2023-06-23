@@ -192,7 +192,7 @@ void GameCamera::ClearReturnRotate()
 	if (easeData_->GetEndFlag())
 	{
 		easeData_->Reset();
-		easeData_->SetCount(30);
+		easeData_->SetCount(50);
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
@@ -204,7 +204,7 @@ void GameCamera::GameReStart()
 	Vector3 moveNum;
 	if (!reStartEaseChangeFlag_)
 	{
-		moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate()) - Easing::OutQuint(0.0f, 25.0f, reStartEaseData_->GetTimeRate());
+		moveNum.x = Easing::OutQuint(0.0f, -25.0f, reStartEaseData_->GetTimeRate());
 
 		if (reStartEaseData_->GetEndFlag())
 		{
@@ -214,11 +214,9 @@ void GameCamera::GameReStart()
 	}
 	else
 	{
-		moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate()) - Easing::InQuint(25.0f, 0.0f, reStartEaseData_->GetTimeRate());
+		moveNum.x = Easing::InQuint(-25.0f, 0.0f, reStartEaseData_->GetTimeRate());
 	}
-	
-	moveNum.y = Easing::InCubic(stratMoveNum_.y, endMoveNum_.y, easeData_->GetTimeRate());
-	moveNum.z = Easing::InCubic(stratMoveNum_.z, endMoveNum_.z, easeData_->GetTimeRate());
+
 	//‰ñ“]Šp‚©‚çŒvZ‚µ‚½À•W‚ÉˆÚ“®—Ê‚ğ‰Á‚¦‚Ä³®‚ÈÀ•W‚ğZo
 	position = moveNum + UpdatePosition();
 
