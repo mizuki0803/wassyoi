@@ -1,7 +1,7 @@
 #include "Skydome.h"
 
 const float Skydome::size = 10.0f;
-const float Skydome::rotSpeed = 8.0f;
+const float Skydome::rotSpeed = 4.3f;
 
 Skydome* Skydome::Create(ObjModel* model)
 {
@@ -39,5 +39,5 @@ void Skydome::Rotate()
 	//âÒì]èÛë‘Ç≈Ç»ÇØÇÍÇŒî≤ÇØÇÈ
 	if (!isRotate) { return; }
 
-	rotation.y += rotSpeed;
+	rotation.y += -rotSpeed;
 }

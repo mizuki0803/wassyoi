@@ -284,6 +284,7 @@ private: //メンバ変数
 	size_t phase_ = 0;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
+	std::unique_ptr<EaseData> reStartEaseData_;
 	// イージング用に保存する座標
 	// クリア時にカメラを移動させる量(開始時)
 	Vector3 stratMoveNum_ = {};
@@ -301,6 +302,8 @@ private: //メンバ変数
 	int attenuation_ = 0;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
+	// カメラのイージングの切り替えし
+	bool reStartEaseChangeFlag_ = false;
 	//ステージクリア状態か
 	bool isStageClear = false;
 };

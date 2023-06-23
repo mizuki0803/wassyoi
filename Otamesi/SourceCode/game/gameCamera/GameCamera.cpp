@@ -43,6 +43,7 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	phase_ = static_cast<int>(GamePhase::Play);
 	// イージングの初期化
 	easeData_ = std::make_unique<EaseData>(60);
+	reStartEaseData_ = std::make_unique<EaseData>(40);
 	//関数の設定
 	CreateAct();
 
@@ -157,7 +158,21 @@ void GameCamera::GameReStart()
 	rotation.y = Easing::InCubic(rotateBefore.y, rotateAfter.y, easeData_->GetTimeRate());
 	rotation.z = Easing::InCubic(rotateBefore.z, rotateAfter.z, easeData_->GetTimeRate());
 	Vector3 moveNum;
-	moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate());
+	if (!reStartEaseChangeFlag_)
+	{
+		moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate()) - Easing::OutQuint(0.0f, 25.0f, reStartEaseData_->GetTimeRate());
+
+		if (reStartEaseData_->GetEndFlag())
+		{
+			reStartEaseData_->Reset();
+			reStartEaseChangeFlag_ = true;
+		}
+	}
+	else
+	{
+		moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate()) - Easing::InQuint(25.0f, 0.0f, reStartEaseData_->GetTimeRate());
+	}
+	
 	moveNum.y = Easing::InCubic(stratMoveNum_.y, endMoveNum_.y, easeData_->GetTimeRate());
 	moveNum.z = Easing::InCubic(stratMoveNum_.z, endMoveNum_.z, easeData_->GetTimeRate());
 	//回転角から計算した座標に移動量を加えて正式な座標を算出
@@ -173,12 +188,14 @@ void GameCamera::GameReStart()
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
-	if (easeData_->GetEndFlag())
+	if (easeData_->GetEndFlag() && reStartEaseData_->GetEndFlag())
 	{
 		easeData_->Reset();
+		reStartEaseData_->Reset();
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
+	reStartEaseData_->Update();
 	easeData_->Update();
 }
 
@@ -262,6 +279,7 @@ void GameCamera::Reset()
 	shakeTimer_ = 0;
 	attenuation_ = 0;
 	cameraEaseChangeFlag_ = false;
+	reStartEaseChangeFlag_ = false;
 	isStageClear = false;
 }
 

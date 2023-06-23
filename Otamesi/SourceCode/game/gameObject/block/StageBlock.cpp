@@ -24,7 +24,7 @@ bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, cons
 
 	// イージングデータの設定
 	SetEaseData(60);
-	vecEaseData_ = std::make_unique<EaseData>(60);
+	vecEaseData_ = std::make_unique<EaseData>(80);
 
 	//座標をセット
 	ReCreate(GamePhase::Start, mapChipNum, shiftPos);
