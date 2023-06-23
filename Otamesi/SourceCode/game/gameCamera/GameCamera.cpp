@@ -317,8 +317,6 @@ void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
 	// •Û‘¶‚·‚éÀ•W‚ÌXV
 	beforeDistanceStageCenter = this->distanceStageCenter;
 	afterDistanceStageCenter = distanceStageCenter;
-	stratMoveNum_ = {};
-	endMoveNum_ = {};
 	phase_ = static_cast<int>(GamePhase::Play);
 	is2D = false;
 	isTriggerDimensionChange = false;

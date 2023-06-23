@@ -285,11 +285,6 @@ private: //メンバ変数
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
 	std::unique_ptr<EaseData> reStartEaseData_;
-	// イージング用に保存する座標
-	// クリア時にカメラを移動させる量(開始時)
-	Vector3 stratMoveNum_ = {};
-	// クリア時にカメラを移動させる量(終了時)
-	Vector3 endMoveNum_ = {};
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
 	// カメラのイージングの切り替えし
