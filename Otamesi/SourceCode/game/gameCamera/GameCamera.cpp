@@ -204,7 +204,7 @@ void GameCamera::GameReStart()
 	Vector3 moveNum;
 	if (!reStartEaseChangeFlag_)
 	{
-		moveNum.x = Easing::OutQuint(0.0f, -25.0f, reStartEaseData_->GetTimeRate());
+		moveNum.x = Easing::OutQuint(0.0f, -28.0f, reStartEaseData_->GetTimeRate());
 
 		if (reStartEaseData_->GetEndFlag())
 		{
@@ -214,7 +214,7 @@ void GameCamera::GameReStart()
 	}
 	else
 	{
-		moveNum.x = Easing::InQuint(-25.0f, 0.0f, reStartEaseData_->GetTimeRate());
+		moveNum.x = Easing::InQuint(-28.0f, 0.0f, reStartEaseData_->GetTimeRate());
 	}
 
 	//回転角から計算した座標に移動量を加えて正式な座標を算出
