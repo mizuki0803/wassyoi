@@ -306,8 +306,7 @@ void GameScene::ReCreate()
 	player->ReCreate(mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos());
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
-	camera->SetReCreateMove();
-	camera->SetSaveDistanceStageCenter(mapData->GetCameraDist());
+	camera->SetReCreateMove(mapData->GetCameraDist());
 	skydome->SetIsRotate(true);
 }
 

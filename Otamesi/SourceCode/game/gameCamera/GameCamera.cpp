@@ -135,6 +135,18 @@ void GameCamera::ClearReturn3D()
 	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
 	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
 	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
+	//座標更新
+	position = UpdatePosition();
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
 
 	//プロジェクション行列のイージング
 	if (is2D) {
@@ -220,6 +232,11 @@ void GameCamera::GameReStart()
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
+	//ステージを変更するので、ステージとカメラの距離をイージングで変更していく
+	distanceStageCenter.x = Easing::InCubic(beforeDistanceStageCenter.x, afterDistanceStageCenter.x, easeData_->GetTimeRate());
+	distanceStageCenter.y = Easing::InCubic(beforeDistanceStageCenter.y, afterDistanceStageCenter.y, easeData_->GetTimeRate());
+	distanceStageCenter.z = Easing::InCubic(beforeDistanceStageCenter.z, afterDistanceStageCenter.z, easeData_->GetTimeRate());
+
 	if (easeData_->GetEndFlag() && reStartEaseData_->GetEndFlag() && reStartEaseChangeFlag_)
 	{
 		easeData_->Reset();
@@ -297,9 +314,11 @@ void GameCamera::SetClearResetAround()
 	else { rotateAfter.z = aroundMax; }
 }
 
-void GameCamera::SetReCreateMove()
+void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
 {
 	// 保存する座標の更新
+	beforeDistanceStageCenter = this->distanceStageCenter;
+	afterDistanceStageCenter = distanceStageCenter;
 	stratMoveNum_ = {};
 	endMoveNum_ = {};
 	phase_ = static_cast<int>(GamePhase::Play);

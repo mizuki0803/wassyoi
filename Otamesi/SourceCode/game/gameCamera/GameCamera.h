@@ -125,13 +125,14 @@ public: //メンバ関数
 	void ChanegeDimensionStart();
 
 	/// <summary>
-	/// 再生成時に動かすための処理
+	/// クリア後演出のカメラ回転を初期位置に修正する処理
 	/// </summary>
 	void SetClearResetAround();
 	/// <summary>
 	/// 再生成時に動かすための処理
 	/// </summary>
-	void SetReCreateMove();
+	/// <param name="distanceStageCenter">ステージ中心から離す距離</param>
+	void SetReCreateMove(const XMFLOAT3& distanceStageCenter);
 
 	/// <summary>
 	/// 開始状態に戻す
@@ -153,7 +154,6 @@ public: //メンバ関数
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
 	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
-	void SetSaveDistanceStageCenter(XMFLOAT3 saveDistanceStageCenter) { saveDistanceStageCenter_ = saveDistanceStageCenter; }
 
 private: //メンバ関数
 	/// <summary>
@@ -262,6 +262,10 @@ private: //メンバ変数
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
 	//ステージ中央からの距離
 	XMFLOAT3 distanceStageCenter;
+	//イージング変更前のステージ中央からの距離
+	XMFLOAT3 beforeDistanceStageCenter;
+	//イージング変更後のステージ中央からの距離
+	XMFLOAT3 afterDistanceStageCenter;
 	//アクション
 	ActionPhase actionPhase = ActionPhase::None;
 	//アクション用タイマー
@@ -286,8 +290,6 @@ private: //メンバ変数
 	Vector3 stratMoveNum_ = {};
 	// クリア時にカメラを移動させる量(終了時)
 	Vector3 endMoveNum_ = {};
-	//
-	XMFLOAT3 saveDistanceStageCenter_;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
 	// カメラのイージングの切り替えし
