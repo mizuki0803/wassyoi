@@ -18,7 +18,7 @@ void StageSelectScene::Initialize()
 	lightGroup->SetDirLightActive(2, false);
 
 	//objからモデルデータを読み込む
-	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeBase", true));
+	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 	//マップ管理生成
 	mapDataManager.reset(MapDataStageSelectManager::Create());
