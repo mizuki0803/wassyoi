@@ -152,13 +152,19 @@ void GameScene::Update()
 		{
 			//binary削除
 			DeleteBinary();
-			//カメラの回転を元に戻す状態にする
-			camera->SetClearResetAround();
+			//次のステージがある場合は次のステージへ
+			if (StageManager::NextStageSelect()) {
+				//カメラの回転を元に戻す状態にする
+				camera->SetClearResetAround();
+			}
+			//次のステージがない場合はステージセレクトシーン
+			else {
+				//シーン切り替え
+				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
+			}
 		}
 		else if (stageClear_->GetEndFlag())
 		{
-			//次のステージへ
-			StageManager::NextStageSelect();
 			//再生成
 			ReCreate();
 			stageClear_->Reset();
