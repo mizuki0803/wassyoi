@@ -63,6 +63,7 @@ void ClearStaging::Reset()
 {
 	easeData_->Reset();
 	endFlag_ = false;
+	intermediateFlag_ = false;
 }
 
 void ClearStaging::StartMove()
@@ -82,6 +83,7 @@ void ClearStaging::StartMove()
 	{
 		easeData_->Reset();
 		easeData_->SetCount(30);
+		intermediateFlag_ = true;
 		phase_ = static_cast<int>(MovePhase::End);
 	}
 

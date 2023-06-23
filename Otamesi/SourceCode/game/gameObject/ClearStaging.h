@@ -52,6 +52,11 @@ public: //メンバ関数
 	/// <returns>終了フラグ</returns>
 	bool GetEndFlag() { return endFlag_; }
 	/// <summary>
+	/// 途中経過のフラグの取得
+	/// </summary>
+	/// <returns>途中経過のフラグ</returns>
+	bool GetIntermediateFlag() { return intermediateFlag_; }
+	/// <summary>
 	/// リセット
 	/// </summary>
 	void Reset();
@@ -79,5 +84,7 @@ private: //メンバ変数
 	size_t phase_ = 0;
 	// 終了フラグ
 	bool endFlag_ = false;
+	// 途中経過のフラグ
+	bool intermediateFlag_ = false;
 };
 
