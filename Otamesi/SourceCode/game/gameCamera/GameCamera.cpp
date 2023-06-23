@@ -43,7 +43,7 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	phase_ = static_cast<int>(GamePhase::Play);
 	// イージングの初期化
 	easeData_ = std::make_unique<EaseData>(29);
-	reStartEaseData_ = std::make_unique<EaseData>(40);
+	reStartEaseData_ = std::make_unique<EaseData>(39);
 	//関数の設定
 	CreateAct();
 
@@ -188,9 +188,15 @@ void GameCamera::ClearReturnRotate()
 void GameCamera::GameReStart()
 {	
 	Vector3 moveNum;
-	if (reStartEaseData_->GetTimeRate() < 0.5f)
+	if (!reStartEaseChangeFlag_)
 	{
 		moveNum.x = Easing::InCubic(stratMoveNum_.x, endMoveNum_.x, easeData_->GetTimeRate()) - Easing::OutQuint(0.0f, 25.0f, reStartEaseData_->GetTimeRate());
+
+		if (reStartEaseData_->GetEndFlag())
+		{
+			reStartEaseData_->Reset();
+			reStartEaseChangeFlag_ = true;
+		}
 	}
 	else
 	{
@@ -212,7 +218,7 @@ void GameCamera::GameReStart()
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
-	if (easeData_->GetEndFlag() && reStartEaseData_->GetEndFlag())
+	if (easeData_->GetEndFlag() && reStartEaseData_->GetEndFlag() && reStartEaseChangeFlag_)
 	{
 		easeData_->Reset();
 		reStartEaseData_->Reset();
