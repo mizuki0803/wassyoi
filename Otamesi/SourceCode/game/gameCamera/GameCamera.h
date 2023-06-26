@@ -146,6 +146,7 @@ public: //ƒƒ“ƒoŠÖ”
 	const bool GetIs2D() { return is2D; }
 	const bool GetIsTriggerDimensionChange() { return isTriggerDimensionChange; }
 	const Vector3 GetRotation() { return rotation; }
+	const GamePhase GetGamePhase() { return static_cast<GamePhase>(phase_); }
 	//setter
 	void SetPlayer(Player* _player) { player = _player; }
 	void SetIs2D(const bool _is2D) { is2D = _is2D; }
