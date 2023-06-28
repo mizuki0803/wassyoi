@@ -41,7 +41,7 @@ public: //静的メンバ関数
 	static bool PrevStageSelect();
 
 private: //静的メンバ変数(定数)
-	static const int stageNum = 14;
+	static const int stageNum = 15;
 
 private: //静的メンバ変数
 	//選択中のステージ
