@@ -75,10 +75,8 @@ void TitleScene::Initialize()
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//操作方法UI生成
-	howToPlayUI.reset(HowToPlayUI::Create(false));
-	//ステージクリアUI生成
-	stageClearUI.reset(StageClearUI::Create());
+	//UI関係生成
+	userInterface_ = UserInterface::Create();
 	//タイトルロゴ生成
 	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
 	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
@@ -159,11 +157,24 @@ void TitleScene::Update()
 	//背景オブジェクト
 	backGround->Update();
 
-	//スプライト更新
-	//操作方法
-	howToPlayUI->Update();
-	//ステージクリアUI更新
-	stageClearUI->Update();
+	//スプライト
+	//UIの更新
+	userInterface_->Update();
+
+	//パーティクル更新
+	ParticleEmitter::GetInstance()->Update();
+
+	if (Input::GetInstance()->TriggerKey(DIK_M))
+	{
+		if (!userInterface_->GetMenuFlag())
+		{
+			userInterface_->SetMenuFlag(true);
+		}
+		else
+		{
+			userInterface_->SetMenuFlag(false);
+		}
+	}
 	//タイトルロゴ
 	titleLogo->Update();
 
@@ -235,13 +246,8 @@ void TitleScene::DrawFrontSprite()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//操作方法
-	howToPlayUI->Draw();
-
-	//ステージクリアUI
-	if (isStageClear) {
-		stageClearUI->Draw();
-	}
+	//UI関係
+	userInterface_->Draw();
 
 	//タイトルロゴ
 	titleLogo->Draw();

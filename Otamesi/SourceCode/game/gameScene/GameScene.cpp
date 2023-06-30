@@ -80,11 +80,9 @@ void GameScene::Initialize()
 	//初期状態をbinary保存
 	KeepBinary(*camera, *player);
 
+	//UI関係生成
 	userInterface_ = UserInterface::Create();
-	//操作方法UI生成
-	howToPlayUI.reset(HowToPlayUI::Create(true));
 	//ステージクリアUI生成
-	stageClearUI.reset(StageClearUI::Create());
 	stageClear_ = ClearStaging::Create();
 
 	// スカイドーム生成
@@ -199,10 +197,7 @@ void GameScene::Update()
 	//スプライト
 	//UIの更新
 	userInterface_->Update();
-	//操作方法
-	howToPlayUI->Update();
 	//ステージクリアUI更新
-	stageClearUI->Update();
 	stageClear_->Update();
 
 	//パーティクル更新
@@ -287,16 +282,10 @@ void GameScene::DrawFrontSprite()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//操作方法
-	howToPlayUI->Draw();
-
+	//UI関係
 	userInterface_->Draw();
 
-	//ステージクリアUI
-	/*if (isStageClear) {
-		stageClearUI->Draw();
-	}*/
-
+	//ステージクリア
 	stageClear_->Draw();
 
 	//シーン変更演出描画

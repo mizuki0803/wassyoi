@@ -326,9 +326,6 @@
     <ClCompile Include="SourceCode\main.cpp">
       <Filter>ソース ファイル\game</Filter>
     </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\engine\math\Timer.cpp">
       <Filter>ソース ファイル\engine\math</Filter>
     </ClCompile>
@@ -367,6 +364,12 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\Skydome.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -706,6 +709,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\Skydome.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

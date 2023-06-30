@@ -7,7 +7,7 @@
 #include "MapDataStage.h"
 #include "BackGround.h"
 #include "Skydome.h"
-#include "HowToPlayUI.h"
+#include "UserInterface.h"
 #include "StageClearUI.h"
 
 /// <summary>
@@ -87,10 +87,8 @@ private: //メンバ変数
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;
 
-	//操作方法UI
-	std::unique_ptr<HowToPlayUI> howToPlayUI;
-	//ステージクリアUI
-	std::unique_ptr<StageClearUI> stageClearUI;
+	//UI関係
+	std::unique_ptr<UserInterface> userInterface_;
 
 	//タイトルロゴ
 	std::unique_ptr<Sprite> titleLogo;

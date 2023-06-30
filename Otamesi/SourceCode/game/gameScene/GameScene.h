@@ -6,8 +6,6 @@
 #include "Player.h"
 #include "MapDataStage.h"
 #include "UserInterface.h"
-#include "HowToPlayUI.h"
-#include "StageClearUI.h"
 #include "BackGround.h"
 #include "Skydome.h"
 #include "ClearStaging.h"
@@ -94,12 +92,9 @@ private: //メンバ変数
 	//天球
 	std::unique_ptr<Skydome> skydome;
 
-	//メニュー関係
+	//UI関係
 	std::unique_ptr<UserInterface> userInterface_;
-	//操作方法UI
-	std::unique_ptr<HowToPlayUI> howToPlayUI;
 	//ステージクリアUI
-	std::unique_ptr<StageClearUI> stageClearUI;
 	std::unique_ptr<ClearStaging> stageClear_;
 
 	//背景オブジェクト
