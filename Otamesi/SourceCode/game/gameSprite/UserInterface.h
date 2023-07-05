@@ -100,6 +100,6 @@ private: //ƒƒ“ƒo•Ï”
 	// ŠÖ”‚Ì”Ô†
 	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
 	// ‰¹‚Ì‘å‚«‚³
-	float soundVolume_ = 0.0f;
+	float soundVolume_ = 0.1f;
 };
 

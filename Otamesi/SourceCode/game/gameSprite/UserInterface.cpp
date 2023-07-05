@@ -2,6 +2,7 @@
 #include "WindowApp.h"
 #include "SpriteTextureLoader.h"
 #include "Input.h"
+#include "Audio.h"
 
 std::unique_ptr<UserInterface> UserInterface::Create()
 {
@@ -146,7 +147,7 @@ void UserInterface::MenuSelection()
 	{
 		if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_LEFT))
 		{
-			soundVolume_--;
+			soundVolume_ -= 0.01f;
 			if (soundVolume_ <= 0.0f)
 			{
 				soundVolume_ = 0.0f;
@@ -154,13 +155,15 @@ void UserInterface::MenuSelection()
 		}
 		else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_RIGHT))
 		{
-			soundVolume_++;
-			if (soundVolume_ >= 100.0f)
+			soundVolume_ += 0.01f;
+			if (soundVolume_ >= 0.200f)
 			{
-				soundVolume_ = 100.0f;
+				soundVolume_ = 0.200f;
 			}
 		}
 	}
+
+	Audio::GetInstance()->ChangeVolume(soundVolume_);
 
 	for (int i = 0; i < menuframe_.size(); i++)
 	{
