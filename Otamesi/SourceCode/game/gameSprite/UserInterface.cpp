@@ -4,6 +4,9 @@
 #include "Input.h"
 #include "Audio.h"
 
+float UserInterface::soundVolume_ = 1.0f;
+const float UserInterface::soundMaxVolume_ = 2.0f;
+
 std::unique_ptr<UserInterface> UserInterface::Create()
 {
 	UserInterface* temp = new UserInterface;
@@ -21,7 +24,6 @@ void UserInterface::Initialize()
 	drawerSprites[HowToPlayPlayer].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DrawerSprite::Left, 500, stickoutNum)); //プレイヤー操作説明
 	drawerSprites[HowToPlayCamera].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DrawerSprite::Right, 500, stickoutNum)); //カメラ操作説明
 
-
 	//メニュー用スプライト生成
 	for (int i = 0; i < menuframe_.size(); i++)
 	{
@@ -32,6 +34,13 @@ void UserInterface::Initialize()
 
 	menuFunc_.push_back([this] { return MenuOpen(); });
 	menuFunc_.push_back([this] { return MenuSelection(); });
+
+	//音量変更用スプライト生成
+	soundVolumeBar = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumeBar), { 0.0f, 0.5f }, false, false));
+	soundVolumeBar->SetPosition({ menuframe_[0]->GetPosition().x + 150, menuframe_[0]->GetPosition().y });
+	const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //最大音量と比較時の音量割合
+	soundVolumePointer = std::unique_ptr<SoundVolumePointer>(SoundVolumePointer::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumePointer),
+		soundVolumeBar->GetPosition(), soundVolumeBar->GetSize().x, soundVolumeStartPercentage));
 }
 
 void UserInterface::Update()
@@ -47,6 +56,10 @@ void UserInterface::Update()
 	//メニュースプライト更新
 	MenuUpdate();
 	menuBackScreen_->Update();
+
+	//音量変更用スプライト更新
+	soundVolumeBar->Update();
+	soundVolumePointer->Update();
 }
 
 void UserInterface::Draw()
@@ -66,6 +79,10 @@ void UserInterface::Draw()
 		{
 			menu->Draw();
 		}
+
+		//音量変更用スプライト描画
+		soundVolumeBar->Draw();
+		soundVolumePointer->Draw();
 	}
 }
 
@@ -145,25 +162,28 @@ void UserInterface::MenuSelection()
 
 	if (selectionNumber_ == 0)
 	{
-		if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_LEFT))
+		//音量変更キー入力がある場合のみ判定
+		if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->GetInstance()->PushKey(DIK_RIGHT)) 
 		{
-			soundVolume_ -= 0.01f;
-			if (soundVolume_ <= 0.0f)
+			const float soundVolumeChangeSpeed = 0.01f;	//音量変更量
+
+			if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT))
 			{
-				soundVolume_ = 0.0f;
+				soundVolume_ -= soundVolumeChangeSpeed;
+				soundVolume_ = max(soundVolume_, 0.0f);
 			}
-		}
-		else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_RIGHT))
-		{
-			soundVolume_ += 0.01f;
-			if (soundVolume_ >= 0.200f)
+			else if (Input::GetInstance()->GetInstance()->PushKey(DIK_RIGHT))
 			{
-				soundVolume_ = 0.200f;
+				soundVolume_ += soundVolumeChangeSpeed;
+				soundVolume_ = min(soundVolume_, soundMaxVolume_);
 			}
+			//音量変更用ポインターの割合座標を変更
+			const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //最大音量と比較時の音量割合
+			soundVolumePointer->SetPercentage(soundVolumeStartPercentage);
+
+			Audio::GetInstance()->ChangeVolume(soundVolume_);
 		}
 	}
-
-	Audio::GetInstance()->ChangeVolume(soundVolume_);
 
 	for (int i = 0; i < menuframe_.size(); i++)
 	{

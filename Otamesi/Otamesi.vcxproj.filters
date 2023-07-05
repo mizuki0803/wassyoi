@@ -371,6 +371,9 @@
     <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -711,6 +714,9 @@
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include "Menu.h"
 #include "DrawerSprite.h"
+#include "SoundVolumePointer.h"
 #include <array>
 #include <vector>
 #include <functional>
@@ -78,6 +79,12 @@ private: //メンバ関数
 	/// </summary>
 	void DrawerSpriteMoveStartKey();
 
+private: //静的メンバ変数
+	//音の大きさ
+	static float soundVolume_;
+	//最大音量
+	static const float soundMaxVolume_;
+
 private: //メンバ変数
 	//説明用引き出しスプライト
 	std::array<std::unique_ptr<DrawerSprite>, DrawerSpriteNum> drawerSprites;
@@ -87,6 +94,10 @@ private: //メンバ変数
 	std::unique_ptr<Sprite> menuBackScreen_;
 	// メニュー用の枠組み
 	std::array<std::unique_ptr<Menu>, 3> menuframe_;
+	// 音量設定用バースプライト
+	std::unique_ptr<Sprite> soundVolumeBar;
+	// 音量設定用ポインタースプライト
+	std::unique_ptr<SoundVolumePointer> soundVolumePointer;
 	// 行動フラグ
 	bool menuFlag_ = false;
 	// 行動をさせない
@@ -98,8 +109,5 @@ private: //メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> menuFunc_;
 	// 関数の番号
-	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
-	// 音の大きさ
-	float soundVolume_ = 0.1f;
+	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);	
 };
-

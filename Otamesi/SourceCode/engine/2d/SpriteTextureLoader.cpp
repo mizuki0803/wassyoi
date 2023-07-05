@@ -18,6 +18,8 @@ void SpriteTextureLoader::TextureLoad()
 	//ƒƒjƒ…[ŠÖŒW
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
 	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
+	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
+	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
 	//‘€ì•û–@ŠÖŒW
 	TextureManager::LoadTexture(textures[HowToPlayMove], directoryPath, "move.png");
 	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "camera.png");

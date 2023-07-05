@@ -15,6 +15,8 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		SoundVolumeBar,	//音量変更用バー
+		SoundVolumePointer,	//音量変更用ポインター
 		HowToPlayMove,	//操作方法(移動)
 		HowToPlayCamera,//操作方法(カメラ)
 		HowToPlayChengeDemension,//操作方法(次元変更)
