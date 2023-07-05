@@ -32,6 +32,8 @@ public: //メンバ関数
 	/// </summary>
 	void Reset();
 
+	const bool EaseEnd() {return menuEaseData_->GetEndFlag(); }
+
 private: //メンバ変数
 	// イージング
 	std::unique_ptr<EaseData> menuEaseData_;

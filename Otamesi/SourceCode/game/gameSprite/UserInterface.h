@@ -2,6 +2,8 @@
 #include "Menu.h"
 #include "DrawerSprite.h"
 #include <array>
+#include <vector>
+#include <functional>
 
 class UserInterface
 {
@@ -20,6 +22,14 @@ public: //enum
 		DrawerSpriteNum,	//引き出しスプライト数
 	};
 
+	/// <summary>
+	/// メニューの全体
+	/// </summary>
+	enum class MenuPhase
+	{
+		Start,		//開始
+		Selection,	//選択
+	};
 
 public: //メンバ関数
 	/// <summary>
@@ -44,6 +54,12 @@ public: //メンバ関数
 
 	// メニュー関係の処理
 	void MenuUpdate();
+	// 
+	void MenuReset();
+	//
+	void MenuOpen();
+	//
+	void MenuSelection();
 
 	/// <summary>
 	/// 引き出しスプライトの開閉状態をリセット
@@ -73,7 +89,17 @@ private: //メンバ変数
 	std::array<std::unique_ptr<Menu>, 3> menuframe_;
 	// 行動フラグ
 	bool menuFlag_ = false;
-	//
+	// 行動をさせない
 	bool notMove_ = false;
+	// メニュー選択
+	int selectionNumber_ = 0;
+	// 選択可能か
+	bool selectionFlag_ = false;
+	// 関数の管理
+	std::vector<std::function<void()>> menuFunc_;
+	// 関数の番号
+	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
+	// 音の大きさ
+	float soundVolume_ = 0.0f;
 };
 

@@ -28,6 +28,9 @@ void UserInterface::Initialize()
 	}
 	menuBackScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0.0f, 0.0f }, false, false));
 	menuBackScreen_->SetSize(Vector2(WindowApp::window_width, (WindowApp::window_height)));
+
+	menuFunc_.push_back([this] { return MenuOpen(); });
+	menuFunc_.push_back([this] { return MenuSelection(); });
 }
 
 void UserInterface::Update()
@@ -69,14 +72,26 @@ void UserInterface::MenuUpdate()
 {
 	if (!menuFlag_)
 	{
-		for (auto& menu : menuframe_)
-		{
-			menu->Reset();
-		}
-		easeTimer_ = 0.0f;
+		MenuReset();
 		return;
 	}
 
+	menuFunc_[menuPhase_]();
+}
+
+void UserInterface::MenuReset()
+{
+	for (auto& menu : menuframe_)
+	{
+		menu->Reset();
+	}
+	easeTimer_ = 0.0f;
+	selectionNumber_ = 0;
+	menuPhase_ = static_cast<int>(MenuPhase::Start);
+}
+
+void UserInterface::MenuOpen()
+{
 	int count = 0;
 	easeTimer_++;
 
@@ -89,6 +104,79 @@ void UserInterface::MenuUpdate()
 
 		menu->Update();
 		count++;
+	}
+
+	bool hitFlag = false;
+	for (auto& menu : menuframe_)
+	{
+		if (!menu->EaseEnd())
+		{
+			hitFlag = true;
+		}
+	}
+
+	if (!hitFlag)
+	{
+		menuPhase_ = static_cast<int>(MenuPhase::Selection);
+	}
+}
+
+void UserInterface::MenuSelection()
+{
+	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_UP))
+	{
+		selectionNumber_--;
+
+		if (selectionNumber_ < 0)
+		{
+			selectionNumber_ = static_cast<int>(menuframe_.size() - 1);
+		}
+	}
+	else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_DOWN))
+	{
+		selectionNumber_++;
+
+		if (selectionNumber_ >= menuframe_.size())
+		{
+			selectionNumber_ = 0;
+		}
+	}
+
+	if (selectionNumber_ == 0)
+	{
+		if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_LEFT))
+		{
+			soundVolume_--;
+			if (soundVolume_ <= 0.0f)
+			{
+				soundVolume_ = 0.0f;
+			}
+		}
+		else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_RIGHT))
+		{
+			soundVolume_++;
+			if (soundVolume_ >= 100.0f)
+			{
+				soundVolume_ = 100.0f;
+			}
+		}
+	}
+
+	for (int i = 0; i < menuframe_.size(); i++)
+	{
+		if (i == selectionNumber_)
+		{
+			menuframe_[i]->SetColor({1,0,0,1});
+		}
+		else
+		{
+			menuframe_[i]->SetColor({ 1,1,1,1 });
+		}
+	}
+
+	for (auto& menu : menuframe_)
+	{
+		menu->Update();
 	}
 }
 
