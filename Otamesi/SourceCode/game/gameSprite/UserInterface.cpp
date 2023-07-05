@@ -32,12 +32,12 @@ void UserInterface::Initialize()
 
 void UserInterface::Update()
 {
+	if (notMove_) { return; }
+
 	//説明用引き出しスプライト更新
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Update();
 	}
-
-	if (notMove_) { return; }
 
 	//メニュースプライト更新
 	MenuUpdate();
@@ -46,12 +46,12 @@ void UserInterface::Update()
 
 void UserInterface::Draw()
 {
+	if (notMove_) { return; }
+
 	//説明用引き出しスプライト描画
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
 	}
-
-	if (notMove_) { return; }
 
 	//メニュースプライト描画
 	if (menuFlag_)
