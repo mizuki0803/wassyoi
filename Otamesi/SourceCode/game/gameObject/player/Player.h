@@ -101,6 +101,11 @@ public: //メンバ関数
 	//setter
 	void SetMoveSurfacePhase(const int _moveSurfacePhase) { moveSurfacePhase = MoveSurfacePhase(_moveSurfacePhase); }
 	void SetMapChipNumberPos(const XMINT3& _mapChipNumberPos) { mapChipNumberPos = _mapChipNumberPos; }
+	void SetNotMove(bool flag1, bool flag2)
+	{ 
+		menuFlag_ = flag1;
+		isCreateMove_ = flag2;
+	}
 
 private: //メンバ関数
 	/// <summary>
@@ -194,4 +199,9 @@ private: //メンバ変数
 
 	//最初の移動が終わったかのフラグ
 	bool isStartMove;
+
+	// メニューを開いているか
+	bool menuFlag_ = false;
+	// 行動が終わったか
+	bool isCreateMove_ = false;
 };

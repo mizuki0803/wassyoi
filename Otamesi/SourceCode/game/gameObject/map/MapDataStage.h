@@ -66,6 +66,7 @@ public: //メンバ関数
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
 	const bool GetIsReCreateEnd() { return isReCreateEnd; }
+	const bool GetIsMoveEnd() { return isMoveEnd_; }
 
 	//setter
 	void SetIsReCreateEnd(const bool isReCreateEnd) { this->isReCreateEnd = isReCreateEnd; }
@@ -99,4 +100,6 @@ protected: //メンバ変数
 	int blockActTimer_ = 100;
 	//マップ再生成が終了したか
 	bool isReCreateEnd = false;
+	// 行動が終わったか
+	bool isMoveEnd_ = false;
 };

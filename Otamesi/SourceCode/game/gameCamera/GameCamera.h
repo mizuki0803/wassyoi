@@ -155,6 +155,11 @@ public: //メンバ関数
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
 	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
+	void SetNotMove(bool flag1, bool flag2)
+	{
+		menuFlag_ = flag1;
+		isCreateMove_ = flag2;
+	}
 
 private: //メンバ関数
 	/// <summary>
@@ -292,4 +297,8 @@ private: //メンバ変数
 	bool reStartEaseChangeFlag_ = false;
 	//ステージクリア状態か
 	bool isStageClear = false;
+	// メニューを開いているか
+	bool menuFlag_ = false;
+	// 行動が終わったか
+	bool isCreateMove_ = false;
 };

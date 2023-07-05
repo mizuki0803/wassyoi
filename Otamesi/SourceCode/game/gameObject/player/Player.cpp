@@ -90,7 +90,7 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 void Player::PlayGame()
 {
 	//ƒS[ƒ‹‚µ‚Ä‚¢‚È‚¢‚Æ‚«‚É“®‚«‚ğ‚·‚é
-	if (isGoal) {
+	if (isGoal || menuFlag_ || isCreateMove_) {
 		return;
 	}
 	//frameÅ‰‚Ì‰Šú‰»

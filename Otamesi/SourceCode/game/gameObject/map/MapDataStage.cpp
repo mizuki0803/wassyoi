@@ -41,6 +41,7 @@ void MapDataStage::PlayGame()
 
 void MapDataStage::GameStart()
 {
+	isMoveEnd_ = true;
 	// 何個ずつ上げるかの計算(全体の30%)
 	int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
 
@@ -88,12 +89,14 @@ void MapDataStage::GameStart()
 
 	if (!hitFlag)
 	{
+		isMoveEnd_ = false;
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 	}
 }
 
 void MapDataStage::GameReStart()
 {
+	isMoveEnd_ = true;
 	// 何個ずつ上げるかの計算(全体の30%)
 	int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
 
@@ -155,6 +158,7 @@ void MapDataStage::GameReStart()
 
 	if (!hitFlag)
 	{
+		isMoveEnd_ = false;
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 		isReCreateEnd = true;
 	}

@@ -174,6 +174,9 @@ void GameScene::Update()
 		}
 	}
 
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+
 	//ƒJƒƒ‰XV
 	camera->Update();
 	lightCamera->Update();
