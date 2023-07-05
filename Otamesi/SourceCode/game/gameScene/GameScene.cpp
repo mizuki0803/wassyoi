@@ -318,6 +318,7 @@ void GameScene::RestartGame()
 	camera->Reset();
 	skydome->SetIsRotate(false);
 	userInterface_->SetMenuFlag(false);
+	userInterface_->DrawerSpriteReset();
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;
 	KeepBinary(*camera, *player);
 }

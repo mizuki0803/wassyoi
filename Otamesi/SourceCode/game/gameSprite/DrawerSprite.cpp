@@ -3,18 +3,18 @@
 #include "Easing.h"
 #include "WindowApp.h"
 
-DrawerSprite* DrawerSprite::Create(const Texture& texture, BYTE keyNumber, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
+DrawerSprite* DrawerSprite::Create(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
 	//インスタンス生成
 	DrawerSprite* instance = new DrawerSprite();
 
 	//初期化処理
-	instance->Initialize(texture, keyNumber, hidePlace, posY, stickoutNum, isOpenDrawer);
+	instance->Initialize(texture, hidePlace, posY, stickoutNum, isOpenDrawer);
 
 	return instance;
 }
 
-bool DrawerSprite::Initialize(const Texture& texture, BYTE keyNumber, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
+bool DrawerSprite::Initialize(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
 	//隠れる場所に応じてアンカーポイントをセット
 	Vector2 anchorpoint;
@@ -26,8 +26,6 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE keyNumber, HidePlace 
 		return false;
 	}
 
-	//開閉を開始するキーを割り当て
-	this->keyNumber = keyNumber;
 	//閉じている場合の座標をセット
 	if (hidePlace == HidePlace::Left) { closedStatePos = { stickoutNum, posY }; }
 	else if (hidePlace == HidePlace::Right) { closedStatePos = { WindowApp::window_width - stickoutNum, posY }; }
@@ -37,6 +35,7 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE keyNumber, HidePlace 
 	else if (hidePlace == HidePlace::Right) { openStatePos.x -= size.x - stickoutNum; }
 
 	//開始時に引き出しを開いている状態かセット
+	isOpenDrawerSceneStart = isOpenDrawer;
 	this->isOpenDrawer = isOpenDrawer;
 
 	//開始時の開閉状態に合わせて座標をセット
@@ -48,8 +47,6 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE keyNumber, HidePlace 
 
 void DrawerSprite::Update()
 {
-	//開閉移動開始
-	MoveStart();
 	//開閉移動
 	Move();
 
@@ -59,9 +56,6 @@ void DrawerSprite::Update()
 
 void DrawerSprite::MoveStart()
 {
-	//開閉開始のキーを入力していなければ抜ける
-	if (!Input::GetInstance()->TriggerKey(keyNumber)) { return; }
-
 	//移動開始時座標をセット
 	moveStartPos = position;
 
@@ -73,6 +67,15 @@ void DrawerSprite::MoveStart()
 	//開閉の状態を反転させる
 	if (isOpenDrawer) { isOpenDrawer = false; }
 	else { isOpenDrawer = true; }
+}
+
+void DrawerSprite::Reset()
+{
+	//座標と開閉状態をシーン開始状態に戻す
+	isOpenDrawer = isOpenDrawerSceneStart;
+	if (isOpenDrawer) { position = openStatePos; }
+	else { position = closedStatePos; }
+	isMoveDrawer = false;
 }
 
 void DrawerSprite::Move()

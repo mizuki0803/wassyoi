@@ -22,13 +22,12 @@ public: //静的メンバ関数
 	/// 生成処理
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
-	/// <param name="keyNumber">開閉キー割り当て</param>
 	/// <param name="hidePlace">引き出しで隠れる場所</param>
 	/// <param name="posY">Y座標</param>
 	/// <param name="stickoutNum">閉じている場合に画面内にはみ出す量</param>
 	/// <param name="isOpenDrawer">引き出しを開いている状態か</param>
 	/// <returns>引き出し移動スプライト</returns>
-	static DrawerSprite* Create(const Texture& texture, BYTE keyNumber, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer = false);
+	static DrawerSprite* Create(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer = false);
 
 
 public: //メンバ関数
@@ -36,26 +35,29 @@ public: //メンバ関数
 	/// 初期化
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
-	/// <param name="keyNumber">開閉キー割り当て</param>
 	/// <param name="hidePlace">引き出しで隠れる場所</param>
 	/// <param name="posY">Y座標</param>
 	/// <param name="stickoutNum">閉じている場合に画面内にはみ出す量</param>
 	/// <param name="isOpenDrawer">引き出しを開いている状態か</param>
 	/// <returns>成否</returns>
-	bool Initialize(const Texture& texture, BYTE keyNumber, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
+	bool Initialize(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
 
 	/// <summary>
 	/// 更新
 	/// </summary>
 	void Update() override;
 
-
-private: //メンバ関数
 	/// <summary>
 	/// 開閉移動開始
 	/// </summary>
 	void MoveStart();
 
+	/// <summary>
+	/// リセット
+	/// </summary>
+	void Reset();
+
+private: //メンバ関数
 	/// <summary>
 	/// 開閉移動
 	/// </summary>
@@ -68,8 +70,8 @@ private: //静的メンバ変数
 private: //メンバ変数
 	//引き出しを開いている状態か
 	bool isOpenDrawer = false;
-	//開閉キー割り当て
-	BYTE keyNumber;
+	//シーン開始時の開閉状態保存用
+	bool isOpenDrawerSceneStart;
 	//開いている場合の座標
 	Vector2 openStatePos;
 	//閉じている場合の座標

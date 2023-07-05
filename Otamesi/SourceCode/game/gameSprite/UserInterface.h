@@ -2,10 +2,25 @@
 #include "Menu.h"
 #include "DrawerSprite.h"
 #include <array>
-#include <vector>
 
 class UserInterface
 {
+public: //enum
+	/// <summary>
+	/// 引き出しスプライトの役割名
+	/// </summary>
+	enum DrawerSpriteName
+	{
+		HowToPlayMenu,		//メニュー
+		Hint1,				//ヒント1
+		Hint2,				//ヒント2
+		HowToPlayPlayer,	//プレイヤー操作
+		HowToPlayCamera,	//カメラ操作
+
+		DrawerSpriteNum,	//引き出しスプライト数
+	};
+
+
 public: //メンバ関数
 	/// <summary>
 	/// 生成
@@ -30,28 +45,26 @@ public: //メンバ関数
 	// メニュー関係の処理
 	void MenuUpdate();
 
+	/// <summary>
+	/// 引き出しスプライトの開閉状態をリセット
+	/// </summary>
+	void DrawerSpriteReset();
+
 	//フラグの設定、取得
-	void SetMenuFlag(bool flag) { menuFlag_ = flag; }
+	void SetMenuFlag(bool flag) { menuFlag_ = flag; drawerSprites[HowToPlayMenu]->MoveStart(); }
 	void SetNotMove(bool flag) { notMove_ = flag; }
 
 	bool GetMenuFlag() { return menuFlag_; }
 
 private: //メンバ関数
 	/// <summary>
-	/// 引き出しスプライト生成
+	/// キー入力による引き出しスプライト移動開始
 	/// </summary>
-	/// <param name="texture">テクスチャ</param>
-	/// <param name="keyNumber">開閉キー割り当て</param>
-	/// <param name="hidePlace">引き出しで隠れる場所</param>
-	/// <param name="posY">Y座標</param>
-	/// <param name="stickoutNum">閉じている場合に画面内にはみ出す量</param>
-	/// <param name="isOpenDrawer">引き出しを開いている状態か</param>
-	/// <returns>引き出し移動スプライト</returns>
-	void CreateNewDrawerSprite(const Texture& texture, BYTE keyNumber, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer = false);
+	void DrawerSpriteMoveStartKey();
 
 private: //メンバ変数
 	//説明用引き出しスプライト
-	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
+	std::array<std::unique_ptr<DrawerSprite>, DrawerSpriteNum> drawerSprites;
 	// イージング進行
 	float easeTimer_ = 0.0f;
 	// メニュー用の背景
