@@ -132,6 +132,18 @@ void TitleScene::Update()
 			//次のステージへ
 			StageManager::NextStageSelect();
 		}
+
+		if (Input::GetInstance()->TriggerKey(DIK_M))
+		{
+			if (!userInterface_->GetMenuFlag())
+			{
+				userInterface_->SetMenuFlag(true);
+			}
+			else
+			{
+				userInterface_->SetMenuFlag(false);
+			}
+		}
 	}
 
 	//エスケープキーでゲームループ終了
@@ -139,6 +151,10 @@ void TitleScene::Update()
 		isEndRequest = true;
 		return;
 	}
+
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	userInterface_->SetNotMove(isStageClear);
 
 	//カメラ更新
 	camera->Update();
@@ -164,17 +180,6 @@ void TitleScene::Update()
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
 
-	if (Input::GetInstance()->TriggerKey(DIK_M))
-	{
-		if (!userInterface_->GetMenuFlag())
-		{
-			userInterface_->SetMenuFlag(true);
-		}
-		else
-		{
-			userInterface_->SetMenuFlag(false);
-		}
-	}
 	//タイトルロゴ
 	titleLogo->Update();
 

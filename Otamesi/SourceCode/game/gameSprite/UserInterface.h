@@ -32,6 +32,8 @@ public: //メンバ関数
 
 	//フラグの設定、取得
 	void SetMenuFlag(bool flag) { menuFlag_ = flag; }
+	void SetNotMove(bool flag) { notMove_ = flag; }
+
 	bool GetMenuFlag() { return menuFlag_; }
 
 private: //メンバ関数
@@ -58,5 +60,7 @@ private: //メンバ変数
 	std::array<std::unique_ptr<Menu>, 3> menuframe_;
 	// 行動フラグ
 	bool menuFlag_ = false;
+	//
+	bool notMove_ = false;
 };
 

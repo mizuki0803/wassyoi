@@ -37,6 +37,8 @@ void UserInterface::Update()
 		drawerSprite->Update();
 	}
 
+	if (notMove_) { return; }
+
 	//メニュースプライト更新
 	MenuUpdate();
 	menuBackScreen_->Update();
@@ -48,6 +50,8 @@ void UserInterface::Draw()
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
 	}
+
+	if (notMove_) { return; }
 
 	//メニュースプライト描画
 	if (menuFlag_)

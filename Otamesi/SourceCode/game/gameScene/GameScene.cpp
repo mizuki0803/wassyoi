@@ -144,6 +144,18 @@ void GameScene::Update()
 			camera->SetClearMode();
 			stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
 		}
+
+		if (Input::GetInstance()->TriggerKey(DIK_M))
+		{
+			if (!userInterface_->GetMenuFlag())
+			{
+				userInterface_->SetMenuFlag(true);
+			}
+			else
+			{
+				userInterface_->SetMenuFlag(false);
+			}
+		}
 	}
 	else {
 		if (stageClear_->GetIntermediateTrigger())
@@ -176,6 +188,7 @@ void GameScene::Update()
 
 	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
 	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	userInterface_->SetNotMove(isStageClear);
 
 	//カメラ更新
 	camera->Update();
@@ -205,18 +218,6 @@ void GameScene::Update()
 
 	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
-
-	if (Input::GetInstance()->TriggerKey(DIK_M))
-	{
-		if (!userInterface_->GetMenuFlag())
-		{
-			userInterface_->SetMenuFlag(true);
-		}
-		else
-		{
-			userInterface_->SetMenuFlag(false);
-		}
-	}
 
 	//初期状態をbinary保存
 	if (player->GetIsStartMove()) {
@@ -316,6 +317,7 @@ void GameScene::RestartGame()
 	player->Reset();
 	camera->Reset();
 	skydome->SetIsRotate(false);
+	userInterface_->SetMenuFlag(false);
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;
 	KeepBinary(*camera, *player);
 }
