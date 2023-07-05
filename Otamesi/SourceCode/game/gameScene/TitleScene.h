@@ -39,6 +39,7 @@ public: //メンバ関数
 	/// 3Dシーン描画
 	/// </summary>
 	void Draw3D() override;
+	void AfterBloomDraw() override;
 
 	/// <summary>
 	/// 3Dシーン描画(ライトから見た視点)

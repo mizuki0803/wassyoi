@@ -72,6 +72,14 @@ void FrameWork::Initialize()
 	//ゲーム共通ポストエフェクトの初期化
 	GamePostEffect::Initialize();
 
+
+	afterBloom->AfterBloomCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+	afterBloom.reset(AfterBloom::Create());
+
+	outLine->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+	outLine.reset(OutLine::Create());
+	outLineDraw->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
+	outLineDraw.reset(OutLineDraw::Create());
 	//シャドウマップ共通初期化処理
 	ShadowMap::ShadowMapCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	//シャドウマップの初期化
@@ -106,6 +114,7 @@ void FrameWork::Initialize()
 
 	// タイマーsingleton生成
 	Timer::CreateSingleton();
+;
 }
 
 void FrameWork::Finalize()
@@ -166,6 +175,21 @@ void FrameWork::Draw()
 	SceneManager::GetInstance()->Draw3D();
 	GamePostEffect::DrawSceneRear();
 
+	// 単体で発光するもの用
+	afterBloom->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
+	SceneManager::GetInstance()->AfterBloomDraw();
+	afterBloom->DrawSceneRear();
+	
+	// アウトライン描画用
+	outLine->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
+	SceneManager::GetInstance()->OutLineDraw();
+	outLine->DrawSceneRear();
+
+	outLineDraw->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
+	outLine->Draw();
+	outLineDraw->DrawSceneRear();
+
+
 	//グラフィックスコマンド(前)
 	dxbase->GraphicsCommandPrev();
 
@@ -174,7 +198,8 @@ void FrameWork::Draw()
 
 	//ゲームポストエフェクトの描画
 	GamePostEffect::Draw();
-
+	afterBloom->Draw();				// アフターブルームを描画
+	outLineDraw->Draw();
 	//シーンの前景スプライト描画
 	SceneManager::GetInstance()->DrawFrontSprite();
 

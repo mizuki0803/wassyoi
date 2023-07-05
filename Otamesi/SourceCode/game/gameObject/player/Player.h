@@ -84,6 +84,7 @@ public: //メンバ関数
 	void ReCreate(const XMINT3& mapChipNum);
 
 	void Draw();
+	void EffectDraw();
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
@@ -150,7 +151,7 @@ private: //静的メンバ変数
 
 private: //メンバ変数
 
-	std::array<std::unique_ptr<PlayerEffect>, 4> effect;
+	std::array<std::unique_ptr<PlayerEffect>, 3> effect;
 
 
 	//プレイヤー位置を表すマップ番号

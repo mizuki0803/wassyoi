@@ -47,6 +47,14 @@ public: //メンバ関数
 	void Draw3D();
 
 	/// <summary>
+	/// 後からブルーム
+	/// </summary>
+	void AfterBloomDraw();
+	/// <summary>
+	/// アウトライン用
+	/// </summary>
+	void OutLineDraw();
+	/// <summary>
 	/// 3Dシーン描画(ライトから見た視点)
 	/// </summary>
 	void Draw3DLightView();

@@ -15,6 +15,7 @@
 #include <cassert>
 #include <fstream>
 #include <iomanip>
+#include "OutLine.h"
 
 
 void GameScene::Initialize()
@@ -47,6 +48,8 @@ void GameScene::Initialize()
 	lightCamera->Initialize({ -100, 100, -300 });
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
+	OutLine::SetCmaera(camera.get());
+
 	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
@@ -59,6 +62,7 @@ void GameScene::Initialize()
 	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
 	skydome->SetPosition({});
 	skydome->SetScale({ 2, 2, 2 });
+
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -89,7 +93,11 @@ void GameScene::Initialize()
 	stageClearUI.reset(StageClearUI::Create());
 
 	// スカイドーム生成
-	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
+	//paranomaSkyDorm.reset(static_cast<Sprite *>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
+
+	// ポストエフェクト設定
+	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
+
 }
 
 void GameScene::Finalize()
@@ -207,25 +215,30 @@ void GameScene::Update()
 	SceneChangeMode();
 	//シーン変更演出更新
 	SceneChangeEffect::Update();
+
 }
 
 void GameScene::DrawBackSprite()
 {
-	/*SpriteCommon::GetInstance()->DrawPrev("SkyDorm");
+	/*SpriteCommon::GetInstance()->DrawPrev();
 	paranomaSkyDorm->Draw();*/
 }
 
 void GameScene::Draw3D()
 {
+
 	//Object3d共通コマンド
 	ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
 
-	//プレイヤー
-	player->Draw();
+	////プレイヤー
+	//player->Draw();
 
 	//天球
 	skydome->Draw();
+
+
+
 
 	///-------Object3d描画ここまで-------///
 
@@ -234,17 +247,43 @@ void GameScene::Draw3D()
 	InstanceObject::DrawPrev();
 	//マップ用ブロック
 	mapData->Draw();
+
+
+
+
 	//背景オブジェクト
 	backGround->Draw();
+
 
 	///-------Instance描画ここまで-------///
 
 	///-------パーティクル描画ここから-------///
-
 	//パーティクル描画
 	ParticleEmitter::GetInstance()->DrawAll();
 
 	///-------パーティクル描画ここまで-------///
+}
+
+void GameScene::AfterBloomDraw()
+{
+	player->EffectDraw();
+}
+
+void GameScene::OutLineDraw()
+{
+
+	ObjObject3d::DrawPrev();
+	///-------アウトライン関係ここから-------///
+	
+	// プレイヤーのカラーと深度を書き出し
+	player->Draw();
+
+	// ステージのカラーと深度を書き出し
+	//InstanceObject::DrawMulutiPrev();
+	//mapData->Draw();
+
+
+	///-------アウトライン関係ここまで-------///
 }
 
 void GameScene::Draw3DLightView()

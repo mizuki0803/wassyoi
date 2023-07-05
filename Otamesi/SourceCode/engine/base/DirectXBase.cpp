@@ -113,16 +113,16 @@ void DirectXBase::InitializeDevice()
 {
 	HRESULT result;
 
-	//#ifdef _DEBUG
-	//
-	//	//デバッグレイヤーをオンに
-	//	ComPtr<ID3D12Debug1> debugController;
-	//	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
-	//	{
-	//		debugController->EnableDebugLayer();
-	//		debugController->SetEnableGPUBasedValidation(TRUE);
-	//	}
-	//#endif
+	#ifdef _DEBUG
+	
+		//デバッグレイヤーをオンに
+		ComPtr<ID3D12Debug1> debugController;
+		if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController))))
+		{
+			debugController->EnableDebugLayer();
+			debugController->SetEnableGPUBasedValidation(TRUE);
+		}
+	#endif
 
 		//DXGIファクトリーの生成
 	result = CreateDXGIFactory1(IID_PPV_ARGS(&dxgiFactory));

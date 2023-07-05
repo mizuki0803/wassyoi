@@ -130,6 +130,14 @@ public: //メンバ関数
 	/// <param name="rootOaramIndexMaterial">ルートパラメータの数字</param>
 	void DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
+	/// <summary>
+	/// 加算合成用
+	/// </summary>
+	/// <param name="cmdList"></param>
+	/// <param name="rootParamIndexMaterial"></param>
+	/// <param name="_instanceDrawNum"></param>
+	void DrawAdd(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
+
 private: //メンバ変数
 	//テクスチャ
 	Texture texture;

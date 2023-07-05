@@ -81,6 +81,7 @@ public: //ƒƒ“ƒoŠÖ”
 	const bool GetIsRadialBlur() { return isRadialBlur; }
 	const int GetRadialBlurSampleNum() { return radialBlurSampleNum; }
 	const float GetRadialBlurStrength() { return radialBlurStrength; }
+	ID3D12DescriptorHeap *GetDsv() { return descHeapDSV.Get(); }
 
 	//setter
 	void SetRadialBlur(const bool isRadialBlur) { this->isRadialBlur = isRadialBlur; }

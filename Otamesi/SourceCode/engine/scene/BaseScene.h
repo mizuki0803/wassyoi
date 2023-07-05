@@ -40,6 +40,13 @@ public: //メンバ関数
 	virtual void Draw3D() = 0;
 
 	/// <summary>
+	/// 後からブルーム描画
+	/// </summary>
+	virtual void AfterBloomDraw() {};
+
+	virtual void OutLineDraw() {};
+
+	/// <summary>
 	/// 3Dシーン描画(ライトから見た視点)
 	/// </summary>
 	virtual void Draw3DLightView() = 0;

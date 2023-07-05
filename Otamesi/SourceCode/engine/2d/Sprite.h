@@ -68,7 +68,7 @@ public: //ƒƒ“ƒoŠÖ”
 	/// <summary>
 	/// •`‰æ
 	/// </summary>
-	void Draw();
+	virtual void Draw();
 
 	//getter
 	const Vector2& GetPosition() { return position; }

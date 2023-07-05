@@ -1,4 +1,5 @@
-#include "PostEffect.h"
+#include "AfterBloom.h"
+
 #include "WindowApp.h"
 #include "DescHeapSRV.h"
 #include <d3dx12.h>
@@ -8,15 +9,14 @@
 
 using namespace DirectX;
 
-const float PostEffect::clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-ID3D12Device* PostEffect::dev = nullptr;
-ID3D12GraphicsCommandList* PostEffect::cmdList = nullptr;
-PipelineSet PostEffect::pipelineSet;
+ID3D12Device *AfterBloom::dev = nullptr;
+ID3D12GraphicsCommandList *AfterBloom::cmdList = nullptr;
+PipelineSet AfterBloom::pipelineSet;
 
-PostEffect* PostEffect::Create()
+AfterBloom *AfterBloom::Create()
 {
 	//インスタンスを生成
-	PostEffect* instance = new PostEffect();
+	AfterBloom *instance = new AfterBloom();
 	if (instance == nullptr) {
 		return nullptr;
 	}
@@ -31,17 +31,7 @@ PostEffect* PostEffect::Create()
 	return instance;
 }
 
-void PostEffect::PostEffectCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList)
-{
-	//nullptrチェック
-	assert(dev);
-	assert(cmdList);
-
-	PostEffect::dev = dev;
-	PostEffect::cmdList = cmdList;
-}
-
-bool PostEffect::Initialize()
+bool AfterBloom::Initialize()
 {
 	//パイプライン生成
 	CreateGraphicsPipelineState();
@@ -65,8 +55,8 @@ bool PostEffect::Initialize()
 	assert(SUCCEEDED(result));
 
 	//頂点バッファへのデータ転送
-	VertexPosUv* vertMap = nullptr;
-	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
+	VertexPosUv *vertMap = nullptr;
+	result = vertBuff->Map(0, nullptr, (void **)&vertMap);
 	if (SUCCEEDED(result)) {
 		memcpy(vertMap, vertices, sizeof(vertices));
 		vertBuff->Unmap(0, nullptr);
@@ -77,15 +67,15 @@ bool PostEffect::Initialize()
 	vbView.SizeInBytes = sizeof(vertices);
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	//定数バッファの生成
-	result = dev->CreateCommittedResource(
-		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
-		D3D12_HEAP_FLAG_NONE,
-		&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) * 0xff) & ~0xff),
-		D3D12_RESOURCE_STATE_GENERIC_READ,
-		nullptr,
-		IID_PPV_ARGS(&constBuff));
-	assert(SUCCEEDED(result));
+	////定数バッファの生成
+	//result = dev->CreateCommittedResource(
+	//	&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
+	//	D3D12_HEAP_FLAG_NONE,
+	//	&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) * 0xff) & ~0xff),
+	//	D3D12_RESOURCE_STATE_GENERIC_READ,
+	//	nullptr,
+	//	IID_PPV_ARGS(&constBuff));
+	//assert(SUCCEEDED(result));
 
 	//テクスチャリソース設定
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
@@ -96,6 +86,7 @@ bool PostEffect::Initialize()
 	);
 
 	//テクスチャバッファの生成	
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
 			D3D12_MEMORY_POOL_L0),
@@ -103,9 +94,9 @@ bool PostEffect::Initialize()
 		&texresDesc,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		&CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM, clearColor),
-		IID_PPV_ARGS(&texture.texBuff)
+		IID_PPV_ARGS(&baseTexture.texBuff)
 	);
-	texture.texBuff->SetName(L"Draw");
+	baseTexture.texBuff->SetName(L"AfterBloomDraw");
 
 	assert(SUCCEEDED(result));
 
@@ -118,13 +109,13 @@ bool PostEffect::Initialize()
 		//画像全体のデータサイズ
 		const UINT depthPitch = rowPitch * WindowApp::window_height;
 		//画像イメージ
-		UINT* img = new UINT[pixelCount];
+		UINT *img = new UINT[pixelCount];
 		for (int i = 0; i < pixelCount; i++) {
 			img[i] = 0xff0000ff;
 		}
 
 		//テクスチャバッファにデータ転送
-		result = texture.texBuff->WriteToSubresource(0, nullptr,
+		result = baseTexture.texBuff->WriteToSubresource(0, nullptr,
 			img, rowPitch, depthPitch);
 		assert(SUCCEEDED(result));
 		delete[] img;
@@ -137,7 +128,7 @@ bool PostEffect::Initialize()
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dテクスチャ
 	srvDesc.Texture2D.MipLevels = 1;
 	//デスクリプタヒープにSRV作成
-	DescHeapSRV::CreateShaderResourceView(srvDesc, texture);
+	DescHeapSRV::CreateShaderResourceView(srvDesc, baseTexture);
 
 	//RTV用デスクリプタヒープ設定
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
@@ -148,7 +139,7 @@ bool PostEffect::Initialize()
 	assert(SUCCEEDED(result));
 
 	//デスクリプタヒープにRTV生成
-	dev->CreateRenderTargetView(texture.texBuff.Get(),
+	dev->CreateRenderTargetView(baseTexture.texBuff.Get(),
 		nullptr,
 		descHeapRTV->GetCPUDescriptorHandleForHeapStart()
 	);
@@ -178,35 +169,24 @@ bool PostEffect::Initialize()
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
 	DescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	DescHeapDesc.NumDescriptors = 1;
-	//DSV用デスクリプタヒープを生成
-	result = dev->CreateDescriptorHeap(&DescHeapDesc, IID_PPV_ARGS(&descHeapDSV));
-	assert(SUCCEEDED(result));
+	////DSV用デスクリプタヒープを生成
+	//result = dev->CreateDescriptorHeap(&DescHeapDesc, IID_PPV_ARGS(&descHeapDSV));
+	//assert(SUCCEEDED(result));
 
-	//デスクリプタヒープにDSV作成
-	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
-	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
-	dev->CreateDepthStencilView(depthBuff.Get(),
-		&dsvDesc,
-		descHeapDSV->GetCPUDescriptorHandleForHeapStart());
+	////デスクリプタヒープにDSV作成
+	//D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
+	//dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	//dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+	//dev->CreateDepthStencilView(depthBuff.Get(),
+	//	&dsvDesc,
+	//	descHeapDSV->GetCPUDescriptorHandleForHeapStart());
 
 	return true;
 }
 
-void PostEffect::Draw()
+void AfterBloom::Draw()
 {
-	//定数バッファの転送
-	ConstBufferData* constMap = nullptr;
-	HRESULT result = constBuff->Map(0, nullptr, (void**)&constMap);
-	if (isRadialBlur) {
-		constMap->isRadialBlur = isRadialBlur;
-		constMap->radialBlurSampleNum = radialBlurSampleNum;
-		constMap->radialBlurStrength = radialBlurStrength;
-	}
-	else {
-		constMap->isRadialBlur = isRadialBlur;
-	}
-	constBuff->Unmap(0, nullptr);
+
 
 	//パイプラインステートの設定
 	cmdList->SetPipelineState(pipelineSet.pipelinestate.Get());
@@ -218,21 +198,18 @@ void PostEffect::Draw()
 	//頂点バッファをセット
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
 
-	//ルートパラメータ0番に定数バッファをセット
-	cmdList->SetGraphicsRootConstantBufferView(0, constBuff->GetGPUVirtualAddress());
-
 	//シェーダリソースビューをセット
-	DescHeapSRV::SetGraphicsRootDescriptorTable(1, texture.texNumber);
+	DescHeapSRV::SetGraphicsRootDescriptorTable(1, baseTexture.texNumber);
 
 	//ポリゴンの描画(4頂点で四角形)
 	cmdList->DrawInstanced(4, 1, 0, 0);
 }
 
-void PostEffect::DrawScenePrev()
+void AfterBloom::DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV)
 {
 	//リソースバリアを変更(シェーダリソース→描画可能)
 	cmdList->ResourceBarrier(1,
-		&CD3DX12_RESOURCE_BARRIER::Transition(texture.texBuff.Get(),
+		&CD3DX12_RESOURCE_BARRIER::Transition(baseTexture.texBuff.Get(),
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 			D3D12_RESOURCE_STATE_RENDER_TARGET));
 
@@ -253,20 +230,21 @@ void PostEffect::DrawScenePrev()
 		WindowApp::window_height));
 
 	//全画面クリア
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
-	//深度バッファのクリア
-	cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0,
-		nullptr);
+	////深度バッファのクリア
+	//cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0,
+	//	nullptr);
 }
 
-void PostEffect::DrawSceneRear()
+void AfterBloom::DrawSceneRear()
 {
 	//リソースバリアを変更(描画可能→シェーダリソース)
-	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(texture.texBuff.Get(),
+	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(baseTexture.texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
 }
 
-void PostEffect::CreateGraphicsPipelineState()
+void AfterBloom::CreateGraphicsPipelineState()
 {
 	HRESULT result;
 
@@ -276,7 +254,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	//頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/PostEffectVS.hlsl",	//シェーダファイル名
+		L"Resources/shaders/AfterBloomVS.hlsl",	//シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
 		"main", "vs_5_0",	//エントリーポイント名、シェーダーモデル指定
@@ -289,7 +267,7 @@ void PostEffect::CreateGraphicsPipelineState()
 		std::string errstr;
 		errstr.resize(errorBlob->GetBufferSize());
 
-		std::copy_n((char*)errorBlob->GetBufferPointer(),
+		std::copy_n((char *)errorBlob->GetBufferPointer(),
 			errorBlob->GetBufferSize(),
 			errstr.begin());
 		errstr += "\n";
@@ -301,7 +279,7 @@ void PostEffect::CreateGraphicsPipelineState()
 
 	//ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/PostEffectPS.hlsl",	//シェーダファイル名
+		L"Resources/shaders/AfterBloomPS.hlsl",	//シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
 		"main", "ps_5_0",	//エントリーポイント名、シェーダーモデル指定
@@ -314,7 +292,7 @@ void PostEffect::CreateGraphicsPipelineState()
 		std::string errstr;
 		errstr.resize(errorBlob->GetBufferSize());
 
-		std::copy_n((char*)errorBlob->GetBufferPointer(),
+		std::copy_n((char *)errorBlob->GetBufferPointer(),
 			errorBlob->GetBufferSize(),
 			errstr.begin());
 		errstr += "\n";
@@ -354,7 +332,7 @@ void PostEffect::CreateGraphicsPipelineState()
 	gpipeline.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_ALWAYS;		//常に上書きルール
 
 	//レンダーターゲットのブレンド設定
-	D3D12_RENDER_TARGET_BLEND_DESC& blenddesc = gpipeline.BlendState.RenderTarget[0];
+	D3D12_RENDER_TARGET_BLEND_DESC &blenddesc = gpipeline.BlendState.RenderTarget[0];
 	blenddesc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;	//環境設定
 
 	//共通設定
@@ -365,9 +343,9 @@ void PostEffect::CreateGraphicsPipelineState()
 	//色合成
 
 	//加算合成
-	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//加算
-	//blenddesc.SrcBlend = D3D12_BLEND_ONE;	//ソースの値を100%使う
-	//blenddesc.DestBlend = D3D12_BLEND_ONE;	//デストの値を100%使う
+	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//加算
+	blenddesc.SrcBlend = D3D12_BLEND_ONE;	//ソースの値を100%使う
+	blenddesc.DestBlend = D3D12_BLEND_ONE;	//デストの値を100%使う
 
 	//減算合成
 	//blenddesc.BlendOp = D3D12_BLEND_OP_REV_SUBTRACT;	//デストからソースを減算
@@ -379,10 +357,10 @@ void PostEffect::CreateGraphicsPipelineState()
 	//blenddesc.SrcBlend = D3D12_BLEND_INV_DEST_COLOR;	//1.0f-デストカラーの値
 	//blenddesc.DestBlend = D3D12_BLEND_ZERO;	//使わない
 
-	//半透明合成
-	blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//加算
-	blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;	//ソースのアルファ値
-	blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	//1.0f-ソ
+	////半透明合成
+	//blenddesc.BlendOp = D3D12_BLEND_OP_ADD;	//加算
+	//blenddesc.SrcBlend = D3D12_BLEND_SRC_ALPHA;	//ソースのアルファ値
+	//blenddesc.DestBlend = D3D12_BLEND_INV_SRC_ALPHA;	//1.0f-ソ
 
 	//深度値フォーマット
 	gpipeline.DSVFormat = DXGI_FORMAT_D32_FLOAT;

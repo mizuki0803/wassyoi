@@ -153,15 +153,20 @@ void Player::CreateAct()
 
 void Player::Draw()
 {
-	// エフェクト読み込み
-	for (auto& e : effect)
-	{
-		e->Draw();
-	}
-
+	
 	ObjObject3d::Draw();
 
 	isStartMove = false;
+}
+
+void Player::EffectDraw()
+{
+	ObjObject3d::DrawAddPrev();
+	
+	for (auto &e : effect)
+	{
+		e->Draw();
+	}
 }
 
 void Player::MovePosStart()

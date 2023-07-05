@@ -12,6 +12,7 @@
 #include "StageManager.h"
 #include "JsonLoader.h"
 #include "SpriteTextureLoader.h"
+#include "OutLine.h"
 
 void TitleScene::Initialize()
 {
@@ -41,6 +42,9 @@ void TitleScene::Initialize()
 	lightCamera.reset(new LightCamera());
 	lightCamera->Initialize({ -100, 100, -300 });
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
+
+	OutLine::SetCmaera(camera.get());
+
 
 	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
@@ -207,6 +211,7 @@ void TitleScene::Draw3D()
 	backGround->Draw();
 
 	///-------Instance描画ここまで-------///
+	player->EffectDraw();
 
 	///-------パーティクル描画ここから-------///
 
@@ -214,6 +219,10 @@ void TitleScene::Draw3D()
 	ParticleEmitter::GetInstance()->DrawAll();
 
 	///-------パーティクル描画ここまで-------///
+}
+
+void TitleScene::AfterBloomDraw()
+{
 }
 
 void TitleScene::Draw3DLightView()

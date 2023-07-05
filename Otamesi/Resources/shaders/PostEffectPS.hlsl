@@ -48,7 +48,11 @@ float4 main(VSOutput input) : SV_TARGET
 		color /= float(radialBlurSampleNum);
 		return color;
 	}
+
 	
+	
+	
+
 	//í èÌ
 	float4 texColor = tex.Sample(smp, input.uv);
 	return float4(texColor.rgb, 1);

@@ -9,7 +9,6 @@
 #include "HowToPlayUI.h"
 #include "StageClearUI.h"
 #include "BackGround.h"
-#include "game/gameSprite/ParanomaSkyDorm.h"
 
 /// <summary>
 /// ゲームシーン
@@ -41,6 +40,8 @@ public: //メンバ関数
 	/// 3Dシーン描画
 	/// </summary>
 	void Draw3D() override;
+	void AfterBloomDraw() override;
+	void OutLineDraw() override;
 
 	/// <summary>
 	/// 3Dシーン描画(ライトから見た視点)
@@ -99,8 +100,10 @@ private: //メンバ変数
 	std::unique_ptr<BackGround> backGround;
 
 	// パラノマスカイドーム
-	//std::unique_ptr<ParanomaSkyDorm> paranomaSkyDorm;
+	//std::unique_ptr<Sprite> paranomaSkyDorm;
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
+
+
 };

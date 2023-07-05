@@ -132,6 +132,21 @@
     <Filter Include="リソース ファイル\Paranoma">
       <UniqueIdentifier>{64cc5f04-5a5b-47e1-ae93-b020753c154a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="リソース ファイル\ObjEffecte">
+      <UniqueIdentifier>{c00210a8-1331-45d5-88f8-64f0a427eed8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\engine\2d\AfterBloom">
+      <UniqueIdentifier>{9758c4e1-ea1e-459b-9faa-2b69905c43cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\AfterBloom">
+      <UniqueIdentifier>{649358b4-3a28-4080-b3bd-5e8dbb2a895f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\engine\2d\OutLine">
+      <UniqueIdentifier>{ef511327-585f-4a40-8982-b31e35c20384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\OutLine">
+      <UniqueIdentifier>{a3012d05-7f8a-419f-a65f-49dc0f728d53}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\engine\2d\DebugText.cpp">
@@ -335,9 +350,6 @@
     <ClCompile Include="SourceCode\game\gameObject\BackGround.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\game\gameSprite\ParanomaSkyDorm.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerEffect.cpp">
       <Filter>ソース ファイル\game\gameObject\player</Filter>
     </ClCompile>
@@ -355,6 +367,15 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\engine\2d\AfterBloom.cpp">
+      <Filter>ソース ファイル\engine\2d\AfterBloom</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\engine\2d\OutLine.cpp">
+      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\engine\2d\OutLineDraw.cpp">
+      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +402,18 @@
     </None>
     <None Include="Resources\shaders\ParanoiaSkyDome.hlsli">
       <Filter>リソース ファイル\Paranoma</Filter>
+    </None>
+    <None Include="Resources\shaders\ObjEffect.hlsli">
+      <Filter>リソース ファイル\ObjEffecte</Filter>
+    </None>
+    <None Include="Resources\shaders\AfterBloom.hlsli">
+      <Filter>リソース ファイル\AfterBloom</Filter>
+    </None>
+    <None Include="Resources\shaders\OutLine.hlsli">
+      <Filter>リソース ファイル\OutLine</Filter>
+    </None>
+    <None Include="Resources\shaders\OutLineAfter.hlsli">
+      <Filter>リソース ファイル\OutLine</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +467,30 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\ParanoiaSkyDomeVS.hlsl">
       <Filter>リソース ファイル\Paranoma</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ObjEffectPS.hlsl">
+      <Filter>リソース ファイル\ObjEffecte</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\ObjEffectVS.hlsl">
+      <Filter>リソース ファイル\ObjEffecte</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\AfterBloomPS.hlsl">
+      <Filter>リソース ファイル\AfterBloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\AfterBloomVS.hlsl">
+      <Filter>リソース ファイル\AfterBloom</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\OutLinePS.hlsl">
+      <Filter>リソース ファイル\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\OutLineVS.hlsl">
+      <Filter>リソース ファイル\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\OutLineAfterPS.hlsl">
+      <Filter>リソース ファイル\OutLine</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\OutLineAfterVS.hlsl">
+      <Filter>リソース ファイル\OutLine</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -656,9 +713,6 @@
     <ClInclude Include="SourceCode\game\gameObject\BackGround.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\game\gameSprite\ParanomaSkyDorm.h">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerEffect.h">
       <Filter>ソース ファイル\game\gameObject\player</Filter>
     </ClInclude>
@@ -676,6 +730,15 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\2d\AfterBloom.h">
+      <Filter>ソース ファイル\engine\2d\AfterBloom</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\2d\OutLine.h">
+      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\engine\2d\OutLineDraw.h">
+      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -57,6 +57,17 @@ void SceneManager::Draw3D()
 	scene->Draw3D();
 }
 
+void SceneManager::AfterBloomDraw()
+{
+	scene->AfterBloomDraw();
+}
+
+void SceneManager::OutLineDraw()
+{
+
+	scene->OutLineDraw();
+}
+
 void SceneManager::Draw3DLightView()
 {
 	//3Dシーン描画(ライトからの視点)

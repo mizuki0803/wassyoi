@@ -388,3 +388,24 @@ void ObjModel::DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT root
 	//描画コマンド
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), _instanceDrawNum, 0, 0, 0);
 }
+
+void ObjModel::DrawAdd(ID3D12GraphicsCommandList *cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum)
+{
+	//頂点バッファビューの設定
+	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	//インデックスバッファビューの設定
+	cmdList->IASetIndexBuffer(&ibView);
+
+	//定数バッファビューをセット(マテリアル)
+	cmdList->SetGraphicsRootConstantBufferView(rootParamIndexMaterial, constBuffB1->GetGPUVirtualAddress());
+
+	if (material.textureFilename.size() > 0) {
+		//シェーダリソースビューをセット
+		DescHeapSRV::SetGraphicsRootDescriptorTable(2, texture.texNumber);
+
+		DescHeapSRV::SetGraphicsRootDescriptorTable(3, shadowMapTexture.texNumber);
+	}
+
+	//描画コマンド
+	cmdList->DrawIndexedInstanced((UINT)indices.size(), _instanceDrawNum, 0, 0, 0);
+}
