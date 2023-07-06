@@ -94,6 +94,18 @@ void UserInterface::MenuUpdate()
 		return;
 	}
 
+	for (int i = 0; i < menuframe_.size(); i++)
+	{
+		if (i == selectionNumber_)
+		{
+			menuframe_[i]->SetColor({ 1,0,0,1 });
+		}
+		else
+		{
+			menuframe_[i]->SetColor({ 1,1,1,1 });
+		}
+	}
+
 	menuFunc_[menuPhase_]();
 }
 
@@ -112,6 +124,7 @@ void UserInterface::MenuOpen()
 {
 	int count = 0;
 	easeTimer_++;
+	selectionNumber_ = 0;
 
 	for (auto& menu : menuframe_)
 	{
@@ -182,18 +195,6 @@ void UserInterface::MenuSelection()
 			soundVolumePointer->SetPercentage(soundVolumeStartPercentage);
 
 			Audio::GetInstance()->ChangeVolume(soundVolume_);
-		}
-	}
-
-	for (int i = 0; i < menuframe_.size(); i++)
-	{
-		if (i == selectionNumber_)
-		{
-			menuframe_[i]->SetColor({1,0,0,1});
-		}
-		else
-		{
-			menuframe_[i]->SetColor({ 1,1,1,1 });
 		}
 	}
 
