@@ -36,6 +36,8 @@ void Skydome::Update()
 
 void Skydome::Rotate()
 {
+	rotation.y += -0.001f;
+
 	//‰ñ“]ó‘Ô‚Å‚È‚¯‚ê‚Î”²‚¯‚é
 	if (!isRotate) { return; }
 
