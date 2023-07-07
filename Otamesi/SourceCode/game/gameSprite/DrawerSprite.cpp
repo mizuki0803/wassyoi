@@ -3,19 +3,22 @@
 #include "Easing.h"
 #include "WindowApp.h"
 
-DrawerSprite* DrawerSprite::Create(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
+DrawerSprite* DrawerSprite::Create(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
 	//インスタンス生成
 	DrawerSprite* instance = new DrawerSprite();
 
 	//初期化処理
-	instance->Initialize(texture, hidePlace, posY, stickoutNum, isOpenDrawer);
+	instance->Initialize(texture, drawerKey, hidePlace, posY, stickoutNum, isOpenDrawer);
 
 	return instance;
 }
 
-bool DrawerSprite::Initialize(const Texture& texture, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
+bool DrawerSprite::Initialize(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
+	//引き出しの開閉に使用するキーをセット
+	this->drawerKey = drawerKey;
+
 	//隠れる場所に応じてアンカーポイントをセット
 	Vector2 anchorpoint;
 	if (hidePlace == HidePlace::Left) { anchorpoint = { 1.0f, 0.0f }; }

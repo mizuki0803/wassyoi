@@ -113,14 +113,16 @@ void GameScene::Update()
 			//binary削除
 			DeleteBinary();
 		}
-		//エスケープキーでメニュー画面(今は即ステージセレクトへ)
+		//エスケープキーでメニュー画面
 		else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
-			//se再生
-			Audio::GetInstance()->PlayWave(Audio::SoundName::button);
-			//シーン切り替え
-			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
-			//binary削除
-			DeleteBinary();
+			if (!userInterface_->GetMenuFlag())
+			{
+				userInterface_->SetMenuFlag(true);
+			}
+			else
+			{
+				userInterface_->SetMenuFlag(false);
+			}
 		}
 
 		//binary出力
@@ -143,18 +145,6 @@ void GameScene::Update()
 			StageManager::StageClear();
 			camera->SetClearMode();
 			stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
-		}
-
-		if (Input::GetInstance()->TriggerKey(DIK_M))
-		{
-			if (!userInterface_->GetMenuFlag())
-			{
-				userInterface_->SetMenuFlag(true);
-			}
-			else
-			{
-				userInterface_->SetMenuFlag(false);
-			}
 		}
 	}
 	else {
@@ -189,6 +179,7 @@ void GameScene::Update()
 	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
 	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
 	userInterface_->SetNotMove(isStageClear);
+	MenuAction();
 
 	//カメラ更新
 	camera->Update();
@@ -196,9 +187,6 @@ void GameScene::Update()
 
 	//ライト更新
 	lightGroup->Update();
-
-	// スカイドーム更新
-	//paranomaSkyDorm->Update();
 
 	//オブジェクト更新
 	//プレイヤー
@@ -232,8 +220,6 @@ void GameScene::Update()
 
 void GameScene::DrawBackSprite()
 {
-	/*SpriteCommon::GetInstance()->DrawPrev("SkyDorm");
-	paranomaSkyDorm->Draw();*/
 }
 
 void GameScene::Draw3D()
@@ -297,6 +283,32 @@ void GameScene::DrawFrontSprite()
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void GameScene::MenuAction()
+{
+	//メニューが開いていなければ抜ける
+	if (!userInterface_->GetMenuFlag()) { return; }
+	//決定のスペースキーを押していなければ抜ける
+	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
+
+	//スペースキーを押した瞬間に選択されている項目によって挙動を設定
+	//ステージ選択シーンへの移行
+	if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeStageSelect) {
+		//シーン切り替え
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+	}
+	else if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeTitle) {
+		//シーン切り替え
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+	}
+
+	//binary削除
+	DeleteBinary();
 }
 
 void GameScene::ReCreate()

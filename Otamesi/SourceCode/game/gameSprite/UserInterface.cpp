@@ -16,13 +16,7 @@ std::unique_ptr<UserInterface> UserInterface::Create(GamePhase gamePhase)
 
 void UserInterface::Initialize(GamePhase gamePhase)
 {
-	//説明用引き出しスプライト生成
-	const float	stickoutNum = 50.0f; //画面内にはみ出す量
-	drawerSprites[HowToPlayMenu].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DrawerSprite::Left, 0, stickoutNum, true)); //メニュー画面移行 esc
-	drawerSprites[Hint1].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), DrawerSprite::Right, 50, stickoutNum)); //ヒント1
-	drawerSprites[Hint2].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), DrawerSprite::Right, 200, stickoutNum)); //ヒント2
-	drawerSprites[HowToPlayPlayer].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DrawerSprite::Left, 500, stickoutNum)); //プレイヤー操作説明
-	drawerSprites[HowToPlayCamera].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DrawerSprite::Right, 500, stickoutNum)); //カメラ操作説明
+	const float	stickoutNum = 50.0f; //引き出しスプライトが画面内にはみ出す量
 
 	//メニュー用スプライト生成
 	if (GamePhase::Title == gamePhase)
@@ -32,6 +26,11 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
 			menuframe_.push_back(std::move(temp));
 		}
+
+		//説明用引き出しスプライト生成
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
@@ -40,6 +39,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
 			menuframe_.push_back(std::move(temp));
 		}
+
+		//説明用引き出しスプライト生成
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -48,6 +50,13 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
 			menuframe_.push_back(std::move(temp));
 		}
+
+		//説明用引き出しスプライト生成
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), DIK_2, DrawerSprite::Right, 200, stickoutNum, false); //ヒント2
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
 	}
 
 	gamePhase_ = gamePhase;
@@ -199,7 +208,7 @@ void UserInterface::MenuSelection()
 	if (selectionNumber_ == 0)
 	{
 		//音量変更キー入力がある場合のみ判定
-		if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->GetInstance()->PushKey(DIK_RIGHT)) 
+		if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->GetInstance()->PushKey(DIK_RIGHT))
 		{
 			const float soundVolumeChangeSpeed = 0.01f;	//音量変更量
 
@@ -235,14 +244,28 @@ void UserInterface::DrawerSpriteReset()
 	}
 }
 
+void UserInterface::CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
+{
+	//引き出しスプライト生成
+	std::unique_ptr<DrawerSprite> newSprite;
+	newSprite.reset(DrawerSprite::Create(texture, drawerKey, hidePlace, posY, stickoutNum, isOpenDrawer));
+	drawerSprites.push_back(std::move(newSprite));
+}
+
 void UserInterface::DrawerSpriteMoveStartKey()
 {
 	//メニューが開いている状態なら抜ける
 	if (menuFlag_) { return; }
 
 	//キー入力による引き出しスプライト移動開始
-	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_1)) { drawerSprites[Hint1]->MoveStart(); }
-	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_2)) { drawerSprites[Hint2]->MoveStart(); }
-	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_3)) { drawerSprites[HowToPlayPlayer]->MoveStart(); }
-	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_4)) { drawerSprites[HowToPlayCamera]->MoveStart(); }
+	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
+		if (Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey())) {
+			//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
+			if (drawerSprite == drawerSprites[HowToPlayMenu]) {
+				continue;
+			}
+			//開閉開始
+			drawerSprite->MoveStart();
+		}
+	}
 }

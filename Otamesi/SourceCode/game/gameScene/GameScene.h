@@ -52,6 +52,11 @@ public: //ƒƒ“ƒoŠÖ”
 	void DrawFrontSprite() override;
 
 	/// <summary>
+	/// ƒƒjƒ…[‚Ì“®‚«
+	/// </summary>
+	void MenuAction() override;
+
+	/// <summary>
 	/// Ä¶¬
 	/// </summary>
 	void ReCreate();

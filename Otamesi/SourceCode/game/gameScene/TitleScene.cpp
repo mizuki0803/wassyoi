@@ -133,7 +133,8 @@ void TitleScene::Update()
 			StageManager::NextStageSelect();
 		}
 
-		if (Input::GetInstance()->TriggerKey(DIK_M))
+		//エスケープキーでメニュー
+		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
 		{
 			if (!userInterface_->GetMenuFlag())
 			{
@@ -146,15 +147,10 @@ void TitleScene::Update()
 		}
 	}
 
-	//エスケープキーでゲームループ終了
-	if (Input::GetInstance()->PushKey(DIK_ESCAPE)) {
-		isEndRequest = true;
-		return;
-	}
-
 	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
 	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
 	userInterface_->SetNotMove(isStageClear);
+	MenuAction();
 
 	//カメラ更新
 	camera->Update();
@@ -262,4 +258,23 @@ void TitleScene::DrawFrontSprite()
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void TitleScene::MenuAction()
+{
+	//メニューが開いていなければ抜ける
+	if (!userInterface_->GetMenuFlag()) { return; }
+	//決定のスペースキーを押していなければ抜ける
+	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
+
+	//スペースキーを押した瞬間に選択されている項目によって挙動を設定
+	//.exeの終了
+	if (userInterface_->GetSelectionNumber() == (int)UserInterface::TitleSceneItem::ExeEnd) {
+		isEndRequest = true;
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+	}
+
+	//binary削除
+	DeleteBinary();
 }

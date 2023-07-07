@@ -51,6 +51,11 @@ public: //メンバ関数
 	/// </summary>
 	void DrawFrontSprite() override;
 
+	/// <summary>
+	/// メニューの動き
+	/// </summary>
+	void MenuAction() override;
+
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<GameCamera> camera;
