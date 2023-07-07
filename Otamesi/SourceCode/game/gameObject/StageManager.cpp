@@ -3,6 +3,7 @@
 
 int StageManager::selectStage = 1;
 std::array<bool, StageManager::stageNum> StageManager::isClear;
+bool StageManager::isAllStageClear = false;
 
 bool StageManager::GetIsClear(const int selectStage)
 {
@@ -54,6 +55,24 @@ bool StageManager::PrevStageSelect()
 		selectStage = 1;
 		return false;
 	}
+
+	return true;
+}
+
+bool StageManager::AllStageClearTriggerCheck()
+{
+	//既にすべてのステージをクリアした状態なら抜ける
+	if (isAllStageClear) { return false; }
+
+	//全てのステージをクリアしたかチェック
+	for (int i = 1; i <= stageNum - 1; i++) {
+		if (!(GetIsClear(i))) { return false; }
+	}
+
+	//初めて全てのステージをクリアしたときのみ特別なステージに進める
+	selectStage = 100;
+	//全てのステージをクリアした状態にする
+	isAllStageClear = true;
 
 	return true;
 }

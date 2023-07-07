@@ -84,9 +84,6 @@ void GameScene::Initialize()
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
 	//ステージクリアUI生成
 	stageClear_ = ClearStaging::Create();
-
-	// スカイドーム生成
-	//paranomaSkyDorm.reset(dynamic_cast<ParanomaSkyDorm*>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
 }
 
 void GameScene::Finalize()
@@ -97,54 +94,64 @@ void GameScene::Finalize()
 void GameScene::Update()
 {
 	if (!isStageClear) {
-		//undo
-		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
-			Undo(camera.get(), player.get());
-		}
-		//redo
-		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
-			Redo(camera.get(), player.get());
-		}
-
-		//Rキーでリセット
-		if (Input::GetInstance()->TriggerKey(DIK_R)) {
-			//シーン切り替え
-			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-			//binary削除
-			DeleteBinary();
-		}
-		//エスケープキーでメニュー画面
-		else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
-			if (!userInterface_->GetMenuFlag())
-			{
-				userInterface_->SetMenuFlag(true);
-			}
-			else
-			{
-				userInterface_->SetMenuFlag(false);
+		//全てのステージをクリア後の特別なステージのみスペースキー入力でタイトルシーンへ
+		if (StageManager::GetSelectStage() == 100) {
+			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+				//シーン切り替え
+				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 			}
 		}
-
-		//binary出力
-		if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
-			orderNum++;
-			orderMaxNum = orderNum;
-			if (deleteOrderMaxNum < orderMaxNum) {
-				deleteOrderMaxNum = orderMaxNum;
+		//その他ステージは通常の動き
+		else {
+			//undo
+			if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+				Undo(camera.get(), player.get());
+			}
+			//redo
+			else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+				Redo(camera.get(), player.get());
 			}
 
-			KeepBinary(*camera, *player);
-		}
+			//Rキーでリセット
+			if (Input::GetInstance()->TriggerKey(DIK_R)) {
+				//シーン切り替え
+				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
+				//binary削除
+				DeleteBinary();
+			}
+			//エスケープキーでメニュー画面
+			else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
+				if (!userInterface_->GetMenuFlag())
+				{
+					userInterface_->SetMenuFlag(true);
+				}
+				else
+				{
+					userInterface_->SetMenuFlag(false);
+				}
+			}
 
-		//プレイヤーがゴールをしたらステージクリア
-		if (player->GetIsGoal()) {
-			//クリア音
-			Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
+			//binary出力
+			if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
+				orderNum++;
+				orderMaxNum = orderNum;
+				if (deleteOrderMaxNum < orderMaxNum) {
+					deleteOrderMaxNum = orderMaxNum;
+				}
 
-			isStageClear = true;
-			StageManager::StageClear();
-			camera->SetClearMode();
-			stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
+				KeepBinary(*camera, *player);
+			}
+
+			//プレイヤーがゴールをしたらステージクリア
+			if (player->GetIsGoal()) {
+				//クリア音
+				Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
+
+				isStageClear = true;
+				StageManager::StageClear();
+				camera->SetClearMode();
+				stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
+			}
 		}
 	}
 	else {
@@ -152,8 +159,13 @@ void GameScene::Update()
 		{
 			//binary削除
 			DeleteBinary();
+			//初めて全てのステージをクリアした場合は特別なステージへ
+			if (StageManager::AllStageClearTriggerCheck()) {
+				//カメラの回転を元に戻す状態にする
+				camera->SetClearResetAround();
+			}
 			//次のステージがある場合は次のステージへ
-			if (StageManager::NextStageSelect()) {
+			else if (StageManager::NextStageSelect()) {
 				//カメラの回転を元に戻す状態にする
 				camera->SetClearResetAround();
 			}
@@ -326,11 +338,16 @@ void GameScene::RestartGame()
 	//次のステージを開始するためにフラグなどをリセット
 	isStageClear = false;
 	mapData->SetIsReCreateEnd(false);
-	player->Reset();
-	camera->Reset();
 	skydome->SetIsRotate(false);
 	userInterface_->SetMenuFlag(false);
 	userInterface_->DrawerSpriteReset();
+
+	//全てのステージをクリア後の特別なステージのみその他の設定をリセットさせずに抜ける
+	if (StageManager::GetSelectStage() == 100) { return; }
+
+	//次のステージを開始するためにフラグなどをリセット
+	player->Reset();
+	camera->Reset();
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;
 	KeepBinary(*camera, *player);
 }
