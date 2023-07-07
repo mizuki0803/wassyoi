@@ -68,6 +68,8 @@ void MapDataStageSelectManager::DrawUI()
 
 void MapDataStageSelectManager::ChangeStage()
 {
+	if (menuFlag_) { return; }
+
 	//•ÏX‚·‚éƒL[“ü—Í‚ð‚µ‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
 	if (!(Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT))) { return; }
 

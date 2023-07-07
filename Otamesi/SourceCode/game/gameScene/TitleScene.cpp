@@ -76,7 +76,7 @@ void TitleScene::Initialize()
 	ParticleEmitter::GetInstance()->AllDelete();
 
 	//UIŠÖŒW¶¬
-	userInterface_ = UserInterface::Create();
+	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Title);
 	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
 	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
 	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });

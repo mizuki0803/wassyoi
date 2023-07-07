@@ -81,7 +81,7 @@ void GameScene::Initialize()
 	KeepBinary(*camera, *player);
 
 	//UI関係生成
-	userInterface_ = UserInterface::Create();
+	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
 	//ステージクリアUI生成
 	stageClear_ = ClearStaging::Create();
 

@@ -26,6 +26,16 @@ public: //enum
 	/// <summary>
 	/// メニューの全体
 	/// </summary>
+	enum class GamePhase
+	{
+		Title,		//タイトル
+		Selection,	//選択
+		Game,		//ゲーム中
+	};
+
+	/// <summary>
+	/// メニューの全体
+	/// </summary>
 	enum class MenuPhase
 	{
 		Start,		//開始
@@ -36,12 +46,12 @@ public: //メンバ関数
 	/// <summary>
 	/// 生成
 	/// </summary>
-	static std::unique_ptr<UserInterface> Create();
+	static std::unique_ptr<UserInterface> Create(GamePhase gamePhase);
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize();
+	void Initialize(GamePhase gamePhase);
 
 	/// <summary>
 	/// 毎フレーム処理
@@ -72,6 +82,7 @@ public: //メンバ関数
 	void SetNotMove(bool flag) { notMove_ = flag; }
 
 	bool GetMenuFlag() { return menuFlag_; }
+	const int GetSelectionNumber() { return selectionNumber_; }
 
 private: //メンバ関数
 	/// <summary>
@@ -93,7 +104,7 @@ private: //メンバ変数
 	// メニュー用の背景
 	std::unique_ptr<Sprite> menuBackScreen_;
 	// メニュー用の枠組み
-	std::array<std::unique_ptr<Menu>, 3> menuframe_;
+	std::vector<std::unique_ptr<Menu>> menuframe_;
 	// 音量設定用バースプライト
 	std::unique_ptr<Sprite> soundVolumeBar;
 	// 音量設定用ポインタースプライト
@@ -109,5 +120,7 @@ private: //メンバ変数
 	// 関数の管理
 	std::vector<std::function<void()>> menuFunc_;
 	// 関数の番号
-	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);	
+	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
+	// プレイシーンの保存用
+	GamePhase gamePhase_;
 };

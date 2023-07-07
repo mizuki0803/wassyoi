@@ -7,14 +7,14 @@
 float UserInterface::soundVolume_ = 1.0f;
 const float UserInterface::soundMaxVolume_ = 2.0f;
 
-std::unique_ptr<UserInterface> UserInterface::Create()
+std::unique_ptr<UserInterface> UserInterface::Create(GamePhase gamePhase)
 {
 	UserInterface* temp = new UserInterface;
-	temp->Initialize();
+	temp->Initialize(gamePhase);
 	return std::unique_ptr<UserInterface>(temp);
 }
 
-void UserInterface::Initialize()
+void UserInterface::Initialize(GamePhase gamePhase)
 {
 	//説明用引き出しスプライト生成
 	const float	stickoutNum = 50.0f; //画面内にはみ出す量
@@ -25,10 +25,33 @@ void UserInterface::Initialize()
 	drawerSprites[HowToPlayCamera].reset(DrawerSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DrawerSprite::Right, 500, stickoutNum)); //カメラ操作説明
 
 	//メニュー用スプライト生成
-	for (int i = 0; i < menuframe_.size(); i++)
+	if (GamePhase::Title == gamePhase)
 	{
-		menuframe_[i] = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
+		for (int i = 0; i < 2; i++)
+		{
+			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
+			menuframe_.push_back(std::move(temp));
+		}
 	}
+	else if (GamePhase::Selection == gamePhase)
+	{
+		for (int i = 0; i < 2; i++)
+		{
+			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
+			menuframe_.push_back(std::move(temp));
+		}
+	}
+	else if (GamePhase::Game == gamePhase)
+	{
+		for (int i = 0; i < 3; i++)
+		{
+			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
+			menuframe_.push_back(std::move(temp));
+		}
+	}
+
+	gamePhase_ = gamePhase;
+
 	menuBackScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0.0f, 0.0f }, false, false));
 	menuBackScreen_->SetSize(Vector2(WindowApp::window_width, (WindowApp::window_height)));
 

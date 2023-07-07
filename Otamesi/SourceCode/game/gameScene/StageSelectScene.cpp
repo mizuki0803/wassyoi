@@ -57,6 +57,9 @@ void StageSelectScene::Initialize()
 
 	//ポストエフェクトのブラーを解除しておく
 	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
+
+	//UI関係生成
+	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Selection);
 }
 
 void StageSelectScene::Finalize()
@@ -69,6 +72,19 @@ void StageSelectScene::Update()
 	//DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
 	//DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
 
+	if (Input::GetInstance()->TriggerKey(DIK_M))
+	{
+		if (!userInterface_->GetMenuFlag())
+		{
+			userInterface_->SetMenuFlag(true);
+		}
+		else
+		{
+			userInterface_->SetMenuFlag(false);
+		}
+	}
+
+	mapDataManager->SetNotMove(userInterface_->GetMenuFlag());
 
 	//カメラ更新
 	camera->Update();
@@ -82,6 +98,9 @@ void StageSelectScene::Update()
 	mapDataManager->Update();
 	//天球
 	skydome->Update();
+
+	//UIの更新
+	userInterface_->Update();
 
 	//スペースキーでステージを確定し、ゲームシーンへ
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
@@ -146,6 +165,9 @@ void StageSelectScene::DrawFrontSprite()
 
 	//ステージ番号
 	mapDataManager->DrawUI();
+
+	//UI関係
+	userInterface_->Draw();
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();

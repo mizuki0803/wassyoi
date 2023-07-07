@@ -4,6 +4,7 @@
 #include "ObjObject3d.h"
 #include "Camera.h"
 #include "MapDataStageSelectManager.h"
+#include "UserInterface.h"
 
 /// <summary>
 /// ステージ選択シーン
@@ -73,4 +74,7 @@ private: //メンバ変数
 
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
+
+	//UI関係
+	std::unique_ptr<UserInterface> userInterface_;
 };
