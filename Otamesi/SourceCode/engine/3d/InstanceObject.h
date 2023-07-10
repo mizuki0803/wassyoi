@@ -136,6 +136,18 @@ public: //メンバ関数
 	/// </summary>
 	virtual void DrawLightCameraView();
 
+	/// <summary>
+	/// インスタンシング描画最大描画数になっていないかのチェック
+	/// </summary>
+	/// <returns></returns>
+	bool GetInstanceDrawCheck() { return instanceDrawNum < draw_max_num; }
+
+	/// <summary>
+	/// インスタンシング描画個数
+	/// </summary>
+	/// <returns></returns>
+	int GetInstanceDrawNum() { return instanceDrawNum; }
+
 	//setter
 	void SetModel(ObjModel* model) { this->model = model; }
 	void SetIsCameraFollow(bool isCameraFollow) { this->isCameraFollow = isCameraFollow; }

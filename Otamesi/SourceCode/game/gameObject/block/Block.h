@@ -14,8 +14,9 @@ public: //enum
 	/// </summary>
 	enum class BROCK_TYPE {
 		block,
-		plane,
+		plane = 10,
 		goal,
+		player,
 		size,
 	};
 

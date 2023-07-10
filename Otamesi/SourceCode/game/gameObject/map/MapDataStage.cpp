@@ -178,20 +178,20 @@ void MapDataStage::CreateMapBlock()
 				//ÉSÅ[Éãê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(2, chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::goal), chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ÉuÉçÉbÉNê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageBlock> newBlock;
-					newBlock.reset(StageBlock::Create(0, chipNum, shiftPos, MapBlockData::MapBlockType::Block));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::Block));
 					blocks.push_back(std::move(newBlock));
 				}
 				//è„å¸Ç´ÉnÉäÉ{Éeê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = {};	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -199,7 +199,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 180, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -207,7 +207,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, 90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -215,7 +215,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, -90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -223,7 +223,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { -90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -231,7 +231,7 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageBlock> newBlock;
 					const XMFLOAT3 rot = { 90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
+					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
