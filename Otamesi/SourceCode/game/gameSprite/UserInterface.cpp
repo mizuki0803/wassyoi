@@ -53,8 +53,8 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), DIK_2, DrawerSprite::Right, 200, stickoutNum, false); //ヒント2
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips1), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips2), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
 	}

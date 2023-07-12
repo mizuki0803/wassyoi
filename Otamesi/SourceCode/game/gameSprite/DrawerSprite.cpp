@@ -34,8 +34,8 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE drawerKey, HidePlace 
 	else if (hidePlace == HidePlace::Right) { closedStatePos = { WindowApp::window_width - stickoutNum, posY }; }
 	//開いている場合の座標をセット
 	openStatePos = closedStatePos;
-	if (hidePlace == HidePlace::Left) { openStatePos.x += size.x - stickoutNum; }
-	else if (hidePlace == HidePlace::Right) { openStatePos.x -= size.x - stickoutNum; }
+	if (hidePlace == HidePlace::Left) { openStatePos.x += size.x - stickoutNum-10; }
+	else if (hidePlace == HidePlace::Right) { openStatePos.x -= size.x - stickoutNum-10; }
 
 	//開始時に引き出しを開いている状態かセット
 	isOpenDrawerSceneStart = isOpenDrawer;

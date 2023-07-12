@@ -20,8 +20,8 @@ void HowToPlayUI::Initialize(bool isDrawPause)
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), leftTopPos, { 465, 84 }, sizeRatio);	//移動
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), leftTopPos, { 545, 84 }, sizeRatio);	//カメラ
 	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), leftTopPos, { 1101, 85 }, sizeRatio);	//次元変更
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo), leftTopPos, { 573, 84 }, sizeRatio);	//アンドゥ
-	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo), leftTopPos, { 574, 84 }, sizeRatio);	//リドゥ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips1), leftTopPos, { 573, 84 }, sizeRatio);	//アンドゥ
+	CreateNewSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips2), leftTopPos, { 574, 84 }, sizeRatio);	//リドゥ
 
 	//ポーズの描画をしないなら抜ける
 	if (!isDrawPause) { return; }
