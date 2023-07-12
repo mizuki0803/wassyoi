@@ -39,9 +39,9 @@ void TitleScene::Initialize()
 	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
 	//影用光源カメラ初期化
-	lightCamera.reset(new LightCamera());
-	lightCamera->Initialize({ -100, 100, -300 });
-	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
+	const float lightCameraCenterDistance = 80;
+	lightCamera.reset(GameLightCamera::Create(lightCameraCenterDistance));
+	lightCamera->SetProjectionNum({ 250, 250 }, { -250, -250 });
 
 	OutLine::SetCmaera(camera.get());
 
@@ -55,9 +55,7 @@ void TitleScene::Initialize()
 	camera->SetPlayer(player.get());
 
 	//天球生成
-	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
-	skydome->SetPosition({});
-	skydome->SetScale({ 2, 2, 2 });
+	skydome.reset(Skydome::Create(modelSkydome.get()));
 
 	//背景オブジェクト生成
 	backGround.reset(BackGround::Create());
@@ -81,10 +79,8 @@ void TitleScene::Initialize()
 	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//操作方法UI生成
-	howToPlayUI.reset(HowToPlayUI::Create(false));
-	//ステージクリアUI生成
-	stageClearUI.reset(StageClearUI::Create());
+	//UI関係生成
+	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Title);
 	//タイトルロゴ生成
 	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
 	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
@@ -126,6 +122,9 @@ void TitleScene::Update()
 		
 		//プレイヤーがゴールをしたらステージクリア
 		if (player->GetIsGoal()) {
+			//クリア音
+			Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
+
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetIsStageClear(true);
@@ -137,13 +136,25 @@ void TitleScene::Update()
 			//次のステージへ
 			StageManager::NextStageSelect();
 		}
+
+		//エスケープキーでメニュー
+		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
+		{
+			if (!userInterface_->GetMenuFlag())
+			{
+				userInterface_->SetMenuFlag(true);
+			}
+			else
+			{
+				userInterface_->SetMenuFlag(false);
+			}
+		}
 	}
 
-	//エスケープキーでゲームループ終了
-	if (Input::GetInstance()->PushKey(DIK_ESCAPE)) {
-		isEndRequest = true;
-		return;
-	}
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	userInterface_->SetNotMove(isStageClear);
+	MenuAction();
 
 	//カメラ更新
 	camera->Update();
@@ -162,11 +173,13 @@ void TitleScene::Update()
 	//背景オブジェクト
 	backGround->Update();
 
-	//スプライト更新
-	//操作方法
-	howToPlayUI->Update();
-	//ステージクリアUI更新
-	stageClearUI->Update();
+	//スプライト
+	//UIの更新
+	userInterface_->Update();
+
+	//パーティクル更新
+	ParticleEmitter::GetInstance()->Update();
+
 	//タイトルロゴ
 	titleLogo->Update();
 
@@ -231,6 +244,14 @@ void TitleScene::AfterBloomDraw()
 
 void TitleScene::Draw3DLightView()
 {
+	///-------Instance描画ここから-------///
+
+	InstanceObject::DrawLightViewPrev();
+
+	//背景オブジェクト
+	backGround->DrawLightCameraView();
+
+	///-------Instance描画ここまで-------///
 }
 
 void TitleScene::DrawFrontSprite()
@@ -239,13 +260,8 @@ void TitleScene::DrawFrontSprite()
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------スプライト描画ここから-------///
 
-	//操作方法
-	howToPlayUI->Draw();
-
-	//ステージクリアUI
-	if (isStageClear) {
-		stageClearUI->Draw();
-	}
+	//UI関係
+	userInterface_->Draw();
 
 	//タイトルロゴ
 	titleLogo->Draw();
@@ -255,4 +271,23 @@ void TitleScene::DrawFrontSprite()
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void TitleScene::MenuAction()
+{
+	//メニューが開いていなければ抜ける
+	if (!userInterface_->GetMenuFlag()) { return; }
+	//決定のスペースキーを押していなければ抜ける
+	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
+
+	//スペースキーを押した瞬間に選択されている項目によって挙動を設定
+	//.exeの終了
+	if (userInterface_->GetSelectionNumber() == (int)UserInterface::TitleSceneItem::ExeEnd) {
+		isEndRequest = true;
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+	}
+
+	//binary削除
+	DeleteBinary();
 }

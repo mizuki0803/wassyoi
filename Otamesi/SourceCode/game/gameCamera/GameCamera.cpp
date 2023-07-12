@@ -2,13 +2,14 @@
 #include "Input.h"
 #include "Easing.h"
 #include "Player.h"
+#include "Audio.h"
 
 const float GameCamera::rotate3DDistance = 2.0f;
 
 const DirectX::XMMATRIX GameCamera::matProj2D = XMMatrixOrthographicOffCenterLH(
-	-(float)WindowApp::window_width / 14.0f, (float)WindowApp::window_width / 14.0f,
-	-WindowApp::window_height / 14.0f, WindowApp::window_height / 14.0f,
-	0.0f, 1000.0f
+	-(float)WindowApp::window_width / 18.0f, (float)WindowApp::window_width / 18.0f,
+	-WindowApp::window_height / 18.0f, WindowApp::window_height / 18.0f,
+	0.0f, 2000.0f
 );
 
 const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
@@ -38,6 +39,14 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 	//ステージの中央座標をセット
 	this->stageCenterPos = stageCenterPos;
 
+	// 最初に動かす関数の設定
+	phase_ = static_cast<int>(GamePhase::Play);
+	// イージングの初期化
+	easeData_ = std::make_unique<EaseData>(29);
+	reStartEaseData_ = std::make_unique<EaseData>(29);
+	//関数の設定
+	CreateAct();
+
 	//初期の回転角をセット
 	rotation.x = rotate3DDistance;
 	//カメラ位置フェーズを更新する
@@ -46,8 +55,13 @@ void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& 
 
 void GameCamera::Update()
 {
+	func_[phase_]();
+}
+
+void GameCamera::PlayGame()
+{
 	//ステージクリア状態なら抜ける
-	if (isStageClear) { return; }
+	if (isStageClear || menuFlag_ || isCreateMove_) { return; }
 
 	//トリガーフラグがtrue状態ならばfalseに直しておく
 	if (isTriggerDimensionChange) { isTriggerDimensionChange = false; }
@@ -61,7 +75,7 @@ void GameCamera::Update()
 	ChanegeDimension();
 
 	//座標更新
-	UpdatePosition();
+	position = UpdatePosition();
 
 	//平行移動行列の計算
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
@@ -72,6 +86,187 @@ void GameCamera::Update()
 	//ビュー行列と射影行列の更新
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
+}
+
+void GameCamera::GameStart()
+{
+}
+
+void GameCamera::SetClearMode()
+{
+	//クリア状態にする
+	isStageClear = true;
+
+	//既に3Dの場合は何もしない状態にして抜ける
+	if (!is2D) { 
+		phase_ = static_cast<int>(GamePhase::None);
+		return; 
+	}
+
+	//回転前回転角をセット
+	rotateBefore = rotation;
+
+	//回転後回転角をセット
+	if (is2D) {
+		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
+	}
+	else {
+		rotateAfter = { rotation.x - rotate3DDistance, rotation.y, rotation.z };
+	}
+	dirtyProjection = true;
+
+	//アクション用タイマーを初期化しておく
+	actionTimer = 0;
+
+	//クリア時に3次元に戻す状態にする
+	phase_ = static_cast<int>(GamePhase::ClearReturn3D);
+}
+
+void GameCamera::ClearReturn3D()
+{
+	//タイマー更新
+	actionTimer++;
+	const float rotTime = 40; //次元切り替え回転にかかる時間
+
+	//イージングに使用する変数(0～1を算出)
+	const float time = actionTimer / rotTime;
+
+	//回転させる
+	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
+	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
+	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
+	//座標更新
+	position = UpdatePosition();
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+
+	//プロジェクション行列のイージング
+	if (is2D) {
+		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
+	}
+
+	//タイマーが指定した時間に満たなければ抜ける
+	if (actionTimer < rotTime) { return; }
+
+	//2D状態かフラグを切り替える
+	if (is2D) { is2D = false; }
+	else { is2D = true; }
+
+	dirtyProjection = true;
+
+	//次元に変更が完了したトリガーを立てる
+	isTriggerDimensionChange = true;
+
+	//行動を「何もしない」に戻す
+	phase_ = static_cast<int>(GamePhase::None);
+}
+
+void GameCamera::ClearReturnRotate()
+{
+	easeData_->SetCount(29);
+	//次のステージ開始のため、正面を向くようにイージングで回転させる
+	rotation.x = Easing::InCubic(rotateBefore.x, rotateAfter.x, easeData_->GetTimeRate());
+	rotation.y = Easing::InCubic(rotateBefore.y, rotateAfter.y, easeData_->GetTimeRate());
+	rotation.z = Easing::InCubic(rotateBefore.z, rotateAfter.z, easeData_->GetTimeRate());
+	//正式な座標を算出
+	position = UpdatePosition();
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+
+	if (easeData_->GetEndFlag())
+	{
+		easeData_->Reset();
+		easeData_->SetCount(39);
+		phase_ = static_cast<int>(GamePhase::None);
+	}
+
+	easeData_->Update();
+}
+
+void GameCamera::GameReStart()
+{	
+	Vector3 moveNum;
+	if (!reStartEaseChangeFlag_)
+	{
+		moveNum.x = Easing::OutQuint(0.0f, -28.0f, reStartEaseData_->GetTimeRate());
+
+		if (reStartEaseData_->GetEndFlag())
+		{
+			reStartEaseData_->Reset();
+			reStartEaseChangeFlag_ = true;
+		}
+	}
+	else
+	{
+		moveNum.x = Easing::InQuint(-28.0f, 0.0f, reStartEaseData_->GetTimeRate());
+	}
+
+	//回転角から計算した座標に移動量を加えて正式な座標を算出
+	position = moveNum + UpdatePosition();
+
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+
+	//ステージを変更するので、ステージとカメラの距離をイージングで変更していく
+	distanceStageCenter.x = Easing::InCubic(beforeDistanceStageCenter.x, afterDistanceStageCenter.x, easeData_->GetTimeRate());
+	distanceStageCenter.y = Easing::InCubic(beforeDistanceStageCenter.y, afterDistanceStageCenter.y, easeData_->GetTimeRate());
+	distanceStageCenter.z = Easing::InCubic(beforeDistanceStageCenter.z, afterDistanceStageCenter.z, easeData_->GetTimeRate());
+
+	if (easeData_->GetEndFlag() && reStartEaseData_->GetEndFlag() && reStartEaseChangeFlag_)
+	{
+		easeData_->Reset();
+		reStartEaseData_->Reset();
+		phase_ = static_cast<int>(GamePhase::None);
+	}
+
+	reStartEaseData_->Update();
+	easeData_->Update();
+}
+
+void GameCamera::StayGame()
+{
+	//平行移動行列の計算
+	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
+	//ワールド行列を更新
+	UpdateMatWorld(matTrans);
+	//視点、注視点を更新
+	UpdateEyeTarget();
+	//ビュー行列と射影行列の更新
+	UpdateMatView();
+	if (dirtyProjection) { UpdateMatProjection(); }
+}
+
+void GameCamera::CreateAct()
+{
+	func_.push_back([this] { return GameStart(); });
+	func_.push_back([this] { return PlayGame(); });
+	func_.push_back([this] { return ClearReturn3D(); });
+	func_.push_back([this] { return ClearReturnRotate(); });
+	func_.push_back([this] { return GameReStart(); });
+	func_.push_back([this] { return StayGame(); });
 }
 
 void GameCamera::ChanegeDimensionStart()
@@ -93,6 +288,58 @@ void GameCamera::ChanegeDimensionStart()
 
 	//行動を「次元切り替え」にする
 	actionPhase = ActionPhase::ChangeDimension;
+
+	if (is2D) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::d2_d3);
+	} else {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::d3_d2);
+	}
+}
+
+void GameCamera::SetClearResetAround()
+{
+	phase_ = static_cast<int>(GamePhase::ClearReturnRotate);
+
+	//回転前回転角をセット
+	rotateBefore = rotation;
+	//回転後回転角をセット(0または360に近いほうに)
+	const float aroundMax = 360;
+	if (rotation.x - rotate3DDistance < aroundMax / 2) { rotateAfter.x = rotate3DDistance; }
+	else { rotateAfter.x = aroundMax + rotate3DDistance; }
+	if (rotation.y < aroundMax / 2) { rotateAfter.y = 0; }
+	else { rotateAfter.y = aroundMax; }
+	if (rotation.z < aroundMax / 2) { rotateAfter.z = 0; }
+	else { rotateAfter.z = aroundMax; }
+}
+
+void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
+{
+	// 保存する座標の更新
+	beforeDistanceStageCenter = this->distanceStageCenter;
+	afterDistanceStageCenter = distanceStageCenter;
+	phase_ = static_cast<int>(GamePhase::Play);
+	is2D = false;
+	isTriggerDimensionChange = false;
+	cameraEaseChangeFlag_ = false;
+	reStartEaseChangeFlag_ = false;
+	isStageClear = false;
+	easeData_->Reset();
+	reStartEaseData_->Reset();
+	phase_ = static_cast<int>(GamePhase::ReStart);
+}
+
+void GameCamera::Reset()
+{
+	cameraXPosPhase = (int)CameraXPosPhase::Front;
+	cameraYPosPhase = (int)CameraYPosPhase::Side;
+	phase_ = static_cast<int>(GamePhase::Play);
+	is2D = false;
+	isTriggerDimensionChange = false;
+	cameraEaseChangeFlag_ = false;
+	reStartEaseChangeFlag_ = false;
+	isStageClear = false;
+	easeData_->Reset();
+	reStartEaseData_->Reset();
 }
 
 void GameCamera::UpdateMatProjection()
@@ -138,28 +385,31 @@ void GameCamera::UpdateEyeTarget()
 	up = MatrixTransformDirection(baseUp, matWorld);
 }
 
-void GameCamera::UpdatePosition()
+Vector3 GameCamera::UpdatePosition()
 {
 	//X,Y回転角をラジアンに直す
-	const double angleX = XMConvertToRadians(rotation.x);
-	const double angleY = XMConvertToRadians(rotation.y);
+	const float angleX = XMConvertToRadians(rotation.x);
+	const float angleY = XMConvertToRadians(rotation.y);
 	//アンダーフローする可能性があるので、小数点を切り捨てる
-	const double divNum = 1000;
-	const double roundAngleX = floor(angleX * divNum) / divNum;
-	const double roundAngleY = floor(angleY * divNum) / divNum;
+	const float divNum = 1000;
+	const float roundAngleX = floorf(angleX * divNum) / divNum;
+	const float roundAngleY = floorf(angleY * divNum) / divNum;
 
 	//X,Yラジアンを使用し、sin,cosを算出
-	const double sinfAngleY = sin(roundAngleY);
-	const double cosfAngleY = cos(roundAngleY);
-	const double sinfAngleX = sin(roundAngleX);
-	const double cosfAngleX = cos(roundAngleX);
+	const float sinfAngleY = sinf(roundAngleY);
+	const float cosfAngleY = cosf(roundAngleY);
+	const float sinfAngleX = sinf(roundAngleX);
+	const float cosfAngleX = cosf(roundAngleX);
 
 	//計算結果を割り当てて座標をセット
 	//Y座標はX回転角のsinを使用
 	//X,Z座標はY回転角のsin,cosで計算し、X回転角(Y座標)のcosを乗算して算出
-	position.x = (float)(-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
-	position.y = (float)sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
-	position.z = (float)(-cosfAngleY * cosfAngleX) * distanceStageCenter.z + stageCenterPos.z;
+	Vector3 pos;
+	pos.x = (-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
+	pos.y = sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
+	pos.z = (-cosfAngleY * cosfAngleX) * distanceStageCenter.z + stageCenterPos.z;
+
+	return pos;
 }
 
 Vector3 GameCamera::InputRotateNum()
@@ -319,80 +569,6 @@ void GameCamera::ChanegeDimension()
 
 	//行動を「何もしない」に戻す
 	actionPhase = ActionPhase::None;
-}
-
-void GameCamera::CameraSetMove()
-{
-	// InOutのQuint
-	SetEye({});
-
-	easeData_->Update();
-
-	if (easeData_->GetEndFlag())
-	{
-		easeData_->Reset();
-		easeData_->SetCount(30);
-		phase_ = 2;
-	}
-}
-
-void GameCamera::GamePlayStratCameraSetMove()
-{
-	SetTarget({}); //プレイヤーの座標
-
-	if (!cameraEaseChangeFlag_)
-	{
-		// InOutのQuad
-		SetEye({});
-
-		if (easeData_->GetEndFlag())
-		{
-			easeData_->Reset();
-			easeData_->SetCount(20);
-			cameraEaseChangeFlag_ = true;
-		}
-	}
-	else
-	{
-		// InOutのQuad
-		SetEye({});
-
-		if (easeData_->GetEndFlag())
-		{
-			isShake_ = true;
-		}
-	}
-
-	ShakeMove();
-}
-
-void GameCamera::ShakeMove()
-{
-	if (isShake_ && !shakeEnd_)
-	{
-		shakeTimer_++;
-
-		Vector3 shake = {};
-		shake.x = static_cast<float>(rand() % (5 - attenuation_) - 2);
-		shake.y = static_cast<float>(rand() % (5 - attenuation_) - 2) + 5.0f;
-		shake.z = 15.0f;
-
-		if (shakeTimer_ >= attenuation_ * 2)
-		{
-			// 減衰値の加算
-			attenuation_ += 1;
-			SetEye(shake);
-		}
-		else if (attenuation_ >= 4)
-		{
-			shakeTimer_ = 0;
-			attenuation_ = 0;
-			shakeEnd_ = true;
-			SetEye({ 0,5,15 });
-			// 未定
-			phase_ = 3;
-		}
-	}
 }
 
 void GameCamera::SetEaseData(const int count)

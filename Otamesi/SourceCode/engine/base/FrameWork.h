@@ -57,8 +57,6 @@ protected: //メンバ変数
 	std::unique_ptr<DirectXBase> dxbase;
 	//入力
 	Input* input = nullptr;
-	//音
-	Audio* audio = nullptr;
 	//スプライトの共通部分
 	SpriteCommon* spriteCommon = nullptr;
 	//デバッグテキスト

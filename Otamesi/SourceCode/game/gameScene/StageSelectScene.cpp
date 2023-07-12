@@ -18,7 +18,7 @@ void StageSelectScene::Initialize()
 	lightGroup->SetDirLightActive(2, false);
 
 	//objからモデルデータを読み込む
-	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeBase", true));
+	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
 	//マップ管理生成
 	mapDataManager.reset(MapDataStageSelectManager::Create());
@@ -57,6 +57,9 @@ void StageSelectScene::Initialize()
 
 	//ポストエフェクトのブラーを解除しておく
 	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
+
+	//UI関係生成
+	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Selection);
 }
 
 void StageSelectScene::Finalize()
@@ -65,10 +68,20 @@ void StageSelectScene::Finalize()
 
 void StageSelectScene::Update()
 {
-	//デバッグ用テキスト
-	//DebugText::GetInstance()->Print("STAGESELECT SCENE", 270, 60, 5);
-	//DebugText::GetInstance()->Print("PRESS ENTER", 600, 600);
-
+	//エスケープキーでメニュー画面
+	if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
+	{
+		if (!userInterface_->GetMenuFlag())
+		{
+			userInterface_->SetMenuFlag(true);
+		}
+		else
+		{
+			userInterface_->SetMenuFlag(false);
+		}
+	}
+	mapDataManager->SetNotMove(userInterface_->GetMenuFlag());
+	MenuAction();
 
 	//カメラ更新
 	camera->Update();
@@ -83,15 +96,16 @@ void StageSelectScene::Update()
 	//天球
 	skydome->Update();
 
+	//UIの更新
+	userInterface_->Update();
+
 	//スペースキーでステージを確定し、ゲームシーンへ
-	if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
+	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !userInterface_->GetMenuFlag()) {
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+
 		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-	}
-	//エスケープキーでタイトルシーンへ
-	else if (Input::GetInstance()->PushKey(DIK_ESCAPE)) {
-		//シーン切り替え
-		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 	}
 
 	//シーン変更状態
@@ -144,9 +158,32 @@ void StageSelectScene::DrawFrontSprite()
 	//ステージ番号
 	mapDataManager->DrawUI();
 
+	//UI関係
+	userInterface_->Draw();
+
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();
 
 
 	///-------スプライト描画ここまで-------///
+}
+
+void StageSelectScene::MenuAction()
+{
+	//メニューが開いていなければ抜ける
+	if (!userInterface_->GetMenuFlag()) { return; }
+	//決定のスペースキーを押していなければ抜ける
+	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
+
+	//スペースキーを押した瞬間に選択されている項目によって挙動を設定
+	//タイトルシーンに移動
+	if (userInterface_->GetSelectionNumber() == (int)UserInterface::StageSelectSceneItem::SceneChangeTitle) {
+		//シーン切り替え
+		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
+		//se再生
+		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
+	}
+
+	//binary削除
+	DeleteBinary();
 }

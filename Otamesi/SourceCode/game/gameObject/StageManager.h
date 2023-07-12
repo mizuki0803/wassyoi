@@ -40,12 +40,20 @@ public: //静的メンバ関数
 	/// </summary>
 	static bool PrevStageSelect();
 
+	/// <summary>
+	/// 全てのステージを初めてクリアしたかチェック
+	/// </summary>
+	/// <returns></returns>
+	static bool AllStageClearTriggerCheck();
+
 private: //静的メンバ変数(定数)
-	static const int stageNum = 14;
+	static const int stageNum = 3;
 
 private: //静的メンバ変数
 	//選択中のステージ
 	static int selectStage;
 	//ステージクリアしているか
 	static std::array<bool, stageNum> isClear;
+	//全てのステージをクリアした状態か
+	static bool isAllStageClear;
 };

@@ -408,7 +408,7 @@ void InstanceObject::CreateLightViewPipeline()
 
 	//頂点シェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/ObjLightViewVS.hlsl",	//シェーダファイル名
+		L"Resources/shaders/InstanceObjectLightViewVS.hlsl",	//シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
 		"main", "vs_5_0",	//エントリーポイント名、シェーダーモデル指定
@@ -433,7 +433,7 @@ void InstanceObject::CreateLightViewPipeline()
 
 	//ピクセルシェーダの読み込みとコンパイル
 	result = D3DCompileFromFile(
-		L"Resources/shaders/ObjLightViewPS.hlsl",	//シェーダファイル名
+		L"Resources/shaders/InstanceObjectLightViewPS.hlsl",	//シェーダファイル名
 		nullptr,
 		D3D_COMPILE_STANDARD_FILE_INCLUDE,	//インクルード可能にする
 		"main", "ps_5_0",	//エントリーポイント名、シェーダーモデル指定
@@ -819,7 +819,7 @@ bool InstanceObject::Initialize()
 		nullptr,
 		IID_PPV_ARGS(&constBuffLightViewB0));
 	if (FAILED(result)) { assert(0); }
-	
+
 	//定数バッファのヒープ設定
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),//アップロード可能
@@ -950,5 +950,5 @@ void InstanceObject::DrawLightCameraView()
 	lightGroup->Draw(cmdList, 3);
 
 	//モデル描画
-	model->DrawLightCameraView(cmdList, 1);
+	model->DrawLightCameraView(cmdList, 1, instanceDrawNum);
 }

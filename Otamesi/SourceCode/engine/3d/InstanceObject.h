@@ -32,10 +32,7 @@ public: //サブクラス
 		XMMATRIX viewproj;	//ビュープロジェクション行列
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 		XMMATRIX lightViewproj;	//ライトビュープロジェクション行列
-		XMMATRIX topLightViewproj;	//頭上ライトビュープロジェクション行列
 		unsigned int isShadowMap;	//影を付けるか
-		float pad;
-		float pad1;
 	};
 
 	//定数バッファ用データ構造体B0
@@ -50,7 +47,6 @@ public: //サブクラス
 	struct ConstBufferDataLightViewB0
 	{
 		XMMATRIX viewproj;	//ビュープロジェクション行列
-		XMMATRIX world;		//ワールド行列
 		Vector3 cameraPos;	//カメラ座標(ワールド座標)
 	};
 
@@ -142,6 +138,18 @@ public: //メンバ関数
 	/// 影用光源ライトから見た視点での描画
 	/// </summary>
 	virtual void DrawLightCameraView();
+
+	/// <summary>
+	/// インスタンシング描画最大描画数になっていないかのチェック
+	/// </summary>
+	/// <returns></returns>
+	bool GetInstanceDrawCheck() { return instanceDrawNum < draw_max_num; }
+
+	/// <summary>
+	/// インスタンシング描画個数
+	/// </summary>
+	/// <returns></returns>
+	int GetInstanceDrawNum() { return instanceDrawNum; }
 
 	//setter
 	void SetModel(ObjModel* model) { this->model = model; }

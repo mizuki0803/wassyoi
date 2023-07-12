@@ -2,11 +2,12 @@
 #include "BaseGameScene.h"
 #include "LightGroup.h"
 #include "GameCamera.h"
-#include "LightCamera.h"
+#include "GameLightCamera.h"
 #include "Player.h"
 #include "MapDataStage.h"
 #include "BackGround.h"
-#include "HowToPlayUI.h"
+#include "Skydome.h"
+#include "UserInterface.h"
 #include "StageClearUI.h"
 
 /// <summary>
@@ -51,11 +52,16 @@ public: //メンバ関数
 	/// </summary>
 	void DrawFrontSprite() override;
 
+	/// <summary>
+	/// メニューの動き
+	/// </summary>
+	void MenuAction() override;
+
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<GameCamera> camera;
 	//影用光源カメラ
-	std::unique_ptr<LightCamera> lightCamera;
+	std::unique_ptr<GameLightCamera> lightCamera;
 
 	//ライト
 	std::unique_ptr<LightGroup> lightGroup;
@@ -82,15 +88,13 @@ private: //メンバ変数
 	std::unique_ptr<MapDataStage> mapData;
 
 	//天球
-	std::unique_ptr<ObjObject3d> skydome;
+	std::unique_ptr<Skydome> skydome;
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;
 
-	//操作方法UI
-	std::unique_ptr<HowToPlayUI> howToPlayUI;
-	//ステージクリアUI
-	std::unique_ptr<StageClearUI> stageClearUI;
+	//UI関係
+	std::unique_ptr<UserInterface> userInterface_;
 
 	//タイトルロゴ
 	std::unique_ptr<Sprite> titleLogo;

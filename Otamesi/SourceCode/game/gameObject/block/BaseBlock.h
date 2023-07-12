@@ -6,7 +6,7 @@ class BaseBlock
 {
 private:
 
-	enum class BROCK_TYPE {
+	enum class BROCK_MODEL_TYPE {
 		block,
 		plane,
 		goal,
@@ -14,8 +14,16 @@ private:
 		size,
 	};
 
+	enum class BROCK_TYPE {
+		block,
+		plane = 10,
+		goal,
+		player,
+		size,
+	};
+
 	//objモデル
-	std::array<std::unique_ptr<ObjModel>, int(BROCK_TYPE::size)> model;
+	std::array<std::unique_ptr<ObjModel>, int(BROCK_MODEL_TYPE::size)> model;
 
 	//描画用クラス
 	std::array<std::unique_ptr<InstanceObject>, int(BROCK_TYPE::size)> block;

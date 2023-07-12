@@ -6,9 +6,12 @@
 #include "Player.h"
 #include "MapDataStage.h"
 #include "UserInterface.h"
-#include "HowToPlayUI.h"
-#include "StageClearUI.h"
 #include "BackGround.h"
+<<<<<<< HEAD
+=======
+#include "Skydome.h"
+#include "ClearStaging.h"
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 
 /// <summary>
 /// ゲームシーン
@@ -53,9 +56,19 @@ public: //メンバ関数
 	void DrawFrontSprite() override;
 
 	/// <summary>
+	/// メニューの動き
+	/// </summary>
+	void MenuAction() override;
+
+	/// <summary>
 	/// 再生成
 	/// </summary>
 	void ReCreate();
+
+	/// <summary>
+	/// ゲームを開始状態に戻す
+	/// </summary>
+	void RestartGame();
 
 private: //メンバ変数
 	//カメラ
@@ -86,14 +99,12 @@ private: //メンバ変数
 	//ステージ用マップデータ
 	std::unique_ptr<MapDataStage> mapData;
 	//天球
-	std::unique_ptr<ObjObject3d> skydome;
+	std::unique_ptr<Skydome> skydome;
 
-	//メニュー関係
+	//UI関係
 	std::unique_ptr<UserInterface> userInterface_;
-	//操作方法UI
-	std::unique_ptr<HowToPlayUI> howToPlayUI;
 	//ステージクリアUI
-	std::unique_ptr<StageClearUI> stageClearUI;
+	std::unique_ptr<ClearStaging> stageClear_;
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;

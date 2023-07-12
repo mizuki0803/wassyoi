@@ -51,6 +51,19 @@ public: //enum
 		ChangeDimension,//次元切り替え
 	};
 
+	/// <summary>
+	/// ゲームの全体
+	/// </summary>
+	enum class GamePhase
+	{
+		Start,	//開始
+		Play,	//ゲーム中
+		ClearReturn3D,	//クリア時に3次元に戻す
+		ClearReturnRotate,	//クリア時に回転角を戻す
+		ReStart,//再度生成
+		None,	//何もしない
+	};
+
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
@@ -74,9 +87,57 @@ public: //メンバ関数
 	void Update() override;
 
 	/// <summary>
+	/// ゲーム中
+	/// </summary>
+	void PlayGame();
+	/// <summary>
+	/// ゲーム開始
+	/// </summary>
+	void GameStart();
+	/// <summary>
+	/// クリア時開始の処理
+	/// </summary>
+	void SetClearMode();
+	/// <summary>
+	/// クリア時に3次元に戻す処理
+	/// </summary>
+	void ClearReturn3D();
+	/// <summary>
+	/// クリア時に回転角に戻す処理
+	/// </summary>
+	void ClearReturnRotate();
+	/// <summary>
+	/// ゲーム再開始
+	/// </summary>
+	void GameReStart();
+	/// <summary>
+	/// 何もしない
+	/// </summary>
+	void StayGame();
+	/// <summary>
+	/// 関数の設定
+	/// </summary>
+	void CreateAct();
+
+	/// <summary>
 	/// 次元切り替え開始
 	/// </summary>
 	void ChanegeDimensionStart();
+
+	/// <summary>
+	/// クリア後演出のカメラ回転を初期位置に修正する処理
+	/// </summary>
+	void SetClearResetAround();
+	/// <summary>
+	/// 再生成時に動かすための処理
+	/// </summary>
+	/// <param name="distanceStageCenter">ステージ中心から離す距離</param>
+	void SetReCreateMove(const XMFLOAT3& distanceStageCenter);
+
+	/// <summary>
+	/// 開始状態に戻す
+	/// </summary>
+	void Reset();
 
 	//getter
 	ActionPhase GetActionPhase() { return actionPhase; };
@@ -85,6 +146,7 @@ public: //メンバ関数
 	const bool GetIs2D() { return is2D; }
 	const bool GetIsTriggerDimensionChange() { return isTriggerDimensionChange; }
 	const Vector3 GetRotation() { return rotation; }
+	const GamePhase GetGamePhase() { return static_cast<GamePhase>(phase_); }
 	//setter
 	void SetPlayer(Player* _player) { player = _player; }
 	void SetIs2D(const bool _is2D) { is2D = _is2D; }
@@ -92,6 +154,12 @@ public: //メンバ関数
 	void SetCameraYPosPhase(const int _cameraYPosPhase) { cameraYPosPhase = _cameraYPosPhase; };
 	void SetRotation(const Vector3& _rotation) { rotation = _rotation; };
 	void SetIsStageClear(const bool _isStageClear) { isStageClear = _isStageClear; }
+	void SetGamePhase(GamePhase gamePhase) { phase_ = static_cast<int>(gamePhase); }
+	void SetNotMove(bool flag1, bool flag2)
+	{
+		menuFlag_ = flag1;
+		isCreateMove_ = flag2;
+	}
 
 private: //メンバ関数
 	/// <summary>
@@ -113,7 +181,7 @@ private: //メンバ関数
 	/// <summary>
 	/// 座標更新
 	/// </summary>
-	void UpdatePosition();
+	Vector3 UpdatePosition();
 
 	/// <summary>
 	/// 回転開始時の入力による回転方向設定
@@ -148,20 +216,6 @@ private: //メンバ関数
 	/// </summary>
 	void ChanegeDimension();
 
-	/// <summary>
-	/// 開始時の位置調整
-	/// </summary>
-	void CameraSetMove();
-
-	/// <summary>
-	/// 
-	/// </summary>
-	void GamePlayStratCameraSetMove();
-
-	/// <summary>
-	/// カメラのシェイク
-	/// </summary>
-	void ShakeMove();
 	/// <summary>
 	/// イージングデータの設定
 	/// </summary>
@@ -214,6 +268,10 @@ private: //メンバ変数
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
 	//ステージ中央からの距離
 	XMFLOAT3 distanceStageCenter;
+	//イージング変更前のステージ中央からの距離
+	XMFLOAT3 beforeDistanceStageCenter;
+	//イージング変更後のステージ中央からの距離
+	XMFLOAT3 afterDistanceStageCenter;
 	//アクション
 	ActionPhase actionPhase = ActionPhase::None;
 	//アクション用タイマー
@@ -232,16 +290,15 @@ private: //メンバ変数
 	size_t phase_ = 0;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
-	// シェイクしているか
-	bool isShake_ = false;
-	// シェイクが終わったか
-	bool shakeEnd_ = false;
-	// シェイクタイマー
-	int shakeTimer_ = 0;
-	// 減衰値
-	int attenuation_ = 0;
+	std::unique_ptr<EaseData> reStartEaseData_;
 	// カメラのイージングの切り替えし
 	bool cameraEaseChangeFlag_ = false;
+	// カメラのイージングの切り替えし
+	bool reStartEaseChangeFlag_ = false;
 	//ステージクリア状態か
 	bool isStageClear = false;
+	// メニューを開いているか
+	bool menuFlag_ = false;
+	// 行動が終わったか
+	bool isCreateMove_ = false;
 };

@@ -2,13 +2,13 @@
 #include "Easing.h"
 #include <random>
 
-StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos)
+StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType)
 {
 	//インスタンス生成
 	StageBlock* instance = new StageBlock();
 
 	//初期化処理
-	if (!instance->Initialize(_blockType, mapChipNum, shiftPos)) {
+	if (!instance->Initialize(_blockType, mapChipNum, shiftPos, mapBlockType)) {
 		delete instance;
 		assert(0);
 		return nullptr;
@@ -17,26 +17,23 @@ StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, c
 	return instance;
 }
 
-bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos)
+bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType)
 {
 	//ブロックの種類を「ブロック」に設定
 	blockType = BROCK_TYPE(_blockType);
 
 	// イージングデータの設定
 	SetEaseData(60);
-	vecEaseData_ = std::make_unique<EaseData>(60);
+	vecEaseData_ = std::make_unique<EaseData>(80);
 
 	//座標をセット
-	Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
-	temppos -= shiftPos;
-	SetBlockEndPos(temppos);
-	temppos.y = -100.0f;
-	SetBlockStratPos(temppos);
-	position = temppos;
+	ReCreate(GamePhase::Start, mapChipNum, shiftPos);
 	//大きさをセット
 	scale = { blockSize, blockSize, blockSize };
 	// 関数の設定
 	CreateAct();
+	// ブロックのタイプの設定
+	SetMapBlockType(mapBlockType);
 	// 関数のタイプの設定
 	SetGamePhase(GamePhase::Start);
 
@@ -73,8 +70,8 @@ void StageBlock::ReStratMove()
 {
 	// イージングの計算
 	position.x = Easing::InCubic(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InCubic(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate()) + Easing::InCubic(vec_.y, 0.0f, vecEaseData_->GetTimeRate());
-	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate()) + Easing::InCubic(vec_.z, 0.0f, vecEaseData_->GetTimeRate());
+	position.y = Easing::InCubic(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
+	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
 	if (easeData_->GetEndFlag())
 	{
@@ -82,16 +79,13 @@ void StageBlock::ReStratMove()
 	}
 
 	// イージングデータ更新
-	vecEaseData_->Update();
 	easeData_->Update();
 }
 
 void StageBlock::DeleteMove()
 {
 	// イージングの計算
-	position.x = Easing::InCubic(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
-	position.y = Easing::InQuart(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate()) + Easing::InCubic(vec_.y, 0.0f, vecEaseData_->GetTimeRate());
-	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate()) + Easing::InCubic(vec_.z, 0.0f, vecEaseData_->GetTimeRate());
+	position.x -= Easing::InCubic(0.0f, 100.0f, easeData_->GetTimeRate());
 
 	rotation.x += vec_.x;
 	rotation.y += vec_.y;
@@ -104,14 +98,13 @@ void StageBlock::DeleteMove()
 	}
 
 	// イージングデータ更新
-	vecEaseData_->Update();
 	easeData_->Update();
 }
 
 void StageBlock::ReCreateMove()
 {
 	// イージングの計算
-	position.x = Easing::OutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
+	position.x = Easing::OutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate()) + Easing::OutQuint(50.0f, 0.0f, vecEaseData_->GetTimeRate());
 	position.y = Easing::OutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::OutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
 
@@ -121,50 +114,55 @@ void StageBlock::ReCreateMove()
 	}
 
 	// イージングデータ更新
+	vecEaseData_->Update();
 	easeData_->Update();
 }
 
-void StageBlock::ReCreate(const GamePhase phase, const XMINT3& mapChipNum)
+void StageBlock::ReCreate(const GamePhase phase, const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
-	if (phase == GamePhase::None || phase == GamePhase::Start)
+	if (phase == GamePhase::None)
 	{
 		return;
 	}
 
-	float speed = 1.5f;
+	float speed = 5.0f;
+	Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
+	temppos -= shiftPos;
+	stagePos_ = temppos;
 
-	if (phase == GamePhase::Move)
+	if (phase == GamePhase::Start)
+	{
+		SetBlockEndPos(temppos);
+		temppos.y -= 100.0f;
+		SetBlockStratPos(temppos);
+		position = temppos;
+	}
+	else if (phase == GamePhase::Move)
 	{
 		//座標をセット
-		Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
 		SetBlockStratPos(position);
-		temppos.x += 100.0f;
 		SetBlockEndPos(temppos);
-		SetEaseData(120);
+		SetEaseData(60);
 	}
 	else if (phase == GamePhase::Delete)
 	{
 		//座標をセット
-		Vector3 temppos = position;
-		SetBlockStratPos(temppos);
-		temppos.x +=  100.0f;
-		temppos.y += -100.0f;
+		SetBlockStratPos(position);
 		SetBlockEndPos(temppos);
-		SetEaseData(120);
+		SetEaseData(60);
 	}
 	else if (phase == GamePhase::ReStart)
 	{
-		Vector3 temppos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
 		SetBlockEndPos(temppos);
-		temppos.x +=  100.0f;
-		temppos.y += -100.0f;
+		temppos.y -= 100.0f;
 		SetBlockStratPos(temppos);
 		position = temppos;
-		SetEaseData(30);
+		SetEaseData(60);
 	}
 
 	vec_ = { RandCalculate(-speed, speed), RandCalculate(-speed, speed), RandCalculate(-speed, speed) };
 	vecEaseData_->Reset();
+	easeData_->Reset();
 	phase_ = static_cast<int>(phase);
 }
 

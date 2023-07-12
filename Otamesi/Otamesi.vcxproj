@@ -140,8 +140,10 @@
     <ClCompile Include="SourceCode\engine\scene\SceneFactory.cpp" />
     <ClCompile Include="SourceCode\engine\scene\SceneManager.cpp" />
     <ClCompile Include="SourceCode\game\gameCamera\GameCamera.cpp" />
+    <ClCompile Include="SourceCode\game\gameCamera\GameLightCamera.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\GamePostEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\ParticleEmitter.cpp" />
+    <ClCompile Include="SourceCode\game\gameEffect\SceneChange.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\BackGround.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp" />
@@ -158,25 +160,32 @@
     <ClCompile Include="SourceCode\game\gameObject\player\Player.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerActionManager.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\player\PlayerEffect.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\Skydome.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\StageManager.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\BaseGameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\GameScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\Menu.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\NumberSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\StageClearUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
-    <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\AfterBloom.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
     <None Include="Resources\shaders\InstanceObject.hlsli" />
+<<<<<<< HEAD
     <None Include="Resources\shaders\InstanceOutLine.hlsli" />
+=======
+    <None Include="Resources\shaders\InstanceObjectLightView.hlsli" />
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\ObjEffect.hlsli" />
     <None Include="Resources\shaders\ObjLightView.hlsli" />
@@ -209,6 +218,18 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewVS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Resources\shaders\InstanceObjectPS.hlsl">
@@ -390,8 +411,10 @@
     <ClInclude Include="SourceCode\engine\scene\SceneFactory.h" />
     <ClInclude Include="SourceCode\engine\scene\SceneManager.h" />
     <ClInclude Include="SourceCode\game\gameCamera\GameCamera.h" />
+    <ClInclude Include="SourceCode\game\gameCamera\GameLightCamera.h" />
     <ClInclude Include="SourceCode\game\gameEffect\GamePostEffect.h" />
     <ClInclude Include="SourceCode\game\gameEffect\ParticleEmitter.h" />
+    <ClInclude Include="SourceCode\game\gameEffect\SceneChange.h" />
     <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h" />
     <ClInclude Include="SourceCode\game\gameObject\BackGround.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h" />
@@ -408,15 +431,18 @@
     <ClInclude Include="SourceCode\game\gameObject\player\Player.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerActionManager.h" />
     <ClInclude Include="SourceCode\game\gameObject\player\PlayerEffect.h" />
+    <ClInclude Include="SourceCode\game\gameObject\Skydome.h" />
     <ClInclude Include="SourceCode\game\gameObject\StageManager.h" />
     <ClInclude Include="SourceCode\game\gameScene\BaseGameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\GameScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\TitleScene.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\Menu.h" />
     <ClInclude Include="SourceCode\game\gameSprite\NumberSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h" />
     <ClInclude Include="SourceCode\game\gameSprite\StageClearUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />

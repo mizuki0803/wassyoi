@@ -132,6 +132,7 @@
     <Filter Include="リソース ファイル\Paranoma">
       <UniqueIdentifier>{64cc5f04-5a5b-47e1-ae93-b020753c154a}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="リソース ファイル\ObjEffecte">
       <UniqueIdentifier>{c00210a8-1331-45d5-88f8-64f0a427eed8}</UniqueIdentifier>
     </Filter>
@@ -146,6 +147,10 @@
     </Filter>
     <Filter Include="リソース ファイル\OutLine">
       <UniqueIdentifier>{a3012d05-7f8a-419f-a65f-49dc0f728d53}</UniqueIdentifier>
+=======
+    <Filter Include="リソース ファイル\InstanceObjectLightView">
+      <UniqueIdentifier>{ae56402a-d9cc-40b4-bbc2-dc876b042f5b}</UniqueIdentifier>
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -338,9 +343,6 @@
     <ClCompile Include="SourceCode\main.cpp">
       <Filter>ソース ファイル\game</Filter>
     </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\engine\math\Timer.cpp">
       <Filter>ソース ファイル\engine\math</Filter>
     </ClCompile>
@@ -368,11 +370,31 @@
     <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="SourceCode\engine\2d\AfterBloom.cpp">
       <Filter>ソース ファイル\engine\2d\AfterBloom</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\engine\2d\OutLine.cpp">
       <Filter>ソース ファイル\engine\2d\OutLine</Filter>
+=======
+    <ClCompile Include="SourceCode\game\gameEffect\SceneChange.cpp">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameCamera\GameLightCamera.cpp">
+      <Filter>ソース ファイル\game\gameCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\Skydome.cpp">
+      <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -400,6 +422,7 @@
     <None Include="Resources\shaders\ParanoiaSkyDome.hlsli">
       <Filter>リソース ファイル\Paranoma</Filter>
     </None>
+<<<<<<< HEAD
     <None Include="Resources\shaders\ObjEffect.hlsli">
       <Filter>リソース ファイル\ObjEffecte</Filter>
     </None>
@@ -411,6 +434,10 @@
     </None>
     <None Include="Resources\shaders\InstanceOutLine.hlsli">
       <Filter>リソース ファイル\OutLine</Filter>
+=======
+    <None Include="Resources\shaders\InstanceObjectLightView.hlsli">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +492,7 @@
     <FxCompile Include="Resources\shaders\ParanoiaSkyDomeVS.hlsl">
       <Filter>リソース ファイル\Paranoma</Filter>
     </FxCompile>
+<<<<<<< HEAD
     <FxCompile Include="Resources\shaders\ObjEffectPS.hlsl">
       <Filter>リソース ファイル\ObjEffecte</Filter>
     </FxCompile>
@@ -488,6 +516,13 @@
     </FxCompile>
     <FxCompile Include="Resources\shaders\InstanceOutLineVS.hlsl">
       <Filter>リソース ファイル\OutLine</Filter>
+=======
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewPS.hlsl">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\InstanceObjectLightViewVS.hlsl">
+      <Filter>リソース ファイル\InstanceObjectLightView</Filter>
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -728,11 +763,28 @@
     <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="SourceCode\engine\2d\AfterBloom.h">
       <Filter>ソース ファイル\engine\2d\AfterBloom</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\engine\2d\OutLine.h">
       <Filter>ソース ファイル\engine\2d\OutLine</Filter>
+=======
+    <ClInclude Include="SourceCode\game\gameEffect\SceneChange.h">
+      <Filter>ソース ファイル\game\gameEffect</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameCamera\GameLightCamera.h">
+      <Filter>ソース ファイル\game\gameCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\Skydome.h">
+      <Filter>ソース ファイル\game\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     </ClInclude>
   </ItemGroup>
 </Project>

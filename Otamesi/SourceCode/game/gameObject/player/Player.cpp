@@ -5,7 +5,7 @@
 #include "PlayerActionManager.h"
 
 
-const float Player::playerSize = 5.0f;
+const float Player::playerSize = 3.5f;
 
 Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
@@ -69,17 +69,20 @@ void Player::Update()
 	}
 }
 
-void Player::ReCreate(const XMINT3& mapChipNum)
+void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	SetGamePhase(GamePhase::ReStart);
 
+	//マップの中心をずらす値をセット
+	this->shiftPos = shiftPos;
+	//プレイヤー位置を表すマップ番号をセット
+	mapChipNumberPos = mapChipNum;
 	//初期座標をセット
 	SetPlayerEndPos(GetMapChipPos(mapChipNum));
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
 	//位置をずらしてイージング
+	playerStratPos_ = position;
 	playerEndPos_ = tempPos;
-	tempPos.x += 100.0f;
-	playerStratPos_ = tempPos;
 
 	easeData_->Reset();
 }
@@ -87,7 +90,7 @@ void Player::ReCreate(const XMINT3& mapChipNum)
 void Player::PlayGame()
 {
 	//ゴールしていないときに動きをする
-	if (isGoal) {
+	if (isGoal || menuFlag_ || isCreateMove_) {
 		return;
 	}
 	//frame最初の初期化
@@ -126,7 +129,6 @@ void Player::GameStart()
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 	}
 	easeData_->Update();
-	resetFlag_ = true;
 }
 
 void Player::GameReStart()
@@ -138,10 +140,10 @@ void Player::GameReStart()
 
 	if (easeData_->GetEndFlag())
 	{
+		easeData_->Reset();
 		phase_ = static_cast<int>(GamePhase::GamePlay);
 	}
 	easeData_->Update();
-	resetFlag_ = true;
 }
 
 void Player::CreateAct()
@@ -159,6 +161,7 @@ void Player::Draw()
 	isStartMove = false;
 }
 
+<<<<<<< HEAD
 void Player::EffectDraw()
 {
 	ObjObject3d::DrawAddPrev();
@@ -167,6 +170,13 @@ void Player::EffectDraw()
 	{
 		e->Draw();
 	}
+=======
+void Player::Reset()
+{
+	//開始状態に戻すためにフラグなどをリセット
+	isGoal = false;
+	phase_ = static_cast<int>(GamePhase::GamePlay);
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 }
 
 void Player::MovePosStart()
@@ -274,6 +284,11 @@ void Player::StageClearCheck()
 	if (gameCamera->GetIs2D()) {
 		if (PlayerActionManager::PlayerGoalCheck2D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;
+
+			//2Dから3Dへ戻る場合、足場となるブロックに接地するマップ番号にプレイヤーを移動させる
+			PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
+			//更新したマップ番号の座標に移動
+			position = GetMapChipPos(mapChipNumberPos);
 		}
 	}
 	//3次元状態ゴールしたのかを判定

@@ -68,8 +68,11 @@ void MapDataStageSelectManager::DrawUI()
 
 void MapDataStageSelectManager::ChangeStage()
 {
+	if (menuFlag_) { return; }
+
 	//変更するキー入力をしていなければ抜ける
-	if (!(Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT))) { return; }
+	if (!(Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_D) ||
+		Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT))) { return; }
 
 	//既に移動中であれば抜ける
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
@@ -80,7 +83,7 @@ void MapDataStageSelectManager::ChangeStage()
 	std::unique_ptr<MapDataStageSelect> newMapData;
 
 	//右キーを押した場合は次のステージを選択する
-	if (Input::GetInstance()->PushKey(DIK_RIGHT)) {
+	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_RIGHT)) {
 		if (!StageManager::NextStageSelect()) { return; } //ステージ番号にエラーが生じたら抜ける
 
 		//画面外(右)に次のステージを生成する
@@ -91,7 +94,7 @@ void MapDataStageSelectManager::ChangeStage()
 		}
 	}
 	//左キーを押した場合は前のステージを選択する
-	else if (Input::GetInstance()->PushKey(DIK_LEFT)) {
+	else if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_LEFT)) {
 		if (!StageManager::PrevStageSelect()) { return; } //ステージ番号にエラーが生じたら抜ける
 
 		//画面外(左)に次のステージを生成する

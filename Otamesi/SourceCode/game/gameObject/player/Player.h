@@ -81,10 +81,15 @@ public: //メンバ関数
 	/// </summary>
 	void CreateAct();
 
-	void ReCreate(const XMINT3& mapChipNum);
+	void ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos);
 
 	void Draw();
 	void EffectDraw();
+
+	/// <summary>
+	/// 開始状態に戻す
+	/// </summary>
+	void Reset();
 
 	//getter
 	const bool GetIsGoal() { return isGoal; }
@@ -97,6 +102,11 @@ public: //メンバ関数
 	//setter
 	void SetMoveSurfacePhase(const int _moveSurfacePhase) { moveSurfacePhase = MoveSurfacePhase(_moveSurfacePhase); }
 	void SetMapChipNumberPos(const XMINT3& _mapChipNumberPos) { mapChipNumberPos = _mapChipNumberPos; }
+	void SetNotMove(bool flag1, bool flag2)
+	{ 
+		menuFlag_ = flag1;
+		isCreateMove_ = flag2;
+	}
 
 private: //メンバ関数
 	/// <summary>
@@ -183,8 +193,6 @@ private: //メンバ変数
 	Vector3 playerEndPos_;
 	// イージングデータ
 	std::unique_ptr<EaseData> easeData_;
-	// イージングのリセットフラグ
-	bool resetFlag_ = false;
 #pragma endregion イージング関係
 
 	//移動処理が終わったタイミング
@@ -192,4 +200,9 @@ private: //メンバ変数
 
 	//最初の移動が終わったかのフラグ
 	bool isStartMove;
+
+	// メニューを開いているか
+	bool menuFlag_ = false;
+	// 行動が終わったか
+	bool isCreateMove_ = false;
 };

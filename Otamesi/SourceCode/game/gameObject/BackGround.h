@@ -35,6 +35,11 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// 影用光源ライトから見た視点での描画
+	/// </summary>
+	void DrawLightCameraView();
+
 private:
 
 	//objモデル

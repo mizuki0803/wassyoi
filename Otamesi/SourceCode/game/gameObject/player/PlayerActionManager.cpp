@@ -419,138 +419,640 @@ XMINT3 PlayerActionManager::PlayerMoveDirection3D(const Player::MoveSurfacePhase
 	//返り値になる値
 	XMINT3 moveNum{};
 
-	//プレイヤーの接地面が上、または下の場合
-	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward || moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
-		if (Input::GetInstance()->PushKey(DIK_W)) {
-			//縦軸カメラ位置が下以外のとき
-			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x++; }
+	if (moveSurfacePhase == Player::MoveSurfacePhase::Upward) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-			//縦軸カメラ位置が下のとき
-			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x--; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-		}
-		else if (Input::GetInstance()->PushKey(DIK_S)) {
-			//縦軸カメラ位置が下以外のとき
-			if (!(cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom)) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x--; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-			//縦軸カメラ位置が下のとき
-			else {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.z++; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.x--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.z--; }
-				else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.x++; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
 			}
 		}
-		else if (Input::GetInstance()->PushKey(DIK_D)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.x++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.z++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.x--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.z--; }
-
-			//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
-			if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
-				moveNum.x = -moveNum.x;
-				moveNum.z = -moveNum.z;
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
 			}
 		}
-		else if (Input::GetInstance()->PushKey(DIK_A)) {
-			if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) { moveNum.x--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) { moveNum.z--; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) { moveNum.x++; }
-			else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) { moveNum.z++; }
-
-			//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
-			if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
-				moveNum.x = -moveNum.x;
-				moveNum.z = -moveNum.z;
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 			}
 		}
 	}
-	//プレイヤーの接地面が前後左右の場合
-	else {
-		//接地面が前後左右の場合はWSで上下移動
-		if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
-		else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
-		//左右移動はカメラが向いている方向によって異なる
-		else if (Input::GetInstance()->PushKey(DIK_D)) {
-			if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					moveNum.z++;
-				}
-				else { moveNum.z--; }
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::Downward) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-					moveNum.z--;
-				}
-				else { moveNum.z++; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-					moveNum.x++;
-				}
-				else { moveNum.x--; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
-					moveNum.x--;
-				}
-				else { moveNum.x++; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
 			}
 		}
-		else if (Input::GetInstance()->PushKey(DIK_A)) {
-			if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-					moveNum.z--;
-				}
-				else { moveNum.z++; }
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back ||
-					cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
-					moveNum.z++;
-				}
-				else { moveNum.z--; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
-					moveNum.x--;
-				}
-				else { moveNum.x++; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
 			}
-			else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
-				if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
-					moveNum.x++;
-				}
-				else { moveNum.x--; }
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
 			}
 		}
-
-
-		//縦軸カメラ位置フェーズが逆さの横ならば左右が逆になるので反転させておく
-		if (cameraYPosPhase == GameCamera::CameraYPosPhase::ReverseSide) {
-			moveNum.x = -moveNum.x;
-			moveNum.y = -moveNum.y;
-			moveNum.z = -moveNum.z;
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingLeft) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingRight) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.z++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.z--; }
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingForward) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+		}
+	}
+	else if (moveSurfacePhase == Player::MoveSurfacePhase::FacingAway) {
+		if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Front) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
+		}
+		else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Left) {
+			if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y--; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Side) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Buttom) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.x--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.y++; }
+			}
+			else if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::ReverseSide) {
+				if (Input::GetInstance()->PushKey(DIK_W)) { moveNum.y--; }
+				else if (Input::GetInstance()->PushKey(DIK_S)) { moveNum.y++; }
+				else if (Input::GetInstance()->PushKey(DIK_D)) { moveNum.x++; }
+				else if (Input::GetInstance()->PushKey(DIK_A)) { moveNum.x--; }
+			}
 		}
 	}
 

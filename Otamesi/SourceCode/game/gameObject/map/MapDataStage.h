@@ -7,6 +7,17 @@
 /// </summary>
 class MapDataStage : public MapData
 {
+public:
+	/// <summary>
+	/// ゲームフェーズ
+	/// </summary>
+	enum class GamePhase
+	{
+		GamePlay,	//ゲーム
+		Start,		//開始
+		ReStart,	//再開始
+	};
+
 public: //静的メンバ関数
 	/// <summary>
 	/// 生成処理
@@ -28,12 +39,37 @@ public: //メンバ関数
 	void Draw() override;
 
 	/// <summary>
+	/// ゲーム中
+	/// </summary>
+	void PlayGame();
+	/// <summary>
+	/// ゲーム開始
+	/// </summary>
+	void GameStart();
+	/// <summary>
+	/// ゲーム再開始
+	/// </summary>
+	void GameReStart();
+	/// <summary>
+	/// 関数の設定
+	/// </summary>
+	void CreateAct();
+
+	/// <summary>
 	/// マップブロック再生成
 	/// </summary>
-	void ReCreateMapBlock();
+	void ReCreateMapBlock(const int selectStageNum);
+
+	void BlockCreate(const MapBlockData::MapBlockType type, const XMINT3 chipNum, const int count);
+	void BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 chipNum);
 
 	//getter
 	const XMINT3& GetPlayerCreateMapChipNum() { return playerCreateMapChipNum; }
+	const bool GetIsReCreateEnd() { return isReCreateEnd; }
+	const bool GetIsMoveEnd() { return isMoveEnd_; }
+
+	//setter
+	void SetIsReCreateEnd(const bool isReCreateEnd) { this->isReCreateEnd = isReCreateEnd; }
 
 protected: //メンバ関数
 	/// <summary>
@@ -46,17 +82,24 @@ protected: //メンバ関数
 	/// </summary>
 	void BlockCountCreate();
 
+	bool BlockCount();
+
 protected: //メンバ変数
 	//ステージ用ブロック
 	std::vector<std::unique_ptr<StageBlock>> blocks;
 
 	//プレイヤーを生成するマップ番号
 	XMINT3 playerCreateMapChipNum;
-
+	// 関数の管理
+	std::vector<std::function<void()>> func_;
+	// 関数の番号
+	size_t phase_ = static_cast<int>(GamePhase::Start);
 	// 上げるブロックの番号の保存
 	std::vector<int> rndcount;
 	// ブロックを上げるタイマー
 	int blockActTimer_ = 100;
-	// ブロックを上げ終わったか
-	bool isBolckUp_ = false;
+	//マップ再生成が終了したか
+	bool isReCreateEnd = false;
+	// 行動が終わったか
+	bool isMoveEnd_ = false;
 };

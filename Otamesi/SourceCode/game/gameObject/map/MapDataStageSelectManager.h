@@ -37,6 +37,8 @@ public: //メンバ関数
 	/// </summary>
 	void DrawUI();
 
+	void SetNotMove(bool flag1) { menuFlag_ = flag1; }
+
 private: //メンバ関数
 	/// <summary>
 	/// 選択するステージを変更する
@@ -49,4 +51,7 @@ private: //メンバ変数
 
 	//ステージ番号表示用UI
 	std::unique_ptr<StageNumberUI> stageNumberUI;
+
+	// メニューを開いているか
+	bool menuFlag_ = false;
 };

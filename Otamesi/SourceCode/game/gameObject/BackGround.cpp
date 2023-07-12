@@ -17,8 +17,13 @@ void BackGround::Initialize()
 	model.reset(ObjModel::LoadFromOBJ("backBlock"));
 	for (int i = 0; i < 3; ++i)
 	{
+<<<<<<< HEAD
 		upperBlock[i].reset(InstanceObject::Create(model.get()));
 		underBlock[i].reset(InstanceObject::Create(model.get()));
+=======
+		block[i].reset(InstanceObject::Create(model.get()));
+		block[i]->SetIsShadowMap(true);
+>>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 	}
 
 	JsonLoader::LoadNlohmannJson("back", &info);
@@ -38,7 +43,7 @@ void BackGround::Update()
 			upperBlock[0]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 			underBlock[0]->DrawInstance(invpos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
-		else if (index < 512*2)
+		else if (index < 512 * 2)
 		{
 			upperBlock[1]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 			underBlock[1]->DrawInstance(invpos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
@@ -63,4 +68,13 @@ void BackGround::Draw()
 
 	}
 
+}
+
+void BackGround::DrawLightCameraView()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		block[i]->DrawLightCameraView();
+
+	}
 }

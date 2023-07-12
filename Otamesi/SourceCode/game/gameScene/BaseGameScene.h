@@ -62,6 +62,11 @@ protected: //メンバ関数
 	/// <param name="_player">プレイヤークラス</param>
 	void Redo(GameCamera* _camera, Player* _player);
 
+	/// <summary>
+	/// メニューの動き
+	/// </summary>
+	virtual void MenuAction() = 0;
+
 protected: //メンバ変数
 	//シーン変更にかかる時間
 	int32_t sceneChangeTime = 0;

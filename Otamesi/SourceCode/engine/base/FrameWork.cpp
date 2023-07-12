@@ -49,8 +49,9 @@ void FrameWork::Initialize()
 	input->Initialize(win.get());
 
 	//音声初期化
-	audio = Audio::GetInstance();
+	Audio* audio = Audio::GetInstance();
 	audio->Initialize();
+	audio->PlayWave(Audio::SoundName::bgm, true);
 
 	//SRV用デスクリプタヒープの初期化
 	DescHeapSRV::Initialize(dxbase->GetDevice(), dxbase->GetCmdList());
@@ -125,7 +126,7 @@ void FrameWork::Finalize()
 	SingletonFinalizer::Finalize();
 
 	//audio解放
-	audio->Finalize();
+	Audio::GetInstance()->Finalize();
 
 	//ウインドウ解放
 	win->WindowRelease();
@@ -150,6 +151,11 @@ void FrameWork::Update()
 	}
 	//各シーンから終了リクエストがあればゲームループ終了
 	if (SceneManager::GetInstance()->GetIsEndRequest()) {
+		isEndRequest = true;
+		return;
+	}
+	//製作者用隠しゲームループ終了コマンド
+	if (input->PushKey(DIK_LCONTROL) && input->PushKey(DIK_LSHIFT) && input->PushKey(DIK_7)) {
 		isEndRequest = true;
 		return;
 	}

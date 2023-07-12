@@ -4,6 +4,7 @@
 #include "ObjObject3d.h"
 #include "Camera.h"
 #include "MapDataStageSelectManager.h"
+#include "UserInterface.h"
 
 /// <summary>
 /// ステージ選択シーン
@@ -46,6 +47,11 @@ public: //メンバ関数
 	/// </summary>
 	void DrawFrontSprite() override;
 
+	/// <summary>
+	/// メニューの動き
+	/// </summary>
+	void MenuAction() override;
+
 private: //メンバ変数
 	//カメラ
 	std::unique_ptr<Camera> camera;
@@ -73,4 +79,7 @@ private: //メンバ変数
 
 	//天球
 	std::unique_ptr<ObjObject3d> skydome;
+
+	//UI関係
+	std::unique_ptr<UserInterface> userInterface_;
 };

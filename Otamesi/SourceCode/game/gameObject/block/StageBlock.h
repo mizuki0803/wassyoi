@@ -1,6 +1,7 @@
 #pragma once
 #include "Block.h"
 #include "EaseData.h"
+#include "MapBlockData.h"
 #include <memory>
 
 /// <summary>
@@ -29,7 +30,7 @@ public: //静的メンバ関数
 	/// <param name="mapChipNum">マップチップの番号</param>
 	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <returns>ステージ用ブロック</returns>
-	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos);
+	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType);
 
 public: //メンバ関数
 	/// <summary>
@@ -39,7 +40,7 @@ public: //メンバ関数
 	/// <param name="mapChipNum">マップチップの番号</param>
 	/// <param name="shiftPos">マップを中心にずらす値</param>
 	/// <returns>成否</returns>
-	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos);
+	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType);
 
 	/// <summary>
 	/// 更新
@@ -68,7 +69,7 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="phase">行動タイプ</param>
 	/// <param name="mapChipNum">マップチップの番号</param>
-	void ReCreate(const GamePhase phase, const XMINT3& mapChipNum);
+	void ReCreate(const GamePhase phase, const XMINT3& mapChipNum, const Vector3& shiftPos);
 
 	/// <summary>
 	/// イージングが終わったか
@@ -98,7 +99,7 @@ public: //メンバ関数
 	/// どの行動をしているかの取得
 	/// </summary>
 	/// <returns></returns>
-	int GetActPhase() { return static_cast<int>(phase_); }
+	GamePhase GetActPhase() { return static_cast<GamePhase>(phase_); }
 
 	/// <summary>
 	/// 削除フラグの取得
@@ -111,6 +112,17 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="phase">行動タイプ</param>
 	void SetGamePhase(GamePhase phase) { phase_ = static_cast<int>(phase); }
+
+	/// <summary>
+	/// ブロックのタイプの取得
+	/// </summary>
+	/// <returns></returns>
+	const MapBlockData::MapBlockType GetMapBlockType() { return mapBlockType_; }
+	/// <summary>
+	/// ブロックのタイプの設定
+	/// </summary>
+	/// <param name="mapBlockType"></param>
+	void SetMapBlockType(const MapBlockData::MapBlockType mapBlockType) { mapBlockType_ = mapBlockType; }
 
 	/// <summary>
 	/// プレイヤーからのコールバック
@@ -131,6 +143,10 @@ protected: // メンバ変数
 	size_t phase_;
 	//削除用のフラグ
 	bool deleteFlag_ = false;
+	// ブロックのタイプ
+	MapBlockData::MapBlockType mapBlockType_;
+	// ステージでの位置
+	Vector3 stagePos_;
 
 #pragma region
 	// 開始位置

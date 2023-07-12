@@ -65,26 +65,26 @@ void MapDataStageSelect::CreateMapBlock()
 				//ÉvÉåÉCÉÑÅ[ÇÃê∂ê¨ópÉ}ÉbÉvî‘çÜÇï€ë∂
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(3, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::player), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ÉSÅ[Éãê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(2, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::goal), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//ÉuÉçÉbÉNê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					newBlock.reset(StageSelectBlock::Create(0, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::block), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
 				//è„å¸Ç´ÉnÉäÉ{Éeê∂ê¨
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = {};	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -92,7 +92,7 @@ void MapDataStageSelect::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = { 180, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -100,7 +100,7 @@ void MapDataStageSelect::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, 90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -108,7 +108,7 @@ void MapDataStageSelect::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = { 0, 0, -90 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -116,7 +116,7 @@ void MapDataStageSelect::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = { -90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
@@ -124,7 +124,7 @@ void MapDataStageSelect::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					const XMFLOAT3 rot = { 90, 0, 0 };	//åXÇØÇÈäpìx
-					newBlock.reset(StageSelectBlock::Create(1, chipNum, shiftPos, blockManager.get()));
+					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}

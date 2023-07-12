@@ -15,14 +15,17 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		SoundVolumeBar,	//音量変更用バー
+		SoundVolumePointer,	//音量変更用ポインター
 		HowToPlayMove,	//操作方法(移動)
 		HowToPlayCamera,//操作方法(カメラ)
 		HowToPlayChengeDemension,//操作方法(次元変更)
-		HowToPlayUndo,	//操作方法(戻る)
-		HowToPlayRedo,	//操作方法(戻る戻る)
+		Tips1,	//ヒント1
+		Tips2,	//ヒント2
 		HowToPlayReset,	//操作方法(リセット)
 		HowToPlayStageSelect,	//操作方法(ステージセレクト)
 		StageClear,		//ステージクリア
+		ClearBack,		//ステージクリアの背景
 		PressSpace,		//PRESS SPACE
 		ParanomaSky,	// スカイドーム用
 
