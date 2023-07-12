@@ -1,12 +1,12 @@
-#include "BackGround.h"
+ï»¿#include "BackGround.h"
 #include <JsonLoader.h>
 
 BackGround* BackGround::Create()
 {
-	//V‚½‚ÈObjModelŒ^‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Ìƒƒ‚ƒŠ‚ðŠm•Û
+	//ï¿½Vï¿½ï¿½ï¿½ï¿½ObjModelï¿½^ï¿½ÌƒCï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½Ìƒï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mï¿½ï¿½
 	BackGround* model = new BackGround();
 
-	//objƒtƒ@ƒCƒ‹‚©‚çƒf[ƒ^“Ç‚Ýž‚Ý
+	//objï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½Ç‚Ýï¿½ï¿½ï¿½
 	model->Initialize();
 
 	return model;
@@ -17,13 +17,8 @@ void BackGround::Initialize()
 	model.reset(ObjModel::LoadFromOBJ("backBlock"));
 	for (int i = 0; i < 3; ++i)
 	{
-<<<<<<< HEAD
-		upperBlock[i].reset(InstanceObject::Create(model.get()));
-		underBlock[i].reset(InstanceObject::Create(model.get()));
-=======
 		block[i].reset(InstanceObject::Create(model.get()));
 		block[i]->SetIsShadowMap(true);
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 	}
 
 	JsonLoader::LoadNlohmannJson("back", &info);
@@ -40,19 +35,16 @@ void BackGround::Update()
 		invpos.y *= -1;
 		if (index < 512)
 		{
-			upperBlock[0]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
-			underBlock[0]->DrawInstance(invpos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
+			block[0]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
 		else if (index < 512 * 2)
 		{
-			upperBlock[1]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
-			underBlock[1]->DrawInstance(invpos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
+			block[1]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
 
 		else if (index < 512 * 3)
 		{
-			upperBlock[2]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
-			underBlock[2]->DrawInstance(invpos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
+			block[2]->DrawInstance(pos, itr[int(transform::scaling)], itr[int(transform::rotation)], color);
 		}
 
 		++index;
@@ -63,9 +55,7 @@ void BackGround::Draw()
 {
 	for (int i = 0; i < 3; ++i)
 	{
-		upperBlock[i]->Draw();
-		underBlock[i]->Draw();
-
+		block[i]->Draw();
 	}
 
 }

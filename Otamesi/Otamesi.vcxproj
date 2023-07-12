@@ -181,11 +181,8 @@
     <None Include="Resources\shaders\AfterBloom.hlsli" />
     <None Include="Resources\shaders\FBX.hlsli" />
     <None Include="Resources\shaders\InstanceObject.hlsli" />
-<<<<<<< HEAD
     <None Include="Resources\shaders\InstanceOutLine.hlsli" />
-=======
     <None Include="Resources\shaders\InstanceObjectLightView.hlsli" />
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
     <None Include="Resources\shaders\Obj.hlsli" />
     <None Include="Resources\shaders\ObjEffect.hlsli" />
     <None Include="Resources\shaders\ObjLightView.hlsli" />

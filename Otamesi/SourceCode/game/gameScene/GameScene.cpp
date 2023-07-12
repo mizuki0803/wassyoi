@@ -1,4 +1,4 @@
-#include "GameScene.h"
+ï»¿#include "GameScene.h"
 #include "SceneManager.h"
 #include "Input.h"
 #include "Audio.h"
@@ -20,85 +20,74 @@
 
 void GameScene::Initialize()
 {
-	//ƒ‰ƒCƒg¶¬
+	//ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½
 	lightGroup.reset(LightGroup::Create());
 	lightGroup->SetDirLightActive(0, false);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
 
-	//obj‚©‚çƒ‚ƒfƒ‹ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	//objï¿½ï¿½ï¿½çƒ‚ï¿½fï¿½ï¿½ï¿½fï¿½[ï¿½^ï¿½ï¿½Ç‚İï¿½ï¿½ï¿½
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
-	//ƒ}ƒbƒv¶¬
+	//ï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½
 	mapData.reset(MapDataStage::Create(StageManager::GetSelectStage()));
 
-	//”wŒiƒIƒuƒWƒFƒNƒg¶¬
+	//ï¿½wï¿½iï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½
 	backGround.reset(BackGround::Create());
 
-	//ƒJƒƒ‰‰Šú‰»
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	camera.reset(new GameCamera());
-	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //ƒJƒƒ‰‹“_‚ÌƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£
-	const XMINT3 mapSize = mapData->GetMapSize(); //ƒ}ƒbƒv‚Ì‘å‚«‚³
-	const Vector3 stageCenterPos = {}; //ƒXƒe[ƒW’†‰›À•W
+	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‹ï¿½ï¿½ï¿½
+	const XMINT3 mapSize = mapData->GetMapSize(); //ï¿½}ï¿½bï¿½vï¿½Ì‘å‚«ï¿½ï¿½
+	const Vector3 stageCenterPos = {}; //ï¿½Xï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½W
 	camera->Initialize(distanceStageCenter, stageCenterPos);
-	//‰e—pŒõŒ¹ƒJƒƒ‰‰Šú‰»
+	//ï¿½eï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	lightCamera.reset(new LightCamera());
 	lightCamera->Initialize({ -100, 100, -300 });
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	OutLine::SetCmaera(camera.get());
 
-	//ƒvƒŒƒCƒ„[¶¬
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
-	//ƒvƒŒƒCƒ„[‚ÌˆÚ“®‰Â”\”»’è—p‚Éƒ}ƒbƒv”Ô†‚ğƒZƒbƒg
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÚ“ï¿½ï¿½Â”\ï¿½ï¿½ï¿½ï¿½pï¿½Éƒ}ï¿½bï¿½vï¿½Ôï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
-	//ƒJƒƒ‰‚É¶¬‚µ‚½ƒvƒŒƒCƒ„[‚ğƒZƒbƒg
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Éï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	camera->SetPlayer(player.get());
 
-	//“V‹…¶¬
+	//ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ÉƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	ObjObject3d::SetCamera(camera.get());
 	ObjObject3d::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Éƒï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½Zï¿½bï¿½g
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ÉƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	InstanceObject::SetCamera(camera.get());
 	InstanceObject::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Éƒï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½Zï¿½bï¿½g
 	InstanceObject::SetLightGroup(lightGroup.get());
 
-	//ƒp[ƒeƒBƒNƒ‹‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//ï¿½pï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½ÉƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	ParticleManager::SetCamera(camera.get());
-	//‰æ–Ê‚Éƒp[ƒeƒBƒNƒ‹‚ªc‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘S‚Äíœ‚µ‚Ä‚¨‚­
+	//ï¿½ï¿½Ê‚Éƒpï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½cï¿½é‚±ï¿½Æ‚ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚Å‘Sï¿½Äíœï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//‰Šúó‘Ô‚ğbinary•Û‘¶
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½binaryï¿½Û‘ï¿½
 	KeepBinary(*camera, *player);
 
-	//UIŠÖŒW¶¬
+	//UIï¿½ÖŒWï¿½ï¿½ï¿½ï¿½
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
-	//ƒXƒe[ƒWƒNƒŠƒAUI¶¬
-<<<<<<< HEAD
-	stageClearUI.reset(StageClearUI::Create());
-
-	// ƒXƒJƒCƒh[ƒ€¶¬
-	//paranomaSkyDorm.reset(static_cast<Sprite *>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ParanomaSky))));
-
-	// ƒ|ƒXƒgƒGƒtƒFƒNƒgİ’è
-	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
-
-=======
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½AUIï¿½ï¿½ï¿½ï¿½
 	stageClear_ = ClearStaging::Create();
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 }
 
 void GameScene::Finalize()
@@ -109,14 +98,14 @@ void GameScene::Finalize()
 void GameScene::Update()
 {
 	if (!isStageClear) {
-		//‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒAŒã‚Ì“Á•Ê‚ÈƒXƒe[ƒW‚Ì‚İƒXƒy[ƒXƒL[“ü—Í‚Åƒ^ƒCƒgƒ‹ƒV[ƒ“‚Ö
+		//ï¿½Sï¿½Ä‚ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½Ì“ï¿½ï¿½Ê‚ÈƒXï¿½eï¿½[ï¿½Wï¿½Ì‚İƒXï¿½yï¿½[ï¿½Xï¿½Lï¿½[ï¿½ï¿½ï¿½Í‚Åƒ^ï¿½Cï¿½gï¿½ï¿½ï¿½Vï¿½[ï¿½ï¿½ï¿½ï¿½
 		if (StageManager::GetSelectStage() == 100) {
 			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-				//ƒV[ƒ“Ø‚è‘Ö‚¦
+				//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 			}
 		}
-		//‚»‚Ì‘¼ƒXƒe[ƒW‚Í’Êí‚Ì“®‚«
+		//ï¿½ï¿½ï¿½Ì‘ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½Í’Êï¿½Ì“ï¿½ï¿½ï¿½
 		else {
 			//undo
 			if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
@@ -127,14 +116,14 @@ void GameScene::Update()
 				Redo(camera.get(), player.get());
 			}
 
-			//RƒL[‚ÅƒŠƒZƒbƒg
+			//Rï¿½Lï¿½[ï¿½Åƒï¿½ï¿½Zï¿½bï¿½g
 			if (Input::GetInstance()->TriggerKey(DIK_R)) {
-				//ƒV[ƒ“Ø‚è‘Ö‚¦
+				//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-				//binaryíœ
+				//binaryï¿½íœ
 				DeleteBinary();
 			}
-			//ƒGƒXƒP[ƒvƒL[‚Åƒƒjƒ…[‰æ–Ê
+			//ï¿½Gï¿½Xï¿½Pï¿½[ï¿½vï¿½Lï¿½[ï¿½Åƒï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½
 			else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
 				if (!userInterface_->GetMenuFlag())
 				{
@@ -146,7 +135,7 @@ void GameScene::Update()
 				}
 			}
 
-			//binaryo—Í
+			//binaryï¿½oï¿½ï¿½
 			if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
 				orderNum++;
 				orderMaxNum = orderNum;
@@ -157,9 +146,9 @@ void GameScene::Update()
 				KeepBinary(*camera, *player);
 			}
 
-			//ƒvƒŒƒCƒ„[‚ªƒS[ƒ‹‚ğ‚µ‚½‚çƒXƒe[ƒWƒNƒŠƒA
+			//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½A
 			if (player->GetIsGoal()) {
-				//ƒNƒŠƒA‰¹
+				//ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½
 				Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
 
 				isStageClear = true;
@@ -172,32 +161,32 @@ void GameScene::Update()
 	else {
 		if (stageClear_->GetIntermediateTrigger())
 		{
-			//binaryíœ
+			//binaryï¿½íœ
 			DeleteBinary();
-			//‰‚ß‚Ä‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½ê‡‚Í“Á•Ê‚ÈƒXƒe[ƒW‚Ö
+			//ï¿½ï¿½ï¿½ß‚Ä‘Sï¿½Ä‚ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Í“ï¿½ï¿½Ê‚ÈƒXï¿½eï¿½[ï¿½Wï¿½ï¿½
 			if (StageManager::AllStageClearTriggerCheck()) {
-				//ƒJƒƒ‰‚Ì‰ñ“]‚ğŒ³‚É–ß‚·ó‘Ô‚É‚·‚é
+				//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ì‰ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
 				camera->SetClearResetAround();
 			}
-			//Ÿ‚ÌƒXƒe[ƒW‚ª‚ ‚éê‡‚ÍŸ‚ÌƒXƒe[ƒW‚Ö
+			//ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½Íï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½
 			else if (StageManager::NextStageSelect()) {
-				//ƒJƒƒ‰‚Ì‰ñ“]‚ğŒ³‚É–ß‚·ó‘Ô‚É‚·‚é
+				//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ì‰ï¿½]ï¿½ï¿½ï¿½ï¿½ï¿½É–ß‚ï¿½ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
 				camera->SetClearResetAround();
 			}
-			//Ÿ‚ÌƒXƒe[ƒW‚ª‚È‚¢ê‡‚ÍƒXƒe[ƒWƒZƒŒƒNƒgƒV[ƒ“
+			//ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½È‚ï¿½ï¿½ê‡ï¿½ÍƒXï¿½eï¿½[ï¿½Wï¿½Zï¿½ï¿½ï¿½Nï¿½gï¿½Vï¿½[ï¿½ï¿½
 			else {
-				//ƒV[ƒ“Ø‚è‘Ö‚¦
+				//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
 			}
 		}
 		else if (stageClear_->GetEndFlag())
 		{
-			//Ä¶¬
+			//ï¿½Äï¿½ï¿½ï¿½
 			ReCreate();
 			stageClear_->Reset();
 		}
 
-		//ƒ}ƒbƒv‚ªÄ¶¬‚ğI‚¦‚½‚çAŸ‚ÌƒXƒe[ƒW‚ğŠJn‚·‚é‚½‚ß‚Éƒtƒ‰ƒO‚È‚Ç‚ğƒŠƒZƒbƒg
+		//ï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½Äï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½é‚½ï¿½ß‚Éƒtï¿½ï¿½ï¿½Oï¿½È‚Ç‚ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 		if (mapData->GetIsReCreateEnd()) {
 			RestartGame();
 		}
@@ -208,90 +197,85 @@ void GameScene::Update()
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 
-	//ƒJƒƒ‰XV
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Xï¿½V
 	camera->Update();
 	lightCamera->Update();
 
-	//ƒ‰ƒCƒgXV
+	//ï¿½ï¿½ï¿½Cï¿½gï¿½Xï¿½V
 	lightGroup->Update();
 
-	//ƒIƒuƒWƒFƒNƒgXV
-	//ƒvƒŒƒCƒ„[
+	//ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Xï¿½V
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
 	player->Update();
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ï¿½}ï¿½bï¿½vï¿½pï¿½uï¿½ï¿½ï¿½bï¿½N
 	mapData->Update();
-	//“V‹…
+	//ï¿½Vï¿½ï¿½
 	skydome->Update();
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//ï¿½wï¿½iï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
 	backGround->Update();
 
-	//ƒXƒvƒ‰ƒCƒg
-	//UI‚ÌXV
+	//ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½g
+	//UIï¿½ÌXï¿½V
 	userInterface_->Update();
-	//ƒXƒe[ƒWƒNƒŠƒAUIXV
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½AUIï¿½Xï¿½V
 	stageClear_->Update();
 
-	//ƒp[ƒeƒBƒNƒ‹XV
+	//ï¿½pï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½Xï¿½V
 	ParticleEmitter::GetInstance()->Update();
 
-	//‰Šúó‘Ô‚ğbinary•Û‘¶
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ï¿½binaryï¿½Û‘ï¿½
 	if (player->GetIsStartMove()) {
 		KeepBinary(*camera, *player);
 	}
 
-	//ƒV[ƒ“•ÏXó‘Ô
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½
 	SceneChangeMode();
-	//ƒV[ƒ“•ÏX‰‰oXV
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½oï¿½Xï¿½V
 	SceneChangeEffect::Update();
 
 }
 
 void GameScene::DrawBackSprite()
 {
-<<<<<<< HEAD
-	/*SpriteCommon::GetInstance()->DrawPrev();
-	paranomaSkyDorm->Draw();*/
-=======
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 }
 
 void GameScene::Draw3D()
 {
 
-	//Object3d‹¤’ÊƒRƒ}ƒ“ƒh
+	//Object3dï¿½ï¿½ï¿½ÊƒRï¿½}ï¿½ï¿½ï¿½h
 	ObjObject3d::DrawOutLinePrev();
 	//ObjObject3d::DrawPrev();
-	///-------Object3d•`‰æ‚±‚±‚©‚ç-------///
-	// ƒAƒEƒgƒ‰ƒCƒ“—p’è”ƒoƒbƒtƒ@ƒZƒbƒg
+	///-------Object3dï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-------///
+	// ï¿½Aï¿½Eï¿½gï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½pï¿½è”ï¿½oï¿½bï¿½tï¿½@ï¿½Zï¿½bï¿½g
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kNone);
-	//“V‹…
+	//ï¿½Vï¿½ï¿½
 	skydome->Draw();
-	////ƒvƒŒƒCƒ„[
+	////ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kPlayer);
 	player->Draw();
 
-	///-------Object3d•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Object3dï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½Ü‚ï¿½-------///
 
-	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+	///-------Instanceï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-------///
 
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ï¿½}ï¿½bï¿½vï¿½pï¿½uï¿½ï¿½ï¿½bï¿½N
 	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	mapData->Draw();
 
 
 
 	InstanceObject::DrawPrev();
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//ï¿½wï¿½iï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
 	backGround->Draw();
 
 
-	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Instanceï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½Ü‚ï¿½-------///
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚©‚ç-------///
-	//ƒp[ƒeƒBƒNƒ‹•`‰æ
+	///-------ï¿½pï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-------///
+	//ï¿½pï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½`ï¿½ï¿½
 	ParticleEmitter::GetInstance()->DrawAll();
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ï¿½pï¿½[ï¿½eï¿½Bï¿½Nï¿½ï¿½ï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½Ü‚ï¿½-------///
 }
 
 void GameScene::AfterBloomDraw()
@@ -302,58 +286,58 @@ void GameScene::AfterBloomDraw()
 
 void GameScene::Draw3DLightView()
 {
-	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+	///-------Instanceï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-------///
 
 	InstanceObject::DrawLightViewPrev();
 
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//ï¿½wï¿½iï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
 	backGround->DrawLightCameraView();
 
-	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Instanceï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½Ü‚ï¿½-------///
 }
 
 void GameScene::DrawFrontSprite()
 {
-	//ƒXƒvƒ‰ƒCƒg‹¤’ÊƒRƒ}ƒ“ƒh
+	//ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ÊƒRï¿½}ï¿½ï¿½ï¿½h
 	SpriteCommon::GetInstance()->DrawPrev();
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚©‚ç-------///
+	///-------ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½-------///
 
-	//UIŠÖŒW
+	//UIï¿½ÖŒW
 	userInterface_->Draw();
 
-	//ƒXƒe[ƒWƒNƒŠƒA
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½A
 	stageClear_->Draw();
 
-	//ƒV[ƒ“•ÏX‰‰o•`‰æ
+	//ï¿½Vï¿½[ï¿½ï¿½ï¿½ÏXï¿½ï¿½ï¿½oï¿½`ï¿½ï¿½
 	SceneChangeEffect::Draw();
 
 
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½æ‚±ï¿½ï¿½ï¿½Ü‚ï¿½-------///
 }
 
 void GameScene::MenuAction()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!userInterface_->GetMenuFlag()) { return; }
-	//Œˆ’è‚ÌƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//ï¿½ï¿½ï¿½ï¿½ÌƒXï¿½yï¿½[ï¿½Xï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//ƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚½uŠÔ‚É‘I‘ğ‚³‚ê‚Ä‚¢‚é€–Ú‚É‚æ‚Á‚Ä‹““®‚ğİ’è
-	//ƒXƒe[ƒW‘I‘ğƒV[ƒ“‚Ö‚ÌˆÚs
+	//ï¿½Xï¿½yï¿½[ï¿½Xï¿½Lï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½uï¿½Ô‚É‘Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é€ï¿½Ú‚É‚ï¿½ï¿½ï¿½Ä‹ï¿½ï¿½ï¿½ï¿½ï¿½İ’ï¿½
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Iï¿½ï¿½ï¿½Vï¿½[ï¿½ï¿½ï¿½Ö‚ÌˆÚs
 	if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeStageSelect) {
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
-		//seÄ¶
+		//seï¿½Äï¿½
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 	else if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeTitle) {
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
-		//seÄ¶
+		//seï¿½Äï¿½
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 
-	//binaryíœ
+	//binaryï¿½íœ
 	DeleteBinary();
 }
 
@@ -369,17 +353,17 @@ void GameScene::ReCreate()
 
 void GameScene::RestartGame()
 {
-	//Ÿ‚ÌƒXƒe[ƒW‚ğŠJn‚·‚é‚½‚ß‚Éƒtƒ‰ƒO‚È‚Ç‚ğƒŠƒZƒbƒg
+	//ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½é‚½ï¿½ß‚Éƒtï¿½ï¿½ï¿½Oï¿½È‚Ç‚ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	isStageClear = false;
 	mapData->SetIsReCreateEnd(false);
 	skydome->SetIsRotate(false);
 	userInterface_->SetMenuFlag(false);
 	userInterface_->DrawerSpriteReset();
 
-	//‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒAŒã‚Ì“Á•Ê‚ÈƒXƒe[ƒW‚Ì‚İ‚»‚Ì‘¼‚Ìİ’è‚ğƒŠƒZƒbƒg‚³‚¹‚¸‚É”²‚¯‚é
+	//ï¿½Sï¿½Ä‚ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Aï¿½ï¿½Ì“ï¿½ï¿½Ê‚ÈƒXï¿½eï¿½[ï¿½Wï¿½Ì‚İ‚ï¿½ï¿½Ì‘ï¿½ï¿½Ìİ’ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É”ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (StageManager::GetSelectStage() == 100) { return; }
 
-	//Ÿ‚ÌƒXƒe[ƒW‚ğŠJn‚·‚é‚½‚ß‚Éƒtƒ‰ƒO‚È‚Ç‚ğƒŠƒZƒbƒg
+	//ï¿½ï¿½ï¿½ÌƒXï¿½eï¿½[ï¿½Wï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½é‚½ï¿½ß‚Éƒtï¿½ï¿½ï¿½Oï¿½È‚Ç‚ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	player->Reset();
 	camera->Reset();
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;

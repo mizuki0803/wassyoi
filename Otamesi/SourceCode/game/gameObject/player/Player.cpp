@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Input.h"
 #include "Easing.h"
 #include "Block.h"
@@ -9,43 +9,43 @@ const float Player::playerSize = 3.5f;
 
 Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ï¿½Cï¿½ï¿½ï¿½Xï¿½^ï¿½ï¿½ï¿½Xï¿½ğ¶ï¿½
 	Player* instance = new Player();
 
-	//ƒ‚ƒfƒ‹‚ğƒZƒbƒg
+	//ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	assert(model);
 	instance->model = model;
 
-	// ‰Šú‰»
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	// ŠÖ”‚Ìİ’è
+	// ï¿½Öï¿½ï¿½Ìİ’ï¿½
 	instance->CreateAct();
-	// ƒC[ƒWƒ“ƒO‚Ìİ’è
+	// ï¿½Cï¿½[ï¿½Wï¿½ï¿½ï¿½Oï¿½Ìİ’ï¿½
 	instance->easeData_ = std::make_unique<EaseData>(60);
-	//ƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğƒZƒbƒg
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ê’uï¿½ï¿½\ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	instance->mapChipNumberPos = mapChipNum;
-	//ƒ}ƒbƒv‚Ì’†S‚ğ‚¸‚ç‚·’l‚ğƒZƒbƒg
+	//ï¿½}ï¿½bï¿½vï¿½Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ç‚·ï¿½lï¿½ï¿½ï¿½Zï¿½bï¿½g
 	instance->shiftPos = shiftPos;
-	//‰ŠúÀ•W‚ğƒZƒbƒg
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Zï¿½bï¿½g
 	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNum));
 	Vector3 tempPos = instance->GetMapChipPos(mapChipNum);
-	//ˆÊ’u‚ğ‚¸‚ç‚µ‚ÄƒC[ƒWƒ“ƒO
+	//ï¿½Ê’uï¿½ï¿½ï¿½ï¿½ï¿½ç‚µï¿½ÄƒCï¿½[ï¿½Wï¿½ï¿½ï¿½O
 	instance->playerEndPos_ = tempPos;
 	tempPos.y -= 100.0f;
 	instance->playerStratPos_ = tempPos;
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//ï¿½å‚«ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	instance->scale = { playerSize, playerSize, playerSize };
-	//ƒQ[ƒ€ƒJƒƒ‰‚ğƒZƒbƒg
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	instance->gameCamera = gameCamera;
-	//Å‰‚ÌˆÚ“®‚ªI‚í‚Á‚½‚©‚Ìƒtƒ‰ƒO
+	//ï¿½Åï¿½ï¿½ÌˆÚ“ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìƒtï¿½ï¿½ï¿½O
 	instance->isStartMove = false;
 
-	// ƒGƒtƒFƒNƒg“Ç‚İ‚İ
+	// ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½Ç‚İï¿½ï¿½ï¿½
 	for (int i = 0; i < instance->effect.size(); ++i)
 	{
 		instance->effect[i].reset(PlayerEffect::Create(effectModel, static_cast<float>(i)));
@@ -56,13 +56,13 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3&
 
 void Player::Update()
 {
-	//s“®
+	//ï¿½sï¿½ï¿½
 	func_[phase_]();
 
-	//ƒIƒuƒWƒFƒNƒgXV
+	//ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Xï¿½V
 	ObjObject3d::Update();
 
-	// ƒGƒtƒFƒNƒgXV
+	// ï¿½Gï¿½tï¿½Fï¿½Nï¿½gï¿½Xï¿½V
 	for (auto& e : effect)
 	{
 		e->Update(this);
@@ -73,14 +73,14 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	SetGamePhase(GamePhase::ReStart);
 
-	//ƒ}ƒbƒv‚Ì’†S‚ğ‚¸‚ç‚·’l‚ğƒZƒbƒg
+	//ï¿½}ï¿½bï¿½vï¿½Ì’ï¿½ï¿½Sï¿½ï¿½ï¿½ï¿½ï¿½ç‚·ï¿½lï¿½ï¿½ï¿½Zï¿½bï¿½g
 	this->shiftPos = shiftPos;
-	//ƒvƒŒƒCƒ„[ˆÊ’u‚ğ•\‚·ƒ}ƒbƒv”Ô†‚ğƒZƒbƒg
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ê’uï¿½ï¿½\ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	mapChipNumberPos = mapChipNum;
-	//‰ŠúÀ•W‚ğƒZƒbƒg
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Zï¿½bï¿½g
 	SetPlayerEndPos(GetMapChipPos(mapChipNum));
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
-	//ˆÊ’u‚ğ‚¸‚ç‚µ‚ÄƒC[ƒWƒ“ƒO
+	//ï¿½Ê’uï¿½ï¿½ï¿½ï¿½ï¿½ç‚µï¿½ÄƒCï¿½[ï¿½Wï¿½ï¿½ï¿½O
 	playerStratPos_ = position;
 	playerEndPos_ = tempPos;
 
@@ -89,36 +89,36 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 
 void Player::PlayGame()
 {
-	//ƒS[ƒ‹‚µ‚Ä‚¢‚È‚¢‚Æ‚«‚É“®‚«‚ğ‚·‚é
+	//ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½È‚ï¿½ï¿½Æ‚ï¿½ï¿½É“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (isGoal || menuFlag_ || isCreateMove_) {
 		return;
 	}
-	//frameÅ‰‚Ì‰Šú‰»
+	//frameï¿½Åï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½
 	isMove = false;
 
-	//ƒQ[ƒ€ƒJƒƒ‰‚ÌŸŒ³‚É•ÏX‚ªŠ®—¹ƒgƒŠƒK[ƒtƒ‰ƒO‚ªtrue‚È‚ç
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½É•ÏXï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½gï¿½ï¿½ï¿½Kï¿½[ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½trueï¿½È‚ï¿½
 	if (gameCamera->GetIsTriggerDimensionChange()) {
-		//2ŸŒ³ó‘Ô‚È‚çAƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğ‰æ–Êè‘O‚ÉˆÚ“®‚³‚¹‚é
+		//2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚È‚ï¿½Aï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ÌˆÊ’uï¿½ï¿½ï¿½ï¿½Êï¿½Oï¿½ÉˆÚ“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (gameCamera->GetIs2D()) {
 			PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
 			position = GetMapChipPos(mapChipNumberPos);
 		}
-		//ƒS[ƒ‹‚µ‚½‚Ì‚©‚ğ”»’è
+		//ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ğ”»’ï¿½
 		StageClearCheck();
 	}
 
-	//À•WˆÚ“®ŠJn
+	//ï¿½ï¿½ï¿½Wï¿½Ú“ï¿½ï¿½Jï¿½n
 	MovePosStart();
-	//À•WˆÚ“®
+	//ï¿½ï¿½ï¿½Wï¿½Ú“ï¿½
 	MovePos();
 
-	//ŸŒ³Ø‚è‘Ö‚¦ŠJn
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½Jï¿½n
 	ChanegeDimensionStart();
 }
 
 void Player::GameStart()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ï¿½Cï¿½[ï¿½Wï¿½ï¿½ï¿½Oï¿½ÌŒvï¿½Z
 	position.x = Easing::OutBack(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::OutBack(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::OutBack(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
@@ -133,7 +133,7 @@ void Player::GameStart()
 
 void Player::GameReStart()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ï¿½Cï¿½[ï¿½Wï¿½ï¿½ï¿½Oï¿½ÌŒvï¿½Z
 	position.x = Easing::InCubic(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::InCubic(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::InCubic(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
@@ -161,7 +161,6 @@ void Player::Draw()
 	isStartMove = false;
 }
 
-<<<<<<< HEAD
 void Player::EffectDraw()
 {
 	ObjObject3d::DrawAddPrev();
@@ -170,28 +169,27 @@ void Player::EffectDraw()
 	{
 		e->Draw();
 	}
-=======
+}
 void Player::Reset()
 {
-	//ŠJnó‘Ô‚É–ß‚·‚½‚ß‚Éƒtƒ‰ƒO‚È‚Ç‚ğƒŠƒZƒbƒg
+	//ï¿½Jï¿½nï¿½ï¿½Ô‚É–ß‚ï¿½ï¿½ï¿½ï¿½ß‚Éƒtï¿½ï¿½ï¿½Oï¿½È‚Ç‚ï¿½ï¿½ï¿½ï¿½Zï¿½bï¿½g
 	isGoal = false;
 	phase_ = static_cast<int>(GamePhase::GamePlay);
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 }
 
 void Player::MovePosStart()
 {
-	//s“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½ÈŠOï¿½È‚ç”²ï¿½ï¿½ï¿½ï¿½
 	if (!(actionPhase == ActionPhase::None)) { return; }
-	//ƒQ[ƒ€ƒJƒƒ‰‚Ìs“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìsï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½ÈŠOï¿½È‚ç”²ï¿½ï¿½ï¿½ï¿½
 	if (!(gameCamera->GetActionPhase() == GameCamera::ActionPhase::None)) { return; }
-	//ˆÚ“®ƒL[“ü—Í‚ª‚È‚¯‚ê‚Î”²‚¯‚é
+	//ï¿½Ú“ï¿½ï¿½Lï¿½[ï¿½ï¿½ï¿½Í‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!(Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->PushKey(DIK_S)
 		|| Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_D))) {
 		return;
 	}
 
-	//ˆÚ“®‰Â”\‚©”»’è
+	//ï¿½Ú“ï¿½ï¿½Â”\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (gameCamera->GetIs2D()) {
 		if (!PlayerActionManager::PlayerMoveCheck2D(mapChipNumberPos, moveSurfacePhase, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase())) { return; };
 	}
@@ -199,58 +197,58 @@ void Player::MovePosStart()
 		if (!PlayerActionManager::PlayerMoveCheck3D(mapChipNumberPos, moveSurfacePhase, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase())) { return; };
 	}
 
-	//ˆÚ“®‘OÀ•W‚ğƒZƒbƒg
+	//ï¿½Ú“ï¿½ï¿½Oï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Zï¿½bï¿½g
 	moveBeforePos = position;
-	//ˆÚ“®–Ú•WÀ•W‚ğƒZƒbƒg
+	//ï¿½Ú“ï¿½ï¿½Ú•Wï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½Zï¿½bï¿½g
 	moveAfterPos = GetMapChipPos(mapChipNumberPos);
 
-	//ƒAƒNƒVƒ‡ƒ“—pƒ^ƒCƒ}[‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
+	//ï¿½Aï¿½Nï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½pï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½
 	actionTimer = 0;
 
-	//s“®‚ğuÀ•WˆÚ“®v‚É‚·‚é
+	//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Wï¿½Ú“ï¿½ï¿½vï¿½É‚ï¿½ï¿½ï¿½
 	actionPhase = ActionPhase::MovePos;
 }
 
 void Player::MovePos()
 {
-	//s“®‚ªuÀ•WˆÚ“®vˆÈŠO‚È‚ç”²‚¯‚é
+	//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½Wï¿½Ú“ï¿½ï¿½vï¿½ÈŠOï¿½È‚ç”²ï¿½ï¿½ï¿½ï¿½
 	if (!(actionPhase == ActionPhase::MovePos)) { return; }
 
-	//ƒ^ƒCƒ}[XV
+	//ï¿½^ï¿½Cï¿½}ï¿½[ï¿½Xï¿½V
 	actionTimer++;
-	const float moveTime = 30; //À•WˆÚ“®‚É‚©‚©‚éŠÔ
+	const float moveTime = 30; //ï¿½ï¿½ï¿½Wï¿½Ú“ï¿½ï¿½É‚ï¿½ï¿½ï¿½ï¿½éï¿½ï¿½
 
-	//À•WˆÚ“®ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//ï¿½ï¿½ï¿½Wï¿½Ú“ï¿½ï¿½Cï¿½[ï¿½Wï¿½ï¿½ï¿½Oï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½Ïï¿½(0ï¿½`1ï¿½ï¿½ï¿½Zï¿½o)
 	const float time = actionTimer / moveTime;
-	//ƒvƒŒƒCƒ„[‚ğˆÚ“®‚³‚¹‚é
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	position.x = Easing::OutQuint(moveBeforePos.x, moveAfterPos.x, time);
 	position.y = Easing::OutQuint(moveBeforePos.y, moveAfterPos.y, time);
 	position.z = Easing::OutQuint(moveBeforePos.z, moveAfterPos.z, time);
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ï¿½^ï¿½Cï¿½}ï¿½[ï¿½ï¿½ï¿½wï¿½è‚µï¿½ï¿½ï¿½ï¿½ï¿½Ô‚É–ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½ï¿½Î”ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (actionTimer < moveTime) { return; }
 
-	//ˆÚ“®‚µ‚½‚Ì‚Åtrue
+	//ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½true
 	isMove = true;
 
-	//ƒS[ƒ‹‚µ‚½‚Ì‚©‚ğ”»’è
+	//ï¿½Sï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ğ”»’ï¿½
 	StageClearCheck();
 
-	//s“®‚ğu‰½‚à‚µ‚È‚¢v‚É–ß‚·
+	//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½É–ß‚ï¿½
 	actionPhase = ActionPhase::None;
 }
 
 void Player::ChanegeDimensionStart()
 {
-	//s“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½ÈŠOï¿½È‚ç”²ï¿½ï¿½ï¿½ï¿½
 	if (!(actionPhase == ActionPhase::None)) { return; }
-	//ƒQ[ƒ€ƒJƒƒ‰‚Ìs“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ìsï¿½ï¿½ï¿½ï¿½ï¿½uï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½vï¿½ÈŠOï¿½È‚ç”²ï¿½ï¿½ï¿½ï¿½
 	if (!(gameCamera->GetActionPhase() == GameCamera::ActionPhase::None)) { return; }
-	//ƒL[“ü—Í‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚µ”²‚¯‚é
+	//ï¿½Lï¿½[ï¿½ï¿½ï¿½Í‚ï¿½ï¿½È‚ï¿½ï¿½ï¿½ï¿½falseï¿½ï¿½Ô‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//Œ»İƒJƒƒ‰‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚Ì–Ê‚ÉÚ’n‚·‚é
-	MoveSurfacePhase judgeMoveSurfacePhase; //”»’è—p•Ï”
+	//ï¿½ï¿½ï¿½İƒJï¿½ï¿½ï¿½ï¿½ï¿½ÌŒï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì–Ê‚ÉÚ’nï¿½ï¿½ï¿½ï¿½
+	MoveSurfacePhase judgeMoveSurfacePhase; //ï¿½ï¿½ï¿½ï¿½pï¿½Ïï¿½
 	if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Top) { judgeMoveSurfacePhase = MoveSurfacePhase::Upward; }
 	else if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Buttom) { judgeMoveSurfacePhase = MoveSurfacePhase::Downward; }
 	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Front) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingForward; }
@@ -258,40 +256,40 @@ void Player::ChanegeDimensionStart()
 	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Back) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingAway; }
 	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Left) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingLeft; }
 
-	//Œ»İ‚ÌƒJƒƒ‰•ûŒü‚ÅŒ©‚½ê‡‚ÉAƒvƒŒƒCƒ„[‚Ìè‘O‚ÉƒuƒƒbƒN‚ª‚È‚¢ ‚©‚Â ƒvƒŒƒCƒ„[‚Ì‰œ‚ÉƒuƒƒbƒN‚ª‘¶İ‚·‚é‚©”»’è
+	//ï¿½ï¿½ï¿½İ‚ÌƒJï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÅŒï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÉAï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ìï¿½Oï¿½Éƒuï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½È‚ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½Ì‰ï¿½ï¿½Éƒuï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½İ‚ï¿½ï¿½é‚©ï¿½ï¿½ï¿½ï¿½
 	if (!(!PlayerActionManager::DirectionForwardBlockCheck(mapChipNumberPos, judgeMoveSurfacePhase) &&
 		PlayerActionManager::DirectionAwayBlockCheck(mapChipNumberPos, judgeMoveSurfacePhase))) {
 		return;
 	}
 
-	//”»’è—p‚Ég—p‚µ‚½•Ï”‚ğÚ’n–Ê‚É‚·‚é
+	//ï¿½ï¿½ï¿½ï¿½pï¿½Égï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½ï¿½ï¿½Ú’nï¿½Ê‚É‚ï¿½ï¿½ï¿½
 	moveSurfacePhase = judgeMoveSurfacePhase;
 
-	//2D‚©‚ç3D‚Ö–ß‚éê‡A‘«ê‚Æ‚È‚éƒuƒƒbƒN‚ÉÚ’n‚·‚éƒ}ƒbƒv”Ô†‚ÉƒvƒŒƒCƒ„[‚ğˆÚ“®‚³‚¹‚é
+	//2Dï¿½ï¿½ï¿½ï¿½3Dï¿½Ö–ß‚ï¿½ê‡ï¿½Aï¿½ï¿½ï¿½ï¿½Æ‚È‚ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ÉÚ’nï¿½ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½Éƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (gameCamera->GetIs2D()) {
 		PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
 
-		//XV‚µ‚½ƒ}ƒbƒv”Ô†‚ÌÀ•W‚ÉˆÚ“®
+		//ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½Ìï¿½ï¿½Wï¿½ÉˆÚ“ï¿½
 		position = GetMapChipPos(mapChipNumberPos);
 	}
-	//ƒQ[ƒ€ƒJƒƒ‰‚ğŸŒ³Ø‚è‘Ö‚¦ó‘Ô‚É‚·‚é
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½Ô‚É‚ï¿½ï¿½ï¿½
 	gameCamera->ChanegeDimensionStart();
 }
 
 void Player::StageClearCheck()
 {
-	//2ŸŒ³ó‘ÔƒS[ƒ‹‚µ‚½‚Ì‚©‚ğ”»’è
+	//2ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔƒSï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ğ”»’ï¿½
 	if (gameCamera->GetIs2D()) {
 		if (PlayerActionManager::PlayerGoalCheck2D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;
 
-			//2D‚©‚ç3D‚Ö–ß‚éê‡A‘«ê‚Æ‚È‚éƒuƒƒbƒN‚ÉÚ’n‚·‚éƒ}ƒbƒv”Ô†‚ÉƒvƒŒƒCƒ„[‚ğˆÚ“®‚³‚¹‚é
+			//2Dï¿½ï¿½ï¿½ï¿½3Dï¿½Ö–ß‚ï¿½ê‡ï¿½Aï¿½ï¿½ï¿½ï¿½Æ‚È‚ï¿½uï¿½ï¿½ï¿½bï¿½Nï¿½ÉÚ’nï¿½ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½Éƒvï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ú“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 			PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
-			//XV‚µ‚½ƒ}ƒbƒv”Ô†‚ÌÀ•W‚ÉˆÚ“®
+			//ï¿½Xï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½Ôï¿½ï¿½Ìï¿½ï¿½Wï¿½ÉˆÚ“ï¿½
 			position = GetMapChipPos(mapChipNumberPos);
 		}
 	}
-	//3ŸŒ³ó‘ÔƒS[ƒ‹‚µ‚½‚Ì‚©‚ğ”»’è
+	//3ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÔƒSï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ğ”»’ï¿½
 	else {
 		if (PlayerActionManager::PlayerGoalCheck3D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;

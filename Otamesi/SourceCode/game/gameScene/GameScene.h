@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseGameScene.h"
 #include "LightGroup.h"
 #include "GameCamera.h"
@@ -7,79 +7,76 @@
 #include "MapDataStage.h"
 #include "UserInterface.h"
 #include "BackGround.h"
-<<<<<<< HEAD
-=======
 #include "Skydome.h"
 #include "ClearStaging.h"
->>>>>>> a99f973c2b8717afa6a2ec56890bed22426f99ff
 
 /// <summary>
-/// ƒQ[ƒ€ƒV[ƒ“
+/// ï¿½Qï¿½[ï¿½ï¿½ï¿½Vï¿½[ï¿½ï¿½
 /// </summary>
 class GameScene :public BaseGameScene
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Öï¿½
 	/// <summary>
-	/// ‰Šú‰»
+	/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// XV
+	/// ï¿½Xï¿½V
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// ï¿½wï¿½iï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½
 	/// </summary>
 	void DrawBackSprite() override;
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ
+	/// 3Dï¿½Vï¿½[ï¿½ï¿½ï¿½`ï¿½ï¿½
 	/// </summary>
 	void Draw3D() override;
 	void AfterBloomDraw() override;
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ(ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_)
+	/// 3Dï¿½Vï¿½[ï¿½ï¿½ï¿½`ï¿½ï¿½(ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½çŒ©ï¿½ï¿½ï¿½ï¿½ï¿½_)
 	/// </summary>
 	void Draw3DLightView() override;
 
 	/// <summary>
-	/// ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// ï¿½Oï¿½iï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½
 	/// </summary>
 	void DrawFrontSprite() override;
 
 	/// <summary>
-	/// ƒƒjƒ…[‚Ì“®‚«
+	/// ï¿½ï¿½ï¿½jï¿½ï¿½ï¿½[ï¿½Ì“ï¿½ï¿½ï¿½
 	/// </summary>
 	void MenuAction() override;
 
 	/// <summary>
-	/// Ä¶¬
+	/// ï¿½Äï¿½ï¿½ï¿½
 	/// </summary>
 	void ReCreate();
 
 	/// <summary>
-	/// ƒQ[ƒ€‚ğŠJnó‘Ô‚É–ß‚·
+	/// ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½Ô‚É–ß‚ï¿½
 	/// </summary>
 	void RestartGame();
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒJƒƒ‰
+private: //ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Ïï¿½
+	//ï¿½Jï¿½ï¿½ï¿½ï¿½
 	std::unique_ptr<GameCamera> camera;
-	//‰e—pŒõŒ¹ƒJƒƒ‰
+	//ï¿½eï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½
 	std::unique_ptr<LightCamera> lightCamera;
 
-	//ƒ‰ƒCƒg
+	//ï¿½ï¿½ï¿½Cï¿½g
 	std::unique_ptr<LightGroup> lightGroup;
 	float ambientColor0[3] = { 1,1,1 };
-	// Œõü•ûŒü‰Šú’l
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½l
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 1,0,0 };
 
@@ -89,30 +86,30 @@ private: //ƒƒ“ƒo•Ï”
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 0,0,1 };
 
-	//objƒ‚ƒfƒ‹
+	//objï¿½ï¿½ï¿½fï¿½ï¿½
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelPlayerEffect;
 	std::unique_ptr<ObjModel> modelSkydome;
 
-	//ƒvƒŒƒCƒ„[
+	//ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[
 	std::unique_ptr<Player> player;
-	//ƒXƒe[ƒW—pƒ}ƒbƒvƒf[ƒ^
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½pï¿½}ï¿½bï¿½vï¿½fï¿½[ï¿½^
 	std::unique_ptr<MapDataStage> mapData;
-	//“V‹…
+	//ï¿½Vï¿½ï¿½
 	std::unique_ptr<Skydome> skydome;
 
-	//UIŠÖŒW
+	//UIï¿½ÖŒW
 	std::unique_ptr<UserInterface> userInterface_;
-	//ƒXƒe[ƒWƒNƒŠƒAUI
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½AUI
 	std::unique_ptr<ClearStaging> stageClear_;
 
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//ï¿½wï¿½iï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½g
 	std::unique_ptr<BackGround> backGround;
 
-	// ƒpƒ‰ƒmƒ}ƒXƒJƒCƒh[ƒ€
+	// ï¿½pï¿½ï¿½ï¿½mï¿½}ï¿½Xï¿½Jï¿½Cï¿½hï¿½[ï¿½ï¿½
 	//std::unique_ptr<Sprite> paranomaSkyDorm;
 
-	//ƒXƒe[ƒWƒNƒŠƒAƒtƒ‰ƒO
+	//ï¿½Xï¿½eï¿½[ï¿½Wï¿½Nï¿½ï¿½ï¿½Aï¿½tï¿½ï¿½ï¿½O
 	bool isStageClear = false;
 
 
