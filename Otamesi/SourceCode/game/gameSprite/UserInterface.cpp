@@ -27,10 +27,18 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			menuframe_.push_back(std::move(temp));
 		}
 
+		//次元変更可能確認スプライト生成
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension)));
+		isChangeDimenisonSprite->SetPosition({ 650, WindowApp::window_width / 2 });
+
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
+
+		/*childSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Number)));
+		childSprite->SetParent(isChangeDimenisonSprite.get());
+		childSprite->SetPosition({ 200, -50 });*/
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
@@ -50,6 +58,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
 			menuframe_.push_back(std::move(temp));
 		}
+
+		//次元変更可能確認スプライト生成
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension)));
+		isChangeDimenisonSprite->SetPosition({ 650, WindowApp::window_width / 2 });
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
@@ -79,11 +91,18 @@ void UserInterface::Update()
 {
 	if (notMove_) { return; }
 
+	//次元変更可能確認スプライト更新
+	if (isChangeDimenisonSprite) {
+		isChangeDimenisonSprite->Update();
+	}
+
 	//説明用引き出しスプライト更新
 	DrawerSpriteMoveStartKey();
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Update();
 	}
+	//引き出しの子供スプライト更新
+	//childSprite->Update();
 
 	//メニュースプライト更新
 	MenuUpdate();
@@ -98,10 +117,17 @@ void UserInterface::Draw()
 {
 	if (notMove_) { return; }
 
+	//次元変更可能確認スプライト描画
+	if (isChangeDimenisonSprite) {
+		isChangeDimenisonSprite->Draw();
+	}
+
 	//説明用引き出しスプライト描画
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
 	}
+	//引き出しの子供スプライト描画
+	//childSprite->Draw();
 
 	//メニュースプライト描画
 	if (menuFlag_)
@@ -236,6 +262,19 @@ void UserInterface::MenuSelection()
 	}
 }
 
+void UserInterface::IsChangeDimensionCheck(bool isChangeDimension)
+{
+	float spriteVividness{}; //スプライトの色の鮮やかさ
+
+	//次元変更可能の場合はスプライトの色を明るくする
+	if (isChangeDimension) { spriteVividness = 1.0f; }
+	//次元変更可能でない場合はスプライトの色を暗くする
+	else { spriteVividness = 0.3f; }
+
+	//鮮やかさをセット
+	isChangeDimenisonSprite->SetColor({ spriteVividness, spriteVividness, spriteVividness,1 });
+}
+
 void UserInterface::DrawerSpriteReset()
 {
 	//引き出しスプライトの開閉状態をリセット
@@ -259,13 +298,25 @@ void UserInterface::DrawerSpriteMoveStartKey()
 
 	//キー入力による引き出しスプライト移動開始
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
-		if (Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey())) {
-			//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
-			if (drawerSprite == drawerSprites[HowToPlayMenu]) {
-				continue;
+		//開閉に使用するキーが入力されていなければ飛ばす
+		if (!(Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey()))) { continue; }
+		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
+		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
+
+		//開閉開始
+		drawerSprite->MoveStart();
+
+		//開閉させるスプライトがヒント1で、開く状態を開始する場合はヒント2を全て閉じる
+		if (drawerSprite == drawerSprites[Hint1] && drawerSprite->GetIsOpenDrawer()) {
+			if (drawerSprites[Hint2]->GetIsOpenDrawer()) {
+				drawerSprites[Hint2]->MoveStart();
 			}
-			//開閉開始
-			drawerSprite->MoveStart();
+		}
+		//開閉させるスプライトがヒント2で、開く状態を開始する場合はヒント1を全て閉じる
+		if (drawerSprite == drawerSprites[Hint2] && drawerSprite->GetIsOpenDrawer()) {
+			if (drawerSprites[Hint1]->GetIsOpenDrawer()) {
+				drawerSprites[Hint1]->MoveStart();
+			}
 		}
 	}
 }

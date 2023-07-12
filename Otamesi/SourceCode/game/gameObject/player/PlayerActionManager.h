@@ -43,17 +43,19 @@ public: //静的メンバ関数
 	/// 現在のカメラ方向で見た場合にプレイヤーの上方向にブロックが存在するか判定
 	/// </summary>
 	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
-	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
 	/// <returns>成否</returns>
-	static bool DirectionForwardBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
+	static bool DirectionForwardBlockCheck(const XMINT3& mapChipNumberPlayerPos, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
 	/// 現在のカメラ方向で見た場合にプレイヤーの下方向にブロックが存在するか判定
 	/// </summary>
 	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
-	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
 	/// <returns>成否</returns>
-	static bool DirectionAwayBlockCheck(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
+	static bool DirectionAwayBlockCheck(const XMINT3& mapChipNumberPlayerPos, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
 	/// 3次元に戻るときの足場となるブロックに接するマップ番号を設定

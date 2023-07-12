@@ -9,43 +9,43 @@ const float Player::playerSize = 3.5f;
 
 Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3& shiftPos, GameCamera* gameCamera, ObjModel* effectModel)
 {
-	//�C���X�^���X�𐶐�
+	//インスタンスを生成
 	Player* instance = new Player();
 
-	//���f�����Z�b�g
+	//モデルをセット
 	assert(model);
 	instance->model = model;
 
-	// ������
+	// 初期化
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	// �֐��̐ݒ�
+	// 関数の設定
 	instance->CreateAct();
-	// �C�[�W���O�̐ݒ�
+	// イージングの設定
 	instance->easeData_ = std::make_unique<EaseData>(60);
-	//�v���C���[�ʒu��\���}�b�v�ԍ����Z�b�g
+	//プレイヤー位置を表すマップ番号をセット
 	instance->mapChipNumberPos = mapChipNum;
-	//�}�b�v�̒��S�����炷�l���Z�b�g
+	//マップの中心をずらす値をセット
 	instance->shiftPos = shiftPos;
-	//�������W���Z�b�g
+	//初期座標をセット
 	instance->SetPlayerEndPos(instance->GetMapChipPos(mapChipNum));
 	Vector3 tempPos = instance->GetMapChipPos(mapChipNum);
-	//�ʒu�����炵�ăC�[�W���O
+	//位置をずらしてイージング
 	instance->playerEndPos_ = tempPos;
 	tempPos.y -= 100.0f;
 	instance->playerStratPos_ = tempPos;
-	//�傫�����Z�b�g
+	//大きさをセット
 	instance->scale = { playerSize, playerSize, playerSize };
-	//�Q�[���J�������Z�b�g
+	//ゲームカメラをセット
 	instance->gameCamera = gameCamera;
-	//�ŏ��̈ړ����I��������̃t���O
+	//最初の移動が終わったかのフラグ
 	instance->isStartMove = false;
 
-	// �G�t�F�N�g�ǂݍ���
+	// エフェクト読み込み
 	for (int i = 0; i < instance->effect.size(); ++i)
 	{
 		instance->effect[i].reset(PlayerEffect::Create(effectModel, static_cast<float>(i)));
@@ -56,13 +56,13 @@ Player* Player::Create(ObjModel* model, const XMINT3& mapChipNum, const Vector3&
 
 void Player::Update()
 {
-	//�s��
+	//行動
 	func_[phase_]();
 
-	//�I�u�W�F�N�g�X�V
+	//オブジェクト更新
 	ObjObject3d::Update();
 
-	// �G�t�F�N�g�X�V
+	// エフェクト更新
 	for (auto& e : effect)
 	{
 		e->Update(this);
@@ -73,14 +73,14 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 {
 	SetGamePhase(GamePhase::ReStart);
 
-	//�}�b�v�̒��S�����炷�l���Z�b�g
+	//マップの中心をずらす値をセット
 	this->shiftPos = shiftPos;
-	//�v���C���[�ʒu��\���}�b�v�ԍ����Z�b�g
+	//プレイヤー位置を表すマップ番号をセット
 	mapChipNumberPos = mapChipNum;
-	//�������W���Z�b�g
+	//初期座標をセット
 	SetPlayerEndPos(GetMapChipPos(mapChipNum));
 	Vector3 tempPos = GetMapChipPos(mapChipNum);
-	//�ʒu�����炵�ăC�[�W���O
+	//位置をずらしてイージング
 	playerStratPos_ = position;
 	playerEndPos_ = tempPos;
 
@@ -89,36 +89,36 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 
 void Player::PlayGame()
 {
-	//�S�[�����Ă��Ȃ��Ƃ��ɓ���������
+	//ゴールしていないときに動きをする
 	if (isGoal || menuFlag_ || isCreateMove_) {
 		return;
 	}
-	//frame�ŏ��̏�����
+	//frame最初の初期化
 	isMove = false;
 
-	//�Q�[���J�����̎����ɕύX�������g���K�[�t���O��true�Ȃ�
+	//ゲームカメラの次元に変更が完了トリガーフラグがtrueなら
 	if (gameCamera->GetIsTriggerDimensionChange()) {
-		//2������ԂȂ�A�v���C���[�̈ʒu����ʎ�O�Ɉړ�������
+		//2次元状態なら、プレイヤーの位置を画面手前に移動させる
 		if (gameCamera->GetIs2D()) {
 			PlayerActionManager::PlayerFrontmost2D(mapChipNumberPos, moveSurfacePhase);
 			position = GetMapChipPos(mapChipNumberPos);
 		}
-		//�S�[�������̂��𔻒�
+		//ゴールしたのかを判定
 		StageClearCheck();
 	}
 
-	//���W�ړ��J�n
+	//座標移動開始
 	MovePosStart();
-	//���W�ړ�
+	//座標移動
 	MovePos();
 
-	//�����؂�ւ��J�n
+	//次元切り替え開始
 	ChanegeDimensionStart();
 }
 
 void Player::GameStart()
 {
-	// �C�[�W���O�̌v�Z
+	// イージングの計算
 	position.x = Easing::OutBack(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::OutBack(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::OutBack(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
@@ -133,7 +133,7 @@ void Player::GameStart()
 
 void Player::GameReStart()
 {
-	// �C�[�W���O�̌v�Z
+	// イージングの計算
 	position.x = Easing::InCubic(playerStratPos_.x, playerEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::InCubic(playerStratPos_.y, playerEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::InCubic(playerStratPos_.z, playerEndPos_.z, easeData_->GetTimeRate());
@@ -172,24 +172,31 @@ void Player::EffectDraw()
 }
 void Player::Reset()
 {
-	//�J�n��Ԃɖ߂����߂Ƀt���O�Ȃǂ����Z�b�g
+	//開始状態に戻すためにフラグなどをリセット
 	isGoal = false;
 	phase_ = static_cast<int>(GamePhase::GamePlay);
 }
 
+bool Player::ChangeDimensionStartCheck()
+{
+	//現在のカメラ方向で見た場合に、プレイヤーの手前にブロックがない かつ プレイヤーの奥にブロックが存在するか判定
+	return ((!PlayerActionManager::DirectionForwardBlockCheck(mapChipNumberPos, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase())) &&
+		PlayerActionManager::DirectionAwayBlockCheck(mapChipNumberPos, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase()));
+}
+
 void Player::MovePosStart()
 {
-	//�s�����u�������Ȃ��v�ȊO�Ȃ甲����
+	//行動が「何もしない」以外なら抜ける
 	if (!(actionPhase == ActionPhase::None)) { return; }
-	//�Q�[���J�����̍s�����u�������Ȃ��v�ȊO�Ȃ甲����
+	//ゲームカメラの行動が「何もしない」以外なら抜ける
 	if (!(gameCamera->GetActionPhase() == GameCamera::ActionPhase::None)) { return; }
-	//�ړ��L�[���͂��Ȃ���Δ�����
+	//移動キー入力がなければ抜ける
 	if (!(Input::GetInstance()->PushKey(DIK_W) || Input::GetInstance()->PushKey(DIK_S)
 		|| Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_D))) {
 		return;
 	}
 
-	//�ړ��\������
+	//移動可能か判定
 	if (gameCamera->GetIs2D()) {
 		if (!PlayerActionManager::PlayerMoveCheck2D(mapChipNumberPos, moveSurfacePhase, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase())) { return; };
 	}
@@ -197,99 +204,92 @@ void Player::MovePosStart()
 		if (!PlayerActionManager::PlayerMoveCheck3D(mapChipNumberPos, moveSurfacePhase, gameCamera->GetCameraXPosPhase(), gameCamera->GetCameraYPosPhase())) { return; };
 	}
 
-	//�ړ��O���W���Z�b�g
+	//移動前座標をセット
 	moveBeforePos = position;
-	//�ړ��ڕW���W���Z�b�g
+	//移動目標座標をセット
 	moveAfterPos = GetMapChipPos(mapChipNumberPos);
 
-	//�A�N�V�����p�^�C�}�[�����������Ă���
+	//アクション用タイマーを初期化しておく
 	actionTimer = 0;
 
-	//�s�����u���W�ړ��v�ɂ���
+	//行動を「座標移動」にする
 	actionPhase = ActionPhase::MovePos;
 }
 
 void Player::MovePos()
 {
-	//�s�����u���W�ړ��v�ȊO�Ȃ甲����
+	//行動が「座標移動」以外なら抜ける
 	if (!(actionPhase == ActionPhase::MovePos)) { return; }
 
-	//�^�C�}�[�X�V
+	//タイマー更新
 	actionTimer++;
-	const float moveTime = 30; //���W�ړ��ɂ����鎞��
+	const float moveTime = 30; //座標移動にかかる時間
 
-	//���W�ړ��C�[�W���O�Ɏg�p����ϐ�(0�`1���Z�o)
+	//座標移動イージングに使用する変数(0～1を算出)
 	const float time = actionTimer / moveTime;
-	//�v���C���[���ړ�������
+	//プレイヤーを移動させる
 	position.x = Easing::OutQuint(moveBeforePos.x, moveAfterPos.x, time);
 	position.y = Easing::OutQuint(moveBeforePos.y, moveAfterPos.y, time);
 	position.z = Easing::OutQuint(moveBeforePos.z, moveAfterPos.z, time);
 
-	//�^�C�}�[���w�肵�����Ԃɖ����Ȃ���Δ�����
+	//タイマーが指定した時間に満たなければ抜ける
 	if (actionTimer < moveTime) { return; }
 
-	//�ړ������̂�true
+	//移動したのでtrue
 	isMove = true;
 
-	//�S�[�������̂��𔻒�
+	//ゴールしたのかを判定
 	StageClearCheck();
 
-	//�s�����u�������Ȃ��v�ɖ߂�
+	//行動を「何もしない」に戻す
 	actionPhase = ActionPhase::None;
 }
 
 void Player::ChanegeDimensionStart()
 {
-	//�s�����u�������Ȃ��v�ȊO�Ȃ甲����
+	//行動が「何もしない」以外なら抜ける
 	if (!(actionPhase == ActionPhase::None)) { return; }
-	//�Q�[���J�����̍s�����u�������Ȃ��v�ȊO�Ȃ甲����
+	//ゲームカメラの行動が「何もしない」以外なら抜ける
 	if (!(gameCamera->GetActionPhase() == GameCamera::ActionPhase::None)) { return; }
-	//�L�[���͂��Ȃ����false��Ԃ�������
+	//キー入力がなければfalseを返し抜ける
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//���݃J�����̌����Ă�������̖ʂɐڒn����
-	MoveSurfacePhase judgeMoveSurfacePhase; //����p�ϐ�
-	if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Top) { judgeMoveSurfacePhase = MoveSurfacePhase::Upward; }
-	else if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Buttom) { judgeMoveSurfacePhase = MoveSurfacePhase::Downward; }
-	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Front) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingForward; }
-	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Right) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingRight; }
-	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Back) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingAway; }
-	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Left) { judgeMoveSurfacePhase = MoveSurfacePhase::FacingLeft; }
+	//次元変更できる状態なのかを判定
+	if (!ChangeDimensionStartCheck()) { return; }
 
-	//���݂̃J���������Ō����ꍇ�ɁA�v���C���[�̎�O�Ƀu���b�N���Ȃ� ���� �v���C���[�̉��Ƀu���b�N�����݂��邩����
-	if (!(!PlayerActionManager::DirectionForwardBlockCheck(mapChipNumberPos, judgeMoveSurfacePhase) &&
-		PlayerActionManager::DirectionAwayBlockCheck(mapChipNumberPos, judgeMoveSurfacePhase))) {
-		return;
-	}
+	//現在カメラの向いている方向の面に接地する
+	if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Top) { moveSurfacePhase = MoveSurfacePhase::Upward; }
+	else if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Buttom) { moveSurfacePhase = MoveSurfacePhase::Downward; }
+	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Front) { moveSurfacePhase = MoveSurfacePhase::FacingForward; }
+	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Right) { moveSurfacePhase = MoveSurfacePhase::FacingRight; }
+	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Back) { moveSurfacePhase = MoveSurfacePhase::FacingAway; }
+	else if (gameCamera->GetCameraXPosPhase() == (int)GameCamera::CameraXPosPhase::Left) { moveSurfacePhase = MoveSurfacePhase::FacingLeft; }
 
-	//����p�Ɏg�p�����ϐ���ڒn�ʂɂ���
-	moveSurfacePhase = judgeMoveSurfacePhase;
-
-	//2D����3D�֖߂�ꍇ�A����ƂȂ�u���b�N�ɐڒn����}�b�v�ԍ��Ƀv���C���[���ړ�������
+	//2Dから3Dへ戻る場合、足場となるブロックに接地するマップ番号にプレイヤーを移動させる
 	if (gameCamera->GetIs2D()) {
 		PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
 
-		//�X�V�����}�b�v�ԍ��̍��W�Ɉړ�
+		//更新したマップ番号の座標に移動
 		position = GetMapChipPos(mapChipNumberPos);
 	}
-	//�Q�[���J�����������؂�ւ���Ԃɂ���
+	//ゲームカメラを次元切り替え状態にする
 	gameCamera->ChanegeDimensionStart();
 }
 
 void Player::StageClearCheck()
 {
-	//2������ԃS�[�������̂��𔻒�
+	//2次元状態ゴールしたのかを判定
 	if (gameCamera->GetIs2D()) {
 		if (PlayerActionManager::PlayerGoalCheck2D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;
 
-			//2D����3D�֖߂�ꍇ�A����ƂȂ�u���b�N�ɐڒn����}�b�v�ԍ��Ƀv���C���[���ړ�������
+			//2Dから3Dへ戻る場合、足場となるブロックに接地するマップ番号にプレイヤーを移動させる
 			PlayerActionManager::PlayerScaffoldReturn3D(mapChipNumberPos, moveSurfacePhase);
-			//�X�V�����}�b�v�ԍ��̍��W�Ɉړ�
+			//更新したマップ番号の座標に移動
 			position = GetMapChipPos(mapChipNumberPos);
 		}
 	}
-	//3������ԃS�[�������̂��𔻒�
+	//3次元状態ゴールしたのかを判定
 	else {
 		if (PlayerActionManager::PlayerGoalCheck3D(mapChipNumberPos, moveSurfacePhase)) {
 			isGoal = true;

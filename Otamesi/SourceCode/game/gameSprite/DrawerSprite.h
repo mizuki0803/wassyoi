@@ -60,7 +60,9 @@ public: //ƒƒ“ƒoŠÖ”
 	void Reset();
 
 	//gettre
+	bool GetIsOpenDrawer() { return isOpenDrawer; }
 	BYTE GetDrawerKey() { return drawerKey; }
+	bool GetIsMoveDrawer() { return isMoveDrawer; }
 
 private: //ƒƒ“ƒoŠÖ”
 	/// <summary>

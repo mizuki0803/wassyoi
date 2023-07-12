@@ -20,73 +20,73 @@
 
 void GameScene::Initialize()
 {
-	//���C�g����
+	//ライト生成
 	lightGroup.reset(LightGroup::Create());
 	lightGroup->SetDirLightActive(0, false);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
 
-	//obj���烂�f���f�[�^��ǂݍ���
+	//objからモデルデータを読み込む
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
-	//�}�b�v����
+	//マップ生成
 	mapData.reset(MapDataStage::Create(StageManager::GetSelectStage()));
 
-	//�w�i�I�u�W�F�N�g����
+	//背景オブジェクト生成
 	backGround.reset(BackGround::Create());
 
-	//�J����������
+	//カメラ初期化
 	camera.reset(new GameCamera());
-	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //�J�������_�̃X�e�[�W��������̋���
-	const XMINT3 mapSize = mapData->GetMapSize(); //�}�b�v�̑傫��
-	const Vector3 stageCenterPos = {}; //�X�e�[�W�������W
+	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //カメラ視点のステージ中央からの距離
+	const XMINT3 mapSize = mapData->GetMapSize(); //マップの大きさ
+	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
-	//�e�p�����J����������
+	//影用光源カメラ初期化
 	lightCamera.reset(new LightCamera());
 	lightCamera->Initialize({ -100, 100, -300 });
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 	OutLine::SetCmaera(camera.get());
 
-	//�v���C���[����
+	//プレイヤー生成
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
-	//�v���C���[�̈ړ��\����p�Ƀ}�b�v�ԍ����Z�b�g
+	//プレイヤーの移動可能判定用にマップ番号をセット
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
-	//�J�����ɐ��������v���C���[���Z�b�g
+	//カメラに生成したプレイヤーをセット
 	camera->SetPlayer(player.get());
 
-	//�V������
+	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 
 
-	//obj�I�u�W�F�N�g�ɃJ�������Z�b�g
+	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
 	ObjObject3d::SetLightCamera(lightCamera.get());
 
-	//obj�I�u�W�F�N�g�Ƀ��C�g���Z�b�g
+	//objオブジェクトにライトをセット
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
-	//obj�I�u�W�F�N�g�ɃJ�������Z�b�g
+	//objオブジェクトにカメラをセット
 	InstanceObject::SetCamera(camera.get());
 	InstanceObject::SetLightCamera(lightCamera.get());
 
-	//obj�I�u�W�F�N�g�Ƀ��C�g���Z�b�g
+	//objオブジェクトにライトをセット
 	InstanceObject::SetLightGroup(lightGroup.get());
 
-	//�p�[�e�B�N���ɃJ�������Z�b�g
+	//パーティクルにカメラをセット
 	ParticleManager::SetCamera(camera.get());
-	//��ʂɃp�[�e�B�N�����c�邱�Ƃ�����̂őS�č폜���Ă���
+	//画面にパーティクルが残ることがあるので全て削除しておく
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//������Ԃ�binary�ۑ�
+	//初期状態をbinary保存
 	KeepBinary(*camera, *player);
 
-	//UI�֌W����
+	//UI関係生成
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
-	//�X�e�[�W�N���AUI����
+	//ステージクリアUI生成
 	stageClear_ = ClearStaging::Create();
 }
 
@@ -98,15 +98,18 @@ void GameScene::Finalize()
 void GameScene::Update()
 {
 	if (!isStageClear) {
-		//�S�ẴX�e�[�W���N���A��̓��ʂȃX�e�[�W�̂݃X�y�[�X�L�[���͂Ń^�C�g���V�[����
+		//全てのステージをクリア後の特別なステージのみスペースキー入力でタイトルシーンへ
 		if (StageManager::GetSelectStage() == 100) {
 			if (Input::GetInstance()->TriggerKey(DIK_SPACE)) {
-				//�V�[���؂�ւ�
+				//シーン切り替え
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 			}
 		}
-		//���̑��X�e�[�W�͒ʏ�̓���
+		//その他ステージは通常の動き
 		else {
+			//次元変更が可能かUIに伝える
+			userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
+
 			//undo
 			if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
 				Undo(camera.get(), player.get());
@@ -116,14 +119,14 @@ void GameScene::Update()
 				Redo(camera.get(), player.get());
 			}
 
-			//R�L�[�Ń��Z�b�g
+			//Rキーでリセット
 			if (Input::GetInstance()->TriggerKey(DIK_R)) {
-				//�V�[���؂�ւ�
+				//シーン切り替え
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-				//binary�폜
+				//binary削除
 				DeleteBinary();
 			}
-			//�G�X�P�[�v�L�[�Ń��j���[���
+			//エスケープキーでメニュー画面
 			else if (Input::GetInstance()->TriggerKey(DIK_ESCAPE)) {
 				if (!userInterface_->GetMenuFlag())
 				{
@@ -135,7 +138,7 @@ void GameScene::Update()
 				}
 			}
 
-			//binary�o��
+			//binary出力
 			if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
 				orderNum++;
 				orderMaxNum = orderNum;
@@ -146,9 +149,9 @@ void GameScene::Update()
 				KeepBinary(*camera, *player);
 			}
 
-			//�v���C���[���S�[����������X�e�[�W�N���A
+			//プレイヤーがゴールをしたらステージクリア
 			if (player->GetIsGoal()) {
-				//�N���A��
+				//クリア音
 				Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
 
 				isStageClear = true;
@@ -161,32 +164,32 @@ void GameScene::Update()
 	else {
 		if (stageClear_->GetIntermediateTrigger())
 		{
-			//binary�폜
+			//binary削除
 			DeleteBinary();
-			//���߂đS�ẴX�e�[�W���N���A�����ꍇ�͓��ʂȃX�e�[�W��
+			//初めて全てのステージをクリアした場合は特別なステージへ
 			if (StageManager::AllStageClearTriggerCheck()) {
-				//�J�����̉�]�����ɖ߂���Ԃɂ���
+				//カメラの回転を元に戻す状態にする
 				camera->SetClearResetAround();
 			}
-			//���̃X�e�[�W������ꍇ�͎��̃X�e�[�W��
+			//次のステージがある場合は次のステージへ
 			else if (StageManager::NextStageSelect()) {
-				//�J�����̉�]�����ɖ߂���Ԃɂ���
+				//カメラの回転を元に戻す状態にする
 				camera->SetClearResetAround();
 			}
-			//���̃X�e�[�W���Ȃ��ꍇ�̓X�e�[�W�Z���N�g�V�[��
+			//次のステージがない場合はステージセレクトシーン
 			else {
-				//�V�[���؂�ւ�
+				//シーン切り替え
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
 			}
 		}
 		else if (stageClear_->GetEndFlag())
 		{
-			//�Đ���
+			//再生成
 			ReCreate();
 			stageClear_->Reset();
 		}
 
-		//�}�b�v���Đ������I������A���̃X�e�[�W���J�n���邽�߂Ƀt���O�Ȃǂ����Z�b�g
+		//マップが再生成を終えたら、次のステージを開始するためにフラグなどをリセット
 		if (mapData->GetIsReCreateEnd()) {
 			RestartGame();
 		}
@@ -197,42 +200,41 @@ void GameScene::Update()
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 
-	//�J�����X�V
+	//カメラ更新
 	camera->Update();
 	lightCamera->Update();
 
-	//���C�g�X�V
+	//ライト更新
 	lightGroup->Update();
 
-	//�I�u�W�F�N�g�X�V
-	//�v���C���[
+	//オブジェクト更新
+	//プレイヤー
 	player->Update();
-	//�}�b�v�p�u���b�N
+	//マップ用ブロック
 	mapData->Update();
-	//�V��
+	//天球
 	skydome->Update();
-	//�w�i�I�u�W�F�N�g
+	//背景オブジェクト
 	backGround->Update();
 
-	//�X�v���C�g
-	//UI�̍X�V
+	//スプライト
+	//UIの更新
 	userInterface_->Update();
-	//�X�e�[�W�N���AUI�X�V
+	//ステージクリアUI更新
 	stageClear_->Update();
 
-	//�p�[�e�B�N���X�V
+	//パーティクル更新
 	ParticleEmitter::GetInstance()->Update();
 
-	//������Ԃ�binary�ۑ�
+	//初期状態をbinary保存
 	if (player->GetIsStartMove()) {
 		KeepBinary(*camera, *player);
 	}
 
-	//�V�[���ύX���
+	//シーン変更状態
 	SceneChangeMode();
-	//�V�[���ύX���o�X�V
+	//シーン変更演出更新
 	SceneChangeEffect::Update();
-
 }
 
 void GameScene::DrawBackSprite()
@@ -242,40 +244,43 @@ void GameScene::DrawBackSprite()
 void GameScene::Draw3D()
 {
 
-	//Object3d���ʃR�}���h
+	//Object3d共通コマンド
 	ObjObject3d::DrawOutLinePrev();
-	//ObjObject3d::DrawPrev();
-	///-------Object3d�`�悱������-------///
+
+	///-------Object3d描画ここから-------///
 	// �A�E�g���C���p�萔�o�b�t�@�Z�b�g
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kNone);
-	//�V��
+	//天球
 	skydome->Draw();
 	////�v���C���[
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kPlayer);
+	//プレイヤー
 	player->Draw();
 
-	///-------Object3d�`�悱���܂�-------///
+	///-------Object3d描画ここまで-------///
 
-	///-------Instance�`�悱������-------///
+	///-------Instance描画ここから-------///
 
 	//�}�b�v�p�u���b�N
 	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
+	//マップ用ブロック
 	mapData->Draw();
 
 
 
 	InstanceObject::DrawPrev();
-	//�w�i�I�u�W�F�N�g
+	//背景オブジェクト
 	backGround->Draw();
 
 
-	///-------Instance�`�悱���܂�-------///
+	///-------Instance描画ここまで-------///
 
-	///-------�p�[�e�B�N���`�悱������-------///
-	//�p�[�e�B�N���`��
+	///-------パーティクル描画ここから-------///
+
+	//パーティクル描画
 	ParticleEmitter::GetInstance()->DrawAll();
 
-	///-------�p�[�e�B�N���`�悱���܂�-------///
+	///-------パーティクル描画ここまで-------///
 }
 
 void GameScene::AfterBloomDraw()
@@ -286,58 +291,58 @@ void GameScene::AfterBloomDraw()
 
 void GameScene::Draw3DLightView()
 {
-	///-------Instance�`�悱������-------///
+	///-------Instance描画ここから-------///
 
 	InstanceObject::DrawLightViewPrev();
 
-	//�w�i�I�u�W�F�N�g
+	//背景オブジェクト
 	backGround->DrawLightCameraView();
 
-	///-------Instance�`�悱���܂�-------///
+	///-------Instance描画ここまで-------///
 }
 
 void GameScene::DrawFrontSprite()
 {
-	//�X�v���C�g���ʃR�}���h
+	//スプライト共通コマンド
 	SpriteCommon::GetInstance()->DrawPrev();
-	///-------�X�v���C�g�`�悱������-------///
+	///-------スプライト描画ここから-------///
 
-	//UI�֌W
+	//UI関係
 	userInterface_->Draw();
 
-	//�X�e�[�W�N���A
+	//ステージクリア
 	stageClear_->Draw();
 
-	//�V�[���ύX���o�`��
+	//シーン変更演出描画
 	SceneChangeEffect::Draw();
 
 
-	///-------�X�v���C�g�`�悱���܂�-------///
+	///-------スプライト描画ここまで-------///
 }
 
 void GameScene::MenuAction()
 {
-	//���j���[���J���Ă��Ȃ���Δ�����
+	//メニューが開いていなければ抜ける
 	if (!userInterface_->GetMenuFlag()) { return; }
-	//����̃X�y�[�X�L�[�������Ă��Ȃ���Δ�����
+	//決定のスペースキーを押していなければ抜ける
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//�X�y�[�X�L�[���������u�ԂɑI������Ă��鍀�ڂɂ���ċ�����ݒ�
-	//�X�e�[�W�I���V�[���ւ̈ڍs
+	//スペースキーを押した瞬間に選択されている項目によって挙動を設定
+	//ステージ選択シーンへの移行
 	if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeStageSelect) {
-		//�V�[���؂�ւ�
+		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "STAGESELECT");
-		//se�Đ�
+		//se再生
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 	else if (userInterface_->GetSelectionNumber() == (int)UserInterface::GameSceneItem::SceneChangeTitle) {
-		//�V�[���؂�ւ�
+		//シーン切り替え
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
-		//se�Đ�
+		//se再生
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 
-	//binary�폜
+	//binary削除
 	DeleteBinary();
 }
 
@@ -353,17 +358,19 @@ void GameScene::ReCreate()
 
 void GameScene::RestartGame()
 {
-	//���̃X�e�[�W���J�n���邽�߂Ƀt���O�Ȃǂ����Z�b�g
+	//次のステージを開始するためにフラグなどをリセット
 	isStageClear = false;
 	mapData->SetIsReCreateEnd(false);
 	skydome->SetIsRotate(false);
 	userInterface_->SetMenuFlag(false);
 	userInterface_->DrawerSpriteReset();
+	//次元変更が可能かUIに伝える
+	userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
-	//�S�ẴX�e�[�W���N���A��̓��ʂȃX�e�[�W�݂̂��̑��̐ݒ�����Z�b�g�������ɔ�����
+	//全てのステージをクリア後の特別なステージのみその他の設定をリセットさせずに抜ける
 	if (StageManager::GetSelectStage() == 100) { return; }
 
-	//���̃X�e�[�W���J�n���邽�߂Ƀt���O�Ȃǂ����Z�b�g
+	//次のステージを開始するためにフラグなどをリセット
 	player->Reset();
 	camera->Reset();
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;

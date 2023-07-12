@@ -94,6 +94,7 @@ public: //メンバ関数
 	void SetIsFlipX(bool isFlipX) { this->isFlipX = isFlipX; }
 	void SetIsFlipY(bool isFlipY) { this->isFlipY = isFlipY; }
 	void SetScale(float scale);
+	void SetParent(Sprite* parent) { this->parent = parent; }
 
 
 protected: //メンバ変数
@@ -129,4 +130,6 @@ protected: //メンバ変数
 	Vector2 texSize = { 100, 100 };
 	//スケール
 	float scale_ = 1.0f;
+	//親スプライト
+	Sprite* parent = nullptr;
 };

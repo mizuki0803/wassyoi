@@ -91,6 +91,12 @@ public: //メンバ関数
 	/// </summary>
 	void Reset();
 
+	/// <summary>
+	/// 次元変更を開始できるか判定
+	/// </summary>
+	/// <returns>次元変更を開始できるか</returns>
+	bool ChangeDimensionStartCheck();
+
 	//getter
 	const bool GetIsGoal() { return isGoal; }
 	const bool GetIsMove() { return isMove; }

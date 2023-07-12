@@ -99,6 +99,9 @@ void TitleScene::Update()
 	//DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
 
 	if (!isStageClear) {
+		//ŽŸŒ³•ÏX‚ª‰Â”\‚©UI‚É“`‚¦‚é
+		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
+
 		//undo
 		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
 			Undo(camera.get(), player.get());

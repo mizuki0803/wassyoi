@@ -169,6 +169,12 @@ void Sprite::Update()
 	//平行移動
 	matWorld *= XMMatrixTranslation(position.x, position.y, 0);
 
+	//親オブジェクトがあれば
+	if (parent != nullptr) {
+		//親オブジェクトのワールド行列をかける
+		matWorld *= parent->matWorld;
+	}
+
 	//頂点バッファに反映
 	TransferVertexBuffer();
 

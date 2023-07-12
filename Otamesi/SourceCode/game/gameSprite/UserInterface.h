@@ -101,6 +101,12 @@ public: //メンバ関数
 	void MenuSelection();
 
 	/// <summary>
+	/// 次元変更可能かをチェックし、スプライトの色を変更する
+	/// </summary>
+	/// <param name="isChangeDimension">次元変更可能か</param>
+	void IsChangeDimensionCheck(bool isChangeDimension);
+
+	/// <summary>
 	/// 引き出しスプライトの開閉状態をリセット
 	/// </summary>
 	void DrawerSpriteReset();
@@ -136,8 +142,12 @@ private: //静的メンバ変数
 	static const float soundMaxVolume_;
 
 private: //メンバ変数
+	//次元変更可能か可能のときのみ光るスペースキースプライト
+	std::unique_ptr<Sprite> isChangeDimenisonSprite;
 	//説明用引き出しスプライト
 	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
+	//引き出しスプライトの子供
+	std::unique_ptr<Sprite> childSprite;
 	// イージング進行
 	float easeTimer_ = 0.0f;
 	// メニュー用の背景
