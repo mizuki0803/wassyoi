@@ -228,29 +228,28 @@ void GameScene::Draw3D()
 {
 
 	//Object3d共通コマンド
-	ObjObject3d::DrawPrev();
+	ObjObject3d::DrawOutLinePrev();
+	//ObjObject3d::DrawPrev();
 	///-------Object3d描画ここから-------///
-
-	////プレイヤー
-	//player->Draw();
-
+	// アウトライン用定数バッファセット
+	GamePostEffect::SetIdColorBuffer(5,PostEffect::kNone);
 	//天球
 	skydome->Draw();
-
-
-
+	////プレイヤー
+	GamePostEffect::SetIdColorBuffer(5,PostEffect::kPlayer);
+	player->Draw();
 
 	///-------Object3d描画ここまで-------///
 
 	///-------Instance描画ここから-------///
 
-	InstanceObject::DrawPrev();
 	//マップ用ブロック
+	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	mapData->Draw();
 
 
 
-
+	InstanceObject::DrawPrev();
 	//背景オブジェクト
 	backGround->Draw();
 
@@ -269,22 +268,6 @@ void GameScene::AfterBloomDraw()
 	player->EffectDraw();
 }
 
-void GameScene::OutLineDraw()
-{
-
-	ObjObject3d::DrawPrev();
-	///-------アウトライン関係ここから-------///
-	
-	// プレイヤーのカラーと深度を書き出し
-	player->Draw();
-
-	// ステージのカラーと深度を書き出し
-	//InstanceObject::DrawMulutiPrev();
-	//mapData->Draw();
-
-
-	///-------アウトライン関係ここまで-------///
-}
 
 void GameScene::Draw3DLightView()
 {

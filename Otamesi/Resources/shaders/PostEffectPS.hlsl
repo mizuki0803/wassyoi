@@ -1,59 +1,43 @@
 #include "PostEffect.hlsli"
 
-Texture2D<float4> tex : register(t0);	//0番スロットに設定されたテクスチャ
+Texture2D<float4> baseTex : register(t0);	//0番スロットに設定されたテクスチャ
+Texture2D<float4> idTex : register(t1);	    //1番スロットに設定されたテクスチャ
+Texture2D<float4> playerTex : register(t2);	//2番スロットに設定されたテクスチャ
+Texture2D<float4> goalTex : register(t3); //3番スロットに設定されたテクスチャ
 SamplerState smp : register(s0);		//0番スロットに設定されたサンプラー
-
-float Gaussian(float2 drawUV, float2 pickUV, float sigma)
-{
-	float d = distance(drawUV, pickUV);
-	return exp(-(d * d) / (2 * sigma * sigma));
-}
-
-float4 GaussianBlur(float2 uv, float sigma, float stepWidth)
-{
-	float totalWeight = 0;
-	float4 col = float4(0, 0, 0, 0);
-
-	for (float py = -sigma * 2; py <= sigma * 2; py += stepWidth) {
-		for (float px = -sigma * 2; px <= sigma * 2; px += stepWidth) {
-			float2 pickUV = uv + float2(px, py);
-			float weight = Gaussian(uv, pickUV, sigma);
-			col += tex.Sample(smp, pickUV) * weight;
-			totalWeight += weight;
-		}
-	}
-	col.rgb = col.rgb / totalWeight;
-	return col;
-}
 
 float4 main(VSOutput input) : SV_TARGET
 {
-	//ラジアンブラー
-	if (isRadialBlur) {
-		//最終的に使用する色
-		float4 color = { 0, 0, 0, 1 }; //黒で初期化
-		//中心座標
-		const float2 center = { 0.5f, 0.5f };
-		//中心を基準にしておく
-		float2 pos = input.uv - center;
-		//基準からの距離
-		float dist = length(pos);
-		//サンプル回数
-		float factor = radialBlurStrength / (float)radialBlurSampleNum * dist;
-		for (int i = 0; i < (int)radialBlurSampleNum; i++) {
-			float uvOffset = 1.0f - factor * float(i);
-			color += tex.Sample(smp, pos * uvOffset + center);
-		}
-		//平均を求める
-		color /= float(radialBlurSampleNum);
-		return color;
-	}
+	// 最終的な出力
+    float4 outputColor;
+	
+    float4 baseColor = baseTex.Sample(smp, input.uv);
+    float4 idColor = idTex.Sample(smp, input.uv);
+    float4 playerColor = playerTex.Sample(smp, input.uv);
+    float4 goalColor = goalTex.Sample(smp, input.uv);
+	
+    
+    // ID抽出
+    float isPlayerID = step(0.5f, playerColor.b);
+    float isGoalID = step(0.5f, goalColor.r);
+    float isStageID = step(0.5f, idColor.g);
+    
+    float isOutline = step(1.0f, (isPlayerID + isStageID) / 2.0f);
+    float isGoal = step(1.0f, (isGoalID + isStageID) / 2.0f);
+    
+    float4 outline =
+    lerp(
+        float4(0.0f,0.0f,0.0f,0.0f),
+        float4(0.0f,0.0f,1.0f,0.5f),
+        isOutline
+    );
+    float4 goalPosition =
+    lerp(
+        float4(0.0f,0.0f,0.0f,0.0f),
+        float4(1.0f,0.0f,0.0f,0.5f),
+        isGoal
+    );
 
-	
-	
-	
-
-	//通常
-	float4 texColor = tex.Sample(smp, input.uv);
-	return float4(texColor.rgb, 1);
+    outputColor = baseColor + outline + goalPosition;
+    return float4(outputColor.rgb, baseColor.w);
 }

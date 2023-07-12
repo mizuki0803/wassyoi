@@ -1,12 +1,21 @@
 #include "OutLine.hlsli"
 
-VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
+VSOutput main(float4 pos : POSITION, float3 normal : NORMAL, float2 uv : TEXCOORD)
 {
-	VSOutput output;	//ピクセルシェーダに渡す値
-	output.uv = uv;
-	
-    output.world_position = float4(pos.xyz, 1.0f);
-    output.viewprojection_position = mul(float4(pos.xyz, 1.0f), output.world_position);
-	
-	return output;
+	//法線にワールド行列によるスケーリング・回転を適用
+    float4 wnormal = normalize(mul(world, float4(normal, 0)));
+    float4 wpos = mul(world, pos);
+
+	//ピクセルシェーダに渡す値
+    VSOutput output;
+    output.svpos = mul(mul(viewproj, world), pos);
+
+    output.worldpos = /*wpos*/float4(world._41_42_43_44);
+    output.normal = wnormal.xyz;
+    output.uv = uv;
+
+	//ライト視点から見た座標
+    output.shadowpos = mul(mul(light_viewproj, world), pos);
+
+    return output;
 }

@@ -68,11 +68,6 @@ public: //メンバ関数
 	/// </summary>
 	void DrawSceneRear();
 
-	/// <summary>
-	/// パイプライン生成
-	/// </summary>
-	void CreateBeforeGraphicsPipelineState();
-
 	static void SetCmaera(Camera *camera)
 	{
 		camera_ = camera;
@@ -109,6 +104,8 @@ private: //メンバ変数
 	ComPtr<ID3D12Resource> depthBuff;
 	//RTV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV;
+	//深度バッファ用デスクリプタヒープ
+	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
 	struct CameraBuffer
 	{

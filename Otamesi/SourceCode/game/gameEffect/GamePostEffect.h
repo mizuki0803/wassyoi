@@ -28,6 +28,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	static void DrawSceneRear();
 
+	static void SetIdColorBuffer(int num, PostEffect::ObjectIdType type)
+	{
+		postEffect->SetIdColorBuffer(num, type);
+	}
+
 	//getter
 	static PostEffect* GetPostEffect() { return GamePostEffect::postEffect.get(); }
 

@@ -1,21 +1,21 @@
-#include "OutLine.hlsli"
+#include "InstanceOutLine.hlsli"
 
-Texture2D color_texture_2d : register(t0);
-Texture2D<float4> shadow_map : register(t1); //1番スロットに設定されたテクスチャ
-
-SamplerState smp : register(s0);
+Texture2D<float4> tex : register(t0); //0番スロットに設定されたテクスチャ
+Texture2D<float4> shadowMap : register(t1); //1番スロットに設定されたテクスチャ
+SamplerState smp : register(s0); //0番スロットに設定されたサンプラー
 
 PSOutput main(VSOutput input) : SV_TARGET
 {
     PSOutput output;
-    
-    //テクスチャマッピング
-    float4 texcolor = color_texture_2d.Sample(smp, input.uv) * color;
+	//テクスチャマッピング
+    float4 texcolor = tex.Sample(smp, input.uv) * color[input.instNo];
+
+    clip(texcolor.a < 0.1f ? -1 : 1);
 
 	// 光沢度
     const float shininess = 4.0f;
 	// 頂点から視点への方向ベクトル
-    float3 eyedir = normalize(camera_pos - input.worldpos.xyz);
+    float3 eyedir = normalize(cameraPos - input.worldpos.xyz);
 
 	// 環境反射光
     float3 ambient = m_ambient;
@@ -131,7 +131,7 @@ PSOutput main(VSOutput input) : SV_TARGET
 
 	//影(シャドウマップ)
     float shadow = 1.0f;
-    if (is_shadowMap)
+    if (isShadowMap)
     {
 		//シャドウマップのZ値を参照
         float w = 1.0f / input.shadowpos.w;
@@ -141,22 +141,34 @@ PSOutput main(VSOutput input) : SV_TARGET
 		//uv座標で0～1なら影判定をする
         if (shadowTexUV.x >= 0 && shadowTexUV.x <= 1.0f && shadowTexUV.y >= 0 && shadowTexUV.y <= 1.0f)
         {
-            if (shadow_map.Sample(smp, shadowTexUV).x + 0.0005f < input.shadowpos.z * w)
+            if (shadowMap.Sample(smp, shadowTexUV).x + 0.0005f < input.shadowpos.z * w)
             {
                 shadow *= 0.5f;
             }
         }
     }
-    output.color = shadecolor * texcolor * float4(shadow, shadow, shadow, 1);
+	
+    output.color = texcolor * float4(shadow, shadow, shadow, 1);
+
     
-    
+    // 法線出力
+    float3 normal;
+    float3x3 world_normal_matrix =
+    {
+        normalize(input.normal),
+		normalize(input.normal),
+		normalize(input.normal)
+    };
+    normal = normalize(mul(normal * 2.0f - 1.0f, world_normal_matrix));
+	
     float isPlayer = step(0.5f, idColor.b);
-    output.player = float4(0.0f, 0.0f, isPlayer,isPlayer);
+    output.player = float4(0.0f, 0.0f, isPlayer, isPlayer);
+	
     float isGoal = step(0.5f, idColor.r);
     output.goal = float4(isGoal, 0.0f, 0.0f, isGoal);
-    
-    
     output.id = idColor;
-    
-    return output; // 2枚のターゲットに書き込み
+	
+	// シェーディングによる色で描画;
+    return output;
+
 }

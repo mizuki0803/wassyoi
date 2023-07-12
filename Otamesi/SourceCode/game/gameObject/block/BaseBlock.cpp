@@ -1,5 +1,5 @@
 #include "BaseBlock.h"
-
+#include "GamePostEffect.h"
 void BaseBlock::StaticInitialize()
 {
 	model[int(BROCK_TYPE::block)].reset(ObjModel::LoadFromOBJ("block"));
@@ -22,7 +22,31 @@ const XMFLOAT3& _rotation, const XMFLOAT4& _color, const XMMATRIX* _parentWorld)
 void BaseBlock::Draw()
 {
 	//ÉuÉçÉbÉNï`âÊ
+	int type = static_cast<int>(BROCK_TYPE::block);
+
+	GamePostEffect::SetIdColorBuffer(6, PostEffect::kGoal);
+	block[static_cast<int>(BROCK_TYPE::goal)]->Draw();
 	for (auto& i : block) {
-		i->Draw();
+		switch (static_cast<BROCK_TYPE>(type))
+		{
+		case BaseBlock::BROCK_TYPE::block:
+			GamePostEffect::SetIdColorBuffer(6, PostEffect::kStage);
+			i->Draw();
+			break;
+		case BaseBlock::BROCK_TYPE::plane:
+			GamePostEffect::SetIdColorBuffer(6, PostEffect::kStage);
+			i->Draw();
+			break;
+		case BaseBlock::BROCK_TYPE::goal:
+			break;
+		case BaseBlock::BROCK_TYPE::player:
+			GamePostEffect::SetIdColorBuffer(6, PostEffect::kPlayer);
+			i->Draw();
+			break;
+		default:
+			break;
+		}
+
+		++type;
 	}
 }

@@ -68,6 +68,12 @@ public: //静的メンバ関数
 	static void CreateAddPipeline();
 
 	/// <summary>
+	/// アウトラインパイプライン
+	/// </summary>
+	static void CreateOutLinePipeline();
+
+
+	/// <summary>
 	/// 描画前処理
 	/// </summary>
 	static void DrawPrev();
@@ -81,6 +87,11 @@ public: //静的メンバ関数
 	/// 描画前処理
 	/// </summary>
 	static void DrawAddPrev();
+	
+	/// <summary>
+	/// 描画前処理
+	/// </summary>
+	static void DrawOutLinePrev();
 
 	/// <summary>
 	/// 生成処理
@@ -144,6 +155,8 @@ protected: //静的メンバ変数
 	static PipelineSet pipelineSetLightView;
 	//パイプラインセット
 	static PipelineSet pipelineSetAdd;
+	//パイプラインセット
+	static PipelineSet pipelineSetOutLine;
 	//ライト
 	static LightGroup* lightGroup;
 	//カメラ

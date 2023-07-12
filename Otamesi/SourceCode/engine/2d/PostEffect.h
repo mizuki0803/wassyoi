@@ -33,6 +33,21 @@ public: //サブクラス
 		float pad1;
 	};
 
+	// オブジェクト用（）
+	struct ObjectIdColor
+	{
+		float color[4];
+	};
+	
+	enum ObjectIdType
+	{
+		kNone,
+		kPlayer,
+		kStage,
+		kGoal,
+		kMax
+	};
+
 public: //定数
 	//ラジアルブラーの最小サンプル回数
 	static const int radialBlurSampleNumMin = 1;
@@ -88,6 +103,8 @@ public: //メンバ関数
 	void SetRadialBlurSampleNum(const int radialBlurSampleNum) { this->radialBlurSampleNum = radialBlurSampleNum; }
 	void SetRadialBlurStrength(const float radialBlurStrength) { this->radialBlurStrength = radialBlurStrength; }
 
+	void SetIdColorBuffer(int num, ObjectIdType type);
+
 private: //静的メンバ変数
 	//画面クリアカラー
 	static const float clearColor[4];
@@ -105,8 +122,19 @@ private: //メンバ変数
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
 	//定数バッファ
 	ComPtr<ID3D12Resource> constBuff;
+	
+	ComPtr<ID3D12Resource> objectIdConstBuff[kMax];
 	//テクスチャ
-	Texture texture;
+	enum TextureName
+	{
+		kBaseTexture,
+		kPlayerTexture,
+		kIdTexture,
+		kGoalTexture,
+		kTexturMax,
+	};
+	Texture texture[kTexturMax];	// 通常の出力結果用
+
 	//深度バッファ
 	ComPtr<ID3D12Resource> depthBuff;
 	//RTV用デスクリプタヒープ

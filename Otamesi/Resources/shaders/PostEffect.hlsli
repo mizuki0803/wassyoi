@@ -1,10 +1,3 @@
-cbuffer cbuff0 : register(b0)
-{
-	uint isRadialBlur; //ラジアルブラーをかけるか
-	uint radialBlurSampleNum; //ラジアルブラーのサンプル回数
-	float radialBlurStrength; //ラジアルブラーの広がる強さ
-};
-
 //頂点シェーダからピクセルシェーダへのやり取りに使用する構造体
 struct VSOutput
 {

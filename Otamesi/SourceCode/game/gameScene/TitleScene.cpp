@@ -191,27 +191,30 @@ void TitleScene::DrawBackSprite()
 void TitleScene::Draw3D()
 {
 	//Object3d共通コマンド
-	ObjObject3d::DrawPrev();
+	ObjObject3d::DrawOutLinePrev();
 	///-------Object3d描画ここから-------///
-
-	//プレイヤー
-	player->Draw();
+	// アウトライン用定数バッファセット
+	GamePostEffect::SetIdColorBuffer(5, PostEffect::kNone);
 	//天球
 	skydome->Draw();
+	////プレイヤー
+	GamePostEffect::SetIdColorBuffer(5, PostEffect::kPlayer);
+	player->Draw();
 
 	///-------Object3d描画ここまで-------///
 
 	///-------Instance描画ここから-------///
 
-	InstanceObject::DrawPrev();
 	//マップ用ブロック
+	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	mapData->Draw();
 
+
 	//背景オブジェクト
+	InstanceObject::DrawPrev();
 	backGround->Draw();
 
 	///-------Instance描画ここまで-------///
-	player->EffectDraw();
 
 	///-------パーティクル描画ここから-------///
 
@@ -223,6 +226,7 @@ void TitleScene::Draw3D()
 
 void TitleScene::AfterBloomDraw()
 {
+	player->EffectDraw();
 }
 
 void TitleScene::Draw3DLightView()

@@ -78,8 +78,6 @@ void FrameWork::Initialize()
 
 	outLine->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	outLine.reset(OutLine::Create());
-	outLineDraw->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
-	outLineDraw.reset(OutLineDraw::Create());
 	//シャドウマップ共通初期化処理
 	ShadowMap::ShadowMapCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	//シャドウマップの初期化
@@ -180,14 +178,14 @@ void FrameWork::Draw()
 	SceneManager::GetInstance()->AfterBloomDraw();
 	afterBloom->DrawSceneRear();
 	
-	// アウトライン描画用
-	outLine->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
-	SceneManager::GetInstance()->OutLineDraw();
-	outLine->DrawSceneRear();
+	//// アウトライン描画用
+	//outLine->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
+	//SceneManager::GetInstance()->OutLineDraw();
+	//outLine->DrawSceneRear();
 
-	outLineDraw->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
-	outLine->Draw();
-	outLineDraw->DrawSceneRear();
+	//outLineDraw->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
+	//outLine->Draw();
+	//outLineDraw->DrawSceneRear();
 
 
 	//グラフィックスコマンド(前)
@@ -199,7 +197,7 @@ void FrameWork::Draw()
 	//ゲームポストエフェクトの描画
 	GamePostEffect::Draw();
 	afterBloom->Draw();				// アフターブルームを描画
-	outLineDraw->Draw();
+	//outLineDraw->Draw();
 	//シーンの前景スプライト描画
 	SceneManager::GetInstance()->DrawFrontSprite();
 

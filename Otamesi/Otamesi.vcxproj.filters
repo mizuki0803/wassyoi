@@ -374,9 +374,6 @@
     <ClCompile Include="SourceCode\engine\2d\OutLine.cpp">
       <Filter>ソース ファイル\engine\2d\OutLine</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\engine\2d\OutLineDraw.cpp">
-      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -412,7 +409,7 @@
     <None Include="Resources\shaders\OutLine.hlsli">
       <Filter>リソース ファイル\OutLine</Filter>
     </None>
-    <None Include="Resources\shaders\OutLineAfter.hlsli">
+    <None Include="Resources\shaders\InstanceOutLine.hlsli">
       <Filter>リソース ファイル\OutLine</Filter>
     </None>
   </ItemGroup>
@@ -486,10 +483,10 @@
     <FxCompile Include="Resources\shaders\OutLineVS.hlsl">
       <Filter>リソース ファイル\OutLine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OutLineAfterPS.hlsl">
+    <FxCompile Include="Resources\shaders\InstanceOutLinePS.hlsl">
       <Filter>リソース ファイル\OutLine</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\shaders\OutLineAfterVS.hlsl">
+    <FxCompile Include="Resources\shaders\InstanceOutLineVS.hlsl">
       <Filter>リソース ファイル\OutLine</Filter>
     </FxCompile>
   </ItemGroup>
@@ -735,9 +732,6 @@
       <Filter>ソース ファイル\engine\2d\AfterBloom</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\engine\2d\OutLine.h">
-      <Filter>ソース ファイル\engine\2d\OutLine</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\engine\2d\OutLineDraw.h">
       <Filter>ソース ファイル\engine\2d\OutLine</Filter>
     </ClInclude>
   </ItemGroup>

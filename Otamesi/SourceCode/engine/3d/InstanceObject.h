@@ -63,6 +63,7 @@ public: //サブクラス
 	{
 		Alpha,
 		Add,
+		OutLine,
 		Size,
 	};
 
@@ -88,6 +89,8 @@ public: //静的メンバ関数
 	/// パイプライン生成
 	/// </summary>
 	static void CreateLightViewPipeline();
+
+	static void CreateOutLinePipeline();
 
 	/// <summary>
 	/// 描画前処理

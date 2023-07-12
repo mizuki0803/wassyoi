@@ -10,7 +10,6 @@
 #include "AbstractSceneFactory.h"
 #include "AfterBloom.h"
 #include "OutLine.h"
-#include "OutLineDraw.h"
 
 /// <summary>
 /// フレームワーク
@@ -68,7 +67,6 @@ protected: //メンバ変数
 	std::unique_ptr<ShadowMap> shadowMap;
 	std::unique_ptr<AfterBloom> afterBloom;
 	std::unique_ptr<OutLine> outLine;
-	std::unique_ptr<OutLineDraw> outLineDraw;
 	//シーン工場
 	std::unique_ptr<AbstractSceneFactory> sceneFactory;
 };
