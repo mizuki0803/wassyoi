@@ -36,6 +36,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void Draw() override;
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 	//getter
 	StageSelectBlockManager* GetStageSelectBlockManager() { return blockManager.get(); }
 

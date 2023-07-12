@@ -57,6 +57,12 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void MenuAction() override;
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset()override;
+
+
 private: //ƒƒ“ƒo•Ï”
 	//ƒJƒƒ‰
 	std::unique_ptr<GameCamera> camera;

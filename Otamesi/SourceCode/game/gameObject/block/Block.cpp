@@ -29,6 +29,11 @@ void Block::Draw()
 	instanceBlock->Draw();
 }
 
+void Block::FrameReset()
+{
+	instanceBlock->FrameReset();
+}
+
 bool Block::Initialize(const int _blockType, const XMINT3& mapChipNum)
 {
 	//ブロックの種類を「ブロック」に設定

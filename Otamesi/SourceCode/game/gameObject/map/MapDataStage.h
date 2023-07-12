@@ -60,6 +60,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void ReCreateMapBlock(const int selectStageNum);
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 	void BlockCreate(const MapBlockData::MapBlockType type, const XMINT3 chipNum, const int count);
 	void BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 chipNum);
 

@@ -88,3 +88,8 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	//次のシーンをセット
 	nextScene = sceneFactory->CreateScene(sceneName);
 }
+
+void SceneManager::FrameReset()
+{
+	scene->FrameReset();
+}

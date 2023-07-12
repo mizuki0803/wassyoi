@@ -291,3 +291,9 @@ void TitleScene::MenuAction()
 	//binaryíœ
 	DeleteBinary();
 }
+
+void TitleScene::FrameReset()
+{
+	mapData->FrameReset();
+	backGround->FrameReset();
+}

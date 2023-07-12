@@ -54,6 +54,13 @@ void MapDataStageSelect::Draw()
 	Block::Draw();
 }
 
+void MapDataStageSelect::FrameReset()
+{
+	for (auto& i : blocks) {
+		i->FrameReset();
+	}
+}
+
 void MapDataStageSelect::CreateMapBlock()
 {
 	//ƒuƒƒbƒN¶¬

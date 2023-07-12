@@ -66,6 +66,13 @@ void MapDataStageSelectManager::DrawUI()
 	stageNumberUI->Draw();
 }
 
+void MapDataStageSelectManager::FrameReset()
+{
+	for (auto& i : mapDatas) {
+		i->FrameReset();
+}
+}
+
 void MapDataStageSelectManager::ChangeStage()
 {
 	if (menuFlag_) { return; }

@@ -369,3 +369,9 @@ void GameScene::RestartGame()
 	orderMaxNum = orderNum = deleteOrderMaxNum = 0;
 	KeepBinary(*camera, *player);
 }
+
+void GameScene::FrameReset()
+{
+	mapData->FrameReset();
+	backGround->FrameReset();
+}

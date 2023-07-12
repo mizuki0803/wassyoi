@@ -68,3 +68,11 @@ void BackGround::DrawLightCameraView()
 
 	}
 }
+
+void BackGround::FrameReset()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		block[i]->FrameReset();
+	}
+}

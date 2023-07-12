@@ -67,6 +67,11 @@ public: //�����o�֐�
 	/// </summary>
 	void RestartGame();
 
+	/// <summary>
+	/// frameごとの初期化
+	/// </summary>
+	void FrameReset()override;
+
 private: //�����o�ϐ�
 	//�J����
 	std::unique_ptr<GameCamera> camera;
@@ -111,6 +116,4 @@ private: //�����o�ϐ�
 
 	//�X�e�[�W�N���A�t���O
 	bool isStageClear = false;
-
-
 };

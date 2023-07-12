@@ -56,6 +56,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	virtual void DrawFrontSprite() = 0;
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	virtual void FrameReset() = 0;
+
 	//getter
 	bool GetIsEndRequest() { return isEndRequest; }
 

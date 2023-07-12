@@ -298,6 +298,13 @@ void MapDataStage::ReCreateMapBlock(const int selectStageNum)
 	phase_ = static_cast<int>(GamePhase::ReStart);
 }
 
+void MapDataStage::FrameReset()
+{
+	for (auto& i : blocks) {
+		i->FrameReset();
+	}
+}
+
 void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMINT3 chipNum, const int count)
 {
 	std::unique_ptr<StageBlock> newBlock;

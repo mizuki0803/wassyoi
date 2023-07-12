@@ -187,3 +187,8 @@ void StageSelectScene::MenuAction()
 	//binaryíœ
 	DeleteBinary();
 }
+
+void StageSelectScene::FrameReset()
+{
+	mapDataManager->FrameReset();
+}
