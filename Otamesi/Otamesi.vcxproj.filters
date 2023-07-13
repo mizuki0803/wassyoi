@@ -359,12 +359,6 @@
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameSprite\StageClearUI.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
@@ -390,6 +384,9 @@
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
   </ItemGroup>
@@ -746,12 +743,6 @@
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameSprite\StageClearUI.h">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
@@ -774,6 +765,9 @@
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>

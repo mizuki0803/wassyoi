@@ -17,13 +17,16 @@ public: //テクスチャ名
 		MenuFrame,		//メニューの枠組み
 		SoundVolumeBar,	//音量変更用バー
 		SoundVolumePointer,	//音量変更用ポインター
+		Husen,
+		HusenL,
+		HusenR,
 		HowToPlayMove,	//操作方法(移動)
 		HowToPlayCamera,//操作方法(カメラ)
 		HowToPlayChengeDemension,//操作方法(次元変更)
-		Tips1,	//ヒント1
-		Tips2,	//ヒント2
 		HowToPlayReset,	//操作方法(リセット)
 		HowToPlayStageSelect,	//操作方法(ステージセレクト)
+		Hint1,	//ヒント1
+		Hint2,	//ヒント2
 		StageClear,		//ステージクリア
 		ClearBack,		//ステージクリアの背景
 		PressSpace,		//PRESS SPACE

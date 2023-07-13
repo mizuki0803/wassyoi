@@ -8,7 +8,6 @@
 #include "BackGround.h"
 #include "Skydome.h"
 #include "UserInterface.h"
-#include "StageClearUI.h"
 
 /// <summary>
 /// タイトルシーン

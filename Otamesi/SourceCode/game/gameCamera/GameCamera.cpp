@@ -61,7 +61,7 @@ void GameCamera::Update()
 void GameCamera::PlayGame()
 {
 	//ステージクリア状態なら抜ける
-	if (isStageClear || menuFlag_ || isCreateMove_) { return; }
+	if (isStageClear || menuFlag_ || isCreateMove_ || hintFlag_) { return; }
 
 	//トリガーフラグがtrue状態ならばfalseに直しておく
 	if (isTriggerDimensionChange) { isTriggerDimensionChange = false; }

@@ -18,7 +18,7 @@ SceneChangeSprite* SceneChangeSprite::Create(const XMFLOAT4& color, int32_t deep
 	}
 
 	// 初期化
-	if (!sceneChangeSprite->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White), {0, 0}, false, false)) {
+	if (!sceneChangeSprite->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White), {0, 0}, {0, 0}, false, false)) {
 		delete sceneChangeSprite;
 		assert(0);
 		return nullptr;
@@ -35,15 +35,14 @@ SceneChangeSprite* SceneChangeSprite::Create(const XMFLOAT4& color, int32_t deep
 	return sceneChangeSprite;
 }
 
-bool SceneChangeSprite::Initialize(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
+bool SceneChangeSprite::Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
 	//スプライト初期化
-	if (!Sprite::Initialize(texture, anchorpoint, isFlipX, isFlipY)) {
+	if (!Sprite::Initialize(texture, position, anchorpoint, isFlipX, isFlipY)) {
 		return false;
 	}
 
 	//画面全体を覆うのに必要な情報をセット
-	position = { 0, 0 };
 	size = { WindowApp::window_width, WindowApp::window_height };
 	texSize = { 1, 1 };
 

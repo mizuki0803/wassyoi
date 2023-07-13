@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "DrawerSprite.h"
 #include "SoundVolumePointer.h"
+#include "HintSprite.h"
 #include <array>
 #include <vector>
 #include <functional>
@@ -15,10 +16,10 @@ public: //enum
 	enum DrawerSpriteName
 	{
 		HowToPlayMenu,		//メニュー
-		Hint1,				//ヒント1
-		Hint2,				//ヒント2
 		HowToPlayPlayer,	//プレイヤー操作
 		HowToPlayCamera,	//カメラ操作
+		Hint1,				//ヒント1
+		Hint2,				//ヒント2
 
 		DrawerSpriteNum,	//引き出しスプライト数
 	};
@@ -117,6 +118,7 @@ public: //メンバ関数
 
 	bool GetMenuFlag() { return menuFlag_; }
 	const int GetSelectionNumber() { return selectionNumber_; }
+	bool GetIsHintViewMode();
 
 private: //メンバ関数
 	/// <summary>
@@ -131,9 +133,23 @@ private: //メンバ関数
 	void CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
 
 	/// <summary>
+	/// 子供スプライト生成
+	/// </summary>
+	/// <param name="texture">テクスチャ</param>
+	/// <param name="parent">親スプライト</param>
+	/// <param name="position">座標</param>
+	/// <param name="anchorpoint">アンカーポイント</param>
+	void CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f });
+
+	/// <summary>
 	/// キー入力による引き出しスプライト移動開始
 	/// </summary>
 	void DrawerSpriteMoveStartKey();
+
+	/// <summary>
+	/// ヒントスプライトの大きさ変更
+	/// </summary>
+	void HintSpriteSizeChange();
 
 private: //静的メンバ変数
 	//音の大きさ
@@ -147,7 +163,9 @@ private: //メンバ変数
 	//説明用引き出しスプライト
 	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
 	//引き出しスプライトの子供
-	std::unique_ptr<Sprite> childSprite;
+	std::vector<std::unique_ptr<Sprite>> childSprites;
+	//ヒントスプライト
+	std::array<std::unique_ptr<HintSprite>, 2> hintSprites;
 	// イージング進行
 	float easeTimer_ = 0.0f;
 	// メニュー用の背景

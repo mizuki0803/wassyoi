@@ -82,8 +82,7 @@ void TitleScene::Initialize()
 	//UIŠÖŒW¶¬
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Title);
 	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
-	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
-	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
+	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo), { WindowApp::window_width / 2, 140 }));
 	titleLogo->SetTexSize({1658, 518});
 	titleLogo->SetSize(titleLogo->GetTexSize() * 0.4f);
 }
@@ -154,8 +153,8 @@ void TitleScene::Update()
 		}
 	}
 
-	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
-	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 

@@ -39,21 +39,23 @@ public: //メンバ関数
 	/// スプライト生成
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
+	/// <param name="position">座標</param>
 	/// <param name="anchorpoint">アンカーポイント</param>
 	/// <param name="isFlipX">左右反転するか</param>
 	/// <param name="isFlipY">上下反転するか</param>
 	/// <returns>スプライト</returns>
-	static Sprite* Create(const Texture& texture, const Vector2& anchorpoint = { 0.5f, 0.5f }, bool isFlipX = false, bool isFlipY = false);
+	static Sprite* Create(const Texture& texture, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f }, bool isFlipX = false, bool isFlipY = false);
 
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
+	/// <param name="position">座標</param>
 	/// <param name="anchorpoint">アンカーポイント</param>
 	/// <param name="isFlipX">左右反転するか</param>
 	/// <param name="isFlipY">上下反転するか</param>
 	/// <returns>成否</returns>
-	virtual bool Initialize(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY);
+	virtual bool Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY);
 
 	/// <summary>
 	/// 頂点バッファの転送
@@ -81,6 +83,7 @@ public: //メンバ関数
 	const bool GetIsFlipX() { return isFlipX; }
 	const bool GetIsFlipY() { return isFlipY; }
 	const float GetScale() { return scale_; }
+	Sprite* GetParent() { return parent; }
 
 	//setter
 	void SetTexture(const Texture& texture) { this->texture = texture; }

@@ -18,13 +18,12 @@ SoundVolumePointer* SoundVolumePointer::Create(const Texture& texture, const Vec
 bool SoundVolumePointer::Initialize(const Texture& texture, const Vector2 barLeftPos, float barLength, float startPercentage)
 {
 	//スプライト生成
-	if (!Sprite::Initialize(texture, { 0.5f, 0.5f }, false, false)) {
+	if (!Sprite::Initialize(texture, barLeftPos, { 0.5f, 0.5f }, false, false)) {
 		return false;
 	}
 
 	//バーの左端座標をセット
 	this->barLeftPos = barLeftPos;
-	position = barLeftPos;
 	//バーの長さをセット
 	this->barLength = barLength;
 

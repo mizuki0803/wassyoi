@@ -195,8 +195,8 @@ void GameScene::Update()
 		}
 	}
 
-	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
-	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 

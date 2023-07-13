@@ -90,7 +90,7 @@ void Player::ReCreate(const XMINT3& mapChipNum, const Vector3& shiftPos)
 void Player::PlayGame()
 {
 	//ゴールしていないときに動きをする
-	if (isGoal || menuFlag_ || isCreateMove_) {
+	if (isGoal || menuFlag_ || isCreateMove_ || hintFlag_) {
 		return;
 	}
 	//frame最初の初期化

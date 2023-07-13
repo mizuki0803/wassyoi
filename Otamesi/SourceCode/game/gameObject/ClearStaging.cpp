@@ -20,13 +20,11 @@ std::unique_ptr<ClearStaging> ClearStaging::Create()
 void ClearStaging::Initialize()
 {
 	Vector2 position = { -1000.0f, static_cast<float>(WindowApp::window_height / 2) };
-	backScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ClearBack), { 0.5f, 0.5f }, false, false));
-	backScreen_->SetPosition(position);
+	backScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::ClearBack), position, { 0.5f, 0.5f }, false, false));
 	backScreen_->SetScale(0.3f);
 
 	position.x = static_cast<float>(WindowApp::window_width) + 1000.0f;
-	textSprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::StageClear), { 0.5f, 0.5f }, false, false));
-	textSprite_->SetPosition(position);
+	textSprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::StageClear), position, { 0.5f, 0.5f }, false, false));
 	textSprite_->SetScale(0.3f);
 
 	phase_ = static_cast<int>(MovePhase::None);

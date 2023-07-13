@@ -167,12 +167,11 @@
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp" />
-    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\Menu.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\NumberSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp" />
-    <ClCompile Include="SourceCode\game\gameSprite\StageClearUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
@@ -435,12 +434,11 @@
     <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\TitleScene.h" />
     <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h" />
-    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\Menu.h" />
     <ClInclude Include="SourceCode\game\gameSprite\NumberSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h" />
-    <ClInclude Include="SourceCode\game\gameSprite\StageClearUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />
   </ItemGroup>

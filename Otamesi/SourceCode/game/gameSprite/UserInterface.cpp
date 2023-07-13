@@ -28,17 +28,19 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 
 		//次元変更可能確認スプライト生成
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension)));
-		isChangeDimenisonSprite->SetPosition({ 650, WindowApp::window_width / 2 });
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
 
-		/*childSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Number)));
-		childSprite->SetParent(isChangeDimenisonSprite.get());
-		childSprite->SetPosition({ 200, -50 });*/
+		//子供スプライト生成
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の画像
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
@@ -50,6 +52,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+
+		//子供スプライト生成
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -60,28 +65,40 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 
 		//次元変更可能確認スプライト生成
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension)));
-		isChangeDimenisonSprite->SetPosition({ 650, WindowApp::window_width / 2 });
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips1), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Tips2), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint1), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint2), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
+
+		//子供スプライト生成
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[Hint1].get(), {});	//ヒント1説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[Hint2].get(), {});	//ヒント2説明の文字
+
+		//ヒントスプライト生成
+		hintSprites[0].reset(HintSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[Hint1].get(), {}, {}));
+		hintSprites[1].reset(HintSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[Hint2].get(), {}, {}));
 	}
 
 	gamePhase_ = gamePhase;
 
-	menuBackScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0.0f, 0.0f }, false, false));
+	menuBackScreen_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuBackScreen), { 0, 0 }, { 0.0f, 0.0f }, false, false));
 	menuBackScreen_->SetSize(Vector2(WindowApp::window_width, (WindowApp::window_height)));
 
 	menuFunc_.push_back([this] { return MenuOpen(); });
 	menuFunc_.push_back([this] { return MenuSelection(); });
 
 	//音量変更用スプライト生成
-	soundVolumeBar = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumeBar), { 0.0f, 0.5f }, false, false));
-	soundVolumeBar->SetPosition({ menuframe_[0]->GetPosition().x + 150, menuframe_[0]->GetPosition().y });
+	soundVolumeBar = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumeBar),
+		{ menuframe_[0]->GetPosition().x + 150, menuframe_[0]->GetPosition().y }, { 0.0f, 0.5f }, false, false));
 	const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //最大音量と比較時の音量割合
 	soundVolumePointer = std::unique_ptr<SoundVolumePointer>(SoundVolumePointer::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumePointer),
 		soundVolumeBar->GetPosition(), soundVolumeBar->GetSize().x, soundVolumeStartPercentage));
@@ -101,8 +118,6 @@ void UserInterface::Update()
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Update();
 	}
-	//引き出しの子供スプライト更新
-	//childSprite->Update();
 
 	//メニュースプライト更新
 	MenuUpdate();
@@ -111,6 +126,17 @@ void UserInterface::Update()
 	//音量変更用スプライト更新
 	soundVolumeBar->Update();
 	soundVolumePointer->Update();
+
+	//子供スプライト更新
+	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
+		childSprite->Update();
+	}
+	//ヒントスプライト更新
+	HintSpriteSizeChange();	//ヒントスプライトの大きさ変更
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		if (!hintSprite) { continue; }
+		hintSprite->Update();
+	}
 }
 
 void UserInterface::Draw()
@@ -126,8 +152,16 @@ void UserInterface::Draw()
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
 	}
-	//引き出しの子供スプライト描画
-	//childSprite->Draw();
+
+	//子供スプライト描画
+	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
+		childSprite->Draw();
+	}
+	//ヒントスプライト描画
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		if (!hintSprite) { continue; }
+		hintSprite->Draw();
+	}
 
 	//メニュースプライト描画
 	if (menuFlag_)
@@ -283,6 +317,18 @@ void UserInterface::DrawerSpriteReset()
 	}
 }
 
+bool UserInterface::GetIsHintViewMode()
+{
+	//どれか一つでもヒントスプライトが大きい状態 または 大きさ変更中ならtrue
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		if (!hintSprite) { continue; }
+		if (hintSprite->GetIsSizeLarger() || hintSprite->GetIsSizeChange()) { return true; }
+	}
+
+	//全てのヒントスプライトが小さい状態ならfalse
+	return false;
+}
+
 void UserInterface::CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
 	//引き出しスプライト生成
@@ -291,10 +337,21 @@ void UserInterface::CreateDrawerSprite(const Texture& texture, BYTE drawerKey, D
 	drawerSprites.push_back(std::move(newSprite));
 }
 
+void UserInterface::CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint)
+{
+	//子供スプライト生成
+	std::unique_ptr<Sprite> newSprite;
+	newSprite.reset(Sprite::Create(texture, position, anchorpoint));
+	newSprite->SetParent(parent);
+	childSprites.push_back(std::move(newSprite));
+}
+
 void UserInterface::DrawerSpriteMoveStartKey()
 {
 	//メニューが開いている状態なら抜ける
 	if (menuFlag_) { return; }
+	//ヒントスプライトを拡大表示している場合は抜ける
+	if (GetIsHintViewMode()) { return; }
 
 	//キー入力による引き出しスプライト移動開始
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
@@ -305,6 +362,9 @@ void UserInterface::DrawerSpriteMoveStartKey()
 
 		//開閉開始
 		drawerSprite->MoveStart();
+
+		//そもそもヒントがなければ飛ばす
+		if (drawerSprites.size() <= Hint1) { continue; }
 
 		//開閉させるスプライトがヒント1で、開く状態を開始する場合はヒント2を全て閉じる
 		if (drawerSprite == drawerSprites[Hint1] && drawerSprite->GetIsOpenDrawer()) {
@@ -318,5 +378,23 @@ void UserInterface::DrawerSpriteMoveStartKey()
 				drawerSprites[Hint1]->MoveStart();
 			}
 		}
+	}
+}
+
+void UserInterface::HintSpriteSizeChange()
+{
+	//キー入力がされていなければ抜ける
+	if (!Input::GetInstance()->TriggerKey(DIK_RETURN)) { return; }
+
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		//インスタンスがなければ飛ばす
+		if (!hintSprite) { continue; }
+		//親の引き出しが開いている かつ 親の引き出しが移動中でない　の条件を満たせていなければ飛ばす
+		if (!(hintSprite->GetParentStorage()->GetIsOpenDrawer() && !hintSprite->GetParentStorage()->GetIsMoveDrawer())) { continue; }
+		//ヒントスプライトが大きさを変更中なら飛ばす
+		if (hintSprite->GetIsSizeChange()) { continue; }
+
+		//ヒントスプライトの大きさを変更
+		hintSprite->SizeChangeStart();
 	}
 }

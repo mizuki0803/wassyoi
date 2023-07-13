@@ -108,10 +108,11 @@ public: //メンバ関数
 	//setter
 	void SetMoveSurfacePhase(const int _moveSurfacePhase) { moveSurfacePhase = MoveSurfacePhase(_moveSurfacePhase); }
 	void SetMapChipNumberPos(const XMINT3& _mapChipNumberPos) { mapChipNumberPos = _mapChipNumberPos; }
-	void SetNotMove(bool flag1, bool flag2)
+	void SetNotMove(bool menuFlag, bool isCreateMove, bool hintFlag)
 	{ 
-		menuFlag_ = flag1;
-		isCreateMove_ = flag2;
+		menuFlag_ = menuFlag;
+		isCreateMove_ = isCreateMove;
+		hintFlag_ = hintFlag;
 	}
 
 private: //メンバ関数
@@ -211,4 +212,6 @@ private: //メンバ変数
 	bool menuFlag_ = false;
 	// 行動が終わったか
 	bool isCreateMove_ = false;
+	// ヒントを拡大表示しているか
+	bool hintFlag_ = false;
 };
