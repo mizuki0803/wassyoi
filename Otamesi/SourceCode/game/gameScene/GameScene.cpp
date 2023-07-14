@@ -162,6 +162,11 @@ void GameScene::Update()
 		}
 		mapData->SetIsAllStageClear(StageManager::GetIsAllStageClear());
 		mapData->SetSelectStageNum(StageManager::GetSelectStage());
+
+		if (StageManager::GetIsAllStageClear() && StageManager::GetSelectStage() >= 100)
+		{
+			ParticleEmitter::GetInstance()->DemoShine(Vector3(0.0f, 0.0f, -(mapData->GetCameraDist().z - 20.0f)), 30.0f, 1);
+		}
 	}
 	else {
 		if (stageClear_->GetIntermediateTrigger())

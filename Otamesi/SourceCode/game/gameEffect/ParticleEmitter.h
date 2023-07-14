@@ -177,6 +177,14 @@ public: //メンバ関数
 	void ItemShine(const Vector3& position, const float size, const int num);
 
 	/// <summary>
+	/// キラキラ
+	/// </summary>
+	/// <param name="position">パーティクル生成座標</param>
+	/// <param name="size">パーティクル大きさ</param>
+	/// <param name="num">一度に出す数</param>
+	void DemoShine(const Vector3& position, const float size, const int num);
+
+	/// <summary>
 	/// 全削除
 	/// </summary>
 	void AllDelete();

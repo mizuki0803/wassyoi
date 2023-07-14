@@ -43,7 +43,7 @@ void MapDataStage::PlayGame()
 			if (count2 <= count)
 			{
 				ParticleEmitter::GetInstance()->ItemShine(block->GetPosition(), 30.0f, 1);
-				count2 += (rand() % 4) + 1;
+				count2 += 10;
 			}
 
 			count++;
