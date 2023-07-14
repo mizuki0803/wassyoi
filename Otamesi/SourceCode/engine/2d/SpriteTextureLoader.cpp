@@ -21,15 +21,16 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
 	//操作方法関係
+	TextureManager::LoadTexture(textures[Husen], directoryPath, "husen.png");
+	TextureManager::LoadTexture(textures[HusenL], directoryPath, "husen_L.png");
+	TextureManager::LoadTexture(textures[HusenR], directoryPath, "husen_R.png");
 
-
-	TextureManager::LoadTexture(textures[HowToPlayMove], directoryPath, "husen_L.png");
-	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "husen_R.png");
+	TextureManager::LoadTexture(textures[HowToPlayPlayer], directoryPath, "howToPlayPlayerText.png");
+	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "howToPlayCameraText.png");
+	TextureManager::LoadTexture(textures[Hint1Text], directoryPath, "hint1Text.png");
+	TextureManager::LoadTexture(textures[Hint2Text], directoryPath, "hint2Text.png");
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
-	TextureManager::LoadTexture(textures[Hint1], directoryPath, "husen_R.png");
-	TextureManager::LoadTexture(textures[Hint2], directoryPath, "husen_R.png");
-	TextureManager::LoadTexture(textures[HowToPlayReset], directoryPath, "reset.png");
-	TextureManager::LoadTexture(textures[HowToPlayStageSelect], directoryPath, "husen.png");
+	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "stageSelect.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");
 	TextureManager::LoadTexture(textures[ClearBack], directoryPath, "Clear_Back.png");

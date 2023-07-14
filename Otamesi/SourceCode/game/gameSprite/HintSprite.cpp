@@ -2,8 +2,8 @@
 #include "Easing.h"
 #include "WindowApp.h"
 
-const float HintSprite::normalTextureScale = 0.2f;
-const float HintSprite::largeTextureScale = HintSprite::normalTextureScale * 3.0f;
+const float HintSprite::normalTextureScale = 0.15f;
+const float HintSprite::largeTextureScale = 0.7f;
 
 
 HintSprite* HintSprite::Create(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint)

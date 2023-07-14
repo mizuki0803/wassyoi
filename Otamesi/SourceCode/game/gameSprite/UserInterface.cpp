@@ -18,6 +18,7 @@ std::unique_ptr<UserInterface> UserInterface::Create(GamePhase gamePhase)
 void UserInterface::Initialize(GamePhase gamePhase)
 {
 	const float	stickoutNum = 50.0f; //引き出しスプライトが画面内にはみ出す量
+	const float drawerHandleSize = 45.0f;	//引き出しスプライトの取っ手のサイズ
 
 	//メニュー用スプライト生成
 	if (GamePhase::Title == gamePhase)
@@ -32,16 +33,21 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 
 		//説明用引き出しスプライト生成
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
 
 		//子供スプライト生成
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の画像
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
+			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayPlayer].get(),
+			{}, drawerSprites[HowToPlayPlayer]->GetAnchorpoint());	//プレイヤー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayPlayer].get(),
+			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });	//プレイヤー操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(),
+			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//カメラ操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
+			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//カメラ操作説明の画像
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
@@ -52,10 +58,11 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 
 		//説明用引き出しスプライト生成
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 
 		//子供スプライト生成
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
+			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -69,24 +76,33 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 
 		//説明用引き出しスプライト生成
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint1), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint2), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
 
 		//子供スプライト生成
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[HowToPlayMenu].get(), {});	//メニュー画面説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMove), drawerSprites[HowToPlayPlayer].get(), {});	//プレイヤー操作説明の画像
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(), {});	//カメラ操作説明の画像
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[Hint1].get(), {});	//ヒント1説明の文字
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[Hint2].get(), {});	//ヒント2説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
+			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayPlayer].get(),
+			{}, drawerSprites[HowToPlayPlayer]->GetAnchorpoint());	//プレイヤー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayPlayer].get(),
+			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });	//プレイヤー操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(),
+			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//カメラ操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
+			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//カメラ操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint1Text), drawerSprites[Hint1].get(),
+			{}, drawerSprites[Hint1]->GetAnchorpoint());	//ヒント1説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint2Text), drawerSprites[Hint2].get(),
+			{}, drawerSprites[Hint2]->GetAnchorpoint());	//ヒント2説明の文字
 
 		//ヒントスプライト生成
-		hintSprites[0].reset(HintSprite::Create(HintTextureLoader::GetTexture(0), drawerSprites[Hint1].get(), {}, {}));
-		hintSprites[1].reset(HintSprite::Create(HintTextureLoader::GetTexture(1), drawerSprites[Hint2].get(), {}, {}));
+		hintSprites[0].reset(HintSprite::Create(HintTextureLoader::GetTexture(0), drawerSprites[Hint1].get(),
+			drawerSprites[Hint1]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f }));
+		hintSprites[1].reset(HintSprite::Create(HintTextureLoader::GetTexture(1), drawerSprites[Hint2].get(),
+			drawerSprites[Hint2]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f }));
 	}
 
 	gamePhase_ = gamePhase;

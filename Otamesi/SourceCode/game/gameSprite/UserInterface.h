@@ -137,7 +137,7 @@ private: //メンバ関数
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
 	/// <param name="parent">親スプライト</param>
-	/// <param name="position">座標</param>
+	/// <param name="position">親スプライト原点での座標</param>
 	/// <param name="anchorpoint">アンカーポイント</param>
 	void CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f });
 
