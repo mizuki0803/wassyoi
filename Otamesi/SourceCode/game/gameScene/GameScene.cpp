@@ -12,6 +12,7 @@
 #include "GamePostEffect.h"
 #include "StageManager.h"
 #include "SpriteTextureLoader.h"
+#include "HintTextureLoader.h"
 #include <cassert>
 #include <fstream>
 #include <iomanip>
@@ -85,6 +86,7 @@ void GameScene::Initialize()
 	KeepBinary(*camera, *player);
 
 	//UI関係生成
+	HintTextureLoader::LoadTextures(StageManager::GetSelectStage());
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
 	//ステージクリアUI生成
 	stageClear_ = ClearStaging::Create();
@@ -370,7 +372,8 @@ void GameScene::RestartGame()
 	mapData->SetIsReCreateEnd(false);
 	skydome->SetIsRotate(false);
 	userInterface_->SetMenuFlag(false);
-	userInterface_->DrawerSpriteReset();
+	HintTextureLoader::LoadTextures(StageManager::GetSelectStage());
+	userInterface_->StageChangeUpdate();
 	//次元変更が可能かUIに伝える
 	userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 

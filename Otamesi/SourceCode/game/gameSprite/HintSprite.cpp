@@ -2,6 +2,10 @@
 #include "Easing.h"
 #include "WindowApp.h"
 
+const float HintSprite::normalTextureScale = 0.2f;
+const float HintSprite::largeTextureScale = HintSprite::normalTextureScale * 3.0f;
+
+
 HintSprite* HintSprite::Create(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint)
 {
 	//インスタンス生成
@@ -32,6 +36,9 @@ bool HintSprite::Initialize(const Texture& texture, DrawerSprite* parent, const 
 	parentStorage = parent;
 	positionStorage = position;
 	anchorpointStorage = anchorpoint;
+
+	//大きさをセット
+	SetScale(normalTextureScale);
 
 	return true;
 }
@@ -101,7 +108,7 @@ void HintSprite::SizeChange()
 	//大きくする場合
 	if (isSizeLarger) {
 		//大きさを変更
-		size = Easing::OutQuint(1.0f, 3.0f, time);
+		size = Easing::OutQuint(normalTextureScale, largeTextureScale, time);
 
 		//アンカーポイント変更
 		anchorpoint.x = Easing::OutQuint(anchorpointStorage.x, 0.5f, time);
@@ -110,7 +117,7 @@ void HintSprite::SizeChange()
 	//元に戻す場合
 	else {
 		//大きさを変更
-		size = Easing::OutQuint(3.0f, 1.0f, time);
+		size = Easing::OutQuint(largeTextureScale, normalTextureScale, time);
 
 		//アンカーポイント変更
 		anchorpoint.x = Easing::OutQuint(0.5f, anchorpointStorage.x, time);

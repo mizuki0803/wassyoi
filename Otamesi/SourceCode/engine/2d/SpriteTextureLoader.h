@@ -43,7 +43,7 @@ public: //静的メンバ関数
 	static void TextureLoad();
 
 	//getter
-	static Texture GetTexture(const TextureName textureName) { return textures[textureName]; };
+	static Texture& GetTexture(const TextureName textureName) { return textures[textureName]; };
 
 private: //静的メンバ変数
 	//テクスチャ

@@ -389,6 +389,9 @@
     <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\HintTextureLoader.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -768,6 +771,9 @@
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\HintTextureLoader.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
   </ItemGroup>

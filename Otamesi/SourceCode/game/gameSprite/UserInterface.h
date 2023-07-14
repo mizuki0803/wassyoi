@@ -108,9 +108,9 @@ public: //メンバ関数
 	void IsChangeDimensionCheck(bool isChangeDimension);
 
 	/// <summary>
-	/// 引き出しスプライトの開閉状態をリセット
+	/// ステージ変更に伴う処理
 	/// </summary>
-	void DrawerSpriteReset();
+	void StageChangeUpdate();
 
 	//フラグの設定、取得
 	void SetMenuFlag(bool flag) { menuFlag_ = flag; drawerSprites[HowToPlayMenu]->MoveStart(); }
