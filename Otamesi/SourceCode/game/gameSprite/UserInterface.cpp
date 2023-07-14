@@ -147,35 +147,8 @@ void UserInterface::Update()
 
 	//次元変更可能確認スプライト更新
 	if (isChangeDimenisonSprite) {
+		SpaceEffect();
 		isChangeDimenisonSprite->Update();
-	}
-
-	//spaceの反応演出制御
-	{
-		bool frameUp = false;
-		if (isChangeDimenison && SpriteEffectCount % 50 == 0) {
-			for (auto& i : ChangeDimenisonSpriteEffect) {
-				if (!i.isSizeUp && !frameUp) {
-					i.isSizeUp = true;
-					frameUp = true;
-				}
-			}
-		}
-		for (auto& i : ChangeDimenisonSpriteEffect) {
-			if (i.isSizeUp) {
-				float size = i.inst->GetScale();
-				size += 0.002f;
-				if (size > 1.15f) {
-					size = 1.0f;
-				}
-				i.inst->SetScale(size);
-				i.inst->Update();
-			}
-		}
-	}
-	SpriteEffectCount++;
-	if (SpriteEffectCount > 100) {
-		SpriteEffectCount = 0;
 	}
 
 	//説明用引き出しスプライト更新
@@ -239,6 +212,12 @@ void UserInterface::Draw()
 		if (!hintSprite) { continue; }
 		hintSprite->Draw();
 	}
+
+	//かさんごーせー
+	SpriteCommon::GetInstance()->DrawPrev("Add");
+	AddDraw();
+
+	SpriteCommon::GetInstance()->DrawPrev();
 
 	//メニュースプライト描画
 	if (menuFlag_)
@@ -485,5 +464,35 @@ void UserInterface::HintSpriteSizeChange()
 
 		//ヒントスプライトの大きさを変更
 		hintSprite->SizeChangeStart();
+	}
+}
+
+void UserInterface::SpaceEffect()
+{
+	//メニューが開いている場合は抜ける
+	if (menuFlag_) { return; }
+
+	//spaceの反応演出制御
+	bool frameUp = false;
+	if (isChangeDimenison && SpriteEffectCount % 50 == 0) {
+		for (auto& i : ChangeDimenisonSpriteEffect) {
+			if (i.isSizeUp || frameUp) { continue; }
+			i.isSizeUp = true;
+			frameUp = true;
+		}
+	}
+	for (auto& i : ChangeDimenisonSpriteEffect) {
+		if (!i.isSizeUp) { continue; }
+		float size = i.inst->GetScale();
+		size += 0.002f;
+		if (size > 1.15f) {
+			size = 1.0f;
+		}
+		i.inst->SetScale(size);
+		i.inst->Update();
+	}
+	SpriteEffectCount++;
+	if (SpriteEffectCount > 100) {
+		SpriteEffectCount = 0;
 	}
 }

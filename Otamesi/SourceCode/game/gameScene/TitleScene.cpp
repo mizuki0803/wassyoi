@@ -271,11 +271,6 @@ void TitleScene::DrawFrontSprite()
 	//シーン変更演出
 	SceneChangeEffect::Draw();
 
-	//かさんごーせー
-	SpriteCommon::GetInstance()->DrawPrev("Add");
-	userInterface_->AddDraw();
-
-
 	///-------スプライト描画ここまで-------///
 }
 

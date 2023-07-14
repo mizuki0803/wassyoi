@@ -161,6 +161,11 @@ private: //メンバ関数
 	/// </summary>
 	void HintSpriteSizeChange();
 
+	/// <summary>
+	/// スペースのエフェクト
+	/// </summary>
+	void SpaceEffect();
+
 private: //静的メンバ変数
 	//音の大きさ
 	static float soundVolume_;
