@@ -3,6 +3,7 @@
 #include "SpriteTextureLoader.h"
 #include "Input.h"
 #include "Audio.h"
+#include "HintTextureLoader.h"
 
 float UserInterface::soundVolume_ = 1.0f;
 const float UserInterface::soundMaxVolume_ = 2.0f;
@@ -84,8 +85,8 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[Hint2].get(), {});	//ヒント2説明の文字
 
 		//ヒントスプライト生成
-		hintSprites[0].reset(HintSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[Hint1].get(), {}, {}));
-		hintSprites[1].reset(HintSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayStageSelect), drawerSprites[Hint2].get(), {}, {}));
+		hintSprites[0].reset(HintSprite::Create(HintTextureLoader::GetTexture(0), drawerSprites[Hint1].get(), {}, {}));
+		hintSprites[1].reset(HintSprite::Create(HintTextureLoader::GetTexture(1), drawerSprites[Hint2].get(), {}, {}));
 	}
 
 	gamePhase_ = gamePhase;
@@ -309,12 +310,16 @@ void UserInterface::IsChangeDimensionCheck(bool isChangeDimension)
 	isChangeDimenisonSprite->SetColor({ spriteVividness, spriteVividness, spriteVividness,1 });
 }
 
-void UserInterface::DrawerSpriteReset()
+void UserInterface::StageChangeUpdate()
 {
 	//引き出しスプライトの開閉状態をリセット
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Reset();
 	}
+
+	//ヒントスプライトのテクスチャを次のステージ用に更新
+	hintSprites[0]->SetTexture(HintTextureLoader::GetTexture(0));
+	hintSprites[1]->SetTexture(HintTextureLoader::GetTexture(1));
 }
 
 bool UserInterface::GetIsHintViewMode()
@@ -383,6 +388,8 @@ void UserInterface::DrawerSpriteMoveStartKey()
 
 void UserInterface::HintSpriteSizeChange()
 {
+	//メニューが開いている場合は抜ける
+	if (menuFlag_) { return; }
 	//キー入力がされていなければ抜ける
 	if (!Input::GetInstance()->TriggerKey(DIK_RETURN)) { return; }
 

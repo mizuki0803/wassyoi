@@ -49,6 +49,12 @@ public: //メンバ関数
 	/// </summary>
 	void SizeChange();
 
+private: //静的メンバ変数
+	//通常時のテクスチャ大きさ
+	static const float normalTextureScale;
+	//拡大表示時のテクスチャ大きさ
+	static const float largeTextureScale;
+
 private: //メンバ変数
 	//親子構造を解除したりするので、保存用引き出し親オブジェクト
 	DrawerSprite* parentStorage;
