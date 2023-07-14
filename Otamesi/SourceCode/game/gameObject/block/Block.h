@@ -51,6 +51,7 @@ public: //Ã“Iƒƒ“ƒoŠÖ”
 
 	//getter
 	static float GetBlockSize() { return Block::blockSize; }
+	const Vector3 GetPosition() { return position; }
 
 public: //ƒƒ“ƒoŠÖ”
 	/// <summary>

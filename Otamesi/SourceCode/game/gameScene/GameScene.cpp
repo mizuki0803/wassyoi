@@ -160,6 +160,8 @@ void GameScene::Update()
 				stageClear_->SetMovePhase(ClearStaging::MovePhase::Start);
 			}
 		}
+		mapData->SetIsAllStageClear(StageManager::GetIsAllStageClear());
+		mapData->SetSelectStageNum(StageManager::GetSelectStage());
 	}
 	else {
 		if (stageClear_->GetIntermediateTrigger())

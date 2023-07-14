@@ -75,6 +75,8 @@ public: //メンバ関数
 
 	//setter
 	void SetIsReCreateEnd(const bool isReCreateEnd) { this->isReCreateEnd = isReCreateEnd; }
+	void SetIsAllStageClear(const bool flag) { isAllStageClear = flag; }
+	void SetSelectStageNum(const int stageNum) { selectStageNum = stageNum; }
 
 protected: //メンバ関数
 	/// <summary>
@@ -107,4 +109,8 @@ protected: //メンバ変数
 	bool isReCreateEnd = false;
 	// 行動が終わったか
 	bool isMoveEnd_ = false;
+	//
+	bool isAllStageClear = false;
+	//
+	int selectStageNum = 0;
 };

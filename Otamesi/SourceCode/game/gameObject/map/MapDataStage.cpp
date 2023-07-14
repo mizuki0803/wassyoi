@@ -1,5 +1,6 @@
 #include "MapDataStage.h"
 #include "MapBlockData.h"
+#include "ParticleEmitter.h"
 #include <sstream>
 
 MapDataStage* MapDataStage::Create(const int selectStageNum)
@@ -33,6 +34,22 @@ void MapDataStage::Draw()
 
 void MapDataStage::PlayGame()
 {
+	if (isAllStageClear && selectStageNum >= 100)
+	{
+		int count = 0;
+		int count2 = 0;
+		for (const std::unique_ptr<StageBlock>& block : blocks) {
+			
+			if (count2 <= count)
+			{
+				ParticleEmitter::GetInstance()->ItemShine(block->GetPosition(), 30.0f, 1);
+				count2 += (rand() % 4) + 1;
+			}
+
+			count++;
+		}
+	}
+
 	//マップ用ブロック
 	for (const std::unique_ptr<StageBlock>& block : blocks) {
 		block->Update();

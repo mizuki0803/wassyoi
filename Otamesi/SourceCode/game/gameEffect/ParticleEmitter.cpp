@@ -701,7 +701,7 @@ void ParticleEmitter::ItemShine(const Vector3& position, const float size, const
 {
 	//生存時間
 	for (int i = 0; i < num; i++) {
-		int life = (rand() % 30) + 30;
+		int life = 40;
 
 		//X,Y,Zにでランダムに分布
 		const float mdPos = 4.0f;
@@ -715,7 +715,7 @@ void ParticleEmitter::ItemShine(const Vector3& position, const float size, const
 		Vector3 acc{};
 		const float mdScale = 2.0f * size;
 		const float randScale = ((float)rand() / RAND_MAX * mdScale) + (1.0f * size);
-		const float scale = randScale;
+		const float scale = mdScale + (1.0f * size);
 		//大きさ変更のイージング
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
