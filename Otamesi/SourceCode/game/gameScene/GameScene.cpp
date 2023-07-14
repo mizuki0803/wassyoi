@@ -45,9 +45,9 @@ void GameScene::Initialize()
 	const Vector3 stageCenterPos = {}; //ステージ中央座標
 	camera->Initialize(distanceStageCenter, stageCenterPos);
 	//影用光源カメラ初期化
-	lightCamera.reset(new LightCamera());
-	lightCamera->Initialize({ -100, 100, -300 });
-	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
+	const float lightCameraCenterDistance = 80;
+	lightCamera.reset(GameLightCamera::Create(lightCameraCenterDistance));
+	lightCamera->SetProjectionNum({ 250, 250 }, { -250, -250 });
 
 	OutLine::SetCmaera(camera.get());
 
@@ -324,6 +324,10 @@ void GameScene::DrawFrontSprite()
 
 	//シーン変更演出描画
 	SceneChangeEffect::Draw();
+	
+	//かさんごーせー
+	SpriteCommon::GetInstance()->DrawPrev("Add");
+	userInterface_->AddDraw();
 
 
 	///-------スプライト描画ここまで-------///

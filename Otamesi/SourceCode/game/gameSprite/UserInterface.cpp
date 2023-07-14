@@ -31,6 +31,16 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 		//次元変更可能確認スプライト生成
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+		float size = 1.0f;
+		for (auto& i : ChangeDimenisonSpriteEffect) {
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
+			i.inst->SetScale(size);
+			i.isSizeUp = true;
+			size += 0.002f * 50.0f;
+		}
+		SpriteEffectCount = 0;
+		isChangeDimenison = false;
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
@@ -73,7 +83,17 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 
 		//次元変更可能確認スプライト生成
+		float size = 1.0f;
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+		for (auto& i : ChangeDimenisonSpriteEffect) {
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
+			i.inst->SetScale(size);
+			i.isSizeUp = true;
+			size += 0.002f * 50.0f;
+		}
+		SpriteEffectCount = 0;
+		isChangeDimenison = false;
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
@@ -130,6 +150,34 @@ void UserInterface::Update()
 		isChangeDimenisonSprite->Update();
 	}
 
+	//spaceの反応演出制御
+	{
+		bool frameUp = false;
+		if (isChangeDimenison && SpriteEffectCount % 50 == 0) {
+			for (auto& i : ChangeDimenisonSpriteEffect) {
+				if (!i.isSizeUp && !frameUp) {
+					i.isSizeUp = true;
+					frameUp = true;
+				}
+			}
+		}
+		for (auto& i : ChangeDimenisonSpriteEffect) {
+			if (i.isSizeUp) {
+				float size = i.inst->GetScale();
+				size += 0.002f;
+				if (size > 1.15f) {
+					size = 1.0f;
+				}
+				i.inst->SetScale(size);
+				i.inst->Update();
+			}
+		}
+	}
+	SpriteEffectCount++;
+	if (SpriteEffectCount > 100) {
+		SpriteEffectCount = 0;
+	}
+
 	//説明用引き出しスプライト更新
 	DrawerSpriteMoveStartKey();
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
@@ -153,6 +201,18 @@ void UserInterface::Update()
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
 		if (!hintSprite) { continue; }
 		hintSprite->Update();
+	}
+}
+
+void UserInterface::AddDraw()
+{
+	if (notMove_) { return; }
+
+	if (isChangeDimenison) {
+		for (auto& i : ChangeDimenisonSpriteEffect) {
+			if (!i.isSizeUp) { continue; }
+			i.inst->Draw();
+		}
 	}
 }
 
@@ -318,9 +378,15 @@ void UserInterface::IsChangeDimensionCheck(bool isChangeDimension)
 	float spriteVividness{}; //スプライトの色の鮮やかさ
 
 	//次元変更可能の場合はスプライトの色を明るくする
-	if (isChangeDimension) { spriteVividness = 1.0f; }
+	if (isChangeDimension) {
+		spriteVividness = 1.0f;
+		isChangeDimenison = true;
+	}
 	//次元変更可能でない場合はスプライトの色を暗くする
-	else { spriteVividness = 0.3f; }
+	else {
+		spriteVividness = 0.3f;
+		isChangeDimenison = false;
+	}
 
 	//鮮やかさをセット
 	isChangeDimenisonSprite->SetColor({ spriteVividness, spriteVividness, spriteVividness,1 });

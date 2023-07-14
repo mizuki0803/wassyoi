@@ -63,6 +63,11 @@ private: //メンバ関数
 	/// </summary>
 	void CreateSkyDormPipeline();
 
+	/// <summary>
+	/// パイプライン生成
+	/// </summary>
+	void AddCreatePipeline();
+
 public: //getter
 	/// <summary>
 	/// デバイス取得

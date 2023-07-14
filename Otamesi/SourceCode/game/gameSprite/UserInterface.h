@@ -71,6 +71,11 @@ public: //enum
 		SceneChangeTitle,	//タイトルシーンに移行
 	};
 
+	struct SpaceIndo {
+		std::unique_ptr<Sprite> inst;
+		float isSizeUp;
+	};
+
 public: //メンバ関数
 	/// <summary>
 	/// 生成
@@ -86,6 +91,11 @@ public: //メンバ関数
 	/// 毎フレーム処理
 	/// </summary>
 	void Update();
+
+	/// <summary>
+	/// 加算合成描画
+	/// </summary>
+	void AddDraw();
 
 	/// <summary>
 	/// 奥の描画
@@ -160,6 +170,12 @@ private: //静的メンバ変数
 private: //メンバ変数
 	//次元変更可能か可能のときのみ光るスペースキースプライト
 	std::unique_ptr<Sprite> isChangeDimenisonSprite;
+	//押せるときの反応
+	std::array<SpaceIndo, 4> ChangeDimenisonSpriteEffect;
+	//反応を入れるカウント
+	int SpriteEffectCount;
+	//次元変更可能か
+	bool isChangeDimenison;
 	//説明用引き出しスプライト
 	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
 	//引き出しスプライトの子供

@@ -2,7 +2,7 @@
 #include "BaseGameScene.h"
 #include "LightGroup.h"
 #include "GameCamera.h"
-#include "LightCamera.h"
+#include "GameLightCamera.h"
 #include "Player.h"
 #include "MapDataStage.h"
 #include "UserInterface.h"
