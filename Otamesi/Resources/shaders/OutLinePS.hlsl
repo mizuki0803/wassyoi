@@ -150,10 +150,11 @@ PSOutput main(VSOutput input) : SV_TARGET
     output.color = shadecolor * texcolor * float4(shadow, shadow, shadow, 1);
     
     
+    float isOutLine = step(1.0f, step(input.uv.x, 0.1f) + step(0.9f, input.uv.x) + step(input.uv.y, 0.1f) + step(0.9f, input.uv.y));
     float isPlayer = step(0.5f, idColor.b);
-    output.player = float4(0.0f, 0.0f, isPlayer,isPlayer);
+    output.player = float4(0.0f, 0.0f, isPlayer, isOutLine);
     float isGoal = step(0.5f, idColor.r);
-    output.goal = float4(isGoal, 0.0f, 0.0f, isGoal);
+    output.goal = float4(isGoal, 0.0f, 0.0f, isOutLine);
     
     
     output.id = idColor;

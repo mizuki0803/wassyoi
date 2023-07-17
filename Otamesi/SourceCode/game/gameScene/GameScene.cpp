@@ -88,6 +88,11 @@ void GameScene::Initialize()
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Game);
 	//�X�e�[�W�N���AUI����
 	stageClear_ = ClearStaging::Create();
+
+
+	// UIレンダー初期化
+	imageUiRenderer->Common(dxbase->GetDevice(), dxbase->GetCmdList());
+	imageUiRenderer.reset(ImageUIRenderer::Create());
 }
 
 void GameScene::Finalize()
@@ -298,6 +303,10 @@ void GameScene::Draw3DLightView()
 
 void GameScene::DrawFrontSprite()
 {
+
+
+
+
 	//�X�v���C�g���ʃR�}���h
 	SpriteCommon::GetInstance()->DrawPrev();
 	///-------�X�v���C�g�`�悱������-------///
@@ -313,6 +322,14 @@ void GameScene::DrawFrontSprite()
 
 
 	///-------�X�v���C�g�`�悱���܂�-------///
+}
+
+void GameScene::DrawImageForUI()
+{
+	imageUiRenderer->DrawCameraDescription();
+	imageUiRenderer->DrawMoveDescription();
+
+
 }
 
 void GameScene::MenuAction()

@@ -9,6 +9,7 @@
 #include "BackGround.h"
 #include "Skydome.h"
 #include "ClearStaging.h"
+#include "ImageUIRenderer.h"
 
 /// <summary>
 /// �Q�[���V�[��
@@ -51,6 +52,8 @@ public: //�����o�֐�
 	/// �O�i�X�v���C�g�`��
 	/// </summary>
 	void DrawFrontSprite() override;
+
+	void DrawImageForUI() override;
 
 	/// <summary>
 	/// ���j���[�̓���
@@ -111,6 +114,9 @@ private: //�����o�ϐ�
 
 	//�X�e�[�W�N���A�t���O
 	bool isStageClear = false;
+
+	// UI用
+	std::unique_ptr<ImageUIRenderer> imageUiRenderer;
 
 
 };

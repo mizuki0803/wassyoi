@@ -56,6 +56,9 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	virtual void DrawFrontSprite() = 0;
 
+	///
+	virtual void DrawImageForUI() {};
+
 	//getter
 	bool GetIsEndRequest() { return isEndRequest; }
 

@@ -74,6 +74,11 @@ void SceneManager::Draw3DLightView()
 	scene->Draw3DLightView();
 }
 
+void SceneManager::DrawImageForUI()
+{
+	scene->DrawImageForUI();
+}
+
 void SceneManager::DrawFrontSprite()
 {
 	//前景スプライト描画

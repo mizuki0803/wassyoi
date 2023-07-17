@@ -59,6 +59,9 @@ public: //メンバ関数
 	/// </summary>
 	void Draw3DLightView();
 
+	void DrawImageForUI();
+
+
 	/// <summary>
 	/// 前景スプライト描画
 	/// </summary>

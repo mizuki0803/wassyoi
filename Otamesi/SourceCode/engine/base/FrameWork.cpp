@@ -77,6 +77,7 @@ void FrameWork::Initialize()
 	afterBloom->AfterBloomCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	afterBloom.reset(AfterBloom::Create());
 
+	// アウトライン初期化
 	outLine->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	outLine.reset(OutLine::Create());
 	//シャドウマップ共通初期化処理
@@ -184,15 +185,7 @@ void FrameWork::Draw()
 	SceneManager::GetInstance()->AfterBloomDraw();
 	afterBloom->DrawSceneRear();
 	
-	//// アウトライン描画用
-	//outLine->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
-	//SceneManager::GetInstance()->OutLineDraw();
-	//outLine->DrawSceneRear();
-
-	//outLineDraw->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
-	//outLine->Draw();
-	//outLineDraw->DrawSceneRear();
-
+	SceneManager::GetInstance()->DrawImageForUI();
 
 	//グラフィックスコマンド(前)
 	dxbase->GraphicsCommandPrev();

@@ -41,7 +41,7 @@ public:
 
 	//getter
 	ID3D12Device* GetDevice() { return dev.Get(); };
-	ID3D12GraphicsCommandList* GetCmdList() { return cmdList.Get(); };
+	ID3D12GraphicsCommandList *GetCmdList() { return cmdList.Get(); };
 
 private:
 	/// <summary>
