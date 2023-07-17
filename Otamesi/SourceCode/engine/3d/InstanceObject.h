@@ -151,6 +151,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// <returns></returns>
 	int GetInstanceDrawNum() { return instanceDrawNum; }
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 	//setter
 	void SetModel(ObjModel* model) { this->model = model; }
 	void SetIsCameraFollow(bool isCameraFollow) { this->isCameraFollow = isCameraFollow; }

@@ -932,9 +932,6 @@ void InstanceObject::Draw()
 
 	//モデル描画
 	model->Draw(cmdList, 1, instanceDrawNum);
-
-	//描画個数リセット
-	instanceDrawNum = 0;
 }
 
 void InstanceObject::DrawLightCameraView()
@@ -951,4 +948,10 @@ void InstanceObject::DrawLightCameraView()
 
 	//モデル描画
 	model->DrawLightCameraView(cmdList, 1, instanceDrawNum);
+}
+
+void InstanceObject::FrameReset()
+{
+	//描画個数リセット
+	instanceDrawNum = 0;
 }

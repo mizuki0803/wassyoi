@@ -40,12 +40,18 @@ public: //Ã“Iƒƒ“ƒoŠÖ”
 	/// </summary>
 	static void Draw();
 
+	/// <summary>
+/// frame‚²‚Æ‚Ì‰Šú‰»
+/// </summary>
+	void FrameReset();
+
 	//setter
 	void SetRotation(const XMFLOAT3& _rotation) { rotation = _rotation; }
 	void SetColor(const XMFLOAT4& _color) { color = _color; }
 
 	//getter
 	static float GetBlockSize() { return Block::blockSize; }
+	const Vector3 GetPosition() { return position; }
 
 public: //ƒƒ“ƒoŠÖ”
 	/// <summary>

@@ -8,7 +8,6 @@
 #include "BackGround.h"
 #include "Skydome.h"
 #include "UserInterface.h"
-#include "StageClearUI.h"
 
 /// <summary>
 /// タイトルシーン
@@ -56,6 +55,12 @@ public: //メンバ関数
 	/// メニューの動き
 	/// </summary>
 	void MenuAction() override;
+
+	/// <summary>
+	/// frameごとの初期化
+	/// </summary>
+	void FrameReset()override;
+
 
 private: //メンバ変数
 	//カメラ

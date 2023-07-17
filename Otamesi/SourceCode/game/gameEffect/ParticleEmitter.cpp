@@ -701,7 +701,7 @@ void ParticleEmitter::ItemShine(const Vector3& position, const float size, const
 {
 	//生存時間
 	for (int i = 0; i < num; i++) {
-		int life = (rand() % 30) + 30;
+		int life = 40;
 
 		//X,Y,Zにでランダムに分布
 		const float mdPos = 4.0f;
@@ -715,7 +715,7 @@ void ParticleEmitter::ItemShine(const Vector3& position, const float size, const
 		Vector3 acc{};
 		const float mdScale = 2.0f * size;
 		const float randScale = ((float)rand() / RAND_MAX * mdScale) + (1.0f * size);
-		const float scale = randScale;
+		const float scale = mdScale + (1.0f * size);
 		//大きさ変更のイージング
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
@@ -728,12 +728,57 @@ void ParticleEmitter::ItemShine(const Vector3& position, const float size, const
 		const float rot = ((float)rand() / RAND_MAX * 360);
 
 		//回転速度
-		const float mdRotSpeed = 2.5f;
-		const float baseSpeed = 5.0f * ((float)num / 2);
+		const float mdRotSpeed = 1.5f;
+		const float baseSpeed = 2.0f * ((float)num / 2);
 		const float rotSpeed = ((float)rand() / RAND_MAX * mdRotSpeed) + baseSpeed;
 
 		//追加
 		shineParticle->Add(life, pos, vel, acc, scale, scale, lerpFloat, startColor, endColor, rot, rotSpeed);
+	}
+}
+
+void ParticleEmitter::DemoShine(const Vector3& position, const float size, const int num)
+{
+	//色
+	const XMFLOAT4 purple = { 1.0f, 0.1f, 1.0f, 1.0f }; //紫
+	const XMFLOAT4 lightBlue = { 0.1f, 1.0f, 1.0f, 1.0f }; //水色
+
+	//生存時間
+	for (int i = 0; i < num; i++) {
+		int life = 60;
+
+		//X,Y,Zにでランダムに分布
+		const float mdPos = 100.0f;
+		Vector3 pos = position;
+		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
+		pos.y += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
+		//pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
+
+		//X,Y,Z全て[-0.05f, +0.05f]でランダムに分布
+		const float mdVel = 0.1f;
+		Vector3 vel{};
+		Vector3 acc{};
+		const float mdScale = 2.0f * size;
+		const float randScale = ((float)rand() / RAND_MAX * mdScale) + (1.0f * size);
+		const float scale = mdScale + (1.0f * size);
+		//大きさ変更のイージング
+		std::function<float(const float, const float, const float) > lerpFloat =
+			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+
+		//色
+		const XMFLOAT4 startColor = { 0.8f, 0.8f, 0.6f, 1 }; //黄色
+		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.3f, 1 }; //薄い黄色
+
+		//初期回転角
+		const float rot = ((float)rand() / RAND_MAX * 360);
+
+		//回転速度
+		const float mdRotSpeed = 1.5f;
+		const float baseSpeed = 2.0f * ((float)num / 2);
+		const float rotSpeed = ((float)rand() / RAND_MAX * mdRotSpeed) + baseSpeed;
+
+		//追加
+		shineParticle->Add(life, pos, vel, acc, 3.0f, 0.0f, lerpFloat, startColor, endColor, rot, rotSpeed);
 	}
 }
 

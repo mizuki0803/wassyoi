@@ -26,8 +26,7 @@ void SceneChange::Initialize()
 		{
 			std::unique_ptr<BlackBox> tempY = std::make_unique<BlackBox>();
 
-			tempY->sprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White)));
-			tempY->sprite_->SetPosition(Vector2(static_cast<float>(20 + x * 40), static_cast<float>(20 + y * 40)));
+			tempY->sprite_ = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White), Vector2(static_cast<float>(20 + x * 40), static_cast<float>(20 + y * 40))));
 			tempY->sprite_->SetScale(64.0f);
 			tempY->offsetTimer_ = (31 - x + y);
 

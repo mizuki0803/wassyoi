@@ -26,6 +26,12 @@ public: //静的メンバ関数
 	static int GetSelectStage() { return StageManager::selectStage; }
 
 	/// <summary>
+	/// 全てのステージをクリアしたか
+	/// </summary>
+	/// <returns>フラグ</returns>
+	static bool GetIsAllStageClear() { return StageManager::isAllStageClear; }
+
+	/// <summary>
 	/// 現在選択中のステージのsetter
 	/// </summary>
 	static void SetSelectStage(const int selectStage);

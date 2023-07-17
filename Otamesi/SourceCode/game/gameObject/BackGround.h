@@ -40,6 +40,11 @@ public:
 	/// </summary>
 	void DrawLightCameraView();
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 private:
 
 	//objƒ‚ƒfƒ‹

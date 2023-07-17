@@ -3,10 +3,10 @@
 
 BackGround* BackGround::Create()
 {
-	//�V����ObjModel�^�̃C���X�^���X�̃��������m��
+	//新たなObjModel型のインスタンスのメモリを確保
 	BackGround* model = new BackGround();
 
-	//obj�t�@�C������f�[�^�ǂݍ���
+	//objファイルからデータ読み込み
 	model->Initialize();
 
 	return model;
@@ -66,5 +66,13 @@ void BackGround::DrawLightCameraView()
 	{
 		block[i]->DrawLightCameraView();
 
+	}
+}
+
+void BackGround::FrameReset()
+{
+	for (int i = 0; i < 3; ++i)
+	{
+		block[i]->FrameReset();
 	}
 }

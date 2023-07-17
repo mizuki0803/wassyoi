@@ -1,5 +1,6 @@
 #include "MapDataStage.h"
 #include "MapBlockData.h"
+#include "ParticleEmitter.h"
 #include <sstream>
 
 MapDataStage* MapDataStage::Create(const int selectStageNum)
@@ -33,6 +34,22 @@ void MapDataStage::Draw()
 
 void MapDataStage::PlayGame()
 {
+	if (isAllStageClear && selectStageNum >= 100)
+	{
+		int count = 0;
+		int count2 = 0;
+		for (const std::unique_ptr<StageBlock>& block : blocks) {
+			
+			if (count2 <= count)
+			{
+				ParticleEmitter::GetInstance()->ItemShine(block->GetPosition(), 30.0f, 1);
+				count2 += 10;
+			}
+
+			count++;
+		}
+	}
+
 	//マップ用ブロック
 	for (const std::unique_ptr<StageBlock>& block : blocks) {
 		block->Update();
@@ -296,6 +313,13 @@ void MapDataStage::ReCreateMapBlock(const int selectStageNum)
 	}
 	rndcount.clear();
 	phase_ = static_cast<int>(GamePhase::ReStart);
+}
+
+void MapDataStage::FrameReset()
+{
+	for (auto& i : blocks) {
+		i->FrameReset();
+	}
 }
 
 void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMINT3 chipNum, const int count)

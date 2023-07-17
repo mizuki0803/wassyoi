@@ -4,60 +4,64 @@
 class SceneManager;
 
 /// <summary>
-/// Šî’êƒV[ƒ“
+/// ï¿½ï¿½ï¿½Vï¿½[ï¿½ï¿½
 /// </summary>
 class BaseScene
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Öï¿½
 	/// <summary>
-	/// ‰¼‘zƒfƒXƒgƒ‰ƒNƒ^
+	/// ï¿½ï¿½ï¿½zï¿½fï¿½Xï¿½gï¿½ï¿½ï¿½Nï¿½^
 	/// </summary>
 	virtual ~BaseScene() = default;
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	virtual void Initialize() = 0;
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	/// </summary>
 	virtual void Finalize() = 0;
 
 	/// <summary>
-	/// XV
+	/// ï¿½Xï¿½V
 	/// </summary>
 	virtual void Update() = 0;
 
 	/// <summary>
-	/// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// ï¿½wï¿½iï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½
 	/// </summary>
 	virtual void DrawBackSprite() = 0;
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ
+	/// 3Dï¿½Vï¿½[ï¿½ï¿½ï¿½`ï¿½ï¿½
 	/// </summary>
 	virtual void Draw3D() = 0;
 
 	/// <summary>
-	/// Œã‚©‚çƒuƒ‹[ƒ€•`‰æ
+	/// ï¿½ã‚©ï¿½ï¿½uï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½`ï¿½ï¿½
 	/// </summary>
 	virtual void AfterBloomDraw() {};
 
 	virtual void OutLineDraw() {};
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ(ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_)
+	/// 3Dï¿½Vï¿½[ï¿½ï¿½ï¿½`ï¿½ï¿½(ï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½çŒ©ï¿½ï¿½ï¿½ï¿½ï¿½_)
 	/// </summary>
 	virtual void Draw3DLightView() = 0;
 
 	/// <summary>
-	/// ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// ï¿½Oï¿½iï¿½Xï¿½vï¿½ï¿½ï¿½Cï¿½gï¿½`ï¿½ï¿½
 	/// </summary>
 	virtual void DrawFrontSprite() = 0;
 
 	///
 	virtual void DrawImageForUI() {};
+	/// <summary>
+	/// frameï¿½ï¿½ï¿½Æ‚Ìï¿½ï¿½ï¿½ï¿½ï¿½
+	/// </summary>
+	virtual void FrameReset() = 0;
 
 	//getter
 	bool GetIsEndRequest() { return isEndRequest; }
@@ -65,11 +69,11 @@ public: //ƒƒ“ƒoŠÖ”
 	//setter
 	static void SetDirectXbase(DirectXBase* dxbase) { BaseScene::dxbase = dxbase; }
 
-protected: //Ã“Iƒƒ“ƒo•Ï”
+protected: //ï¿½Ã“Iï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Ïï¿½
 	static DirectXBase* dxbase;
 
-protected: //ƒƒ“ƒo•Ï”
-	//ƒQ[ƒ€ƒ‹[ƒvI—¹ƒŠƒNƒGƒXƒg
+protected: //ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½Ïï¿½
+	//ï¿½Qï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½vï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½Gï¿½Xï¿½g
 	bool isEndRequest = false;
 };
 

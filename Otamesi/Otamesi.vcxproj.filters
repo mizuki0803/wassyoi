@@ -359,12 +359,6 @@
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
-    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
-    <ClCompile Include="SourceCode\game\gameSprite\StageClearUI.cpp">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClCompile>
     <ClCompile Include="SourceCode\game\gameObject\ClearStaging.cpp">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClCompile>
@@ -392,8 +386,16 @@
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
+<!-- <<<<<<< HEAD
     <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp">
       <Filter>ソース ファイル</Filter>
+======= -->
+    <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\HintTextureLoader.cpp">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+<!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -749,12 +751,6 @@
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
-    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClInclude>
-    <ClInclude Include="SourceCode\game\gameSprite\StageClearUI.h">
-      <Filter>ソース ファイル\game\gameSprite</Filter>
-    </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\ClearStaging.h">
       <Filter>ソース ファイル\game\gameObject</Filter>
     </ClInclude>
@@ -779,6 +775,15 @@
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
+<!-- <<<<<<< HEAD
     <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
+======= -->
+    <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\HintTextureLoader.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
+<!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
   </ItemGroup>
 </Project>

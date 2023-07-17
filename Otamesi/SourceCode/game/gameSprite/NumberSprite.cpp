@@ -9,14 +9,11 @@ NumberSprite* NumberSprite::Create(const Texture& texture, const Vector2& positi
 	}
 
 	// 初期化
-	if (!numberSprite->Initialize(texture, { 0.5f, 0.5f }, false, false)) {
+	if (!numberSprite->Initialize(texture, position, { 0.5f, 0.5f }, false, false)) {
 		delete numberSprite;
 		assert(0);
 		return nullptr;
 	}
-
-	//座標をセット
-	numberSprite->position = position;
 
 	//大きさをセット
 	numberSprite->size = size;

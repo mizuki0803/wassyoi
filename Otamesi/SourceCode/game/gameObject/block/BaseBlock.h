@@ -51,5 +51,9 @@ public:
 	/// </summary>
 	void Draw();
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
 };
 

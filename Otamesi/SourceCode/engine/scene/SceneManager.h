@@ -79,6 +79,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// <param name="sceneFactory">ƒV[ƒ“Hê</param>
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { this->sceneFactory = sceneFactory; }
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 	//getter
 	bool GetIsEndRequest() { return scene->GetIsEndRequest(); }
 

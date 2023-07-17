@@ -37,6 +37,11 @@ public: //ƒƒ“ƒoŠÖ”
 	/// </summary>
 	void DrawUI();
 
+	/// <summary>
+	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// </summary>
+	void FrameReset();
+
 	void SetNotMove(bool flag1) { menuFlag_ = flag1; }
 
 private: //ƒƒ“ƒoŠÖ”

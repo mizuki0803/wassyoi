@@ -19,6 +19,9 @@ void GameLightCamera::Initialize(float centerDistance)
 	//視点をセット
 	up = { 0, 1, 0 };
 
+	//ターゲット
+	target = { 0,-20.0f,0 };
+
 	//中心からの距離をセット
 	this->centerDistance = centerDistance;
 }
@@ -35,7 +38,7 @@ void GameLightCamera::Update()
 void GameLightCamera::Around()
 {
 	//回転スピード
-	const float rotNum = 0.2f;
+	const float rotNum = 0.01f;
 	//回転角を更新
 	aroundRotate += rotNum;
 
@@ -52,7 +55,7 @@ void GameLightCamera::Around()
 	//計算結果を割り当てて視点をセット
 	Vector3 aroundPos{};
 	aroundPos.x = sinfAngle * centerDistance;
-	aroundPos.y = cosfAngle * centerDistance;
+	aroundPos.z = cosfAngle * centerDistance;
 
 	SetEye(aroundPos);
 }

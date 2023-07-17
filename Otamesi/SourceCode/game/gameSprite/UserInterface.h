@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "DrawerSprite.h"
 #include "SoundVolumePointer.h"
+#include "HintSprite.h"
 #include <array>
 #include <vector>
 #include <functional>
@@ -15,10 +16,10 @@ public: //enum
 	enum DrawerSpriteName
 	{
 		HowToPlayMenu,		//メニュー
-		Hint1,				//ヒント1
-		Hint2,				//ヒント2
 		HowToPlayPlayer,	//プレイヤー操作
 		HowToPlayCamera,	//カメラ操作
+		Hint1,				//ヒント1
+		Hint2,				//ヒント2
 
 		DrawerSpriteNum,	//引き出しスプライト数
 	};
@@ -70,6 +71,11 @@ public: //enum
 		SceneChangeTitle,	//タイトルシーンに移行
 	};
 
+	struct SpaceIndo {
+		std::unique_ptr<Sprite> inst;
+		float isSizeUp;
+	};
+
 public: //メンバ関数
 	/// <summary>
 	/// 生成
@@ -87,6 +93,11 @@ public: //メンバ関数
 	void Update();
 
 	/// <summary>
+	/// 加算合成描画
+	/// </summary>
+	void AddDraw();
+
+	/// <summary>
 	/// 奥の描画
 	/// </summary>
 	void Draw();
@@ -101,9 +112,15 @@ public: //メンバ関数
 	void MenuSelection();
 
 	/// <summary>
-	/// 引き出しスプライトの開閉状態をリセット
+	/// 次元変更可能かをチェックし、スプライトの色を変更する
 	/// </summary>
-	void DrawerSpriteReset();
+	/// <param name="isChangeDimension">次元変更可能か</param>
+	void IsChangeDimensionCheck(bool isChangeDimension);
+
+	/// <summary>
+	/// ステージ変更に伴う処理
+	/// </summary>
+	void StageChangeUpdate();
 
 	//フラグの設定、取得
 	void SetMenuFlag(bool flag) { menuFlag_ = flag; drawerSprites[HowToPlayMenu]->MoveStart(); }
@@ -111,6 +128,7 @@ public: //メンバ関数
 
 	bool GetMenuFlag() { return menuFlag_; }
 	const int GetSelectionNumber() { return selectionNumber_; }
+	bool GetIsHintViewMode();
 
 private: //メンバ関数
 	/// <summary>
@@ -125,9 +143,28 @@ private: //メンバ関数
 	void CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
 
 	/// <summary>
+	/// 子供スプライト生成
+	/// </summary>
+	/// <param name="texture">テクスチャ</param>
+	/// <param name="parent">親スプライト</param>
+	/// <param name="position">親スプライト原点での座標</param>
+	/// <param name="anchorpoint">アンカーポイント</param>
+	void CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f });
+
+	/// <summary>
 	/// キー入力による引き出しスプライト移動開始
 	/// </summary>
 	void DrawerSpriteMoveStartKey();
+
+	/// <summary>
+	/// ヒントスプライトの大きさ変更
+	/// </summary>
+	void HintSpriteSizeChange();
+
+	/// <summary>
+	/// スペースのエフェクト
+	/// </summary>
+	void SpaceEffect();
 
 private: //静的メンバ変数
 	//音の大きさ
@@ -136,8 +173,20 @@ private: //静的メンバ変数
 	static const float soundMaxVolume_;
 
 private: //メンバ変数
+	//次元変更可能か可能のときのみ光るスペースキースプライト
+	std::unique_ptr<Sprite> isChangeDimenisonSprite;
+	//押せるときの反応
+	std::array<SpaceIndo, 4> ChangeDimenisonSpriteEffect;
+	//反応を入れるカウント
+	int SpriteEffectCount;
+	//次元変更可能か
+	bool isChangeDimenison;
 	//説明用引き出しスプライト
 	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
+	//引き出しスプライトの子供
+	std::vector<std::unique_ptr<Sprite>> childSprites;
+	//ヒントスプライト
+	std::array<std::unique_ptr<HintSprite>, 2> hintSprites;
 	// イージング進行
 	float easeTimer_ = 0.0f;
 	// メニュー用の背景

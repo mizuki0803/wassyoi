@@ -30,11 +30,12 @@ public: //メンバ関数
 	/// 初期化
 	/// </summary>
 	/// <param name="texture">テクスチャ</param>
+	/// <param name="position">座標</param>
 	/// <param name="anchorpoint">アンカーポイント</param>
 	/// <param name="isFlipX">左右反転するか</param>
 	/// <param name="isFlipY">上下反転するか</param>
 	/// <returns>成否</returns>
-	bool Initialize(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY) override;
+	bool Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY) override;
 
 	/// <summary>
 	/// 更新

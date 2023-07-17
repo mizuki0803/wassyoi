@@ -10,7 +10,7 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 
 
-Sprite* Sprite::Create(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
+Sprite* Sprite::Create(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
 	//インスタンスを生成
 	Sprite* instance = new Sprite();
@@ -19,7 +19,7 @@ Sprite* Sprite::Create(const Texture& texture, const Vector2& anchorpoint, bool 
 	}
 
 	// 初期化
-	if (!instance->Initialize(texture, anchorpoint, isFlipX, isFlipY)) {
+	if (!instance->Initialize(texture, position, anchorpoint, isFlipX, isFlipY)) {
 		delete instance;
 		assert(0);
 		return nullptr;
@@ -28,9 +28,10 @@ Sprite* Sprite::Create(const Texture& texture, const Vector2& anchorpoint, bool 
 	return instance;
 }
 
-bool Sprite::Initialize(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
+bool Sprite::Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
 	this->texture = texture;
+	this->position = position;
 	this->anchorpoint = anchorpoint;
 	this->isFlipX = isFlipX;
 	this->isFlipY = isFlipY;
@@ -168,6 +169,12 @@ void Sprite::Update()
 	matWorld *= XMMatrixRotationZ(XMConvertToRadians(rotation));
 	//平行移動
 	matWorld *= XMMatrixTranslation(position.x, position.y, 0);
+
+	//親オブジェクトがあれば
+	if (parent != nullptr) {
+		//親オブジェクトのワールド行列をかける
+		matWorld *= parent->matWorld;
+	}
 
 	//頂点バッファに反映
 	TransferVertexBuffer();

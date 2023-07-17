@@ -25,7 +25,7 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE drawerKey, HidePlace 
 	else if (hidePlace == HidePlace::Right) { anchorpoint = { 0.0f, 0.0f }; }
 
 	//スプライト生成
-	if (!Sprite::Initialize(texture, anchorpoint, false, false)) {
+	if (!Sprite::Initialize(texture, position, anchorpoint, false, false)) {
 		return false;
 	}
 

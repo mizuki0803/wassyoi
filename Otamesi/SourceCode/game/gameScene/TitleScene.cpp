@@ -82,8 +82,7 @@ void TitleScene::Initialize()
 	//UI関係生成
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Title);
 	//タイトルロゴ生成
-	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo)));
-	titleLogo->SetPosition({ WindowApp::window_width / 2, 140 });
+	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo), { WindowApp::window_width / 2, 140 }));
 	titleLogo->SetTexSize({1658, 518});
 	titleLogo->SetSize(titleLogo->GetTexSize() * 0.4f);
 }
@@ -99,6 +98,9 @@ void TitleScene::Update()
 	//DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
 
 	if (!isStageClear) {
+		//次元変更が可能かUIに伝える
+		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
+
 		//undo
 		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
 			Undo(camera.get(), player.get());
@@ -151,8 +153,8 @@ void TitleScene::Update()
 		}
 	}
 
-	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
-	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd());
+	camera->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
+	player->SetNotMove(userInterface_->GetMenuFlag(), mapData->GetIsMoveEnd(), userInterface_->GetIsHintViewMode());
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 
@@ -269,7 +271,6 @@ void TitleScene::DrawFrontSprite()
 	//シーン変更演出
 	SceneChangeEffect::Draw();
 
-
 	///-------スプライト描画ここまで-------///
 }
 
@@ -290,4 +291,10 @@ void TitleScene::MenuAction()
 
 	//binary削除
 	DeleteBinary();
+}
+
+void TitleScene::FrameReset()
+{
+	mapData->FrameReset();
+	backGround->FrameReset();
 }

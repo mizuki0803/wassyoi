@@ -210,4 +210,5 @@ void FrameWork::Draw()
 
 	Timer::GetInstance().InstrumentationEnd();
 
+	SceneManager::GetInstance()->FrameReset();
 }

@@ -6,24 +6,21 @@ std::unique_ptr<Menu> Menu::Create(Vector2 pos)
 {
 	Menu* temp = new Menu;
 
-	temp->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), { 0.5f, 0.5f }, false, false);
-
-	temp->SetPosition(pos);
+	temp->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), pos, { 0.5f, 0.5f }, false, false);
 
 	temp->Update();
 
 	return std::unique_ptr<Menu>(temp);
 }
 
-bool Menu::Initialize(const Texture& texture, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
+bool Menu::Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
 	//スプライト初期化
-	if (!Sprite::Initialize(texture, anchorpoint, isFlipX, isFlipY)) {
+	if (!Sprite::Initialize(texture, position, anchorpoint, isFlipX, isFlipY)) {
 		return false;
 	}
 
 	//画面全体を覆うのに必要な情報をセット
-	position = { 0, 0 };
 	size = { 0.0f, 0.0f };
 	texSize = { 256, 256 };
 
