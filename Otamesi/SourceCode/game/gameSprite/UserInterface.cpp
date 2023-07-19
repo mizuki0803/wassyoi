@@ -426,6 +426,8 @@ void UserInterface::DrawerSpriteMoveStartKey()
 		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
 		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
 
+		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+
 		//開閉開始
 		drawerSprite->MoveStart();
 

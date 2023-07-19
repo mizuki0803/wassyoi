@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <wrl.h>
 #include <xaudio2.h>
 #include <cstdint>
@@ -9,45 +9,45 @@
 #pragma comment(lib, "xaudio2.lib")
 
 /// <summary>
-/// ƒI[ƒfƒBƒI
+/// ã‚ªãƒ¼ãƒ‡ã‚£ã‚ª
 /// </summary>
 class Audio final
 {
-public: //ƒGƒCƒŠƒAƒX
-	//namespaceÈ—ª
+public: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//namespaceçœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-private: //ƒTƒuƒNƒ‰ƒX
+private: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 
-	//ƒ`ƒƒƒ“ƒNƒwƒbƒ_
+	//ãƒãƒ£ãƒ³ã‚¯ãƒ˜ãƒƒãƒ€
 	struct ChunkHeader
 	{
-		char id[4];	//ƒ`ƒƒƒ“ƒN–ˆ‚ÌID
-		int32_t size;	//ƒ`ƒƒƒ“ƒNƒTƒCƒY
+		char id[4];	//ãƒãƒ£ãƒ³ã‚¯æ¯ã®ID
+		int32_t size;	//ãƒãƒ£ãƒ³ã‚¯ã‚µã‚¤ã‚º
 	};
 
-	//RIFFƒwƒbƒ_ƒ`ƒƒƒ“ƒN
+	//RIFFãƒ˜ãƒƒãƒ€ãƒãƒ£ãƒ³ã‚¯
 	struct RiffHeader
 	{
 		ChunkHeader chunk;	//RIFF
 		char type[4];	//WAVE
 	};
 
-	//FMTƒ`ƒƒƒ“ƒN
+	//FMTãƒãƒ£ãƒ³ã‚¯
 	struct FormatChunk
 	{
 		ChunkHeader chunk;	//fmt
-		WAVEFORMATEX fmt;	//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		WAVEFORMATEX fmt;	//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 	};
 
-	//‰¹ºƒf[ƒ^
+	//éŸ³å£°ãƒ‡ãƒ¼ã‚¿
 	struct SoundData
 	{
-		//”gŒ`ƒtƒH[ƒ}ƒbƒg
+		//æ³¢å½¢ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		WAVEFORMATEX wfex;
-		//ƒoƒbƒtƒ@‚Ìæ“ªƒAƒhƒŒƒX
+		//ãƒãƒƒãƒ•ã‚¡ã®å…ˆé ­ã‚¢ãƒ‰ãƒ¬ã‚¹
 		BYTE* pBuffer;
-		//ƒoƒbƒtƒ@‚ÌƒTƒCƒY
+		//ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
 		unsigned int bufferSize;
 		//SourceVoice
 		IXAudio2SourceVoice* pSourceVoice;
@@ -57,89 +57,95 @@ public:
 
 	enum class SoundName{
 		bgm,//
-		button,//ƒ{ƒ^ƒ“
-		stage_change,//ƒXƒe[ƒWƒZƒŒƒNƒg‚Å‚Ì•ÏX
-		d2_d3,//2d‚©‚ç3d•ÏŠ·
-		d3_d2,//3d‚©‚ç2d•ÏŠ·
-		clear,//ƒNƒŠƒA
+		button,//ãƒœã‚¿ãƒ³
+		stage_change,//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚»ãƒ¬ã‚¯ãƒˆã§ã®å¤‰æ›´
+		not,//2dâ†”3dä¸å¯
+		d2_d3,//2dã‹ã‚‰3då¤‰æ›
+		d3_d2,//3dã‹ã‚‰2då¤‰æ›
+		ui_inout,//uiï¼ˆä»˜ç®‹ï¼‰ã®ç§»å‹•
+		undo_redo,//undo redo
+		clear,//ã‚¯ãƒªã‚¢
 	};
 
 	std::vector<std::string> name = {
 		"bgm",
 		"button",
 		"stage_change",
+		"not",
 		"d2_d3",
 		"d3_d2",
+		"ui_inout",
+		"undo_redo",
 		"clear",
 	};
 
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	Audio() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~Audio() = default;
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	Audio(const Audio& audio) = delete;
-	//‘ã“ü‰‰Zq‚ğ–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const Audio& audio) = delete;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>ƒI[ƒfƒBƒI</returns>
+	/// <returns>ã‚ªãƒ¼ãƒ‡ã‚£ã‚ª</returns>
 	static Audio* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="directoryPath">ƒfƒBƒŒƒNƒgƒŠƒpƒX</param>
+	/// <param name="directoryPath">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹</param>
 	void Initialize(const std::string& directoryPath = "Resources/sound/");
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// WAVƒf[ƒ^“Ç‚İ‚İ
+	/// WAVãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadWave(const std::string& filename);
 
 	/// <summary>
-	/// ƒTƒEƒ“ƒhƒf[ƒ^‰ğ•ú
+	/// ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿è§£æ”¾
 	/// </summary>
-	/// <param name="soundData">ƒTƒEƒ“ƒhƒf[ƒ^</param>
+	/// <param name="soundData">ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿</param>
 	void SoundDataUnload(SoundData* soundData);
 
 	/// <summary>
-	/// ‰¹ºÄ¶
+	/// éŸ³å£°å†ç”Ÿ
 	/// </summary>
-	/// <param name="soundData">ƒTƒEƒ“ƒhƒf[ƒ^</param>
-	/// <param name="isLoop">ƒ‹[ƒvÄ¶‚©</param>
+	/// <param name="soundData">ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿</param>
+	/// <param name="isLoop">ãƒ«ãƒ¼ãƒ—å†ç”Ÿã‹</param>
 	void PlayWave(const SoundName filename, const bool isLoop = false);
 
 	/// <summary>
-	/// ‰¹º’â~	
+	/// éŸ³å£°åœæ­¢	
 	/// </summary>
-	/// <param name="filename">ƒTƒEƒ“ƒhƒf[ƒ^</param>
+	/// <param name="filename">ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿</param>
 	void StopWave(const SoundName filename);
 
 	/// <summary>
-	/// ‰¹—Ê•ÏX
+	/// éŸ³é‡å¤‰æ›´
 	/// </summary>
-	/// <param name="volume">‰¹—Ê</param>
+	/// <param name="volume">éŸ³é‡</param>
 	void ChangeVolume(const float volume);
 
-private: //ƒƒ“ƒo•Ï”
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
 	//xAudio
 	ComPtr<IXAudio2> xAudio2;
-	//ƒ}ƒXƒ^[ƒ{ƒCƒX
+	//ãƒã‚¹ã‚¿ãƒ¼ãƒœã‚¤ã‚¹
 	IXAudio2MasteringVoice* masterVoice;
-	//ƒTƒEƒ“ƒhƒf[ƒ^‚Ì˜A‘z”z—ñ
+	//ã‚µã‚¦ãƒ³ãƒ‰ãƒ‡ãƒ¼ã‚¿ã®é€£æƒ³é…åˆ—
 	std::unordered_map<std::string, SoundData> soundDatas;
-	//ƒTƒEƒ“ƒhŠi”[ƒfƒBƒŒƒNƒgƒŠ
+	//ã‚µã‚¦ãƒ³ãƒ‰æ ¼ç´ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒª
 	std::string directoryPath;
 };

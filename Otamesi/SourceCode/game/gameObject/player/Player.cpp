@@ -3,7 +3,7 @@
 #include "Easing.h"
 #include "Block.h"
 #include "PlayerActionManager.h"
-
+#include "Audio.h"
 
 const float Player::playerSize = 3.5f;
 
@@ -255,7 +255,10 @@ void Player::ChanegeDimensionStart()
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
 	//次元変更できる状態なのかを判定
-	if (!ChangeDimensionStartCheck()) { return; }
+	if (!ChangeDimensionStartCheck()) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::not);
+		return;
+	}
 
 	//現在カメラの向いている方向の面に接地する
 	if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Top) { moveSurfacePhase = MoveSurfacePhase::Upward; }

@@ -167,7 +167,6 @@
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp" />
-    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\HintTextureLoader.cpp" />
