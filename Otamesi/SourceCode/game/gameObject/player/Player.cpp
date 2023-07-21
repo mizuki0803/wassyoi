@@ -223,7 +223,7 @@ void Player::MovePos()
 
 	//タイマー更新
 	actionTimer++;
-	const float moveTime = 30; //座標移動にかかる時間
+	const float moveTime = 25; //座標移動にかかる時間
 
 	//座標移動イージングに使用する変数(0～1を算出)
 	const float time = actionTimer / moveTime;

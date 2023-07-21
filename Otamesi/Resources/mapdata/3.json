@@ -1,11 +1,11 @@
 {
     "name": "3.json",
-    "cameraDist": {
-        "value0": 40.0,
-        "value1": 40.0,
-        "value2": 40.0
+  "cameraDist": {
+        "value0": 50.0,
+        "value1": 50.0,
+        "value2": 50.0
     },
-    "installationSurface": 0,
+  "installationSurface": 0,
     "mapSize": {
         "value0": 5,
         "value1": 5,
