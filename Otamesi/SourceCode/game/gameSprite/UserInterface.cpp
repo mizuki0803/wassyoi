@@ -272,7 +272,7 @@ void UserInterface::MenuReset()
 void UserInterface::MenuOpen()
 {
 	if (easeTimer_ == 0) {
-		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu);
 	}
 
 	int count = 0;
