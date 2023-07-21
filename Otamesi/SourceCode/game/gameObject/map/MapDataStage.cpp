@@ -196,12 +196,14 @@ void MapDataStage::CreateMapBlock()
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageBlock> newBlock;
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::goal), chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::Goal);
 					blocks.push_back(std::move(newBlock));
 				}
 				//ブロック生成
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageBlock> newBlock;
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::Block));
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::Block);
 					blocks.push_back(std::move(newBlock));
 				}
 				//上向きハリボテ生成
@@ -210,6 +212,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = {};	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::UpPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 				//下向きハリボテ生成
@@ -218,6 +221,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = { 180, 0, 0 };	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::DownPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 				//左向きハリボテ生成
@@ -226,6 +230,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = { 0, 0, 90 };	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::LeftPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 				//右向きハリボテ生成
@@ -234,6 +239,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = { 0, 0, -90 };	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::RightPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 				//正面向きハリボテ生成
@@ -242,6 +248,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = { -90, 0, 0 };	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::ForwardPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 				//奥向きハリボテ生成
@@ -250,6 +257,7 @@ void MapDataStage::CreateMapBlock()
 					const XMFLOAT3 rot = { 90, 0, 0 };	//傾ける角度
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 					newBlock->SetRotation(rot);
+					newBlock->SetMapBlockType(MapBlockData::MapBlockType::AwayPlane);
 					blocks.push_back(std::move(newBlock));
 				}
 			}
@@ -333,6 +341,7 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//ゴール生成
 	else if (type == MapBlockData::MapBlockType::Goal) {
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::goal), chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::Goal);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -340,6 +349,7 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//ブロック生成
 	else if (type == MapBlockData::MapBlockType::Block) {
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::Block));
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::Block);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -349,6 +359,7 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 		const XMFLOAT3 rot = {};	//傾ける角度
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::UpPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -356,8 +367,9 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//下向きハリボテ生成
 	else if (type == MapBlockData::MapBlockType::DownPlane) {
 		const XMFLOAT3 rot = { 180, 0, 0 };	//傾ける角度
-		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
+		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::DownPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -365,8 +377,9 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//左向きハリボテ生成
 	else if (type == MapBlockData::MapBlockType::LeftPlane) {
 		const XMFLOAT3 rot = { 0, 0, 90 };	//傾ける角度
-		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
+		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::LeftPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -374,8 +387,9 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//右向きハリボテ生成
 	else if (type == MapBlockData::MapBlockType::RightPlane) {
 		const XMFLOAT3 rot = { 0, 0, -90 };	//傾ける角度
-		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
+		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::RightPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -383,8 +397,9 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//正面向きハリボテ生成
 	else if (type == MapBlockData::MapBlockType::ForwardPlane) {
 		const XMFLOAT3 rot = { -90, 0, 0 };	//傾ける角度
-		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
+		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::ForwardPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -392,8 +407,9 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	//奥向きハリボテ生成
 	else if (type == MapBlockData::MapBlockType::AwayPlane) {
 		const XMFLOAT3 rot = { 90, 0, 0 };	//傾ける角度
-		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
+		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 		newBlock->SetRotation(rot);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::AwayPlane);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -408,12 +424,16 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 	if (type == MapBlockData::MapBlockType::Goal) {
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::goal), chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::Goal);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//ブロック生成
 	else if (type == MapBlockData::MapBlockType::Block) {
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::Block));
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::Block);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//上向きハリボテ生成
@@ -422,6 +442,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::UpPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//下向きハリボテ生成
@@ -430,6 +452,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::DownPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//左向きハリボテ生成
@@ -438,6 +462,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::LeftPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//右向きハリボテ生成
@@ -446,6 +472,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::RightPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//正面向きハリボテ生成
@@ -454,6 +482,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::ForwardPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 	//奥向きハリボテ生成
@@ -462,6 +492,8 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 		newBlock.reset(StageBlock::Create(static_cast<int>(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
+		newBlock->SetMapBlockType(MapBlockData::MapBlockType::AwayPlane);
+
 		blocks.push_back(std::move(newBlock));
 	}
 }
