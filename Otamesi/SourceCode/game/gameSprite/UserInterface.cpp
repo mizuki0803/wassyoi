@@ -207,17 +207,18 @@ void UserInterface::Draw()
 	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
 		childSprite->Draw();
 	}
-	//ヒントスプライト描画
-	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
-		if (!hintSprite) { continue; }
-		hintSprite->Draw();
-	}
 
 	//かさんごーせー
 	SpriteCommon::GetInstance()->DrawPrev("Add");
 	AddDraw();
 
 	SpriteCommon::GetInstance()->DrawPrev();
+
+	//ヒントスプライト描画
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		if (!hintSprite) { continue; }
+		hintSprite->Draw();
+	}
 
 	//メニュースプライト描画
 	if (menuFlag_)
@@ -270,6 +271,10 @@ void UserInterface::MenuReset()
 
 void UserInterface::MenuOpen()
 {
+	if (easeTimer_ == 0) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+	}
+
 	int count = 0;
 	easeTimer_++;
 	selectionNumber_ = 0;
@@ -304,6 +309,8 @@ void UserInterface::MenuSelection()
 {
 	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_UP))
 	{
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu_move);
+
 		selectionNumber_--;
 
 		if (selectionNumber_ < 0)
@@ -313,6 +320,8 @@ void UserInterface::MenuSelection()
 	}
 	else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_DOWN))
 	{
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu_move);
+
 		selectionNumber_++;
 
 		if (selectionNumber_ >= menuframe_.size())
@@ -423,10 +432,11 @@ void UserInterface::DrawerSpriteMoveStartKey()
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		//開閉に使用するキーが入力されていなければ飛ばす
 		if (!(Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey()))) { continue; }
-		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
-		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
 
 		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+
+		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
+		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
 
 		//開閉開始
 		drawerSprite->MoveStart();
