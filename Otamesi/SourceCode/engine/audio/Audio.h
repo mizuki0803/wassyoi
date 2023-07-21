@@ -59,6 +59,7 @@ public:
 		bgm,//
 		button,//ボタン
 		stage_change,//ステージセレクトでの変更
+		player_move,//プレイヤーの移動
 		not,//2d↔3d不可
 		d2_d3,//2dから3d変換
 		d3_d2,//3dから2d変換
@@ -72,6 +73,7 @@ public:
 		"bgm",
 		"button",
 		"stage_change",
+		"player_move",
 		"not",
 		"d2_d3",
 		"d3_d2",

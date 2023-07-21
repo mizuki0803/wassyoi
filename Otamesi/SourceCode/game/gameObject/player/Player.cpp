@@ -214,6 +214,8 @@ void Player::MovePosStart()
 
 	//行動を「座標移動」にする
 	actionPhase = ActionPhase::MovePos;
+
+	Audio::GetInstance()->PlayWave(Audio::SoundName::player_move);
 }
 
 void Player::MovePos()
