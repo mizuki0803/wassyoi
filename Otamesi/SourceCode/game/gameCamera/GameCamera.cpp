@@ -317,7 +317,7 @@ void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
 	// •Û‘¶‚·‚éÀ•W‚ÌXV
 	beforeDistanceStageCenter = this->distanceStageCenter;
 	afterDistanceStageCenter = distanceStageCenter;
-	phase_ = static_cast<int>(GamePhase::Play);
+	phase_ = static_cast<int>(GamePhase::ReStart);
 	is2D = false;
 	isTriggerDimensionChange = false;
 	cameraEaseChangeFlag_ = false;
@@ -325,7 +325,6 @@ void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
 	isStageClear = false;
 	easeData_->Reset();
 	reStartEaseData_->Reset();
-	phase_ = static_cast<int>(GamePhase::ReStart);
 }
 
 void GameCamera::Reset()
@@ -333,6 +332,7 @@ void GameCamera::Reset()
 	cameraXPosPhase = (int)CameraXPosPhase::Front;
 	cameraYPosPhase = (int)CameraYPosPhase::Side;
 	phase_ = static_cast<int>(GamePhase::Play);
+	actionPhase = ActionPhase::None;
 	is2D = false;
 	isTriggerDimensionChange = false;
 	cameraEaseChangeFlag_ = false;
