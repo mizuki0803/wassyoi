@@ -111,6 +111,8 @@ void GameScene::Update()
 				//シーン切り替え
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 			}
+			//次元変更が可能かUIに伝える
+			userInterface_->IsChangeDimensionCheck(true);
 		}
 		//その他ステージは通常の動き
 		else {
