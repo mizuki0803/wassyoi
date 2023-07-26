@@ -53,7 +53,7 @@ public: //静的メンバ関数
 	static bool AllStageClearTriggerCheck();
 
 private: //静的メンバ変数(定数)
-	static const int stageNum = 34;
+	static const int stageNum = 19;
 
 private: //静的メンバ変数
 	//選択中のステージ
