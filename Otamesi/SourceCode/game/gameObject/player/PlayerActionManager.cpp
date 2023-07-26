@@ -100,7 +100,7 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	}
 	//カメラY軸が「下」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	else if (cameraYPosPhase == GameCamera::CameraYPosPhase::Buttom) {
-		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.y; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::DownPlane) ||
 				mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::UpPlane) {
 				return true;
@@ -109,7 +109,7 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	}
 	//カメラX軸が「左」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
 	else if (cameraXPosPhase == GameCamera::CameraXPosPhase::Left) {
-		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.x; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::LeftPlane) ||
 				mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z] == MapBlockData::MapBlockType::RightPlane) {
 				return true;
@@ -127,7 +127,7 @@ bool PlayerActionManager::DirectionForwardBlockCheck(const XMINT3& mapChipNumber
 	}
 	//カメラX軸が「手前」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
 	else if (cameraXPosPhase == GameCamera::CameraXPosPhase::Front) {
-		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.z; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::ForwardPlane) ||
 				mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i] == MapBlockData::MapBlockType::AwayPlane) {
 				return true;
@@ -154,7 +154,7 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 
 	//カメラY軸が「上」の場合はプレイヤーのマップ番号より「下にブロック」があるかチェック
 	if (cameraYPosPhase == (int)GameCamera::CameraYPosPhase::Top) {
-		for (int i = mapChipNumberPlayerPos.y - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.y; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][i][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::UpPlane)) {
 				return true;
 			}
@@ -187,7 +187,7 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 	}
 	//カメラX軸が「右」の場合はプレイヤーのマップ番号より「左にブロック」があるかチェック
 	else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Right) {
-		for (int i = mapChipNumberPlayerPos.x - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.x; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[i][mapChipNumberPlayerPos.y][mapChipNumberPlayerPos.z], MapBlockData::MapBlockType::RightPlane)) {
 				return true;
 			}
@@ -209,7 +209,7 @@ bool PlayerActionManager::DirectionAwayBlockCheck(const XMINT3& mapChipNumberPla
 	}
 	//カメラX軸が「奥」の場合はプレイヤーのマップ番号より「手前にブロック」があるかチェック
 	else if (cameraXPosPhase == (int)GameCamera::CameraXPosPhase::Back) {
-		for (int i = mapChipNumberPlayerPos.z - 1; i >= 0; --i) {
+		for (int i = mapChipNumberPlayerPos.z; i >= 0; --i) {
 			if (MapBlockData::MapChipNumBlockPlaneCheck(mapChipNum[mapChipNumberPlayerPos.x][mapChipNumberPlayerPos.y][i], MapBlockData::MapBlockType::AwayPlane)) {
 				return true;
 			}
