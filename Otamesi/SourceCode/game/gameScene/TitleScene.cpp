@@ -26,6 +26,8 @@ void TitleScene::Initialize()
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
+	modelBirdBody.reset(ObjModel::LoadFromOBJ("bird_a"));
+	modelBirdWing.reset(ObjModel::LoadFromOBJ("bird_wing"));
 
 	//選択中のステージ番号を0にセット
 	StageManager::SetSelectStage(0);
@@ -59,6 +61,10 @@ void TitleScene::Initialize()
 
 	//背景オブジェクト生成
 	backGround.reset(BackGround::Create());
+
+	//鳥管理生成
+	const int32_t birdCreateInterval = 60 * 2;	//鳥生成の間隔 (1秒にかかるフレーム数(60) * 秒(60) * 分)
+	birdManager.reset(BirdManager::Create(modelBirdBody.get(), modelBirdWing.get(), birdCreateInterval));
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -174,6 +180,8 @@ void TitleScene::Update()
 	skydome->Update();
 	//背景オブジェクト
 	backGround->Update();
+	//鳥管理更新
+	birdManager->Update();
 
 	//スプライト
 	//UIの更新
@@ -212,6 +220,8 @@ void TitleScene::Draw3D()
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kNone);
 	//天球
 	skydome->Draw();
+	//鳥管理
+	birdManager->Draw();
 	////プレイヤー
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kPlayer);
 	player->Draw();
