@@ -193,6 +193,8 @@ private: //メンバ変数
 	std::unique_ptr<Sprite> menuBackScreen_;
 	// メニュー用の枠組み
 	std::vector<std::unique_ptr<Menu>> menuframe_;
+	// メニューのテキスト
+	std::vector<std::unique_ptr<Sprite>> menuText_;
 	// 音量設定用バースプライト
 	std::unique_ptr<Sprite> soundVolumeBar;
 	// 音量設定用ポインタースプライト

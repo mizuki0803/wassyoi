@@ -23,11 +23,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	//メニュー用スプライト生成
 	if (GamePhase::Title == gamePhase)
 	{
-		for (int i = 0; i < 2; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuStageSelect), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
 
 		//次元変更可能確認スプライト生成
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
@@ -61,11 +60,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
-		for (int i = 0; i < 2; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f ), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
@@ -76,11 +74,12 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
-		for (int i = 0; i < 3; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2 , (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuStageSelect), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(2 * 128)), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(2 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
 
 		//次元変更可能確認スプライト生成
 		float size = 1.0f;

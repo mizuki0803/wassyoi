@@ -20,6 +20,9 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
 	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
+	TextureManager::LoadTexture(textures[MenuTitle], directoryPath, "Menu_Title.png");
+	TextureManager::LoadTexture(textures[MenuVolume], directoryPath, "Menu_Volume.png");
+	TextureManager::LoadTexture(textures[MenuStageSelect], directoryPath, "Menu_StageSelect.png");
 	//‘€ì•û–@ŠÖŒW
 	TextureManager::LoadTexture(textures[Husen], directoryPath, "husen.png");
 	TextureManager::LoadTexture(textures[HusenL], directoryPath, "husen_L.png");

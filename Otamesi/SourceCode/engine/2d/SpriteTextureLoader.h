@@ -15,6 +15,9 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		MenuTitle,		//メニューのタイトル
+		MenuVolume,		//メニューの音量
+		MenuStageSelect,//メニューのステージセレクト
 		SoundVolumeBar,	//音量変更用バー
 		SoundVolumePointer,	//音量変更用ポインター
 		Husen,	//ノーマル付箋
