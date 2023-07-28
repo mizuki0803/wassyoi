@@ -64,6 +64,7 @@ public:
 		d2_d3,//2dから3d変換
 		d3_d2,//3dから2d変換
 		ui_inout,//ui（付箋）の移動
+		hintoUp,//ヒントのサイズ変更
 		undo_redo,//undo redo
 		menu,//メニュー
 		menu_move,//menu移動
@@ -79,6 +80,7 @@ public:
 		"d2_d3",
 		"d3_d2",
 		"ui_inout",
+		"hintoUp",
 		"undo_redo",
 		"menu",
 		"menu_move",

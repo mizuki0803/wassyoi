@@ -1,6 +1,7 @@
 #include "HintSprite.h"
 #include "Easing.h"
 #include "WindowApp.h"
+#include "Audio.h"
 
 const float HintSprite::normalTextureScale = 0.15f;
 const float HintSprite::largeTextureScale = 0.7f;
@@ -93,6 +94,11 @@ void HintSprite::SizeChange()
 {
 	//大きさ変更中でなければ抜ける
 	if (!isSizeChange) { return; }
+
+	//拡大化最初に音を出す
+	if (actionTimer == 0) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::hintoUp);
+	}
 
 	//タイマー更新
 	actionTimer++;

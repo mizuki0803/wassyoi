@@ -108,12 +108,12 @@ void TitleScene::Update()
 		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
 		//undo
-		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+		if (Input::GetInstance()->TriggerKey(DIK_LCONTROL)) {
 			Undo(camera.get(), player.get());
 
 		}
 		//redo
-		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+		else if (Input::GetInstance()->TriggerKey(DIK_LSHIFT)) {
 			Redo(camera.get(), player.get());
 		}
 
