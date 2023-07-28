@@ -63,7 +63,7 @@ void TitleScene::Initialize()
 	backGround.reset(BackGround::Create());
 
 	//鳥管理生成
-	const int32_t birdCreateInterval = 60 * 2;	//鳥生成の間隔 (1秒にかかるフレーム数(60) * 秒(60) * 分)
+	const int32_t birdCreateInterval = 60 * 10;	//鳥生成の間隔 (1秒にかかるフレーム数(60) * 秒(60) * 分)
 	birdManager.reset(BirdManager::Create(modelBirdBody.get(), modelBirdWing.get(), birdCreateInterval));
 
 	//objオブジェクトにカメラをセット

@@ -10,6 +10,7 @@
 #include "Skydome.h"
 #include "ClearStaging.h"
 #include "ImageUIRenderer.h"
+#include "BirdManager.h"
 
 /// <summary>
 /// ゲームシーン
@@ -98,6 +99,8 @@ private: //メンバ変数
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelPlayerEffect;
 	std::unique_ptr<ObjModel> modelSkydome;
+	std::unique_ptr<ObjModel> modelBirdBody;
+	std::unique_ptr<ObjModel> modelBirdWing;
 
 	//プレイヤー
 	std::unique_ptr<Player> player;
@@ -123,5 +126,6 @@ private: //メンバ変数
 	// UI用
 	std::unique_ptr<ImageUIRenderer> imageUiRenderer;
 
-
+	//鳥管理
+	std::unique_ptr<BirdManager> birdManager;
 };
