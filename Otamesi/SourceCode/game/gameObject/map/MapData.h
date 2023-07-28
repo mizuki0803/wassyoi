@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include <vector>
 #include <memory>
@@ -6,26 +6,26 @@
 #include "Vector3.h"
 
 /// <summary>
-/// ƒ}ƒbƒvƒf[ƒ^
+/// ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 class MapData
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// DirectX::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMINT3 = DirectX::XMINT3;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update() = 0;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw() = 0;
 
@@ -36,35 +36,35 @@ public: //ƒƒ“ƒoŠÖ”
 	const XMFLOAT3 GetCameraDist() { return cameraDist; }
 	const int GetInstallationSurface() { return installationSurface; }
 
-protected: //ƒƒ“ƒoŠÖ”
+protected: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒ}ƒbƒv¶¬
+	/// ãƒãƒƒãƒ—ç”Ÿæˆ
 	/// </summary>
-	/// <param name="selectStageNum">ƒXƒe[ƒW”Ô†</param>
+	/// <param name="selectStageNum">ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
 	/// <returns></returns>
 	bool CreateMap(const int selectStageNum);
 
 	/// <summary>
-	/// ƒ}ƒbƒvƒf[ƒ^“Ç‚İ‚İ
+	/// ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="fileName">ƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="fileName">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	/// <returns></returns>
 	bool LoadMapData(const std::string& fileName);
 
 	/// <summary>
-	/// ƒ}ƒbƒvƒuƒƒbƒN¶¬
+	/// ãƒãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	/// </summary>
 	virtual void CreateMapBlock() = 0;
 
-protected: //ƒƒ“ƒo•Ï”
-	//ƒ}ƒbƒv‚ÌƒTƒCƒY
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒãƒƒãƒ—ã®ã‚µã‚¤ã‚º
 	XMINT3 mapSize;
-	//3ŸŒ³ƒ}ƒbƒv—p‚Ì3ŸŒ³”z—ñ
+	//3æ¬¡å…ƒãƒãƒƒãƒ—ç”¨ã®3æ¬¡å…ƒé…åˆ—
 	std::vector<std::vector<std::vector<int>>> mapChipNum;
-	//ƒ}ƒbƒv‚Ì’†S‚ğ‚¸‚ç‚·’l
+	//ãƒãƒƒãƒ—ã®ä¸­å¿ƒã‚’ãšã‚‰ã™å€¤
 	Vector3 shiftPos;
-	//ƒJƒƒ‰‹——£
+	//ã‚«ãƒ¡ãƒ©è·é›¢
 	XMFLOAT3 cameraDist;
-	//ƒvƒŒƒCƒ„[‚Ì‰Šúİ’u–Ê
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®åˆæœŸè¨­ç½®é¢
 	int installationSurface;
 };

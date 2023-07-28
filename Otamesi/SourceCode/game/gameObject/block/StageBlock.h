@@ -1,163 +1,163 @@
-#pragma once
+ï»¿#pragma once
 #include "Block.h"
 #include "EaseData.h"
 #include "MapBlockData.h"
 #include <memory>
 
 /// <summary>
-/// ƒXƒe[ƒW—pƒuƒƒbƒN
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 /// </summary>
 class StageBlock : public Block
 {
 public: //enum
 	/// <summary>
-	/// ƒQ[ƒ€‚Ì‘S‘Ì
+	/// ã‚²ãƒ¼ãƒ ã®å…¨ä½“
 	/// </summary>
 	enum class GamePhase
 	{
-		Start,	//ŠJn
-		Move,	//ˆÚ“®
-		Delete,	//íœ
-		ReStart,//Ä“x¶¬
-		None,	//‰½‚à‚µ‚È‚¢
+		Start,	//é–‹å§‹
+		Move,	//ç§»å‹•
+		Delete,	//å‰Šé™¤
+		ReStart,//å†åº¦ç”Ÿæˆ
+		None,	//ä½•ã‚‚ã—ãªã„
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>	
-	/// <param name="_blockType">ƒ‚ƒfƒ‹”Ô†</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <param name="shiftPos">ƒ}ƒbƒv‚ğ’†S‚É‚¸‚ç‚·’l</param>
-	/// <returns>ƒXƒe[ƒW—pƒuƒƒbƒN</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«ç•ªå·</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <param name="shiftPos">ãƒãƒƒãƒ—ã‚’ä¸­å¿ƒã«ãšã‚‰ã™å€¤</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒ–ãƒ­ãƒƒã‚¯</returns>
 	static StageBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="_blockType">ƒ‚ƒfƒ‹”Ô†</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <param name="shiftPos">ƒ}ƒbƒv‚ğ’†S‚É‚¸‚ç‚·’l</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«ç•ªå·</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <param name="shiftPos">ãƒãƒƒãƒ—ã‚’ä¸­å¿ƒã«ãšã‚‰ã™å€¤</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒQ[ƒ€ŠJn
+	/// ã‚²ãƒ¼ãƒ é–‹å§‹æ™‚
 	/// </summary>
 	void PlayStratMove();
 	/// <summary>
-	/// Ä¶¬‚ÌˆÚ“®
+	/// å†ç”Ÿæˆæ™‚ã®ç§»å‹•
 	/// </summary>
 	void ReStratMove();
 	/// <summary>
-	/// íœ‚ÌˆÚ“®
+	/// å‰Šé™¤æ™‚ã®ç§»å‹•
 	/// </summary>
 	void DeleteMove();
 	/// <summary>
-	/// Ä¶¬‚Ì’Ç‰Á‚µ‚½ƒuƒƒbƒN‚ÌˆÚ“®
+	/// å†ç”Ÿæˆæ™‚ã®è¿½åŠ ã—ãŸãƒ–ãƒ­ãƒƒã‚¯ã®ç§»å‹•
 	/// </summary>
 	void ReCreateMove();
 
 	/// <summary>
-	/// Ä¶¬‚Ìİ’è
+	/// å†ç”Ÿæˆã®è¨­å®š
 	/// </summary>
-	/// <param name="phase">s“®ƒ^ƒCƒv</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
+	/// <param name="phase">è¡Œå‹•ã‚¿ã‚¤ãƒ—</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
 	void ReCreate(const GamePhase phase, const XMINT3& mapChipNum, const Vector3& shiftPos);
 
 	/// <summary>
-	/// ƒC[ƒWƒ“ƒO‚ªI‚í‚Á‚½‚©
+	/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãŒçµ‚ã‚ã£ãŸã‹
 	/// </summary>
-	/// <returns>I—¹ƒtƒ‰ƒO</returns>
+	/// <returns>çµ‚äº†ãƒ•ãƒ©ã‚°</returns>
 	bool IsEaseEndFlag() { return easeData_->GetEndFlag(); }
 	/// <summary>
-	/// ƒC[ƒWƒ“ƒOƒf[ƒ^‚Ìİ’è
+	/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
 	/// </summary>
-	/// <param name="count">ƒtƒŒ[ƒ€‚ÌƒJƒEƒ“ƒg</param>
+	/// <param name="count">ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚«ã‚¦ãƒ³ãƒˆ</param>
 	void SetEaseData(const int count);
 	/// <summary>
-	/// ƒC[ƒWƒ“ƒO‚ğŠJn‚·‚é‚ÌˆÊ’u‚Ì•Û‘¶
+	/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚’é–‹å§‹ã™ã‚‹æ™‚ã®ä½ç½®ã®ä¿å­˜
 	/// </summary>
 	/// <param name="position"></param>
 	void SetBlockStratPos(const Vector3& position) { blockStratPos_ = position; }
 	/// <summary>
-	/// ƒC[ƒWƒ“ƒO‚ğI—¹‚·‚é‚ÌˆÊ’u‚Ì•Û‘¶
+	/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚’çµ‚äº†ã™ã‚‹æ™‚ã®ä½ç½®ã®ä¿å­˜
 	/// </summary>
 	/// <param name="position"></param>
 	void SetBlockEndPos(const Vector3& position) { blockEndPos_ = position; }
 	/// <summary>
-	/// ŠÖ”‚Ìİ’è
+	/// é–¢æ•°ã®è¨­å®š
 	/// </summary>
 	void CreateAct();
 	/// <summary>
-	/// ‚Ç‚Ìs“®‚ğ‚µ‚Ä‚¢‚é‚©‚Ìæ“¾
+	/// ã©ã®è¡Œå‹•ã‚’ã—ã¦ã„ã‚‹ã‹ã®å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	GamePhase GetActPhase() { return static_cast<GamePhase>(phase_); }
 
 	/// <summary>
-	/// íœƒtƒ‰ƒO‚Ìæ“¾
+	/// å‰Šé™¤ãƒ•ãƒ©ã‚°ã®å–å¾—
 	/// </summary>
-	/// <returns>íœƒtƒ‰ƒO</returns>
+	/// <returns>å‰Šé™¤ãƒ•ãƒ©ã‚°</returns>
 	bool GetDeleteFlag() { return deleteFlag_; }
 
 	/// <summary>
-	/// s“®ƒ^ƒCƒv‚Ìİ’è
+	/// è¡Œå‹•ã‚¿ã‚¤ãƒ—ã®è¨­å®š
 	/// </summary>
-	/// <param name="phase">s“®ƒ^ƒCƒv</param>
+	/// <param name="phase">è¡Œå‹•ã‚¿ã‚¤ãƒ—</param>
 	void SetGamePhase(GamePhase phase) { phase_ = static_cast<int>(phase); }
 
 	/// <summary>
-	/// ƒuƒƒbƒN‚Ìƒ^ƒCƒv‚Ìæ“¾
+	/// ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚¤ãƒ—ã®å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	const MapBlockData::MapBlockType GetMapBlockType() { return mapBlockType_; }
 	/// <summary>
-	/// ƒuƒƒbƒN‚Ìƒ^ƒCƒv‚Ìİ’è
+	/// ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚¤ãƒ—ã®è¨­å®š
 	/// </summary>
 	/// <param name="mapBlockType"></param>
 	void SetMapBlockType(const MapBlockData::MapBlockType mapBlockType) { mapBlockType_ = mapBlockType; }
 
 	/// <summary>
-	/// ƒvƒŒƒCƒ„[‚©‚ç‚ÌƒR[ƒ‹ƒoƒbƒN
+	/// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‹ã‚‰ã®ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯
 	/// </summary>
 	void ReAction();
 
 	/// <summary>
-	/// ƒ‰ƒ“ƒ_ƒ€‚ÌŒvZ
+	/// ãƒ©ãƒ³ãƒ€ãƒ ã®è¨ˆç®—
 	/// </summary>
-	/// <param name="a">Å¬’l</param>
-	/// <param name="b">Å‘å’l</param>
+	/// <param name="a">æœ€å°å€¤</param>
+	/// <param name="b">æœ€å¤§å€¤</param>
 	const float RandCalculate(float a, float b);
 
-protected: // ƒƒ“ƒo•Ï”
-	// ŠÖ”‚ÌŠÇ—
+protected: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// é–¢æ•°ã®ç®¡ç†
 	std::vector<std::function<void()>> func_;
-	// ŠÖ”‚Ì”Ô†
+	// é–¢æ•°ã®ç•ªå·
 	size_t phase_;
-	//íœ—p‚Ìƒtƒ‰ƒO
+	//å‰Šé™¤ç”¨ã®ãƒ•ãƒ©ã‚°
 	bool deleteFlag_ = false;
-	// ƒuƒƒbƒN‚Ìƒ^ƒCƒv
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚¤ãƒ—
 	MapBlockData::MapBlockType mapBlockType_;
-	// ƒXƒe[ƒW‚Å‚ÌˆÊ’u
+	// ã‚¹ãƒ†ãƒ¼ã‚¸ã§ã®ä½ç½®
 	Vector3 stagePos_;
 
 #pragma region
-	// ŠJnˆÊ’u
+	// é–‹å§‹ä½ç½®
 	Vector3 blockStratPos_;
-	// I—¹ˆÊ’u
+	// çµ‚äº†ä½ç½®
 	Vector3 blockEndPos_;
-	// ˆÚ“®—Ê
+	// ç§»å‹•é‡
 	Vector3 vec_ = {};
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿
 	std::unique_ptr<EaseData> easeData_;
-	// ˆÚ“®—Ê—pƒC[ƒWƒ“ƒOƒf[ƒ^
+	// ç§»å‹•é‡ç”¨ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿
 	std::unique_ptr<EaseData> vecEaseData_;
-#pragma endregion ƒC[ƒWƒ“ƒOŠÖŒW
+#pragma endregion ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é–¢ä¿‚
 };

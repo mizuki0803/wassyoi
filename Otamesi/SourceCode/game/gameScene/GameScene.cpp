@@ -92,9 +92,6 @@ void GameScene::Initialize()
 	stageClear_ = ClearStaging::Create();
 
 
-	// UIレンダー初期化
-	imageUiRenderer->Common(dxbase->GetDevice(), dxbase->GetCmdList());
-	imageUiRenderer.reset(ImageUIRenderer::Create());
 }
 
 void GameScene::Finalize()
@@ -104,6 +101,8 @@ void GameScene::Finalize()
 
 void GameScene::Update()
 {
+	ObjObject3d::SetCamera(camera.get());
+
 	if (!isStageClear) {
 		//全てのステージをクリア後の特別なステージのみスペースキー入力でタイトルシーンへ
 		if (StageManager::GetSelectStage() == 100) {
@@ -335,10 +334,7 @@ void GameScene::DrawFrontSprite()
 
 void GameScene::DrawImageForUI()
 {
-	imageUiRenderer->DrawCameraDescription();
-	imageUiRenderer->DrawMoveDescription();
-
-
+	userInterface_->DrawMenuImage();
 }
 
 void GameScene::MenuAction()

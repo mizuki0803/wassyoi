@@ -63,6 +63,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,6 +85,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -167,7 +169,6 @@
     <ClCompile Include="SourceCode\game\gameScene\StageSelectScene.cpp" />
     <ClCompile Include="SourceCode\game\gameScene\TitleScene.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\DrawerSprite.cpp" />
-    <ClCompile Include="SourceCode\game\gameSprite\HowToPlayUI.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\HintSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\HintTextureLoader.cpp" />
@@ -437,7 +438,6 @@
     <ClInclude Include="SourceCode\game\gameScene\StageSelectScene.h" />
     <ClInclude Include="SourceCode\game\gameScene\TitleScene.h" />
     <ClInclude Include="SourceCode\game\gameSprite\DrawerSprite.h" />
-    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
     <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\HintTextureLoader.h" />

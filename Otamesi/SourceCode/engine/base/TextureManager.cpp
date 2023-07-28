@@ -1,4 +1,4 @@
-#include "TextureManager.h"
+ï»¿#include "TextureManager.h"
 #include "DescHeapSRV.h"
 #include "DirectXBase.h"
 #include <cassert>
@@ -15,28 +15,28 @@ void TextureManager::LoadTexture(Texture& texture, const std::string& directoryP
 {
 	HRESULT result;
 
-	//WICƒeƒNƒXƒ`ƒƒ‚Ìƒ[ƒh
+	//WICãƒ†ã‚¯ã‚¹ãƒãƒ£ã®ãƒ­ãƒ¼ãƒ‰
 	TexMetadata metadata{};
 	ScratchImage scratchImg{};
 
-	//ƒtƒ@ƒCƒ‹ƒpƒX‚ğŒ‹‡
+	//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’çµåˆ
 	string filepath = directoryPath + filename;
 
-	//ƒ†ƒjƒR[ƒh•¶š—ñ‚É•ÏŠ·‚·‚é
+	//ãƒ¦ãƒ‹ã‚³ãƒ¼ãƒ‰æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 	wchar_t wfilepath[128];
 	int iBufferSize = MultiByteToWideChar(CP_ACP, 0, filepath.c_str(), -1,
 		wfilepath, _countof(wfilepath));
 
-	//ƒtƒ@ƒCƒ‹–¼‚ÆŠg’£q‚ğ•ª—£‚·‚é
+	//ãƒ•ã‚¡ã‚¤ãƒ«åã¨æ‹¡å¼µå­ã‚’åˆ†é›¢ã™ã‚‹
 	std::string exceptExt;
 	std::string fileExt;
-	//‹æØ‚è•¶š '.'‚ªo‚Ä‚­‚éˆê”ÔÅŒã‚Ì•”•ª‚ğŒŸõ
+	//åŒºåˆ‡ã‚Šæ–‡å­— '.'ãŒå‡ºã¦ãã‚‹ä¸€ç•ªæœ€å¾Œã®éƒ¨åˆ†ã‚’æ¤œç´¢
 	size_t extDotPos = filepath.rfind('.');
-	//ŒŸõ‚ªƒqƒbƒg‚µ‚½‚ç
+	//æ¤œç´¢ãŒãƒ’ãƒƒãƒˆã—ãŸã‚‰
 	if (extDotPos != std::string::npos) {
-		//‹æØ‚è•¶š‚ÌŒã‚ë‚ğƒtƒ@ƒCƒ‹Šg’£q‚Æ‚µ‚Ä•Û‘¶
+		//åŒºåˆ‡ã‚Šæ–‡å­—ã®å¾Œã‚ã‚’ãƒ•ã‚¡ã‚¤ãƒ«æ‹¡å¼µå­ã¨ã—ã¦ä¿å­˜
 		fileExt = filepath.substr(extDotPos + 1, filepath.size() - extDotPos - 1);
-		//‹æØ‚è•¶š‚Ì‘O‚Ü‚Å‚ğ”²‚«o‚·
+		//åŒºåˆ‡ã‚Šæ–‡å­—ã®å‰ã¾ã§ã‚’æŠœãå‡ºã™
 		exceptExt = filepath.substr(0, extDotPos);
 	}
 	else {
@@ -44,7 +44,7 @@ void TextureManager::LoadTexture(Texture& texture, const std::string& directoryP
 		exceptExt = filepath;
 	}
 
-	//ddsƒtƒ@ƒCƒ‹‚©‚»‚Ì‘¼Œ`®ƒtƒ@ƒCƒ‹‚©‚ÅØ‚è‘Ö‚¦
+	//ddsãƒ•ã‚¡ã‚¤ãƒ«ã‹ãã®ä»–å½¢å¼ãƒ•ã‚¡ã‚¤ãƒ«ã‹ã§åˆ‡ã‚Šæ›¿ãˆ
 	if (fileExt == "dds") {
 		result = LoadFromDDSFile(wfilepath, DDS_FLAGS_NONE, &metadata, scratchImg);
 	}
@@ -53,10 +53,10 @@ void TextureManager::LoadTexture(Texture& texture, const std::string& directoryP
 	}
 	assert(SUCCEEDED(result));
 
-	//¶ƒf[ƒ^’Šo
+	//ç”Ÿãƒ‡ãƒ¼ã‚¿æŠ½å‡º
 	const Image* img = scratchImg.GetImage(0, 0, 0);
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		metadata.format,
 		metadata.width,
@@ -64,7 +64,7 @@ void TextureManager::LoadTexture(Texture& texture, const std::string& directoryP
 		(UINT16)metadata.arraySize,
 		(UINT16)metadata.mipLevels);
 
-	//ƒeƒNƒXƒ`ƒƒ—pƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0),
 		D3D12_HEAP_FLAG_NONE,
@@ -73,22 +73,22 @@ void TextureManager::LoadTexture(Texture& texture, const std::string& directoryP
 		nullptr,
 		IID_PPV_ARGS(&texture.texBuff));
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	result = texture.texBuff->WriteToSubresource(
 		0,
-		nullptr,	//‘S—ÌˆæƒRƒs[
-		img->pixels,	//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-		(UINT)img->rowPitch,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-		(UINT)img->slicePitch	//1–‡ƒTƒCƒY
+		nullptr,	//å…¨é ˜åŸŸã‚³ãƒ”ãƒ¼
+		img->pixels,	//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+		(UINT)img->rowPitch,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+		(UINT)img->slicePitch	//1æšã‚µã‚¤ã‚º
 	);
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[İ’è
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//İ’è\‘¢‘Ì
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼è¨­å®š
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//è¨­å®šæ§‹é€ ä½“
 	srvDesc.Format = metadata.format;	//RGBA
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	srvDesc.Texture2D.MipLevels = 1;
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉSRVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«SRVä½œæˆ
 	DescHeapSRV::CreateShaderResourceView(srvDesc, texture);
 }

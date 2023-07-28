@@ -1,4 +1,4 @@
-#include "EaseData.h"
+﻿#include "EaseData.h"
 
 EaseData::EaseData(int count)
 {

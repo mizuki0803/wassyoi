@@ -1,67 +1,67 @@
-#pragma once
+ï»¿#pragma once
 #include "MapData.h"
 #include "StageBlock.h"
 
 /// <summary>
-/// ƒXƒe[ƒW—pƒ}ƒbƒvƒf[ƒ^
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 class MapDataStage : public MapData
 {
 public:
 	/// <summary>
-	/// ƒQ[ƒ€ƒtƒF[ƒY
+	/// ã‚²ãƒ¼ãƒ ãƒ•ã‚§ãƒ¼ã‚º
 	/// </summary>
 	enum class GamePhase
 	{
-		GamePlay,	//ƒQ[ƒ€
-		Start,		//ŠJn
-		ReStart,	//ÄŠJn
+		GamePlay,	//ã‚²ãƒ¼ãƒ 
+		Start,		//é–‹å§‹
+		ReStart,	//å†é–‹å§‹
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="selectStageNum">‘I‘ğ’†‚ÌƒXƒe[ƒW”Ô†</param>
-	/// <returns>ƒXƒe[ƒW—pƒ}ƒbƒvƒf[ƒ^</returns>
+	/// <param name="selectStageNum">é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿</returns>
 	static MapDataStage* Create(const int selectStageNum);
 
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// ƒQ[ƒ€’†
+	/// ã‚²ãƒ¼ãƒ ä¸­
 	/// </summary>
 	void PlayGame();
 	/// <summary>
-	/// ƒQ[ƒ€ŠJn
+	/// ã‚²ãƒ¼ãƒ é–‹å§‹
 	/// </summary>
 	void GameStart();
 	/// <summary>
-	/// ƒQ[ƒ€ÄŠJn
+	/// ã‚²ãƒ¼ãƒ å†é–‹å§‹
 	/// </summary>
 	void GameReStart();
 	/// <summary>
-	/// ŠÖ”‚Ìİ’è
+	/// é–¢æ•°ã®è¨­å®š
 	/// </summary>
 	void CreateAct();
 
 	/// <summary>
-	/// ƒ}ƒbƒvƒuƒƒbƒNÄ¶¬
+	/// ãƒãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯å†ç”Ÿæˆ
 	/// </summary>
 	void ReCreateMapBlock(const int selectStageNum);
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 
@@ -78,36 +78,36 @@ public: //ƒƒ“ƒoŠÖ”
 	void SetIsAllStageClear(const bool flag) { isAllStageClear = flag; }
 	void SetSelectStageNum(const int stageNum) { selectStageNum = stageNum; }
 
-protected: //ƒƒ“ƒoŠÖ”
+protected: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒ}ƒbƒvƒuƒƒbƒN¶¬
+	/// ãƒãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	/// </summary>
 	void CreateMapBlock() override;
 
 	/// <summary>
-	/// ƒuƒƒbƒN‚ğã‚°‚é”Ô†‚Ì¶¬
+	/// ãƒ–ãƒ­ãƒƒã‚¯ã‚’ä¸Šã’ã‚‹ç•ªå·ã®ç”Ÿæˆ
 	/// </summary>
 	void BlockCountCreate();
 
 	bool BlockCount();
 
-protected: //ƒƒ“ƒo•Ï”
-	//ƒXƒe[ƒW—pƒuƒƒbƒN
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	std::vector<std::unique_ptr<StageBlock>> blocks;
 
-	//ƒvƒŒƒCƒ„[‚ğ¶¬‚·‚éƒ}ƒbƒv”Ô†
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ç”Ÿæˆã™ã‚‹ãƒãƒƒãƒ—ç•ªå·
 	XMINT3 playerCreateMapChipNum;
-	// ŠÖ”‚ÌŠÇ—
+	// é–¢æ•°ã®ç®¡ç†
 	std::vector<std::function<void()>> func_;
-	// ŠÖ”‚Ì”Ô†
+	// é–¢æ•°ã®ç•ªå·
 	size_t phase_ = static_cast<int>(GamePhase::Start);
-	// ã‚°‚éƒuƒƒbƒN‚Ì”Ô†‚Ì•Û‘¶
+	// ä¸Šã’ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã®ç•ªå·ã®ä¿å­˜
 	std::vector<int> rndcount;
-	// ƒuƒƒbƒN‚ğã‚°‚éƒ^ƒCƒ}[
+	// ãƒ–ãƒ­ãƒƒã‚¯ã‚’ä¸Šã’ã‚‹ã‚¿ã‚¤ãƒãƒ¼
 	int blockActTimer_ = 100;
-	//ƒ}ƒbƒvÄ¶¬‚ªI—¹‚µ‚½‚©
+	//ãƒãƒƒãƒ—å†ç”ŸæˆãŒçµ‚äº†ã—ãŸã‹
 	bool isReCreateEnd = false;
-	// s“®‚ªI‚í‚Á‚½‚©
+	// è¡Œå‹•ãŒçµ‚ã‚ã£ãŸã‹
 	bool isMoveEnd_ = false;
 	//
 	bool isAllStageClear = false;

@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "Vector3.h"
 
 using namespace DirectX;
 
 /// <summary>
-/// ƒJƒƒ‰
+/// ã‚«ãƒ¡ãƒ©
 /// </summary>
 class Camera
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// DirectX::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -19,46 +19,46 @@ protected: // ƒGƒCƒŠƒAƒX
 
 public:
 	/// <summary>
-	/// ƒJƒƒ‰‰Šú‰»
+	/// ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// ƒJƒƒ‰ƒAƒ“ƒOƒ‹‚ğXV
+	/// ã‚«ãƒ¡ãƒ©ã‚¢ãƒ³ã‚°ãƒ«ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateAngle();
 
 	/// <summary>
-	/// ƒrƒ…[s—ñ‚ğXV
+	/// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateMatView();
 
 	/// <summary>
-	/// Ë‰es—ñ‚ğXV
+	/// å°„å½±è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	virtual void UpdateMatProjection();
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚éˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveVector(const Vector3& move);
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚é‹“_ˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹è¦–ç‚¹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveEyeVector(const Vector3& move);
 
 	/// <summary>
-	/// ƒxƒNƒgƒ‹‚É‚æ‚é’‹“_ˆÚ“®
+	/// ãƒ™ã‚¯ãƒˆãƒ«ã«ã‚ˆã‚‹æ³¨è¦–ç‚¹ç§»å‹•
 	/// </summary>
-	/// <param name="move">ˆÚ“®—Ê</param>
+	/// <param name="move">ç§»å‹•é‡</param>
 	void MoveTargetVector(const Vector3& move);
 
 
@@ -81,27 +81,27 @@ public:
 	void SetDirtyProjection(const bool _dirtyProjection) { dirtyProjection = _dirtyProjection; }
 
 protected:
-	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	XMMATRIX matWorld = {};
-	// ƒrƒ…[s—ñ
+	// ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—
 	XMMATRIX matView = XMMatrixIdentity();
-	// Ë‰es—ñ
+	// å°„å½±è¡Œåˆ—
 	XMMATRIX matProjection = XMMatrixIdentity();
-	//ƒrƒ‹ƒ{[ƒhs—ñ
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	XMMATRIX matBillboard = XMMatrixIdentity();
-	//Y²‰ñ‚è‚Ìƒrƒ‹ƒ{[ƒhs—ñ
+	//Yè»¸å›ã‚Šã®ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	XMMATRIX matBillboardY = XMMatrixIdentity();
-	// ‹“_À•W
+	// è¦–ç‚¹åº§æ¨™
 	Vector3 eye = { 0, 1, -10.0f };
-	// ’‹“_À•W
+	// æ³¨è¦–ç‚¹åº§æ¨™
 	Vector3 target = { 0, 0, 0 };
-	// ã•ûŒüƒxƒNƒgƒ‹
+	// ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 up = { 0, 1, 0 };
-	//ƒJƒƒ‰‚Ì‰ñ“]Šp
+	//ã‚«ãƒ¡ãƒ©ã®å›è»¢è§’
 	Vector3 angle = { 0.0f, 0.0f, 0.0f };
-	//target‚©‚çƒJƒƒ‰‚Ü‚Å‚Ì‹——£
+	//targetã‹ã‚‰ã‚«ãƒ¡ãƒ©ã¾ã§ã®è·é›¢
 	float distance = 10.0f;
-	//ƒ_[ƒeƒBƒtƒ‰ƒO
+	//ãƒ€ãƒ¼ãƒ†ã‚£ãƒ•ãƒ©ã‚°
 	bool dirtyAngle = false;
 	bool dirtyView = false;
 	bool dirtyProjection = false;

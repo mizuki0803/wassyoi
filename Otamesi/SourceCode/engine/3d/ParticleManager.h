@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include "DirectXBase.h"
 #include <DirectXMath.h>
@@ -9,169 +9,169 @@
 #include "Texture.h"
 
 /// <summary>
-/// ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[
+/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 /// </summary>
 class ParticleManager
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
-	//’¸“_ƒf[ƒ^\‘¢‘Ì
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPos
 	{
-		Vector3 pos;	//xyzÀ•W
-		float scale;	//ƒXƒP[ƒ‹
-		float rot;	//‰ñ“]Šp
-		XMFLOAT4 color;	//F
+		Vector3 pos;	//xyzåº§æ¨™
+		float scale;	//ã‚¹ã‚±ãƒ¼ãƒ«
+		float rot;	//å›è»¢è§’
+		XMFLOAT4 color;	//è‰²
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘ÌB0
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“B0
 	struct ConstBufferData
 	{
-		XMMATRIX mat;	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX matBillboad;	//ƒrƒ‹ƒ{[ƒhs—ñ
+		XMMATRIX mat;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX matBillboad;	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	};
 
-	//ƒp[ƒeƒBƒNƒ‹1—±
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«1ç²’
 	struct Particle
 	{
-		//À•W
+		//åº§æ¨™
 		Vector3 position = {};
-		//‘¬“x
+		//é€Ÿåº¦
 		Vector3 velocity = {};
-		//‰Á‘¬“x
+		//åŠ é€Ÿåº¦
 		Vector3 accel = {};
-		//’Ç]—p‘ÎÛÀ•Wæ“¾ŠÖ”
+		//è¿½å¾“ç”¨å¯¾è±¡åº§æ¨™å–å¾—é–¢æ•°
 		std::function<Vector3()> getTargetPos;
-		//’Ç]—pƒ[ƒJƒ‹À•W
+		//è¿½å¾“ç”¨ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 		Vector3 localPos = {};
-		//Œ»İƒtƒŒ[ƒ€
+		//ç¾åœ¨ãƒ•ãƒ¬ãƒ¼ãƒ 
 		int frame = 0;
-		//I—¹ƒtƒŒ[ƒ€
+		//çµ‚äº†ãƒ•ãƒ¬ãƒ¼ãƒ 
 		int numFrame = 0;
-		//ƒXƒP[ƒ‹
+		//ã‚¹ã‚±ãƒ¼ãƒ«
 		float scale = 1.0f;
-		//‰Šú’l
+		//åˆæœŸå€¤
 		float startScale = 1.0f;
-		//ÅI’l
+		//æœ€çµ‚å€¤
 		float endScale = 0.0f;
-		//ƒXƒP[ƒ‹•ÏX‘¬‚³
+		//ã‚¹ã‚±ãƒ¼ãƒ«å¤‰æ›´é€Ÿã•
 		std::function<float(const float, const float, const float)> easingScale;
-		//‰ñ“]Šp
+		//å›è»¢è§’
 		float rotation = 0;
-		//‰ñ“]‘¬“x
+		//å›è»¢é€Ÿåº¦
 		float rotSpeed = 0;
-		//F
+		//è‰²
 		XMFLOAT4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
-		//F‰Šú’l
+		//è‰²åˆæœŸå€¤
 		XMFLOAT4 startColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-		//FI—¹’l
+		//è‰²çµ‚äº†å€¤
 		XMFLOAT4 endColor = { 0.0f, 0.0f, 0.0f, 0.0f };
 	};
 
 public:
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void ParticleManagerCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
-	/// ‰ÁZ‡¬ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// åŠ ç®—åˆæˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	static void CreateAddBlendPipeline();
 
 	/// <summary>
-	/// Œ¸Z‡¬ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// æ¸›ç®—åˆæˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	static void CreateSubBlendPipeline();
 
 	/// <summary>
-	/// ‰ÁZ‡¬•`‰æ‘Oˆ—
+	/// åŠ ç®—åˆæˆæç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawPrevAddBlend();
 
 	/// <summary>
-	/// Œ¸Z‡¬•`‰æ‘Oˆ—
+	/// æ¸›ç®—åˆæˆæç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawPrevSubBlend();
 
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>	
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <returns>ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <returns>ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼</returns>
 	static ParticleManager* Create(const Texture& texture);
 
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹‚Ìî•ñ‚ğƒZƒbƒg
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="life">õ–½</param>
-	/// <param name="position">À•W</param>
-	/// <param name="velocity">‘¬“x</param>
-	/// <param name="accel">‰Á‘¬“x</param>
-	/// <param name="startScale">ƒXƒP[ƒ‹‰Šú’l</param>
-	/// <param name="endScale">ƒXƒP[ƒ‹I—¹’l</param>
-	/// <param name="easingScale">ƒC[ƒWƒ“ƒOƒXƒP[ƒ‹•ÏX</param>
-	/// <param name="startColor">F‰Šú’l</param>
-	/// <param name="endColor">FI—¹’l</param>
-	/// <param name="rotation">Šp“x</param>
-	/// <param name="rotSpeed">‰ñ“]‘¬“x</param>
+	/// <param name="life">å¯¿å‘½</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="velocity">é€Ÿåº¦</param>
+	/// <param name="accel">åŠ é€Ÿåº¦</param>
+	/// <param name="startScale">ã‚¹ã‚±ãƒ¼ãƒ«åˆæœŸå€¤</param>
+	/// <param name="endScale">ã‚¹ã‚±ãƒ¼ãƒ«çµ‚äº†å€¤</param>
+	/// <param name="easingScale">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¹ã‚±ãƒ¼ãƒ«å¤‰æ›´</param>
+	/// <param name="startColor">è‰²åˆæœŸå€¤</param>
+	/// <param name="endColor">è‰²çµ‚äº†å€¤</param>
+	/// <param name="rotation">è§’åº¦</param>
+	/// <param name="rotSpeed">å›è»¢é€Ÿåº¦</param>
 	void Add(const int life, const Vector3& position, const Vector3& velocity, const Vector3& accel,
 		const float startScale, const float endScale, std::function<float(const float, const float, const float)> easingScale,
 		const XMFLOAT4& startColor, const XMFLOAT4& endColor, const float rotation = 0, const float rotSpeed = 0);
 
 	/// <summary>
-	/// ‘ÎÛÀ•W‚ğ’Ç]‚·‚éƒp[ƒeƒBƒNƒ‹‚Ìî•ñ‚ğƒZƒbƒg
+	/// å¯¾è±¡åº§æ¨™ã‚’è¿½å¾“ã™ã‚‹ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="life">õ–½</param>
-	/// <param name="getTargetPos">’Ç]—p‘ÎÛÀ•Wæ“¾ŠÖ”</param>
-	/// <param name="localPos">ƒ[ƒJƒ‹À•W</param>
-	/// <param name="velocity">‘¬“x</param>
-	/// <param name="accel">‰Á‘¬“x</param>
-	/// <param name="startScale">ƒXƒP[ƒ‹‰Šú’l</param>
-	/// <param name="endScale">ƒXƒP[ƒ‹I—¹’l</param>
-	/// <param name="easingScale">ƒC[ƒWƒ“ƒOƒXƒP[ƒ‹•ÏX</param>
-	/// <param name="startColor">F‰Šú’l</param>
-	/// <param name="endColor">FI—¹’l</param>
-	/// <param name="rotation">Šp“x</param>
-	/// <param name="rotSpeed">‰ñ“]‘¬“x</param>
+	/// <param name="life">å¯¿å‘½</param>
+	/// <param name="getTargetPos">è¿½å¾“ç”¨å¯¾è±¡åº§æ¨™å–å¾—é–¢æ•°</param>
+	/// <param name="localPos">ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™</param>
+	/// <param name="velocity">é€Ÿåº¦</param>
+	/// <param name="accel">åŠ é€Ÿåº¦</param>
+	/// <param name="startScale">ã‚¹ã‚±ãƒ¼ãƒ«åˆæœŸå€¤</param>
+	/// <param name="endScale">ã‚¹ã‚±ãƒ¼ãƒ«çµ‚äº†å€¤</param>
+	/// <param name="easingScale">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã‚¹ã‚±ãƒ¼ãƒ«å¤‰æ›´</param>
+	/// <param name="startColor">è‰²åˆæœŸå€¤</param>
+	/// <param name="endColor">è‰²çµ‚äº†å€¤</param>
+	/// <param name="rotation">è§’åº¦</param>
+	/// <param name="rotSpeed">å›è»¢é€Ÿåº¦</param>
 	void AddTargetFollow(const int life, std::function<Vector3()> getTargetPos, const Vector3& localPos, const Vector3& velocity, const Vector3& accel,
 		const float startScale, const float endScale, std::function<float(const float, const float, const float)> easingScale,
 		const XMFLOAT4& startColor, const XMFLOAT4& endColor, const float rotation = 0, const float rotSpeed = 0);
 
 	/// <summary>
-	/// ƒp[ƒeƒBƒNƒ‹‚ÌŒ`¶¬
+	/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å½¢ç”Ÿæˆ
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
 	bool CreateModel(const Texture& texture);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <returns>¬”Û</returns>
+	/// <returns>æˆå¦</returns>
 	bool Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ‘Síœ
+	/// å…¨å‰Šé™¤
 	/// </summary>
 	void AllDelete();
 
@@ -179,30 +179,30 @@ public:
 	static void SetCamera(Camera* camera) { ParticleManager::camera = camera; }
 
 private:
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//‰ÁZ‡¬ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//åŠ ç®—åˆæˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet addBlendPipelineSet;
-	//Œ¸Z‡¬ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//æ¸›ç®—åˆæˆãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet subBlendPipelineSet;
-	//’¸“_”
+	//é ‚ç‚¹æ•°
 	static const int vertexCount = 2048;
-	//’¸“_ƒf[ƒ^”z—ñ
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	VertexPos vertices[vertexCount];
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	static Camera* camera;
 
 private:
-	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	D3D12_VERTEX_BUFFER_VIEW vbView;
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Texture texture;
-	//ƒp[ƒeƒBƒNƒ‹”z—ñ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«é…åˆ—
 	std::forward_list<Particle> particles;
 };

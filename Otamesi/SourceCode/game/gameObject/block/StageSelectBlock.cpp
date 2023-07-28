@@ -1,11 +1,11 @@
-#include "StageSelectBlock.h"
+ï»¿#include "StageSelectBlock.h"
 
 StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	StageSelectBlock* instance = new StageSelectBlock();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize(_blockType, mapChipNum, shiftPos, parent)) {
 		delete instance;
 		assert(0);
@@ -17,16 +17,16 @@ StageSelectBlock* StageSelectBlock::Create(const int _blockType, const XMINT3& m
 
 bool StageSelectBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent)
 {
-	//ƒuƒƒbƒN‚Ìí—Ş‚ğuƒuƒƒbƒNv‚Éİ’è
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡ã‚’ã€Œãƒ–ãƒ­ãƒƒã‚¯ã€ã«è¨­å®š
 	blockType = BROCK_TYPE(_blockType);
 
-	//À•W‚ğƒZƒbƒg
+	//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	Vector3 pos = { mapChipNum.x * blockSize, mapChipNum.y * blockSize, mapChipNum.z * blockSize };
 	pos -= shiftPos;
 	position = pos;
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	scale = { blockSize, blockSize, blockSize };
-	//eƒIƒuƒWƒFƒNƒg‚ğƒZƒbƒg
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	this->parent = parent;
 
 	return true;

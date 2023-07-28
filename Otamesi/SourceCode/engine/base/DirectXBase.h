@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <d3d12.h>
 #include <dxgi1_6.h>
 #include <string>
@@ -9,33 +9,33 @@
 #include <vector>
 
 /// <summary>
-/// DirectXŠî”Õ
+/// DirectXåŸºç›¤
 /// </summary>
 class DirectXBase
 {
 public:
-	//namespaceÈ—ª
+	//namespaceçœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="win">ƒEƒCƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“</param>
+	/// <param name="win">ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³</param>
 	void Initialize(WindowApp* win);
 
 	/// <summary>
-	/// •`‰æ‘Oİ’è
+	/// æç”»å‰è¨­å®š
 	/// </summary>
 	void GraphicsCommandPrev();
 
 	/// <summary>
-	/// •`‰æŒãİ’è
+	/// æç”»å¾Œè¨­å®š
 	/// </summary>
 	void GraphicsCommandRear();
 
 	/// <summary>
-	/// [“xƒoƒbƒtƒ@ƒNƒŠƒA
+	/// æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã‚¯ãƒªã‚¢
 	/// </summary>
 	void ClearDepthBuffer();
 
@@ -45,57 +45,57 @@ public:
 
 private:
 	/// <summary>
-	/// ƒfƒoƒCƒX‰Šú‰»
+	/// ãƒ‡ãƒã‚¤ã‚¹åˆæœŸåŒ–
 	/// </summary>
 	void InitializeDevice();
 
 	/// <summary>
-	/// ƒRƒ}ƒ“ƒh‰Šú‰»
+	/// ã‚³ãƒãƒ³ãƒ‰åˆæœŸåŒ–
 	/// </summary>
 	void InitializeCommand();
 
 	/// <summary>
-	/// ƒXƒƒbƒvƒ`ƒF[ƒ“‰Šú‰»
+	/// ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³åˆæœŸåŒ–
 	/// </summary>
 	void InitializeSwapchain();
 
 	/// <summary>
-	/// ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‰Šú‰»
+	/// ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼åˆæœŸåŒ–
 	/// </summary>
 	void InitializeRenderTargetView();
 
 	/// <summary>
-	/// [“xƒoƒbƒtƒ@‰Šú‰»
+	/// æ·±åº¦ãƒãƒƒãƒ•ã‚¡åˆæœŸåŒ–
 	/// </summary>
 	void InitializeDepthBuffer();
 
 	/// <summary>
-	/// ƒtƒFƒ“ƒX‰Šú‰»
+	/// ãƒ•ã‚§ãƒ³ã‚¹åˆæœŸåŒ–
 	/// </summary>
 	void InitializeFence();
 
 private:
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<ID3D12Device> dev;
-	//DXGIƒtƒ@ƒNƒgƒŠ[
+	//DXGIãƒ•ã‚¡ã‚¯ãƒˆãƒªãƒ¼
 	ComPtr<IDXGIFactory6> dxgiFactory;
-	//ƒRƒ}ƒ“ƒhƒAƒƒP[ƒ^
+	//ã‚³ãƒãƒ³ãƒ‰ã‚¢ãƒ­ã‚±ãƒ¼ã‚¿
 	ComPtr<ID3D12CommandAllocator> cmdAllocator;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	ComPtr<ID3D12GraphicsCommandList> cmdList;
-	//ƒRƒ}ƒ“ƒhƒLƒ…[
+	//ã‚³ãƒãƒ³ãƒ‰ã‚­ãƒ¥ãƒ¼
 	ComPtr<ID3D12CommandQueue> cmdQueue;
-	//ƒXƒƒbƒvƒ`ƒF[ƒ“
+	//ã‚¹ãƒ¯ãƒƒãƒ—ãƒã‚§ãƒ¼ãƒ³
 	ComPtr<IDXGISwapChain4> swapchain;
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[ƒq[ƒv
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> rtvHeaps;
-	//ƒoƒbƒNƒoƒbƒtƒ@
+	//ãƒãƒƒã‚¯ãƒãƒƒãƒ•ã‚¡
 	std::vector<ComPtr<ID3D12Resource>> backBuffers;
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuffer;
-	//[“xƒoƒbƒtƒ@ƒrƒ…[ƒq[ƒv
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> dsvHeap;
-	//ƒtƒFƒ“ƒX
+	//ãƒ•ã‚§ãƒ³ã‚¹
 	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
 

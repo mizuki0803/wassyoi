@@ -1,134 +1,134 @@
-#pragma once
+﻿#pragma once
 #include "Player.h"
 #include "GameCamera.h"
 #include <vector>
 
 /// <summary>
-/// �v���C���[�s���\����Ǘ�
+/// プレイヤー行動可能判定管理
 /// </summary>
 class PlayerActionManager
 {
-public: //�ÓI�����o�֐�
+public: //静的メンバ関数
 	//setter
 	static void SetMapChipNum(const std::vector<std::vector<std::vector<int>>>& mapChipNum) { PlayerActionManager::mapChipNum = mapChipNum; }
 
 	/// <summary>
-	/// �v���C���[��3D�ړ��\����
+	/// プレイヤーの3D移動可能判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerMoveCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// �v���C���[��2D�ړ��\����
+	/// プレイヤーの2D移動可能判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerMoveCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// 2D���_�ň�Ԏ�O�Ƀv���C���[�������ꍇ�A�ǂ̃u���b�N������O�ɂ����Ԃɂ���
+	/// 2D視点で一番手前にプレイヤーがいた場合、どのブロックよりも手前にいる状態にする
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
 	static void PlayerFrontmost2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
-	/// ���݂̃J���������Ō����ꍇ�Ƀv���C���[�̏�����Ƀu���b�N�����݂��邩����
+	/// 現在のカメラ方向で見た場合にプレイヤーの上方向にブロックが存在するか判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
+	/// <returns>成否</returns>
 	static bool DirectionForwardBlockCheck(const XMINT3& mapChipNumberPlayerPos, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// ���݂̃J���������Ō����ꍇ�Ƀv���C���[�̉������Ƀu���b�N�����݂��邩����
+	/// 現在のカメラ方向で見た場合にプレイヤーの下方向にブロックが存在するか判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
+	/// <returns>成否</returns>
 	static bool DirectionAwayBlockCheck(const XMINT3& mapChipNumberPlayerPos, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// 3�����ɖ߂�Ƃ��̑���ƂȂ�u���b�N�ɐڂ���}�b�v�ԍ���ݒ�
+	/// 3次元に戻るときの足場となるブロックに接するマップ番号を設定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
 	static void PlayerScaffoldReturn3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
-	/// 3������Ԃ̃v���C���[���S�[�������̂��𔻒�
+	/// 3次元状態のプレイヤーがゴールしたのかを判定
 	/// </summary>
-	///  <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <returns>����</returns>
+	///  <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerGoalCheck3D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
-	/// 2������Ԃ̃v���C���[���S�[�������̂��𔻒�
+	/// 2次元状態のプレイヤーがゴールしたのかを判定
 	/// </summary>
-	///  <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <returns>����</returns>
+	///  <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerGoalCheck2D(XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
-private: //�ÓI�����o�֐�
+private: //静的メンバ関数
 	/// <summary>
-	/// �L�[���͂ɑ΂���v���C���[3D�ړ��̕�����ݒ�
+	/// キー入力に対するプレイヤー3D移動の方向を設定
 	/// </summary>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
 	static XMINT3 PlayerMoveDirection3D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// �L�[���͂ɑ΂���v���C���[2D�ړ��̕�����ݒ�
+	/// キー入力に対するプレイヤー2D移動の方向を設定
 	/// </summary>
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <param name="cameraXPosPhase">�X�e�[�W���猩�Ẳ����J�����ʒu�t�F�[�Y</param>
-	/// <param name="cameraYPosPhase">�X�e�[�W���猩�Ă̏c���J�����ʒu�t�F�[�Y</param>
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <param name="cameraXPosPhase">ステージから見ての横軸カメラ位置フェーズ</param>
+	/// <param name="cameraYPosPhase">ステージから見ての縦軸カメラ位置フェーズ</param>
 	static XMINT3 PlayerMoveDirection2D(const Player::MoveSurfacePhase moveSurfacePhase, const int cameraXPosPhase, const int cameraYPosPhase);
 
 	/// <summary>
-	/// 3D�ړ��\�ȃu���b�N�󋵂��𔻒�
+	/// 3D移動可能なブロック状況かを判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param> 
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param> 
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerMoveBlockCheck3D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
-	/// 2D�ړ��\�ȃu���b�N�󋵂��𔻒�
+	/// 2D移動可能なブロック状況かを判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param> 
-	/// <param name="moveSurfacePhase">�u���b�N�̂ǂ̖ʈړ����邩�t�F�[�Y</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param> 
+	/// <param name="moveSurfacePhase">ブロックのどの面移動するかフェーズ</param>
+	/// <returns>成否</returns>
 	static bool PlayerMoveBlockCheck2D(const XMINT3& mapChipNumberPlayerPos, const Player::MoveSurfacePhase moveSurfacePhase);
 
 	/// <summary>
-	/// 3D�ړ��̃u���b�N�ԂɃn���{�e�����݂����A�ړ��\���𔻒�
+	/// 3D移動のブロック間にハリボテが存在せず、移動可能かを判定
 	/// </summary>
-	/// <param name="mapChipNumberPlayerBeforePos">�ړ��O�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <param name="mapChipNumberPlayerAfterPos">�ړ���v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerBeforePos">移動前プレイヤー位置を表すマップ番号</param>
+	/// <param name="mapChipNumberPlayerAfterPos">移動後プレイヤー位置を表すマップ番号</param>
+	/// <returns>成否</returns>
 	static bool PlayerMovePlaneCheck3D(const XMINT3& mapChipNumberPlayerBeforePos, const XMINT3& mapChipNumberPlayerAfterPos);
 
 	/// <summary>
-	/// �v���C���[�̈ʒu��\���}�b�v�ԍ����͈͓������`�F�b�N
+	/// プレイヤーの位置を表すマップ番号が範囲内かをチェック
 	/// </summary> 
-	/// <param name="mapChipNumberPlayerPos">�v���C���[�ʒu��\���}�b�v�ԍ�</param>
-	/// <returns>����</returns>
+	/// <param name="mapChipNumberPlayerPos">プレイヤー位置を表すマップ番号</param>
+	/// <returns>成否</returns>
 	static bool PlayerMoveMapChipNumWithinRangeCheck(const XMINT3& mapChipNumberPlayerPos);
 
-private: //�ÓI�����o�ϐ�
-	//3�����}�b�v�p��3�����z��
+private: //静的メンバ変数
+	//3次元マップ用の3次元配列
 	static std::vector<std::vector<std::vector<int>>> mapChipNum;
 };

@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 #include <wrl.h>
 #include <d3d12.h>
 
 /// <summary>
-/// ƒeƒNƒXƒ`ƒƒ
+/// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 /// </summary>
 struct Texture
 {
-private: //ƒGƒCƒŠƒAƒX
-	//Microsoft::WRL::‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//Microsoft::WRL::ã‚’çœç•¥
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: //ƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒX(ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@)
+public: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹(ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡)
 	ComPtr<ID3D12Resource> texBuff;
-	//ƒeƒNƒXƒ`ƒƒ”Ô†
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·
 	UINT texNumber = 0;
 };

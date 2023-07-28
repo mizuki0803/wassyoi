@@ -1,54 +1,54 @@
-#pragma once
+ï»¿#pragma once
 #include "NumberSprite.h"
 #include <array>
 #include <memory>
 
 /// <summary>
-/// ƒXƒe[ƒW”Ô†•\¦UI
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºUI
 /// </summary>
 class StageNumberUI
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="position">À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="stageNum">ƒXƒe[ƒW”Ô†</param>
-	/// <returns>ƒXƒe[ƒW”Ô†•\¦UI</returns>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="stageNum">ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºUI</returns>
 	static StageNumberUI* Create(const Vector2& position, const float size, const int stageNum);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="position">À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="stageNum">ƒXƒe[ƒW”Ô†</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="stageNum">ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Vector2& position, const float size, const int stageNum);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒXƒe[ƒW”Ô†‚Ì•ÏX
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã®å¤‰æ›´
 	/// </summary>
-	/// <param name="stageNum">ƒXƒe[ƒW”Ô†</param>
+	/// <param name="stageNum">ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
 	void ChengeStageNum(const int stageNum);
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//Œ…”
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//æ¡æ•°
 	static const int digitNum = 2;
 
-private: //ƒƒ“ƒo•Ï”
-	//”šƒXƒvƒ‰ƒCƒg
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::array<std::unique_ptr<NumberSprite>, digitNum> numbers;
 };

@@ -1,70 +1,70 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 
 
 /// <summary>
-/// ‹…
+/// çƒ
 /// </summary>
 struct Sphere
 {
-	//’†SÀ•W
+	//ä¸­å¿ƒåº§æ¨™
 	DirectX::XMVECTOR center = { 0, 0, 0, 1 };
-	//”¼Œa
+	//åŠå¾„
 	float radius = 1.0f;
 };
 
 /// <summary>
-/// •½–Ê
+/// å¹³é¢
 /// </summary>
 struct Plane
 {
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	DirectX::XMVECTOR normal = { 0, 1, 0, 0 };
-	//Œ´“_(0, 0, 0)‚©‚ç‚Ì‹——£
+	//åŸç‚¹(0, 0, 0)ã‹ã‚‰ã®è·é›¢
 	float distance = 0.0f;
 };
 
 /// <summary>
-/// OŠpŒ`
+/// ä¸‰è§’å½¢
 /// </summary>
 class Triangle
 {
 public:
-	//’¸“_À•W3‚Â
+	//é ‚ç‚¹åº§æ¨™3ã¤
 	DirectX::XMVECTOR p0;
 	DirectX::XMVECTOR p1;
 	DirectX::XMVECTOR p2;
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	DirectX::XMVECTOR normal;
 
 	/// <summary>
-	/// –@ü‚ÌŒvZ
+	/// æ³•ç·šã®è¨ˆç®—
 	/// </summary>
 	void ComputeNormal();
 };
 
 /// <summary>
-/// lŠpŒ`
+/// å››è§’å½¢
 /// </summary>
 class Square
 {
 public:
-	//’¸“_À•W4‚Â
+	//é ‚ç‚¹åº§æ¨™4ã¤
 	DirectX::XMVECTOR p0;
 	DirectX::XMVECTOR p1;
 	DirectX::XMVECTOR p2;
 	DirectX::XMVECTOR p3;
-	//–@üƒxƒNƒgƒ‹
+	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 	DirectX::XMVECTOR normal;
 };
 
 /// <summary>
-/// ƒŒƒC(”¼’¼ü)
+/// ãƒ¬ã‚¤(åŠç›´ç·š)
 /// </summary>
 struct Ray
 {
-	//n“_À•W
+	//å§‹ç‚¹åº§æ¨™
 	DirectX::XMVECTOR start = { 0, 0, 0, 1 };
-	//•ûŒü
+	//æ–¹å‘
 	DirectX::XMVECTOR dir = { 1, 0, 0, 0 };
 };

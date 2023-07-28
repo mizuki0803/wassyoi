@@ -1,27 +1,27 @@
-#include "GamePostEffect.h"
+ï»¿#include "GamePostEffect.h"
 
 std::unique_ptr<PostEffect> GamePostEffect::postEffect;
 
 void GamePostEffect::Initialize()
 {
-	//ƒQ[ƒ€‚ÅŽg—p‚·‚éƒ|ƒXƒgƒGƒtƒFƒNƒg¶¬
+	//ã‚²ãƒ¼ãƒ ã§ä½¿ç”¨ã™ã‚‹ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	postEffect.reset(PostEffect::Create());
 }
 
 void GamePostEffect::Draw()
 {
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg•`‰æ
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆæç”»
 	postEffect->Draw();
 }
 
 void GamePostEffect::DrawScenePrev()
 {
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒgƒV[ƒ“•`‰æ‘Oˆ—
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
 	postEffect->DrawScenePrev();
 }
 
 void GamePostEffect::DrawSceneRear()
 {
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒgƒV[ƒ“•`‰æŒãˆ—
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	postEffect->DrawSceneRear();
 }

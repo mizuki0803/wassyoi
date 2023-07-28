@@ -1,13 +1,13 @@
-#include "StageBlock.h"
+ï»¿#include "StageBlock.h"
 #include "Easing.h"
 #include <random>
 
 StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	StageBlock* instance = new StageBlock();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize(_blockType, mapChipNum, shiftPos, mapBlockType)) {
 		delete instance;
 		assert(0);
@@ -19,22 +19,22 @@ StageBlock* StageBlock::Create(const int _blockType, const XMINT3& mapChipNum, c
 
 bool StageBlock::Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, MapBlockData::MapBlockType mapBlockType)
 {
-	//ƒuƒƒbƒN‚Ìí—Ş‚ğuƒuƒƒbƒNv‚Éİ’è
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡ã‚’ã€Œãƒ–ãƒ­ãƒƒã‚¯ã€ã«è¨­å®š
 	blockType = BROCK_TYPE(_blockType);
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^‚Ìİ’è
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
 	SetEaseData(60);
 	vecEaseData_ = std::make_unique<EaseData>(80);
 
-	//À•W‚ğƒZƒbƒg
+	//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	ReCreate(GamePhase::Start, mapChipNum, shiftPos);
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	scale = { blockSize, blockSize, blockSize };
-	// ŠÖ”‚Ìİ’è
+	// é–¢æ•°ã®è¨­å®š
 	CreateAct();
-	// ƒuƒƒbƒN‚Ìƒ^ƒCƒv‚Ìİ’è
+	// ãƒ–ãƒ­ãƒƒã‚¯ã®ã‚¿ã‚¤ãƒ—ã®è¨­å®š
 	SetMapBlockType(mapBlockType);
-	// ŠÖ”‚Ìƒ^ƒCƒv‚Ìİ’è
+	// é–¢æ•°ã®ã‚¿ã‚¤ãƒ—ã®è¨­å®š
 	SetGamePhase(GamePhase::Start);
 
 	return true;
@@ -52,7 +52,7 @@ void StageBlock::Update()
 
 void StageBlock::PlayStratMove()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::InOutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::InOutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::InOutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
@@ -62,13 +62,13 @@ void StageBlock::PlayStratMove()
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	easeData_->Update();
 }
 
 void StageBlock::ReStratMove()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::InCubic(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate());
 	position.y = Easing::InCubic(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::InCubic(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
@@ -78,13 +78,13 @@ void StageBlock::ReStratMove()
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	easeData_->Update();
 }
 
 void StageBlock::DeleteMove()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x -= Easing::InCubic(0.0f, 100.0f, easeData_->GetTimeRate());
 
 	rotation.x += vec_.x;
@@ -97,13 +97,13 @@ void StageBlock::DeleteMove()
 		deleteFlag_ = true;
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	easeData_->Update();
 }
 
 void StageBlock::ReCreateMove()
 {
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::OutBack(blockStratPos_.x, blockEndPos_.x, easeData_->GetTimeRate()) + Easing::OutQuint(50.0f, 0.0f, vecEaseData_->GetTimeRate());
 	position.y = Easing::OutBack(blockStratPos_.y, blockEndPos_.y, easeData_->GetTimeRate());
 	position.z = Easing::OutBack(blockStratPos_.z, blockEndPos_.z, easeData_->GetTimeRate());
@@ -113,7 +113,7 @@ void StageBlock::ReCreateMove()
 		phase_ = static_cast<int>(GamePhase::None);
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	vecEaseData_->Update();
 	easeData_->Update();
 }
@@ -139,14 +139,14 @@ void StageBlock::ReCreate(const GamePhase phase, const XMINT3& mapChipNum, const
 	}
 	else if (phase == GamePhase::Move)
 	{
-		//À•W‚ğƒZƒbƒg
+		//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		SetBlockStratPos(position);
 		SetBlockEndPos(temppos);
 		SetEaseData(60);
 	}
 	else if (phase == GamePhase::Delete)
 	{
-		//À•W‚ğƒZƒbƒg
+		//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		SetBlockStratPos(position);
 		SetBlockEndPos(temppos);
 		SetEaseData(60);
@@ -205,12 +205,12 @@ void StageBlock::ReAction()
 
 const float StageBlock::RandCalculate(float a, float b)
 {
-	// ƒƒ‹ƒZƒ“ƒkEƒcƒCƒXƒ^[–@‚É‚æ‚é‹[——”¶¬Ší‚ğA
-	// ƒn[ƒhƒEƒFƒA—”‚ğƒV[ƒh‚É‚µ‚Ä‰Šú‰»
+	// ãƒ¡ãƒ«ã‚»ãƒ³ãƒŒãƒ»ãƒ„ã‚¤ã‚¹ã‚¿ãƒ¼æ³•ã«ã‚ˆã‚‹æ“¬ä¼¼ä¹±æ•°ç”Ÿæˆå™¨ã‚’ã€
+	// ãƒãƒ¼ãƒ‰ã‚¦ã‚§ã‚¢ä¹±æ•°ã‚’ã‚·ãƒ¼ãƒ‰ã«ã—ã¦åˆæœŸåŒ–
 	std::random_device seed_gen;
 	std::mt19937 engine(seed_gen());
-	// ˆê—lÀ”•ª•z
-	// [a, b)‚Ì’l‚Ì”ÍˆÍ‚ÅA“™Šm—¦‚ÉÀ”‚ğ¶¬‚·‚é
+	// ä¸€æ§˜å®Ÿæ•°åˆ†å¸ƒ
+	// [a, b)ã®å€¤ã®ç¯„å›²ã§ã€ç­‰ç¢ºç‡ã«å®Ÿæ•°ã‚’ç”Ÿæˆã™ã‚‹
 	std::uniform_real_distribution<> dist1(a, b);
 
 	return float(dist1(engine));

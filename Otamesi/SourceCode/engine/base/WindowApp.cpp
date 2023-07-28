@@ -1,47 +1,47 @@
-#include "WindowApp.h"
+ï»¿#include "WindowApp.h"
 
 LRESULT WindowApp::windowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	//ƒƒbƒZ[ƒW‚ğ•ªŠò
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’åˆ†å²
 	switch (msg) {
-	case WM_DESTROY:		//ƒEƒCƒ“ƒhƒE‚ª”jŠü‚³‚ê‚½
-		PostQuitMessage(0);	//OS‚É‘Î‚µ‚ÄAƒAƒvƒŠ‚ÌI—¹‚ğ“`‚¦‚é
+	case WM_DESTROY:		//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãŒç ´æ£„ã•ã‚ŒãŸ
+		PostQuitMessage(0);	//OSã«å¯¾ã—ã¦ã€ã‚¢ãƒ—ãƒªã®çµ‚äº†ã‚’ä¼ãˆã‚‹
 		return 0;
 	}
 
-	return DefWindowProc(hwnd, msg, wParam, lParam);	//•W€‚Ìˆ—‚ğs‚¤
+	return DefWindowProc(hwnd, msg, wParam, lParam);	//æ¨™æº–ã®å‡¦ç†ã‚’è¡Œã†
 }
 
 void WindowApp::WindowCreate(const wchar_t* titlename)
 {
 	wndclass.cbSize = sizeof(WNDCLASSEX);
-	wndclass.lpfnWndProc = (WNDPROC)windowProc;			//ƒEƒCƒ“ƒhƒEƒuƒ[ƒWƒƒ‚ğİ’è
-	wndclass.lpszClassName = titlename;					//ƒEƒCƒ“ƒhƒEƒNƒ‰ƒX–¼
-	wndclass.hInstance = GetModuleHandle(nullptr);		//ƒEƒCƒ“ƒhƒEƒnƒ“ƒhƒ‹
-	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		//ƒJ[ƒ\ƒ‹w’è
+	wndclass.lpfnWndProc = (WNDPROC)windowProc;			//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãƒ–ãƒ­ãƒ¼ã‚¸ãƒ£ã‚’è¨­å®š
+	wndclass.lpszClassName = titlename;					//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹å
+	wndclass.hInstance = GetModuleHandle(nullptr);		//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+	wndclass.hCursor = LoadCursor(NULL, IDC_ARROW);		//ã‚«ãƒ¼ã‚½ãƒ«æŒ‡å®š
 
-	//ƒEƒCƒ“ƒhƒEƒNƒ‰ƒX‚ğOS‚Éİ’è
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã‚’OSã«è¨­å®š
 	RegisterClassEx(&wndclass);
 
-	//ƒEƒCƒ“ƒhƒEƒTƒCƒY{XÀ•W,YÀ•W, ‰¡•, c•}
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º{Xåº§æ¨™,Yåº§æ¨™, æ¨ªå¹…, ç¸¦å¹…}
 	RECT wrc = { 0, 0, window_width, window_height };
 	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);
 
-	//ƒEƒCƒ“ƒhƒEƒIƒuƒWƒFƒNƒg‚Ì¶¬
-	hwnd = CreateWindow(wndclass.lpszClassName,	//ƒNƒ‰ƒX–¼
-		titlename,				//ƒ^ƒCƒgƒ‹ƒo[‚Ì•¶š
-		WS_OVERLAPPEDWINDOW,	//•W€“I‚ÈƒEƒCƒ“ƒhƒEƒXƒ^ƒCƒ‹
-		CW_USEDEFAULT,			//•\¦XÀ•WiOS‚É”C‚¹‚éj
-		CW_USEDEFAULT,			//•\¦YÀ•WiOS‚É”C‚¹‚éj
-		wrc.right - wrc.left,	//ƒEƒCƒ“ƒhƒE‰¡•
-		wrc.bottom - wrc.top,	//ƒEƒCƒ“ƒhƒEc•
-		nullptr,				//eƒEƒCƒ“ƒhƒEƒnƒ“ƒhƒ‹
-		nullptr,				//ƒƒjƒ…[ƒnƒ“ƒhƒ‹
-		wndclass.hInstance,			//ŒÄ‚Ño‚µƒAƒvƒŠƒP[ƒVƒ‡ƒ“ƒnƒ“ƒhƒ‹
-		nullptr					//ƒIƒvƒVƒ‡ƒ“
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ç”Ÿæˆ
+	hwnd = CreateWindow(wndclass.lpszClassName,	//ã‚¯ãƒ©ã‚¹å
+		titlename,				//ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼ã®æ–‡å­—
+		WS_OVERLAPPEDWINDOW,	//æ¨™æº–çš„ãªã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¹ã‚¿ã‚¤ãƒ«
+		CW_USEDEFAULT,			//è¡¨ç¤ºXåº§æ¨™ï¼ˆOSã«ä»»ã›ã‚‹ï¼‰
+		CW_USEDEFAULT,			//è¡¨ç¤ºYåº§æ¨™ï¼ˆOSã«ä»»ã›ã‚‹ï¼‰
+		wrc.right - wrc.left,	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦æ¨ªå¹…
+		wrc.bottom - wrc.top,	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ç¸¦å¹…
+		nullptr,				//è¦ªã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãƒãƒ³ãƒ‰ãƒ«
+		nullptr,				//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒãƒ³ãƒ‰ãƒ«
+		wndclass.hInstance,			//å‘¼ã³å‡ºã—ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ³ãƒ‰ãƒ«
+		nullptr					//ã‚ªãƒ—ã‚·ãƒ§ãƒ³
 	);
 
-	//ƒEƒCƒ“ƒhƒE•\¦
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦è¡¨ç¤º
 	ShowWindow(hwnd, SW_SHOW);
 }
 
@@ -52,15 +52,15 @@ void WindowApp::WindowRelease()
 
 bool WindowApp::MessageProc()
 {
-	MSG msg{};	//ƒƒbƒZ[ƒW
+	MSG msg{};	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 
-	//ƒƒbƒZ[ƒW‚ª‚ ‚éH
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒã‚ã‚‹ï¼Ÿ
 	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) {
-		TranslateMessage(&msg);	//ƒL[“ü—ÍƒƒbƒZ[ƒW‚Ìˆ—
-		DispatchMessage(&msg);	//ƒvƒƒV[ƒWƒƒ‚ÉƒƒbƒZ[ƒW‚ğ‘—‚é
+		TranslateMessage(&msg);	//ã‚­ãƒ¼å…¥åŠ›ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®å‡¦ç†
+		DispatchMessage(&msg);	//ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã«ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’é€ã‚‹
 	}
 
-	//~ƒ{ƒ^ƒ“‚ÅI—¹ƒƒbƒZ[ƒW‚ª—ˆ‚½‚çƒQ[ƒ€ƒ‹[ƒv‚ğ”²‚¯‚é
+	//Ã—ãƒœã‚¿ãƒ³ã§çµ‚äº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ãŸã‚‰ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 	if (msg.message == WM_QUIT) {
 		return true;
 	}

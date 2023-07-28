@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Menu.h"
 #include "DrawerSprite.h"
 #include "SoundVolumePointer.h"
@@ -6,69 +6,70 @@
 #include <array>
 #include <vector>
 #include <functional>
+#include "ImageUIRenderer.h"
 
 class UserInterface
 {
 public: //enum
 	/// <summary>
-	/// ˆø‚«o‚µƒXƒvƒ‰ƒCƒg‚Ì–ğŠ„–¼
+	/// å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å½¹å‰²å
 	/// </summary>
 	enum DrawerSpriteName
 	{
-		HowToPlayMenu,		//ƒƒjƒ…[
-		HowToPlayPlayer,	//ƒvƒŒƒCƒ„[‘€ì
-		HowToPlayCamera,	//ƒJƒƒ‰‘€ì
-		Hint1,				//ƒqƒ“ƒg1
-		Hint2,				//ƒqƒ“ƒg2
+		HowToPlayMenu,		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼
+		HowToPlayPlayer,	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œ
+		HowToPlayCamera,	//ã‚«ãƒ¡ãƒ©æ“ä½œ
+		Hint1,				//ãƒ’ãƒ³ãƒˆ1
+		Hint2,				//ãƒ’ãƒ³ãƒˆ2
 
-		DrawerSpriteNum,	//ˆø‚«o‚µƒXƒvƒ‰ƒCƒg”
+		DrawerSpriteNum,	//å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ•°
 	};
 
 	/// <summary>
-	/// ƒƒjƒ…[‚Ì‘S‘Ì
+	/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å…¨ä½“
 	/// </summary>
 	enum class GamePhase
 	{
-		Title,		//ƒ^ƒCƒgƒ‹
-		Selection,	//‘I‘ğ
-		Game,		//ƒQ[ƒ€’†
+		Title,		//ã‚¿ã‚¤ãƒˆãƒ«
+		Selection,	//é¸æŠ
+		Game,		//ã‚²ãƒ¼ãƒ ä¸­
 	};
 
 	/// <summary>
-	/// ƒƒjƒ…[‚Ì‘S‘Ì
+	/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å…¨ä½“
 	/// </summary>
 	enum class MenuPhase
 	{
-		Start,		//ŠJn
-		Selection,	//‘I‘ğ
+		Start,		//é–‹å§‹
+		Selection,	//é¸æŠ
 	};
 
 	/// <summary>
-	/// ƒ^ƒCƒgƒ‹ƒV[ƒ“‚Ì€–Ú
+	/// ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã®é …ç›®
 	/// </summary>
 	enum class TitleSceneItem
 	{
-		SoundVolumeChange,	//‰¹—Ê•ÏX
-		ExeEnd,				//.exe‚ÌI—¹
+		SoundVolumeChange,	//éŸ³é‡å¤‰æ›´
+		ExeEnd,				//.exeã®çµ‚äº†
 	};
 
 	/// <summary>
-	/// ƒXƒe[ƒW‘I‘ğƒV[ƒ“‚Ì€–Ú
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã‚·ãƒ¼ãƒ³ã®é …ç›®
 	/// </summary>
 	enum class StageSelectSceneItem
 	{
-		SoundVolumeChange,	//‰¹—Ê•ÏX
-		SceneChangeTitle,	//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉˆÚs
+		SoundVolumeChange,	//éŸ³é‡å¤‰æ›´
+		SceneChangeTitle,	//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«ç§»è¡Œ
 	};
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒV[ƒ“‚Ì€–Ú
+	/// ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã®é …ç›®
 	/// </summary>
 	enum class GameSceneItem
 	{
-		SoundVolumeChange,	//‰¹—Ê•ÏX
-		SceneChangeStageSelect,	//ƒXƒe[ƒW‘I‘ğƒV[ƒ“‚ÉˆÚs
-		SceneChangeTitle,	//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉˆÚs
+		SoundVolumeChange,	//éŸ³é‡å¤‰æ›´
+		SceneChangeStageSelect,	//ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã‚·ãƒ¼ãƒ³ã«ç§»è¡Œ
+		SceneChangeTitle,	//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«ç§»è¡Œ
 	};
 
 	struct SpaceIndo {
@@ -76,33 +77,37 @@ public: //enum
 		float isSizeUp;
 	};
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬
+	/// ç”Ÿæˆ
 	/// </summary>
 	static std::unique_ptr<UserInterface> Create(GamePhase gamePhase);
 
+	static void Common(ID3D12Device *dev, ID3D12GraphicsCommandList *cmdList);
+
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(GamePhase gamePhase);
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ‰ÁZ‡¬•`‰æ
+	/// åŠ ç®—åˆæˆæç”»
 	/// </summary>
 	void AddDraw();
 
 	/// <summary>
-	/// ‰œ‚Ì•`‰æ
+	/// å¥¥ã®æç”»
 	/// </summary>
 	void Draw();
 
-	// ƒƒjƒ…[ŠÖŒW‚Ìˆ—
+	void DrawMenuImage();
+
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼é–¢ä¿‚ã®å‡¦ç†
 	void MenuUpdate();
 	// 
 	void MenuReset();
@@ -112,17 +117,17 @@ public: //ƒƒ“ƒoŠÖ”
 	void MenuSelection();
 
 	/// <summary>
-	/// ŸŒ³•ÏX‰Â”\‚©‚ğƒ`ƒFƒbƒN‚µAƒXƒvƒ‰ƒCƒg‚ÌF‚ğ•ÏX‚·‚é
+	/// æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã‹ã‚’ãƒã‚§ãƒƒã‚¯ã—ã€ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®è‰²ã‚’å¤‰æ›´ã™ã‚‹
 	/// </summary>
-	/// <param name="isChangeDimension">ŸŒ³•ÏX‰Â”\‚©</param>
+	/// <param name="isChangeDimension">æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã‹</param>
 	void IsChangeDimensionCheck(bool isChangeDimension);
 
 	/// <summary>
-	/// ƒXƒe[ƒW•ÏX‚É”º‚¤ˆ—
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸å¤‰æ›´ã«ä¼´ã†å‡¦ç†
 	/// </summary>
 	void StageChangeUpdate();
 
-	//ƒtƒ‰ƒO‚Ìİ’èAæ“¾
+	//ãƒ•ãƒ©ã‚°ã®è¨­å®šã€å–å¾—
 	void SetMenuFlag(bool flag) { menuFlag_ = flag; drawerSprites[HowToPlayMenu]->MoveStart(); }
 	void SetNotMove(bool flag) { notMove_ = flag; }
 
@@ -130,85 +135,88 @@ public: //ƒƒ“ƒoŠÖ”
 	const int GetSelectionNumber() { return selectionNumber_; }
 	bool GetIsHintViewMode();
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ˆø‚«o‚µƒXƒvƒ‰ƒCƒg¶¬
+	/// å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="drawerKey">ˆø‚«o‚µ‚ÌŠJ•Â‚Ég—p‚·‚éƒL[</param>
-	/// <param name="hidePlace">ˆø‚«o‚µ‚Å‰B‚ê‚éêŠ</param>
-	/// <param name="posY">YÀ•W</param>
-	/// <param name="stickoutNum">•Â‚¶‚Ä‚¢‚éê‡‚É‰æ–Ê“à‚É‚Í‚İo‚·—Ê</param>
-	/// <param name="isOpenDrawer">ˆø‚«o‚µ‚ğŠJ‚¢‚Ä‚¢‚éó‘Ô‚©</param>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="drawerKey">å¼•ãå‡ºã—ã®é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼</param>
+	/// <param name="hidePlace">å¼•ãå‡ºã—ã§éš ã‚Œã‚‹å ´æ‰€</param>
+	/// <param name="posY">Yåº§æ¨™</param>
+	/// <param name="stickoutNum">é–‰ã˜ã¦ã„ã‚‹å ´åˆã«ç”»é¢å†…ã«ã¯ã¿å‡ºã™é‡</param>
+	/// <param name="isOpenDrawer">å¼•ãå‡ºã—ã‚’é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ã‹</param>
 	void CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
 
 	/// <summary>
-	/// q‹ŸƒXƒvƒ‰ƒCƒg¶¬
+	/// å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="parent">eƒXƒvƒ‰ƒCƒg</param>
-	/// <param name="position">eƒXƒvƒ‰ƒCƒgŒ´“_‚Å‚ÌÀ•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="parent">è¦ªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</param>
+	/// <param name="position">è¦ªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåŸç‚¹ã§ã®åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
 	void CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f });
 
 	/// <summary>
-	/// ƒL[“ü—Í‚É‚æ‚éˆø‚«o‚µƒXƒvƒ‰ƒCƒgˆÚ“®ŠJn
+	/// ã‚­ãƒ¼å…¥åŠ›ã«ã‚ˆã‚‹å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç§»å‹•é–‹å§‹
 	/// </summary>
 	void DrawerSpriteMoveStartKey();
 
 	/// <summary>
-	/// ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚Ì‘å‚«‚³•ÏX
+	/// ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å¤§ãã•å¤‰æ›´
 	/// </summary>
 	void HintSpriteSizeChange();
 
 	/// <summary>
-	/// ƒXƒy[ƒX‚ÌƒGƒtƒFƒNƒg
+	/// ã‚¹ãƒšãƒ¼ã‚¹ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	/// </summary>
 	void SpaceEffect();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//‰¹‚Ì‘å‚«‚³
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//éŸ³ã®å¤§ãã•
 	static float soundVolume_;
-	//Å‘å‰¹—Ê
+	//æœ€å¤§éŸ³é‡
 	static const float soundMaxVolume_;
 
-private: //ƒƒ“ƒo•Ï”
-	//ŸŒ³•ÏX‰Â”\‚©‰Â”\‚Ì‚Æ‚«‚Ì‚İŒõ‚éƒXƒy[ƒXƒL[ƒXƒvƒ‰ƒCƒg
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã‹å¯èƒ½ã®ã¨ãã®ã¿å…‰ã‚‹ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::unique_ptr<Sprite> isChangeDimenisonSprite;
-	//‰Ÿ‚¹‚é‚Æ‚«‚Ì”½‰
+	//æŠ¼ã›ã‚‹ã¨ãã®åå¿œ
 	std::array<SpaceIndo, 4> ChangeDimenisonSpriteEffect;
-	//”½‰‚ğ“ü‚ê‚éƒJƒEƒ“ƒg
+	//åå¿œã‚’å…¥ã‚Œã‚‹ã‚«ã‚¦ãƒ³ãƒˆ
 	int SpriteEffectCount;
-	//ŸŒ³•ÏX‰Â”\‚©
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã‹
 	bool isChangeDimenison;
-	//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒg
+	//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::vector<std::unique_ptr<DrawerSprite>> drawerSprites;
-	//ˆø‚«o‚µƒXƒvƒ‰ƒCƒg‚Ìq‹Ÿ
+	//å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å­ä¾›
 	std::vector<std::unique_ptr<Sprite>> childSprites;
-	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg
+	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::array<std::unique_ptr<HintSprite>, 2> hintSprites;
-	// ƒC[ƒWƒ“ƒOis
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°é€²è¡Œ
 	float easeTimer_ = 0.0f;
-	// ƒƒjƒ…[—p‚Ì”wŒi
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã®èƒŒæ™¯
 	std::unique_ptr<Sprite> menuBackScreen_;
-	// ƒƒjƒ…[—p‚Ì˜g‘g‚İ
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã®æ çµ„ã¿
 	std::vector<std::unique_ptr<Menu>> menuframe_;
-	// ‰¹—Êİ’è—pƒo[ƒXƒvƒ‰ƒCƒg
+	// éŸ³é‡è¨­å®šç”¨ãƒãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::unique_ptr<Sprite> soundVolumeBar;
-	// ‰¹—Êİ’è—pƒ|ƒCƒ“ƒ^[ƒXƒvƒ‰ƒCƒg
+	// éŸ³é‡è¨­å®šç”¨ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	std::unique_ptr<SoundVolumePointer> soundVolumePointer;
-	// s“®ƒtƒ‰ƒO
+	// è¡Œå‹•ãƒ•ãƒ©ã‚°
 	bool menuFlag_ = false;
-	// s“®‚ğ‚³‚¹‚È‚¢
+	// è¡Œå‹•ã‚’ã•ã›ãªã„
 	bool notMove_ = false;
-	// ƒƒjƒ…[‘I‘ğ
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼é¸æŠ
 	int selectionNumber_ = 0;
-	// ‘I‘ğ‰Â”\‚©
+	// é¸æŠå¯èƒ½ã‹
 	bool selectionFlag_ = false;
-	// ŠÖ”‚ÌŠÇ—
+	// é–¢æ•°ã®ç®¡ç†
 	std::vector<std::function<void()>> menuFunc_;
-	// ŠÖ”‚Ì”Ô†
+	// é–¢æ•°ã®ç•ªå·
 	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
-	// ƒvƒŒƒCƒV[ƒ“‚Ì•Û‘¶—p
+	// ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³ã®ä¿å­˜ç”¨
 	GamePhase gamePhase_;
+
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã®ç”»åƒç”Ÿæˆ
+	std::unique_ptr<ImageUIRenderer> imageUiRendere_;
 };

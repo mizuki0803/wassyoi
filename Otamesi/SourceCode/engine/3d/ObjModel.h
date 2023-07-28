@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 #include <Windows.h>
 #include <DirectXMath.h>
@@ -6,49 +6,49 @@
 #include <unordered_map>
 
 /// <summary>
-/// objƒ‚ƒfƒ‹
+/// objãƒ¢ãƒ‡ãƒ«
 /// </summary>
 class ObjModel
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
-	//’¸“_ƒf[ƒ^\‘¢‘Ì
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUv
 	{
-		XMFLOAT3 pos;	//xyzÀ•W
-		XMFLOAT3 normal;//–@üƒxƒNƒgƒ‹
-		XMFLOAT2 uv;	//uvÀ•W
+		XMFLOAT3 pos;	//xyzåº§æ¨™
+		XMFLOAT3 normal;//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		XMFLOAT2 uv;	//uvåº§æ¨™
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘ÌB1
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“B1
 	struct ConstBufferDataB1
 	{
-		XMFLOAT3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒgŒW”
-		float pad1;			//ƒpƒfƒBƒ“ƒO
-		XMFLOAT3 diffuse;	//ƒfƒBƒtƒ…[ƒYŒW”
-		float pad2;			//ƒpƒfƒBƒ“ƒO
-		XMFLOAT3 specular;	//ƒXƒyƒLƒ…ƒ‰[ŒW”
-		float alpha;		//ƒAƒ‹ƒtƒ@
+		XMFLOAT3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
+		float pad1;			//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+		XMFLOAT3 diffuse;	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
+		float pad2;			//ãƒ‘ãƒ‡ã‚£ãƒ³ã‚°
+		XMFLOAT3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼ä¿‚æ•°
+		float alpha;		//ã‚¢ãƒ«ãƒ•ã‚¡
 	};
 
-	//ƒ}ƒeƒŠƒAƒ‹
+	//ãƒãƒ†ãƒªã‚¢ãƒ«
 	struct Material
 	{
-		std::string name;	//ƒ}ƒeƒŠƒAƒ‹–¼
-		XMFLOAT3 ambient;	//ƒAƒ“ƒrƒGƒ“ƒg‰e‹¿“x
-		XMFLOAT3 diffuse;	//ƒfƒBƒtƒ…[ƒY‰e‹¿“x
-		XMFLOAT3 specular;	//ƒXƒyƒLƒ…ƒ‰[‰e‹¿“x
-		float alpha;	//ƒAƒ‹ƒtƒ@
-		std::string textureFilename;	//ƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		std::string name;	//ãƒãƒ†ãƒªã‚¢ãƒ«å
+		XMFLOAT3 ambient;	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆå½±éŸ¿åº¦
+		XMFLOAT3 diffuse;	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºå½±éŸ¿åº¦
+		XMFLOAT3 specular;	//ã‚¹ãƒšã‚­ãƒ¥ãƒ©ãƒ¼å½±éŸ¿åº¦
+		float alpha;	//ã‚¢ãƒ«ãƒ•ã‚¡
+		std::string textureFilename;	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Material() {
 			ambient = { 0.3f, 0.3f, 0.3f };
 			diffuse = { 0.0f, 0.0f, 0.0f };
@@ -57,106 +57,106 @@ public:
 		}
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// objƒtƒ@ƒCƒ‹‚©‚ç3Dƒ‚ƒfƒ‹‚ğ“Ç‚İ‚Ş
+	/// objãƒ•ã‚¡ã‚¤ãƒ«ã‹ã‚‰3Dãƒ¢ãƒ‡ãƒ«ã‚’èª­ã¿è¾¼ã‚€
 	/// </summary>
-	/// <param name="modelname">ƒ‚ƒfƒ‹–¼</param>
-	/// <param name="smoothing">ƒXƒ€[ƒWƒ“ƒO‚ğ‚©‚¯‚é‚©</param>
-	/// <returns>objƒ‚ƒfƒ‹</returns>
+	/// <param name="modelname">ãƒ¢ãƒ‡ãƒ«å</param>
+	/// <param name="smoothing">ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ã‚’ã‹ã‘ã‚‹ã‹</param>
+	/// <returns>objãƒ¢ãƒ‡ãƒ«</returns>
 	static ObjModel* LoadFromOBJ(const std::string& modelname, const bool smoothing = false);
 
 	//setter
 	static void SetDevice(ID3D12Device* device) { ObjModel::dev = device; };
 	static void SetShadowMapTexture(const Texture& shadowMapTexture) { ObjModel::shadowMapTexture = shadowMapTexture; };
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//‰e—p[“xƒeƒNƒXƒ`ƒƒ
+	//å½±ç”¨æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	static Texture shadowMapTexture;
 
-private: //”ñŒöŠJ‚Ìƒƒ“ƒoŠÖ”
+private: //éå…¬é–‹ã®ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// OBJƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// OBJãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="modelname">ƒ‚ƒfƒ‹–¼</param>
-	/// <param name="smoothing">ƒXƒ€[ƒWƒ“ƒO‚ğ‚©‚¯‚é‚©</param>
+	/// <param name="modelname">ãƒ¢ãƒ‡ãƒ«å</param>
+	/// <param name="smoothing">ã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ã‚’ã‹ã‘ã‚‹ã‹</param>
 	void LoadFromOBJInternal(const std::string& modelname, const bool smoothing);
 
 	/// <summary>
-	/// ƒ}ƒeƒŠƒAƒ‹“Ç‚İ‚İ
+	/// ãƒãƒ†ãƒªã‚¢ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="directoryPath">ƒpƒX</param>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="directoryPath">ãƒ‘ã‚¹</param>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadMaterial(const std::string& directoryPath, const std::string& filename);
 
 	/// <summary>
-	/// Šeíƒoƒbƒtƒ@¶¬
+	/// å„ç¨®ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	/// </summary>
 	void CreateBuffers();
 
 	/// <summary>
-	/// ’¸“_ƒf[ƒ^‚Ì”‚ğæ“¾
+	/// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°ã‚’å–å¾—
 	/// </summary>
-	/// <returns>’¸“_ƒf[ƒ^‚Ì”</returns>
+	/// <returns>é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®æ•°</returns>
 	inline size_t GetVertexCount() { return vertices.size(); }
 
 	/// <summary>
-	/// ƒGƒbƒW•½ŠŠ‰»ƒf[ƒ^‚Ì’Ç‰Á
+	/// ã‚¨ãƒƒã‚¸å¹³æ»‘åŒ–ãƒ‡ãƒ¼ã‚¿ã®è¿½åŠ 
 	/// </summary>
-	/// <param name="indexPosition">À•WƒCƒ“ƒfƒbƒNƒX</param>
-	/// <param name="indexVertex">’¸“_ƒCƒ“ƒfƒbƒNƒX</param>
+	/// <param name="indexPosition">åº§æ¨™ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
+	/// <param name="indexVertex">é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹</param>
 	void AddSmootgData(const unsigned short indexPosition, const unsigned short indexVertex);
 
 	/// <summary>
-	/// •½ŠŠ‰»‚³‚ê‚½’¸“_–@ü‚ÌŒvZ
+	/// å¹³æ»‘åŒ–ã•ã‚ŒãŸé ‚ç‚¹æ³•ç·šã®è¨ˆç®—
 	/// </summary>
 	void CalculateSmoothedVertexNormals();
 
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
-	/// <param name="rootOaramIndexMaterial">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ì”š</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
+	/// <param name="rootOaramIndexMaterial">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æ•°å­—</param>
 	void Draw(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
 	/// <summary>
-	/// ‰e—pŒõŒ¹ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_‚Å‚Ì•`‰æ
+	/// å½±ç”¨å…‰æºãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹ã§ã®æç”»
 	/// </summary>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
-	/// <param name="rootOaramIndexMaterial">ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ì”š</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
+	/// <param name="rootOaramIndexMaterial">ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®æ•°å­—</param>
 	void DrawLightCameraView(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
 	/// <summary>
-	/// ‰ÁZ‡¬—p
+	/// åŠ ç®—åˆæˆç”¨
 	/// </summary>
 	/// <param name="cmdList"></param>
 	/// <param name="rootParamIndexMaterial"></param>
 	/// <param name="_instanceDrawNum"></param>
 	void DrawAdd(ID3D12GraphicsCommandList* cmdList, UINT rootParamIndexMaterial, UINT _instanceDrawNum = 1);
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Texture texture;
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//’¸“_ƒf[ƒ^”z—ñ
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	std::vector<VertexPosNormalUv> vertices;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> indexBuff;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView{};
-	//’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 	std::vector<unsigned short> indices;
-	//’è”ƒoƒbƒtƒ@(ƒ}ƒeƒŠƒAƒ‹)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡(ãƒãƒ†ãƒªã‚¢ãƒ«)
 	ComPtr<ID3D12Resource> constBuffB1;
-	//ƒ}ƒeƒŠƒAƒ‹
+	//ãƒãƒ†ãƒªã‚¢ãƒ«
 	Material material;
-	//’¸“_–@üƒXƒ€[ƒWƒ“ƒO—pƒf[ƒ^
+	//é ‚ç‚¹æ³•ç·šã‚¹ãƒ ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ãƒ‡ãƒ¼ã‚¿
 	std::unordered_map<unsigned short, std::vector<unsigned short>> smoothData;
 };

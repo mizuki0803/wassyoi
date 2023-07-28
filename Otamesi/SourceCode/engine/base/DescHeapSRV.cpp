@@ -1,4 +1,4 @@
-#include "DescHeapSRV.h"
+ï»¿#include "DescHeapSRV.h"
 #include <cassert>
 #include <d3dx12.h>
 
@@ -12,56 +12,56 @@ UINT DescHeapSRV::texNumCount = 0;
 
 void DescHeapSRV::Initialize(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList)
 {
-	//ƒfƒoƒCƒX‚ğƒZƒbƒg
+	//ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	DescHeapSRV::dev = dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg‚ğƒZƒbƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	DescHeapSRV::cmdList = cmdList;
 
 	HRESULT result;
 
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescHeapDesc = {};
 	srvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvDescHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	srvDescHeapDesc.NumDescriptors = SRVCount;
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	result = dev->CreateDescriptorHeap(&srvDescHeapDesc, IID_PPV_ARGS(&descHeapSRV));
 	assert(SUCCEEDED(result));
 }
 
 void DescHeapSRV::SetAllSceneTextureNum()
 {
-	//‘SƒV[ƒ“‹¤’Ê‚Åg—p‚·‚éƒeƒNƒXƒ`ƒƒ‚Ì–‡”‚ğŠm’è‚³‚¹‚é
+	//å…¨ã‚·ãƒ¼ãƒ³å…±é€šã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°ã‚’ç¢ºå®šã•ã›ã‚‹
 	allSceneTextureNum = texNumCount;
 }
 
 void DescHeapSRV::TextureDestruction()
 {
-	//‘SƒV[ƒ“‹¤’Ê‚Åg—p‚·‚éƒeƒNƒXƒ`ƒƒ‚Ì–‡”‚ğƒCƒ“ƒfƒbƒNƒX’l‚ÉŠ„‚è“–‚Ä’l‚ğ–ß‚·
+	//å…¨ã‚·ãƒ¼ãƒ³å…±é€šã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°ã‚’ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å€¤ã«å‰²ã‚Šå½“ã¦å€¤ã‚’æˆ»ã™
 	texNumCount = allSceneTextureNum;
 }
 
 void DescHeapSRV::SetDescriptorHeaps()
 {
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÌƒZƒbƒg
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ã‚»ãƒƒãƒˆ
 	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
 }
 
 void DescHeapSRV::CreateShaderResourceView(const D3D12_SHADER_RESOURCE_VIEW_DESC& srvDesc, Texture& texture)
 {
-	//ƒeƒNƒXƒ`ƒƒ‚ÉƒCƒ“ƒfƒbƒNƒX”Ô†‚ğŠ„‚è“–‚Ä
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã‚’å‰²ã‚Šå½“ã¦
 	texture.texNumber = texNumCount;
 
 	dev->CreateShaderResourceView(
-		texture.texBuff.Get(),	//ƒrƒ…[‚ÆŠÖ˜A•t‚¯‚éƒoƒbƒtƒ@
-		&srvDesc,	//ƒeƒNƒXƒ`ƒƒİ’èî•ñ
+		texture.texBuff.Get(),	//ãƒ“ãƒ¥ãƒ¼ã¨é–¢é€£ä»˜ã‘ã‚‹ãƒãƒƒãƒ•ã‚¡
+		&srvDesc,	//ãƒ†ã‚¯ã‚¹ãƒãƒ£è¨­å®šæƒ…å ±
 		CD3DX12_CPU_DESCRIPTOR_HANDLE(descHeapSRV->GetCPUDescriptorHandleForHeapStart(), texture.texNumber,
 			dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV)
 		)
 	);
 	
-	//Ÿ‚É“Ç‚İ‚ñ‚¾‚Ì‚½‚ß‚ÉƒCƒ“ƒfƒbƒNƒX”Ô†‚ğŸ‚Ö
+	//æ¬¡ã«èª­ã¿è¾¼ã‚“ã æ™‚ã®ãŸã‚ã«ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç•ªå·ã‚’æ¬¡ã¸
 	texNumCount++;
 }
 

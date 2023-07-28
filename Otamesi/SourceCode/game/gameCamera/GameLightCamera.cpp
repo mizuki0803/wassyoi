@@ -1,11 +1,11 @@
-#include "GameLightCamera.h"
+ï»¿#include "GameLightCamera.h"
 
 GameLightCamera* GameLightCamera::Create(float centerDistance)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	GameLightCamera* instance = new GameLightCamera();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	instance->Initialize(centerDistance);
 
 	return instance;
@@ -13,46 +13,46 @@ GameLightCamera* GameLightCamera::Create(float centerDistance)
 
 void GameLightCamera::Initialize(float centerDistance)
 {
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	Camera::Initialize();
 
-	//‹“_‚ğƒZƒbƒg
+	//è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	up = { 0, 1, 0 };
 
-	//ƒ^[ƒQƒbƒg
+	//ã‚¿ãƒ¼ã‚²ãƒƒãƒˆ
 	target = { 0,-20.0f,0 };
 
-	//’†S‚©‚ç‚Ì‹——£‚ğƒZƒbƒg
+	//ä¸­å¿ƒã‹ã‚‰ã®è·é›¢ã‚’ã‚»ãƒƒãƒˆ
 	this->centerDistance = centerDistance;
 }
 
 void GameLightCamera::Update()
 {
-	//ƒJƒƒ‰‰ñ“]
+	//ã‚«ãƒ¡ãƒ©å›è»¢
 	Around();
 
-	//ƒJƒƒ‰XV
+	//ã‚«ãƒ¡ãƒ©æ›´æ–°
 	Camera::Update();
 }
 
 void GameLightCamera::Around()
 {
-	//‰ñ“]ƒXƒs[ƒh
+	//å›è»¢ã‚¹ãƒ”ãƒ¼ãƒ‰
 	const float rotNum = 0.01f;
-	//‰ñ“]Šp‚ğXV
+	//å›è»¢è§’ã‚’æ›´æ–°
 	aroundRotate += rotNum;
 
-	//’†S“_‚©‚ç‚Ì‹——£‚ğ‚®‚é‚®‚é‰ñ‚éŒvZ
+	//ä¸­å¿ƒç‚¹ã‹ã‚‰ã®è·é›¢ã‚’ãã‚‹ãã‚‹å›ã‚‹è¨ˆç®—
 	const float angle = XMConvertToRadians(aroundRotate);
-	//ƒAƒ“ƒ_[ƒtƒ[‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅA¬”“_‚ğØ‚èÌ‚Ä‚é
+	//ã‚¢ãƒ³ãƒ€ãƒ¼ãƒ•ãƒ­ãƒ¼ã™ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€å°æ•°ç‚¹ã‚’åˆ‡ã‚Šæ¨ã¦ã‚‹
 	const float divNum = 1000;
 	const float roundAngle = floorf(angle * divNum) / divNum;
 
-	//ƒ‰ƒWƒAƒ“‚ğg—p‚µAsin,cos‚ğZo
+	//ãƒ©ã‚¸ã‚¢ãƒ³ã‚’ä½¿ç”¨ã—ã€sin,cosã‚’ç®—å‡º
 	const float sinfAngle = sinf(roundAngle);
 	const float cosfAngle = cosf(roundAngle);
 
-	//ŒvZŒ‹‰Ê‚ğŠ„‚è“–‚Ä‚Ä‹“_‚ğƒZƒbƒg
+	//è¨ˆç®—çµæœã‚’å‰²ã‚Šå½“ã¦ã¦è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	Vector3 aroundPos{};
 	aroundPos.x = sinfAngle * centerDistance;
 	aroundPos.z = cosfAngle * centerDistance;

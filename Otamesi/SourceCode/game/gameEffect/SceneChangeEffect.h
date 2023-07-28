@@ -1,34 +1,34 @@
-#pragma once
+ï»¿#pragma once
 #include "SceneChangeSprite.h"
 #include <list>
 #include <memory>
 
 /// <summary>
-/// ƒV[ƒ“•ÏX‰‰o
+/// ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡º
 /// </summary>
 class SceneChangeEffect
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	static void Update();
 
 	/// <summary>
-	/// ˆêÄ•`‰æ
+	/// ä¸€æ–‰æç”»
 	/// </summary>
 	static void Draw();
 
 	/// <summary>
-	/// ƒV[ƒ“•ÏX‰‰o‚ğì¬‚·‚é
+	/// ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºã‚’ä½œæˆã™ã‚‹
 	/// </summary>
-	/// <param name="color">‰æ–Ê‚ğ•¢‚¤F</param>
-	/// <param name="deepenTime">F‚ğ”Z‚­‚·‚éŠÔ</param>
-	/// <param name="waitTime">F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚éŠÔ</param>
-	/// <param name="returnTime">F‚ğ–ß‚·ŠÔ</param>
+	/// <param name="color">ç”»é¢ã‚’è¦†ã†è‰²</param>
+	/// <param name="deepenTime">è‰²ã‚’æ¿ƒãã™ã‚‹æ™‚é–“</param>
+	/// <param name="waitTime">è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹æ™‚é–“</param>
+	/// <param name="returnTime">è‰²ã‚’æˆ»ã™æ™‚é–“</param>
 	static void CreateSceneChangeEffect(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime);
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	static std::list<std::unique_ptr<SceneChangeSprite>> sceneChangeSprites;
 };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "WindowApp.h"
 #include "DirectXBase.h"
 #include "Input.h"
@@ -12,59 +12,59 @@
 #include "OutLine.h"
 
 /// <summary>
-/// ƒtƒŒ[ƒ€ƒ[ƒN
+/// ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¯ãƒ¼ã‚¯
 /// </summary>
 class FrameWork
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Às
+	/// å®Ÿè¡Œ
 	/// </summary>
 	void Run();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	virtual void Initialize();
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	virtual void Finalize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒ‹[ƒvI—¹ƒŠƒNƒGƒXƒg‚Ìgetter
+	/// ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆã®getter
 	/// </summary>
-	/// <returns>ƒQ[ƒ€ƒ‹[ƒvI—¹ƒŠƒNƒGƒXƒg</returns>
+	/// <returns>ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆ</returns>
 	virtual bool GetIsEndRequest() { return isEndRequest; }
 
-protected: //ƒƒ“ƒo•Ï”
-	//ƒQ[ƒ€ƒ‹[ƒvI—¹ƒŠƒNƒGƒXƒg
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆ
 	bool isEndRequest = false;
-	//ƒEƒBƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“
+	//ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
 	std::unique_ptr<WindowApp> win;
-	//DirectXŠî”Õ
+	//DirectXåŸºç›¤
 	std::unique_ptr<DirectXBase> dxbase;
-	//“ü—Í
+	//å…¥åŠ›
 	Input* input = nullptr;
-	//ƒXƒvƒ‰ƒCƒg‚Ì‹¤’Ê•”•ª
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å…±é€šéƒ¨åˆ†
 	SpriteCommon* spriteCommon = nullptr;
-	//ƒfƒoƒbƒOƒeƒLƒXƒg
+	//ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆ
 	DebugText* debugText = nullptr;
-	//ƒVƒƒƒhƒEƒ}ƒbƒv(‰e¶¬ƒ‰ƒCƒg‹“_—p)
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—(å½±ç”Ÿæˆãƒ©ã‚¤ãƒˆè¦–ç‚¹ç”¨)
 	std::unique_ptr<ShadowMap> shadowMap;
 	std::unique_ptr<AfterBloom> afterBloom;
 	std::unique_ptr<OutLine> outLine;
-	//ƒV[ƒ“Hê
+	//ã‚·ãƒ¼ãƒ³å·¥å ´
 	std::unique_ptr<AbstractSceneFactory> sceneFactory;
 };

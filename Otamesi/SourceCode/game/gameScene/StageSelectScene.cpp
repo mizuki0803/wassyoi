@@ -1,4 +1,4 @@
-#include "StageSelectScene.h"
+ï»¿#include "StageSelectScene.h"
 #include "Input.h"
 #include "Audio.h"
 #include "SpriteCommon.h"
@@ -11,54 +11,54 @@
 
 void StageSelectScene::Initialize()
 {
-	//ƒ‰ƒCƒg¶¬
+	//ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup.reset(LightGroup::Create());
 	lightGroup->SetDirLightActive(0, false);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
 
-	//obj‚©‚çƒ‚ƒfƒ‹ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	//objã‹ã‚‰ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
-	//ƒ}ƒbƒvŠÇ—¶¬
+	//ãƒãƒƒãƒ—ç®¡ç†ç”Ÿæˆ
 	mapDataManager.reset(MapDataStageSelectManager::Create());
 
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	camera.reset(new Camera());
 	camera->Initialize();
 	camera->SetEye({ 0, 5, -70 });
-	//‰e—pŒõŒ¹ƒJƒƒ‰‰Šú‰»
+	//å½±ç”¨å…‰æºã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	lightCamera.reset(new LightCamera());
 	lightCamera->Initialize({ -100, 100, -300 });
 	lightCamera->SetProjectionNum({ 400, 400 }, { -400, -400 });
 
 
-	//“V‹…¶¬
+	//å¤©çƒç”Ÿæˆ
 	skydome.reset(ObjObject3d::Create(modelSkydome.get()));
 	skydome->SetPosition({});
 	skydome->SetScale({ 2, 2, 2 });
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	ObjObject3d::SetCamera(camera.get());
 	ObjObject3d::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	InstanceObject::SetCamera(camera.get());
 	InstanceObject::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	InstanceObject::SetLightGroup(lightGroup.get());
 
-	//‰æ–Ê‚Éƒp[ƒeƒBƒNƒ‹‚ªc‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘S‚Äíœ‚µ‚Ä‚¨‚­
+	//ç”»é¢ã«ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒæ®‹ã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§å…¨ã¦å‰Šé™¤ã—ã¦ãŠã
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ìƒuƒ‰[‚ğ‰ğœ‚µ‚Ä‚¨‚­
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®ãƒ–ãƒ©ãƒ¼ã‚’è§£é™¤ã—ã¦ãŠã
 	GamePostEffect::GetPostEffect()->SetRadialBlur(false);
 
-	//UIŠÖŒW¶¬
+	//UIé–¢ä¿‚ç”Ÿæˆ
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Selection);
 }
 
@@ -68,7 +68,7 @@ void StageSelectScene::Finalize()
 
 void StageSelectScene::Update()
 {
-	//ƒGƒXƒP[ƒvƒL[‚Åƒƒjƒ…[‰æ–Ê
+	//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚­ãƒ¼ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢
 	if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
 	{
 		if (!userInterface_->GetMenuFlag())
@@ -83,34 +83,34 @@ void StageSelectScene::Update()
 	mapDataManager->SetNotMove(userInterface_->GetMenuFlag());
 	MenuAction();
 
-	//ƒJƒƒ‰XV
+	//ã‚«ãƒ¡ãƒ©æ›´æ–°
 	camera->Update();
 	lightCamera->Update();
 
-	//ƒ‰ƒCƒgXV
+	//ãƒ©ã‚¤ãƒˆæ›´æ–°
 	lightGroup->Update();
 
-	//ƒIƒuƒWƒFƒNƒgXV
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	mapDataManager->Update();
-	//“V‹…
+	//å¤©çƒ
 	skydome->Update();
 
-	//UI‚ÌXV
+	//UIã®æ›´æ–°
 	userInterface_->Update();
 
-	//ƒXƒy[ƒXƒL[‚ÅƒXƒe[ƒW‚ğŠm’è‚µAƒQ[ƒ€ƒV[ƒ“‚Ö
+	//ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã§ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ç¢ºå®šã—ã€ã‚²ãƒ¼ãƒ ã‚·ãƒ¼ãƒ³ã¸
 	if (Input::GetInstance()->TriggerKey(DIK_SPACE) && !userInterface_->GetMenuFlag()) {
-		//seÄ¶
+		//seå†ç”Ÿ
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
 	}
 
-	//ƒV[ƒ“•ÏXó‘Ô
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹
 	SceneChangeMode();
-	//ƒV[ƒ“•ÏX‰‰oXV
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºæ›´æ–°
 	SceneChangeEffect::Update();
 }
 
@@ -120,29 +120,29 @@ void StageSelectScene::DrawBackSprite()
 
 void StageSelectScene::Draw3D()
 {
-	//Object3d‹¤’ÊƒRƒ}ƒ“ƒh
+	//Object3då…±é€šã‚³ãƒãƒ³ãƒ‰
 	ObjObject3d::DrawPrev();
-	///-------Object3d•`‰æ‚±‚±‚©‚ç-------///
+	///-------Object3dæç”»ã“ã“ã‹ã‚‰-------///
 
-	//“V‹…
+	//å¤©çƒ
 	skydome->Draw();
 
-	///-------Object3d•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Object3dæç”»ã“ã“ã¾ã§-------///
 
-	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+	///-------Instanceæç”»ã“ã“ã‹ã‚‰-------///
 
 	InstanceObject::DrawPrev();
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	mapDataManager->Draw();
 
-	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Instanceæç”»ã“ã“ã¾ã§-------///
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚©‚ç-------///
+	///-------ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»ã“ã“ã‹ã‚‰-------///
 
-	//ƒp[ƒeƒBƒNƒ‹•`‰æ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	ParticleEmitter::GetInstance()->DrawAll();
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»ã“ã“ã¾ã§-------///
 }
 
 void StageSelectScene::Draw3DLightView()
@@ -151,40 +151,40 @@ void StageSelectScene::Draw3DLightView()
 
 void StageSelectScene::DrawFrontSprite()
 {
-	//ƒXƒvƒ‰ƒCƒg‹¤’ÊƒRƒ}ƒ“ƒh
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šã‚³ãƒãƒ³ãƒ‰
 	SpriteCommon::GetInstance()->DrawPrev();
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚©‚ç-------///
+	///-------ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»ã“ã“ã‹ã‚‰-------///
 
-	//ƒXƒe[ƒW”Ô†
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·
 	mapDataManager->DrawUI();
 
-	//UIŠÖŒW
+	//UIé–¢ä¿‚
 	userInterface_->Draw();
 
-	//ƒV[ƒ“•ÏX‰‰o•`‰æ
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºæç”»
 	SceneChangeEffect::Draw();
 
 
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»ã“ã“ã¾ã§-------///
 }
 
 void StageSelectScene::MenuAction()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!userInterface_->GetMenuFlag()) { return; }
-	//Œˆ’è‚ÌƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//æ±ºå®šã®ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//ƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚½uŠÔ‚É‘I‘ğ‚³‚ê‚Ä‚¢‚é€–Ú‚É‚æ‚Á‚Ä‹““®‚ğİ’è
-	//ƒ^ƒCƒgƒ‹ƒV[ƒ“‚ÉˆÚ“®
+	//ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸç¬é–“ã«é¸æŠã•ã‚Œã¦ã„ã‚‹é …ç›®ã«ã‚ˆã£ã¦æŒ™å‹•ã‚’è¨­å®š
+	//ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³ã«ç§»å‹•
 	if (userInterface_->GetSelectionNumber() == (int)UserInterface::StageSelectSceneItem::SceneChangeTitle) {
-		//ƒV[ƒ“Ø‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 		SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
-		//seÄ¶
+		//seå†ç”Ÿ
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 
-	//binaryíœ
+	//binaryå‰Šé™¤
 	DeleteBinary();
 }
 

@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseBlock.h"
 #include "ObjObject3d.h"
 #include "EaseData.h"
 
 /// <summary>
-/// ƒ}ƒbƒv—pƒuƒƒbƒN
+/// ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 /// </summary>
 class Block
 {
 public: //enum
 	/// <summary>
-	/// ƒuƒƒbƒN‚Ìí—Ş
+	/// ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡
 	/// </summary>
 	enum class BROCK_TYPE {
 		block,
@@ -20,28 +20,28 @@ public: //enum
 		size,
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	/// <summary>
-	/// ˆê‰ñ‚Ì‚İ‚Ì‰Šú‰»
+	/// ä¸€å›ã®ã¿ã®åˆæœŸåŒ–
 	/// </summary>
 	static void StaticInitialize();
 
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>	
-	/// <param name="_blockType">ƒ‚ƒfƒ‹”Ô†</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <returns>ƒuƒƒbƒN</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«ç•ªå·</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <returns>ãƒ–ãƒ­ãƒƒã‚¯</returns>
 	static Block* Create(const int _blockType, const XMINT3& mapChipNum);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	static void Draw();
 
 	/// <summary>
-/// frame‚²‚Æ‚Ì‰Šú‰»
+/// frameã”ã¨ã®åˆæœŸåŒ–
 /// </summary>
 	void FrameReset();
 
@@ -53,43 +53,43 @@ public: //Ã“Iƒƒ“ƒoŠÖ”
 	static float GetBlockSize() { return Block::blockSize; }
 	const Vector3 GetPosition() { return position; }
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="_blockType">ƒ‚ƒfƒ‹</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const int _blockType, const XMINT3& mapChipNum);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒuƒƒbƒNƒ^ƒCƒv‚Ìæ“¾
+	/// ãƒ–ãƒ­ãƒƒã‚¯ã‚¿ã‚¤ãƒ—ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒuƒƒbƒNƒ^ƒCƒv</returns>
+	/// <returns>ãƒ–ãƒ­ãƒƒã‚¯ã‚¿ã‚¤ãƒ—</returns>
 	BROCK_TYPE GetBlockType() { return blockType; }
 
-protected: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒuƒƒbƒNˆê‚Â‚Ì‘å‚«‚³
+protected: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ–ãƒ­ãƒƒã‚¯ä¸€ã¤ã®å¤§ãã•
 	static const float blockSize;
-	//ƒuƒƒbƒN•`‰æ—p
+	//ãƒ–ãƒ­ãƒƒã‚¯æç”»ç”¨
 	static std::unique_ptr<BaseBlock> instanceBlock;
 
-protected: // ƒƒ“ƒo•Ï”
-	//ƒuƒƒbƒN‚Ìí—Ş
+protected: // ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡
 	BROCK_TYPE blockType;
-	//‘å‚«‚³
+	//å¤§ãã•
 	XMFLOAT3 scale = { 1, 1, 1 };
-	//‰ñ“]Šp
+	//å›è»¢è§’
 	XMFLOAT3 rotation = { 0, 0, 0 };
-	//À•W
+	//åº§æ¨™
 	Vector3 position = { 0, 0, 0 };
-	//F
+	//è‰²
 	XMFLOAT4 color = { 1, 1, 1, 1 };
-	//eƒIƒuƒWƒFƒNƒg
+	//è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	ObjObject3d* parent;
 };

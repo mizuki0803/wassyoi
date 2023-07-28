@@ -1,34 +1,34 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 
 /// <summary>
-/// ƒEƒCƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“
+/// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³
 /// </summary>
 class WindowApp
 {
 public:
-	//ƒEƒCƒ“ƒhƒEƒTƒCƒY
-	static const int window_width = 1280;	//‰¡•
-	static const int window_height = 720;	//c•
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚µã‚¤ã‚º
+	static const int window_width = 1280;	//æ¨ªå¹…
+	static const int window_height = 720;	//ç¸¦å¹…
 
 public:
-	//ƒEƒCƒ“ƒhƒEƒvƒƒV[ƒWƒƒ
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£
 	static LRESULT CALLBACK windowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 public:
 	/// <summary>
-	/// ƒEƒCƒ“ƒhƒEì¬
+	/// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ä½œæˆ
 	/// </summary>
-	/// <param name="titlename">ƒ^ƒCƒgƒ‹ƒo[–¼</param>
+	/// <param name="titlename">ã‚¿ã‚¤ãƒˆãƒ«ãƒãƒ¼å</param>
 	void WindowCreate(const wchar_t* titlename = L"DirectXGame");
 
 	/// <summary>
-	/// ƒEƒCƒ“ƒhƒE‰ğ•ú
+	/// ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦è§£æ”¾
 	/// </summary>
 	void WindowRelease();
 
 	/// <summary>
-	/// ƒƒbƒZ[ƒW
+	/// ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
 	/// </summary>
 	/// <returns></returns>
 	bool MessageProc();
@@ -38,6 +38,6 @@ public:
 	HWND GetHwnd() { return hwnd; };
 
 private:
-	WNDCLASSEX wndclass{};	//ƒEƒCƒ“ƒhƒEƒNƒ‰ƒX‚Ìİ’è
+	WNDCLASSEX wndclass{};	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¯ãƒ©ã‚¹ã®è¨­å®š
 	HWND hwnd = nullptr;
 };

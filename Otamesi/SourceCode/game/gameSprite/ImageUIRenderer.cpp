@@ -1,5 +1,6 @@
-#include "ImageUIRenderer.h"
+ï»¿#include "ImageUIRenderer.h"
 #include "DescHeapSRV.h"
+#include "Easing.h"
 
 
 ID3D12Device *ImageUIRenderer::dev = nullptr;
@@ -7,13 +8,13 @@ ID3D12GraphicsCommandList *ImageUIRenderer::cmdList = nullptr;
 
 ImageUIRenderer *ImageUIRenderer::Create()
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	ImageUIRenderer *instance = new ImageUIRenderer();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
@@ -27,15 +28,25 @@ bool ImageUIRenderer::Initialize()
 {
 	HRESULT result;
 
-	//’¸“_ƒf[ƒ^
+	player_camera_.reset(new Camera);
+	player_camera_->Initialize();
+	Vector3 player_camera_pos = { -5,25,-20 };
+	player_camera_->SetEye(player_camera_pos);
+	player_camera_->SetTarget({0,0,0});
+	camera_camera_.reset(new Camera);
+	camera_camera_->Initialize();
+	camera_camera_->SetEye({ 5,25,-20 });
+	camera_camera_->SetTarget({ 0,0,0 });
+
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPosUv vertices[] = {
-		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},	//¶‰º
-		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}},	//¶ã
-		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},	//‰E‰º
-		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}},	//‰Eã
+		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},	//å·¦ä¸‹
+		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}},	//å·¦ä¸Š
+		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},	//å³ä¸‹
+		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}},	//å³ä¸Š
 	};
 
-	//’¸“_ƒoƒbƒtƒ@¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -43,7 +54,7 @@ bool ImageUIRenderer::Initialize()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	VertexPosUv *vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void **)&vertMap);
 	if (SUCCEEDED(result)) {
@@ -51,12 +62,12 @@ bool ImageUIRenderer::Initialize()
 		vertBuff->Unmap(0, nullptr);
 	}
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	vbView.SizeInBytes = sizeof(vertices);
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	////’è”ƒoƒbƒtƒ@‚Ì¶¬
+	////å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	//result = dev->CreateCommittedResource(
 	//	&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 	//	D3D12_HEAP_FLAG_NONE,
@@ -66,7 +77,7 @@ bool ImageUIRenderer::Initialize()
 	//	IID_PPV_ARGS(&constBuff));
 	//assert(SUCCEEDED(result));
 
-	//ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒXİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM,
 		WindowApp::window_width,
@@ -76,7 +87,7 @@ bool ImageUIRenderer::Initialize()
 
 	for (int i{ 0 }; i < static_cast<int>(TexName::Max); ++i)
 	{
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬	
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ	
 		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		result = dev->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
@@ -90,41 +101,41 @@ bool ImageUIRenderer::Initialize()
 		assert(SUCCEEDED(result));
 
 
-		//ƒeƒNƒXƒ`ƒƒ‚ğÔƒNƒŠƒA
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èµ¤ã‚¯ãƒªã‚¢
 		{
-			//‰æ‘f”(1280x720 = 921600ƒsƒNƒZƒ‹)
+			//ç”»ç´ æ•°(1280x720 = 921600ãƒ”ã‚¯ã‚»ãƒ«)
 			const UINT pixelCount = WindowApp::window_width * WindowApp::window_height;
-			//‰æ‘œ1s•ª‚Ìƒf[ƒ^ƒTƒCƒY
+			//ç”»åƒ1è¡Œåˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 			const UINT rowPitch = sizeof(UINT) * WindowApp::window_width;
-			//‰æ‘œ‘S‘Ì‚Ìƒf[ƒ^ƒTƒCƒY
+			//ç”»åƒå…¨ä½“ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 			const UINT depthPitch = rowPitch * WindowApp::window_height;
-			//‰æ‘œƒCƒ[ƒW
+			//ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸
 			UINT *img = new UINT[pixelCount];
 			for (int i = 0; i < pixelCount; i++) {
 				img[i] = 0xff0000ff;
 			}
 
-			//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 			result = texture_[i].texBuff->WriteToSubresource(0, nullptr,
 				img, rowPitch, depthPitch);
 			assert(SUCCEEDED(result));
 			delete[] img;
 		}
 
-		//SRVİ’è
-		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//İ’è\‘¢‘Ì
+		//SRVè¨­å®š
+		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//è¨­å®šæ§‹é€ ä½“
 		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 		srvDesc.Texture2D.MipLevels = 1;
-		//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉSRVì¬
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«SRVä½œæˆ
 		DescHeapSRV::CreateShaderResourceView(srvDesc, texture_[i]);
 
-		//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+		//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 		rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		rtvDescHeapDesc.NumDescriptors = 2;
-		//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+		//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 		result = dev->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV_));
 		assert(SUCCEEDED(result));
 
@@ -134,7 +145,7 @@ bool ImageUIRenderer::Initialize()
 	// RTV
 	for (int i{ 0 }; i < static_cast<int>(TexName::Max); ++i)
 	{
-		//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉRTV¶¬
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«RTVç”Ÿæˆ
 		dev->CreateRenderTargetView(
 			texture_[i].texBuff.Get(),
 			nullptr,
@@ -148,7 +159,7 @@ bool ImageUIRenderer::Initialize()
 	texture_[static_cast<int>(TexName::Move)].texBuff->SetName(L"Move");
 
 
-	//[“xƒoƒbƒtƒ@ƒŠƒ\[ƒXİ’è
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC depthResDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_D32_FLOAT,
@@ -158,7 +169,7 @@ bool ImageUIRenderer::Initialize()
 			1, 0,
 			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL
 		);
-	//[“xƒoƒbƒtƒ@‚Ì¶¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
 		D3D12_HEAP_FLAG_NONE,
@@ -169,15 +180,15 @@ bool ImageUIRenderer::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
 	DescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	DescHeapDesc.NumDescriptors = 1;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	result = dev->CreateDescriptorHeap(&DescHeapDesc, IID_PPV_ARGS(&descHeapDSV_));
 	assert(SUCCEEDED(result));
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉDSVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«DSVä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
@@ -187,77 +198,356 @@ bool ImageUIRenderer::Initialize()
 
 	
 
-	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
-	key_[static_cast<int>(KeyObjectName::W)]->Create(
-		ObjModel::LoadFromOBJ("KeyBoradW", true)
+	// ãƒ¢ãƒ‡ãƒ«ã®èª­ã¿è¾¼ã¿
+	key_[static_cast<int>(KeyObjectName::W)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradW", true))
 	);
-	key_[static_cast<int>(KeyObjectName::A)]->Create(
-		ObjModel::LoadFromOBJ("KeyBoradA", true)
+	key_[static_cast<int>(KeyObjectName::W)]->SetPosition({ 0,0,-2});
+
+	key_[static_cast<int>(KeyObjectName::A)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradA", true))
 	);
-	key_[static_cast<int>(KeyObjectName::S)]->Create(
-		ObjModel::LoadFromOBJ("KeyBoradS", true)
+	key_[static_cast<int>(KeyObjectName::A)]->SetPosition({ -2,0,-4 });
+
+	key_[static_cast<int>(KeyObjectName::S)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradS", true))
 	);
-	key_[static_cast<int>(KeyObjectName::D)]->Create(
-		ObjModel::LoadFromOBJ("KeyBoradD", true)
+	key_[static_cast<int>(KeyObjectName::S)]->SetPosition({ 0,0,-4 });
+
+	key_[static_cast<int>(KeyObjectName::D)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradD", true))
+	);
+	key_[static_cast<int>(KeyObjectName::D)]->SetPosition({ 2,0,-4 });
+
+	player_.reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("Player", true))
+	);
+	player_->SetPosition({ 0,0,4 });
+	player_->SetScale({ 2,2,2 });
+
+	arrow_[static_cast<int>(ArrowObjectName::Left)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("Arrow", true))
+	);
+	arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+		{ 0.5f,0.5f,0.5f,1.0f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::Left)]->SetPosition(
+		{ -3.0f,0.0f,0.5f }
 	);
 
+	arrow_[static_cast<int>(ArrowObjectName::Right)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("Arrow", true))
+	);
+	arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+		{ 0.5f,0.5f,0.5f,1.0f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::Right)]->SetPosition(
+		{ 3.0f,0.0f,0.5f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::Right)]->SetRotation(
+		{ 0.0f,180.0f,0.0f }
+	);
+
+
+	// ã‚«ãƒ¡ãƒ©ç”¨
+	key_[static_cast<int>(KeyObjectName::Up)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradUp", true))
+	);
+	key_[static_cast<int>(KeyObjectName::Up)]->SetPosition({ 0,0,-2 });
+	key_[static_cast<int>(KeyObjectName::Left)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradLeft", true))
+	);
+	key_[static_cast<int>(KeyObjectName::Left)]->SetPosition({ -2,0,-4 });
+	key_[static_cast<int>(KeyObjectName::Down)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradDown", true))
+	);
+	key_[static_cast<int>(KeyObjectName::Down)]->SetPosition({ 0,0,-4 });
+	key_[static_cast<int>(KeyObjectName::Right)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradRight", true))
+	);
+	key_[static_cast<int>(KeyObjectName::Right)]->SetPosition({ 2,0,-4 });
 	return true;
 }
 
 void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 {
-	// ˆÚ“®—p‰æ‘œXV
+	static auto aKey = key_[static_cast<int>(KeyObjectName::A)].get();
+	static auto dKey = key_[static_cast<int>(KeyObjectName::D)].get();
+	static auto leftKey = key_[static_cast<int>(KeyObjectName::Left)].get();
+	static auto rightKey = key_[static_cast<int>(KeyObjectName::Right)].get();
+		// ç§»å‹•ç”¨ç”»åƒæ›´æ–°
 	if (isMoveMenu)
 	{
+		// Dæ›´æ–°
+		{
+			auto pos = dKey->GetPosition();
+			auto rot = arrow_[static_cast<int>(ArrowObjectName::Right)]->GetRotation();
+			// æŠ¼ã—è¾¼ã¿
+			if (moveFrameCounter_ >= 0 &&
+				moveFrameCounter_ < 15)
+			{
+				pos.y -= 0.05f;
+				dKey->SetPosition(pos);
+				
+			}
+			// æŠ¼ã—ä¸Šã’
+			else if (
+				moveFrameCounter_ >= 135 &&
+				moveFrameCounter_ < 150)
+			{
+				pos.y += 0.05f;
+				dKey->SetPosition(pos);
+			}
 
+			if (moveFrameCounter_ >= 0 &&
+				moveFrameCounter_ < 150)
+			{
+				rot.x += (180.0f / 150.0f);
+				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetRotation(
+					{ rot }
+				);
+				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+					{ 0.8f,0.0f,0.0f,0.8f }
+				);
+			}
+			else
+			{
+				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+					{ 0.3f,0.3f,0.3f,1.0f }
+				);
+			}
+		}
+		
+		// Aæ›´æ–°
+		{
+			auto pos = aKey->GetPosition();
+			auto rot = arrow_[static_cast<int>(ArrowObjectName::Left)]->GetRotation();
+			if (
+				moveFrameCounter_ >= 180 &&
+				moveFrameCounter_ < 195)
+			{
+				pos.y -= 0.05f;
+				aKey->SetPosition(pos);
+			}
+			else if (
+				moveFrameCounter_ >= 300 &&
+				moveFrameCounter_ < 315)
+			{
+				pos.y += 0.05f;
+				aKey->SetPosition(pos);
+			}
+
+			if (moveFrameCounter_ >= 180 &&
+				moveFrameCounter_ < 315)
+			{
+				rot.x += (180.0f / 150.0f);
+				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetRotation(
+					{ rot }
+				);
+				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+					{ 0.8f,0.0f,0.0f,0.8f }
+				);
+			}
+			else
+			{
+				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+					{ 0.3f,0.3f,0.3f,1.0f }
+				);
+			}
+		}
+
+		// Player
+		{
+			auto pos = player_->GetPosition();
+			// +ç§»å‹•
+			if (moveFrameCounter_ >= 0 &&
+				moveFrameCounter_ < 150)
+			{
+				int index{ static_cast<int>(moveFrameCounter_ / 30.0f) };
+				pos.x = Easing::OutQuint(
+					player_pos_[index],
+					player_pos_[index + 1],
+					static_cast<float>((moveFrameCounter_ - index * 30) / 30.0f)
+					);
+				
+				player_->SetPosition(pos);
+			}
+			// -ç§»å‹•
+			else if (
+				moveFrameCounter_ >= 180 &&
+				moveFrameCounter_ < 315
+				)
+			{
+				int counter = moveFrameCounter_ - 180;
+				int index{ 5 - static_cast<int>(counter / 30.0f) };
+				int next_index{ index - 1 };
+				pos.x = Easing::OutQuint(
+					player_pos_[index],
+					player_pos_[next_index],
+					static_cast<float>((counter - ( 5 - index) * 30) / 30.0f)
+				);
+
+				player_->SetPosition(pos);
+				player_->SetPosition(pos);
+			}
+		}
+
+		// ã‚«ã‚¦ãƒ³ãƒˆãƒªã‚»ãƒƒãƒˆ
+		if (moveFrameCounter_ > 345)
+		{
+			moveFrameCounter_ = 0;
+		}
+		else
+		{
+			++moveFrameCounter_;
+		}
 	}
 
-	// ƒJƒƒ‰—p‰æ‘œXV
+	// ã‚«ãƒ¡ãƒ©ç”¨ç”»åƒæ›´æ–°
 	if (isCameraMenu)
 	{
+		// â†’
+		{
+			auto pos = rightKey->GetPosition();
+			auto rot = arrow_[static_cast<int>(ArrowObjectName::Right)]->GetRotation();
+			// æŠ¼ã—è¾¼ã¿
+			if (cameraFrameCounter_ >= 0 &&
+				cameraFrameCounter_ < 15)
+			{
+				pos.y -= 0.05f;
+				rightKey->SetPosition(pos);
+
+			}
+			// æŠ¼ã—ä¸Šã’
+			else if (
+				cameraFrameCounter_ >= 135 &&
+				cameraFrameCounter_ < 150)
+			{
+				pos.y += 0.05f;
+				rightKey->SetPosition(pos);
+			}
+
+			if (cameraFrameCounter_ >= 0 &&
+				cameraFrameCounter_ < 150)
+			{
+				/*rot.x += (180.0f / 150.0f);
+				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetRotation(
+					{ rot }
+				);
+				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+					{ 0.8f,0.0f,0.0f,0.8f }
+				);*/
+			}
+			else
+			{
+				/*arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+					{ 0.3f,0.3f,0.3f,1.0f }
+				);*/
+			}
+		}
+
+		// â†
+		{
+			auto pos = leftKey->GetPosition();
+			auto rot = arrow_[static_cast<int>(ArrowObjectName::Left)]->GetRotation();
+			if (
+				cameraFrameCounter_ >= 180 &&
+				cameraFrameCounter_ < 195)
+			{
+				pos.y -= 0.05f;
+				leftKey->SetPosition(pos);
+			}
+			else if (
+				cameraFrameCounter_ >= 300 &&
+				cameraFrameCounter_ < 315)
+			{
+				pos.y += 0.05f;
+				leftKey->SetPosition(pos);
+			}
+
+			if (cameraFrameCounter_ >= 180 &&
+				cameraFrameCounter_ < 315)
+			{
+				/*rot.x += (180.0f / 150.0f);
+				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetRotation(
+					{ rot }
+				);
+				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+					{ 0.8f,0.0f,0.0f,0.8f }
+				);*/
+			}
+			else
+			{
+				/*arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+					{ 0.3f,0.3f,0.3f,1.0f }
+				);*/
+			}
+		}
+		// ã‚«ã‚¦ãƒ³ãƒˆãƒªã‚»ãƒƒãƒˆ
+		if (cameraFrameCounter_ > 345)
+		{
+			cameraFrameCounter_ = 0;
+		}
+		else
+		{
+			++cameraFrameCounter_;
+		}
 
 	}
 }
 
 void ImageUIRenderer::DrawCameraDescription()
 {
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(ƒVƒF[ƒ_ƒŠƒ\[ƒX¨•`‰æ‰Â”\)
+	ObjObject3d::SetCamera(camera_camera_.get());
+	camera_camera_->Update();
+	for (int i = static_cast<int>(KeyObjectName::Up); i <= static_cast<int>(KeyObjectName::Right); ++i)
+	{
+		key_[i]->Update();
+	}
+
+
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹â†’æç”»å¯èƒ½)
 	cmdList->ResourceBarrier(1,	&CD3DX12_RESOURCE_BARRIER::Transition(texture_[static_cast<int>(TexName::Camera)].texBuff.Get(),
 			D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 			D3D12_RESOURCE_STATE_RENDER_TARGET));
 
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvH =
 		CD3DX12_CPU_DESCRIPTOR_HANDLE(
 			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(), static_cast<int>(TexName::Camera),
 			dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart();
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
 	cmdList->OMSetRenderTargets(1, &rtvH, false, &dsvH);
 
-	//ƒrƒ…[ƒ|[ƒg‚Ìİ’è
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
 	cmdList->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0f, 0.0f,
 		WindowApp::window_width, WindowApp::window_height));
-	//ƒVƒUƒŠƒ“ƒO‹éŒ`‚Ìİ’è
+	//ã‚·ã‚¶ãƒªãƒ³ã‚°çŸ©å½¢ã®è¨­å®š
 	cmdList->RSSetScissorRects(1, &CD3DX12_RECT(0, 0, WindowApp::window_width,
 		WindowApp::window_height));
 
-	//‘S‰æ–ÊƒNƒŠƒA
+	//å…¨ç”»é¢ã‚¯ãƒªã‚¢
 	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
-	//[“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0,
 		nullptr);
 
-	// ‚±‚±‚©‚ç•`‰æ
+	// ã“ã“ã‹ã‚‰æç”»
 	ObjObject3d::DrawPrev();
 
 
+	for (int i = static_cast<int>(KeyObjectName::Up); i <= static_cast<int>(KeyObjectName::Right); ++i)
+	{
+		key_[i]->Draw();
+	}
 
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(•`‰æ‰Â”\¨ƒVƒF[ƒ_ƒŠƒ\[ƒX)
+
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(æç”»å¯èƒ½â†’ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹)
 	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(texture_[static_cast<int>(TexName::Camera)].texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
@@ -265,44 +555,64 @@ void ImageUIRenderer::DrawCameraDescription()
 
 void ImageUIRenderer::DrawMoveDescription()
 {
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(ƒVƒF[ƒ_ƒŠƒ\[ƒX¨•`‰æ‰Â”\)
+	ObjObject3d::SetCamera(player_camera_.get());
+	player_camera_->Update();
+	// ãƒ¢ãƒ‡ãƒ«æ›´æ–°
+	player_->Update();
+	for (int i = 0; i <= static_cast<int>(KeyObjectName::D); ++i)
+	{
+		key_[i]->Update();
+	}
+	arrow_[static_cast<int>(ArrowObjectName::Left)]->Update();
+	arrow_[static_cast<int>(ArrowObjectName::Right)]->Update();
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹â†’æç”»å¯èƒ½)
 	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(texture_[static_cast<int>(TexName::Move)].texBuff.Get(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 		D3D12_RESOURCE_STATE_RENDER_TARGET));
 
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvH =
 		CD3DX12_CPU_DESCRIPTOR_HANDLE(
 			descHeapRTV_->GetCPUDescriptorHandleForHeapStart(), static_cast<int>(TexName::Move),
 			dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart();
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
 	cmdList->OMSetRenderTargets(1, &rtvH, false, &dsvH);
 
-	//ƒrƒ…[ƒ|[ƒg‚Ìİ’è
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
 	cmdList->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0f, 0.0f,
 		WindowApp::window_width, WindowApp::window_height));
-	//ƒVƒUƒŠƒ“ƒO‹éŒ`‚Ìİ’è
+	//ã‚·ã‚¶ãƒªãƒ³ã‚°çŸ©å½¢ã®è¨­å®š
 	cmdList->RSSetScissorRects(1, &CD3DX12_RECT(0, 0, WindowApp::window_width,
 		WindowApp::window_height));
 
-	//‘S‰æ–ÊƒNƒŠƒA
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	//å…¨ç”»é¢ã‚¯ãƒªã‚¢
+	float clearColor[4] = {	0.0f, 0.0f, 0.0f, 0.0f };
 	cmdList->ClearRenderTargetView(rtvH, clearColor, 0, nullptr);
-	//[“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0,
 		nullptr);
 
-	// ‚±‚±‚©‚ç•`‰æ
+	// ã“ã“ã‹ã‚‰æç”»
 	ObjObject3d::DrawPrev();
 
+	// ãƒ¢ãƒ‡ãƒ«æ›´æ–°
+	player_->Draw();
 
+	for (int i = 0; i <= static_cast<int>(KeyObjectName::D); ++i)
+	{
+		key_[i]->Draw();
+	}
 
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(•`‰æ‰Â”\¨ƒVƒF[ƒ_ƒŠƒ\[ƒX)
+	arrow_[static_cast<int>(ArrowObjectName::Left)]->Draw();
+	arrow_[static_cast<int>(ArrowObjectName::Right)]->Draw();
+
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(æç”»å¯èƒ½â†’ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹)
 	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(texture_[static_cast<int>(TexName::Move)].texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));
+
 }

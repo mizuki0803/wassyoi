@@ -1,17 +1,17 @@
-#include "MapData.h"
+ï»¿#include "MapData.h"
 #include "Block.h"
 #include "JsonLoader.h"
 #include <sstream>
 
 bool MapData::CreateMap(const int selectStageNum)
 {
-	//jsonƒ}ƒbƒvƒf[ƒ^“Ç‚İ‚İ
+	//jsonãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	std::ostringstream  fileName;
 	fileName << selectStageNum;
 	if (!LoadMapData(fileName.str())) {
 		return false;
 	}
-	//ƒ}ƒbƒvƒuƒƒbƒN¶¬
+	//ãƒãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	CreateMapBlock();
 
 	Block::StaticInitialize();
@@ -21,7 +21,7 @@ bool MapData::CreateMap(const int selectStageNum)
 
 bool MapData::LoadMapData(const std::string& fileName)
 {
-	//ƒ}ƒbƒvƒf[ƒ^î•ñ“Ç‚İæ‚è
+	//ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿æƒ…å ±èª­ã¿å–ã‚Š
 	std::vector<std::vector<std::vector<int>>> inputmap;
 
 	std::array<float, 3> inCameraDist = {};
@@ -30,14 +30,14 @@ bool MapData::LoadMapData(const std::string& fileName)
 		return false;
 	}
 
-	//ƒJƒƒ‰‹——£•Û‘¶
+	//ã‚«ãƒ¡ãƒ©è·é›¢ä¿å­˜
 	cameraDist = { inCameraDist[0],inCameraDist[1], inCameraDist[2] };
 
-	//ƒ}ƒbƒv‚ÌƒTƒCƒY‚ğæ“¾
-	const int marginNum = 2; //ƒQ[ƒ€‚Ìd—lãAã‰º¶‰E‘OŒã‚É1ƒ}ƒX‚Ì—]”’‚ğì‚é
+	//ãƒãƒƒãƒ—ã®ã‚µã‚¤ã‚ºã‚’å–å¾—
+	const int marginNum = 2; //ã‚²ãƒ¼ãƒ ã®ä»•æ§˜ä¸Šã€ä¸Šä¸‹å·¦å³å‰å¾Œã«1ãƒã‚¹ã®ä½™ç™½ã‚’ä½œã‚‹
 	mapSize = { int(inputmap[0][0].size()) + marginNum, int(inputmap.size()) + marginNum, int(inputmap[0].size()) + marginNum };
 
-	//—]”’‚ ‚è‚Ì‘å‚«‚³‚Åƒ}ƒbƒvƒf[ƒ^‚ğ¶¬B‚Ü‚¸‚Í0‚Å–„‚ß‚é
+	//ä½™ç™½ã‚ã‚Šã®å¤§ãã•ã§ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ã‚’ç”Ÿæˆã€‚ã¾ãšã¯0ã§åŸ‹ã‚ã‚‹
 	mapChipNum.resize(mapSize.x);
 	for (int x = 0; x < mapSize.x; x++) {
 		mapChipNum[x].resize(mapSize.y);
@@ -46,7 +46,7 @@ bool MapData::LoadMapData(const std::string& fileName)
 		}
 	}
 
-	//—]”’‚Å‚Í‚È‚¢•”•ª‚Ì—v‘f”Ô†‚É“Ç‚İ‚ñ‚¾ƒ}ƒbƒvƒf[ƒ^î•ñ‚Ì”Ô†‚ğŠ„‚è“–‚Ä‚Ä‚¢‚­
+	//ä½™ç™½ã§ã¯ãªã„éƒ¨åˆ†ã®è¦ç´ ç•ªå·ã«èª­ã¿è¾¼ã‚“ã ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿æƒ…å ±ã®ç•ªå·ã‚’å‰²ã‚Šå½“ã¦ã¦ã„ã
 	for (int x = 0; x < mapSize.x - marginNum; x++) {
 		for (int y = 0; y < mapSize.y - marginNum; y++) {
 			for (int z = 0; z < mapSize.z - marginNum; z++) {
@@ -55,7 +55,7 @@ bool MapData::LoadMapData(const std::string& fileName)
 		}
 	}
 
-	//ƒ}ƒbƒv‚Ì’†S‚ğ‚¸‚ç‚·’l‚ğƒZƒbƒg
+	//ãƒãƒƒãƒ—ã®ä¸­å¿ƒã‚’ãšã‚‰ã™å€¤ã‚’ã‚»ãƒƒãƒˆ
 	const float blockSize = Block::GetBlockSize();
  	shiftPos = { blockSize / 2 * (mapSize.x - 1), blockSize / 2 * (mapSize.y - 1), blockSize / 2 * (mapSize.z - 1) };
 

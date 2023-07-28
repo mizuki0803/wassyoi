@@ -1,4 +1,4 @@
-#include "FrameWork.h"
+ï»¿#include "FrameWork.h"
 #include "FpsCheck.h"
 #include "DescHeapSRV.h"
 #include "TextureManager.h"
@@ -11,108 +11,112 @@
 #include "LightGroup.h"
 #include "GamePostEffect.h"
 #include "InstanceObject.h"
+#include "UserInterface.h"
 #include "math/Timer.h"
 
 void FrameWork::Run()
 {
-	//ƒQ[ƒ€‰Šú‰»
+	//ã‚²ãƒ¼ãƒ åˆæœŸåŒ–
 	Initialize();
 
-	//ƒQ[ƒ€ƒ‹[ƒv
+	//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	while (true) {
-		//–ˆƒtƒŒ[ƒ€XV
+		//æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 		Update();
 
-		//I—¹ƒŠƒNƒGƒXƒg‚ª—ˆ‚½‚çƒ‹[ƒv‚ð”²‚¯‚é
+		//çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæ¥ãŸã‚‰ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 		if (GetIsEndRequest()) { break; }
 
-		//•`‰æ
+		//æç”»
 		Draw();
 	}
 
-	//ƒQ[ƒ€I—¹
+	//ã‚²ãƒ¼ãƒ çµ‚äº†
 	Finalize();
 }
 
 void FrameWork::Initialize()
 {
-	//ƒEƒCƒ“ƒhƒEì¬
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ä½œæˆ
 	win.reset(new WindowApp());
-	win->WindowCreate(L"ƒ`ƒFƒ“ƒWƒQƒ“");
+	win->WindowCreate(L"ãƒã‚§ãƒ³ã‚¸ã‚²ãƒ³");
 
-	//DirectX‰Šú‰»
+	//DirectXåˆæœŸåŒ–
 	dxbase.reset(new DirectXBase());
 	dxbase->Initialize(win.get());
 
-	//“ü—Í‚Ì‰Šú‰»
+	//å…¥åŠ›ã®åˆæœŸåŒ–
 	input = Input::GetInstance();
 	input->Initialize(win.get());
 
-	//‰¹º‰Šú‰»
+	//éŸ³å£°åˆæœŸåŒ–
 	Audio* audio = Audio::GetInstance();
 	audio->Initialize();
 	audio->PlayWave(Audio::SoundName::bgm, true);
 
-	//SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì‰Šú‰»
+	//SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®åˆæœŸåŒ–
 	DescHeapSRV::Initialize(dxbase->GetDevice(), dxbase->GetCmdList());
-	//ƒeƒNƒXƒ`ƒƒŠÇ—‚Ì‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç®¡ç†ã®åˆæœŸåŒ–
 	TextureManager::SetDevice(dxbase->GetDevice());
 
-	//ƒXƒvƒ‰ƒCƒg‹¤’Ê•”•ª‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šéƒ¨åˆ†åˆæœŸåŒ–
 	spriteCommon = SpriteCommon::GetInstance();
 	spriteCommon->Initialize(dxbase->GetDevice(), dxbase->GetCmdList(), win->window_width, win->window_height);
-	//ƒXƒvƒ‰ƒCƒgƒeƒNƒXƒ`ƒƒ‘S“Ç‚Ýž‚Ý
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£å…¨èª­ã¿è¾¼ã¿
 	SpriteTextureLoader::TextureLoad();
 
-	//ƒfƒoƒbƒOƒeƒLƒXƒg‰Šú‰»
+	//ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆåˆæœŸåŒ–
 	debugText = DebugText::GetInstance();
 	debugText->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::DebugFont));
 
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg‹¤’Ê‰Šú‰»ˆ—
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå…±é€šåˆæœŸåŒ–å‡¦ç†
 	PostEffect::PostEffectCommon(dxbase->GetDevice(), dxbase->GetCmdList());
-	//ƒQ[ƒ€‹¤’Êƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ì‰Šú‰»
+
+	UserInterface::Common(dxbase->GetDevice(), dxbase->GetCmdList());
+
+	//ã‚²ãƒ¼ãƒ å…±é€šãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
 	GamePostEffect::Initialize();
 
 
 	afterBloom->AfterBloomCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	afterBloom.reset(AfterBloom::Create());
 
-	// ƒAƒEƒgƒ‰ƒCƒ“‰Šú‰»
+	// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³åˆæœŸåŒ–
 	outLine->OutLineCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	outLine.reset(OutLine::Create());
-	//ƒVƒƒƒhƒEƒ}ƒbƒv‹¤’Ê‰Šú‰»ˆ—
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒžãƒƒãƒ—å…±é€šåˆæœŸåŒ–å‡¦ç†
 	ShadowMap::ShadowMapCommon(dxbase->GetDevice(), dxbase->GetCmdList());
-	//ƒVƒƒƒhƒEƒ}ƒbƒv‚Ì‰Šú‰»
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒžãƒƒãƒ—ã®åˆæœŸåŒ–
 	shadowMap.reset(ShadowMap::Create());
 
-	//objƒIƒuƒWƒFƒNƒg3d‹¤’Ê‰Šú‰»ˆ—
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ3då…±é€šåˆæœŸåŒ–å‡¦ç†
 	ObjObject3d::Object3dCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 	ObjModel::SetShadowMapTexture(shadowMap->GetTexture());
 
-	//objƒIƒuƒWƒFƒNƒg3d‹¤’Ê‰Šú‰»ˆ—
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ3då…±é€šåˆæœŸåŒ–å‡¦ç†
 	InstanceObject::InstanceObjectCommon(dxbase->GetDevice(), dxbase->GetCmdList());
 
-	//FBXLoader‰Šú‰»
+	//FBXLoaderåˆæœŸåŒ–
 	FbxLoader::GetInstance()->Initialize(dxbase->GetDevice());
 
-	//FBXƒIƒuƒWƒFƒNƒg3d‹¤’Ê
+	//FBXã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ3då…±é€š
 	FbxObject3d::SetDevice(dxbase->GetDevice());
 	FbxObject3d::SetCommandList(dxbase->GetCmdList());
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	FbxObject3d::CreateGraphicsPipeline();
 
-	//ƒ‰ƒCƒg‹¤’Ê‰Šú‰»ˆ—
+	//ãƒ©ã‚¤ãƒˆå…±é€šåˆæœŸåŒ–å‡¦ç†
 	LightGroup::StaticInitialize(dxbase->GetDevice());
 
-	//ƒp[ƒeƒBƒNƒ‹‹¤’Ê‰Šú‰»ˆ—
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å…±é€šåˆæœŸåŒ–å‡¦ç†
 	ParticleManager::ParticleManagerCommon(dxbase->GetDevice(), dxbase->GetCmdList());
-	//ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[‰Šú‰»
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼åˆæœŸåŒ–
 	ParticleEmitter::GetInstance()->Initialize();
 
-	//‘SƒV[ƒ“‚ÅŽg—p‚·‚éƒeƒNƒXƒ`ƒƒ‚Ì–‡”‚ðŠm’è‚³‚¹‚é
+	//å…¨ã‚·ãƒ¼ãƒ³ã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æžšæ•°ã‚’ç¢ºå®šã•ã›ã‚‹
 	DescHeapSRV::SetAllSceneTextureNum();
 
-	// ƒ^ƒCƒ}[singleton¶¬
+	// ã‚¿ã‚¤ãƒžãƒ¼singletonç”Ÿæˆ
 	Timer::CreateSingleton();
 ;
 }
@@ -120,92 +124,93 @@ void FrameWork::Initialize()
 void FrameWork::Finalize()
 {
 	SceneManager::GetInstance()->Finalize();
-	//FBXLoader‰ð•ú
+	//FBXLoaderè§£æ”¾
 	FbxLoader::GetInstance()->Finalize();
 
-	// singleton‰ð•ú
+	// singletonè§£æ”¾
 	SingletonFinalizer::Finalize();
 
-	//audio‰ð•ú
+	//audioè§£æ”¾
 	Audio::GetInstance()->Finalize();
 
-	//ƒEƒCƒ“ƒhƒE‰ð•ú
+	//ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦è§£æ”¾
 	win->WindowRelease();
 }
 
 void FrameWork::Update()
 {
-	// ƒ^ƒCƒ}[Œv‘ªŠJŽn
+	// ã‚¿ã‚¤ãƒžãƒ¼è¨ˆæ¸¬é–‹å§‹
 	Timer::GetInstance().InstrumentationStart();
 
-	//“ü—Í‚ÌXV
+	//å…¥åŠ›ã®æ›´æ–°
 	input->Update();
 
-	//ƒV[ƒ“XV
+	//ã‚·ãƒ¼ãƒ³æ›´æ–°
 	SceneManager::GetInstance()->Update();
 
-	//ƒƒbƒZ[ƒW
-	//~ƒ{ƒ^ƒ“‚ÅI—¹ƒƒbƒZ[ƒW‚ª—ˆ‚½‚çƒQ[ƒ€ƒ‹[ƒv‚ð”²‚¯‚é
+	//ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸
+	//Ã—ãƒœã‚¿ãƒ³ã§çµ‚äº†ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ãŒæ¥ãŸã‚‰ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—ã‚’æŠœã‘ã‚‹
 	if (win->MessageProc()) {
 		isEndRequest = true;
 		return;
 	}
-	//ŠeƒV[ƒ“‚©‚çI—¹ƒŠƒNƒGƒXƒg‚ª‚ ‚ê‚ÎƒQ[ƒ€ƒ‹[ƒvI—¹
+	//å„ã‚·ãƒ¼ãƒ³ã‹ã‚‰çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒã‚ã‚Œã°ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†
 	if (SceneManager::GetInstance()->GetIsEndRequest()) {
 		isEndRequest = true;
 		return;
 	}
-	//»ìŽÒ—p‰B‚µƒQ[ƒ€ƒ‹[ƒvI—¹ƒRƒ}ƒ“ƒh
+	//è£½ä½œè€…ç”¨éš ã—ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—çµ‚äº†ã‚³ãƒžãƒ³ãƒ‰
 	if (input->PushKey(DIK_LCONTROL) && input->PushKey(DIK_LSHIFT) && input->PushKey(DIK_7)) {
 		isEndRequest = true;
 		return;
 	}
 
-	//ƒtƒŒ[ƒ€ƒŒ[ƒgŠm”F
+	//ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆç¢ºèª
 	//FpsCheck::Display();
 }
 
 void FrameWork::Draw()
 {
-	//SRV—p‹¤’ÊƒfƒXƒNƒŠƒvƒ^ƒq[ƒvSetDescriptorHeaps
+	//SRVç”¨å…±é€šãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—SetDescriptorHeaps
 	DescHeapSRV::SetDescriptorHeaps();
 
-	//ƒVƒƒƒhƒEƒ}ƒbƒv‚ÌƒŒƒ“ƒ_[ƒeƒNƒXƒ`ƒƒ‚Ö‚Ì•`‰æ
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒžãƒƒãƒ—ã®ãƒ¬ãƒ³ãƒ€ãƒ¼ãƒ†ã‚¯ã‚¹ãƒãƒ£ã¸ã®æç”»
 	shadowMap->DrawScenePrev();
 	SceneManager::GetInstance()->Draw3DLightView();
 	shadowMap->DrawSceneRear();
 
-	//ƒQ[ƒ€ƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ö‚Ì•`‰æ
+	//ã‚²ãƒ¼ãƒ ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã¸ã®æç”»
 	GamePostEffect::DrawScenePrev();
 	SceneManager::GetInstance()->Draw3D();
 	GamePostEffect::DrawSceneRear();
 
-	// ’P‘Ì‚Å”­Œõ‚·‚é‚à‚Ì—p
+	// å˜ä½“ã§ç™ºå…‰ã™ã‚‹ã‚‚ã®ç”¨
 	afterBloom->DrawScenePrev(GamePostEffect::GetPostEffect()->GetDsv());
 	SceneManager::GetInstance()->AfterBloomDraw();
 	afterBloom->DrawSceneRear();
 	
 	SceneManager::GetInstance()->DrawImageForUI();
 
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh(‘O)
+
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒžãƒ³ãƒ‰(å‰)
 	dxbase->GraphicsCommandPrev();
 
-	//ƒV[ƒ“‚Ì”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	//ã‚·ãƒ¼ãƒ³ã®èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	SceneManager::GetInstance()->DrawBackSprite();
 
-	//ƒQ[ƒ€ƒ|ƒXƒgƒGƒtƒFƒNƒg‚Ì•`‰æ
+	//ã‚²ãƒ¼ãƒ ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã®æç”»
 	GamePostEffect::Draw();
-	afterBloom->Draw();				// ƒAƒtƒ^[ƒuƒ‹[ƒ€‚ð•`‰æ
+	afterBloom->Draw();				// ã‚¢ãƒ•ã‚¿ãƒ¼ãƒ–ãƒ«ãƒ¼ãƒ ã‚’æç”»
 	//outLineDraw->Draw();
-	//ƒV[ƒ“‚Ì‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	//ã‚·ãƒ¼ãƒ³ã®å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	SceneManager::GetInstance()->DrawFrontSprite();
 
-	//ƒXƒvƒ‰ƒCƒg‹¤’ÊƒRƒ}ƒ“ƒh
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šã‚³ãƒžãƒ³ãƒ‰
 	spriteCommon->DrawPrev();
-	//ƒfƒoƒbƒNƒeƒLƒXƒg•`‰æ
+	//ãƒ‡ãƒãƒƒã‚¯ãƒ†ã‚­ã‚¹ãƒˆæç”»
 	debugText->DrawAll();
 
-	//ƒOƒ‰ƒtƒBƒbƒNƒXƒRƒ}ƒ“ƒh(Œã)
+	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ã‚³ãƒžãƒ³ãƒ‰(å¾Œ)
 	dxbase->GraphicsCommandRear();
 
 	Timer::GetInstance().InstrumentationEnd();

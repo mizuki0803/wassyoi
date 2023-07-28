@@ -1,16 +1,16 @@
-#pragma once
+ï»¿#pragma once
 #include "Vector3.h"
 #include "Vector2.h"
 
 class Easing
 {
 public:
-	//“™‘¬’¼ü‰^“®
+	//ç­‰é€Ÿç›´ç·šé‹å‹•
 	static float LerpFloat(const float start, const float end, const float time);
 	static Vector3 LerpVec3(const Vector3& v1, const Vector3& v2, float time);
 	static Vector2 LerpVec2(const Vector2& v1, const Vector2& v2, float time);
 
-	//‹…–ÊüŒ`•âŠÔ
+	//çƒé¢ç·šå½¢è£œé–“
 	static Vector3 Slerp(const Vector3& v1, const Vector3& v2, float time);
 
 	//sin
@@ -18,22 +18,22 @@ public:
 	static float OutSine(const float start, const float end, const float time);
 	static float InOutSine(const float start, const float end, const float time);
 
-	//2æ
+	//2ä¹—
 	static float InQuad(const float start, const float end, const float time);
 	static float OutQuad(const float start, const float end, const float time);
 	static float InOutQuad(const float start, const float end, const float time);
 
-	//3æ
+	//3ä¹—
 	static float InCubic(const float start, const float end, const float time);
 	static float OutCubic(const float start, const float end, const float time);
 	static float InOutCubic(const float start, const float end, const float time);
 
-	//4æ
+	//4ä¹—
 	static float InQuart(const float start, const float end, const float time);
 	static float OutQuart(const float start, const float end, const float time);
 	static float InOutQuart(const float start, const float end, const float time);
 
-	//5æ
+	//5ä¹—
 	static float InQuint(const float start, const float end, const float time);
 	static float OutQuint(const float start, const float end, const float time);
 	static float InOutQuint(const float start, const float end, const float time);
@@ -65,9 +65,9 @@ public:
 
 private:
 	/// <summary>
-	/// BounceŒvZ—p
+	/// Bounceè¨ˆç®—ç”¨
 	/// </summary>
-	/// <param name="time">ƒC[ƒWƒ“ƒOŠÔ(0`1)</param>
-	/// <returns>ƒC[ƒWƒ“ƒOŒvZŒ‹‰Ê</returns>
+	/// <param name="time">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°æ™‚é–“(0ï½1)</param>
+	/// <returns>ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°è¨ˆç®—çµæœ</returns>
 	static float OutBounceCalculate(float time);
 };

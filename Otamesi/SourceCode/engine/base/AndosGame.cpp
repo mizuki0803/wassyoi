@@ -1,35 +1,35 @@
-#include "AndosGame.h"
+ï»¿#include "AndosGame.h"
 #include "SceneFactory.h"
 
 
 void AndosGame::Initialize()
 {
-	//Šî’êƒNƒ‰ƒX‚Ì‰Šú‰»ˆ—
+	//åŸºåº•ã‚¯ãƒ©ã‚¹ã®åˆæœŸåŒ–å‡¦ç†
 	FrameWork::Initialize();
 
-	//ƒV[ƒ“Hê‚ğ¶¬Aƒ}ƒl[ƒWƒƒ[‚ÉƒZƒbƒg
+	//ã‚·ãƒ¼ãƒ³å·¥å ´ã‚’ç”Ÿæˆã€ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ã‚»ãƒƒãƒˆ
 	BaseScene::SetDirectXbase(dxbase.get());
 	sceneFactory.reset(new SceneFactory());
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory.get());
 
-	//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[‚ÉÅ‰‚ÌƒV[ƒ“‚ğƒZƒbƒg
+	//ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«æœ€åˆã®ã‚·ãƒ¼ãƒ³ã‚’ã‚»ãƒƒãƒˆ
 	SceneManager::GetInstance()->ChangeScene("TITLE");
 }
 
 void AndosGame::Finalize()
 {
-	//Šî’êƒNƒ‰ƒX‚ÌI—¹ˆ—
+	//åŸºåº•ã‚¯ãƒ©ã‚¹ã®çµ‚äº†å‡¦ç†
 	FrameWork::Finalize();
 }
 
 void AndosGame::Update()
 {
-	//Šî’êƒNƒ‰ƒX‚ÌXVˆ—
+	//åŸºåº•ã‚¯ãƒ©ã‚¹ã®æ›´æ–°å‡¦ç†
 	FrameWork::Update();
 }
 
 void AndosGame::Draw()
 {
-	//Šî’êƒNƒ‰ƒX‚Ì•`‰æˆ—
+	//åŸºåº•ã‚¯ãƒ©ã‚¹ã®æç”»å‡¦ç†
 	FrameWork::Draw();
 }

@@ -1,11 +1,11 @@
-#include "ClearStaging.h"
+ï»¿#include "ClearStaging.h"
 #include "WindowApp.h"
 #include "SpriteTextureLoader.h"
 #include "Easing.h"
 
 std::unique_ptr<ClearStaging> ClearStaging::Create()
 {
-	// 3DƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	ClearStaging* temp = new ClearStaging();
 	if (temp == nullptr)
 	{
@@ -59,9 +59,9 @@ void ClearStaging::Draw()
 
 bool ClearStaging::GetIntermediateTrigger()
 {
-	//ƒtƒ‰ƒO‚ªfalse‚È‚ç”²‚¯‚é
+	//ãƒ•ãƒ©ã‚°ãŒfalseãªã‚‰æŠœã‘ã‚‹
 	if (!intermediateFlag_) { return false; }
-	//ƒgƒŠƒK[”»’è‚ğs‚¢‚½‚¢‚Ì‚ÅAfalse‚É–ß‚µ‚Ä‚¨‚­
+	//ãƒˆãƒªã‚¬ãƒ¼åˆ¤å®šã‚’è¡Œã„ãŸã„ã®ã§ã€falseã«æˆ»ã—ã¦ãŠã
 	intermediateFlag_ = false;
 
 	return true;
@@ -76,12 +76,12 @@ void ClearStaging::Reset()
 void ClearStaging::StartMove()
 {
 	Vector2 position = backScreen_->GetPosition();
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::OutExpo(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
 	backScreen_->SetPosition(position);
 
 	position = textSprite_->GetPosition();
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::OutExpo(position.x, static_cast<float>(WindowApp::window_width / 2), easeData_->GetTimeRate());
 	textSprite_->SetPosition(position);
 
@@ -94,19 +94,19 @@ void ClearStaging::StartMove()
 		phase_ = static_cast<int>(MovePhase::End);
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	easeData_->Update();
 }
 
 void ClearStaging::EndMove()
 {
 	Vector2 position = backScreen_->GetPosition();
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::InExpo(position.x, 10000.0f, easeData_->GetTimeRate());
 	backScreen_->SetPosition(position);
 
 	position = textSprite_->GetPosition();
-	// ƒC[ƒWƒ“ƒO‚ÌŒvZ
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®è¨ˆç®—
 	position.x = Easing::InExpo(position.x, -5000.0f, easeData_->GetTimeRate());
 	textSprite_->SetPosition(position);
 
@@ -119,6 +119,6 @@ void ClearStaging::EndMove()
 		endFlag_ = true;
 	}
 
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^XV
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿æ›´æ–°
 	easeData_->Update();
 }

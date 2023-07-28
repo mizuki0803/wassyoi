@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 class EaseData
 {
@@ -6,47 +6,47 @@ public:
 	EaseData(int count = 0);
 	~EaseData() = default;
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 	/// <summary>
-	/// ƒŠƒZƒbƒg
+	/// ãƒªã‚»ãƒƒãƒˆ
 	/// </summary>
 	void Reset();
 
 public:
 	/// <summary>
-	/// I—¹‚µ‚½‚©
+	/// çµ‚äº†ã—ãŸã‹
 	/// </summary>
 	/// <returns></returns>
 	bool GetEndFlag() { return endFlag_; }
 	/// <summary>
-	/// s“®‚µ‚Ä‚¢‚é‚©
+	/// è¡Œå‹•ã—ã¦ã„ã‚‹ã‹
 	/// </summary>
 	/// <returns></returns>
 	bool GetActFlag() { return actFlag_; }
 	/// <summary>
-	/// is“x‚Ìæ“¾
+	/// é€²è¡Œåº¦ã®å–å¾—
 	/// </summary>
 	/// <returns>0.0 ~ 1.0</returns>
 	float GetTimeRate() { return timeRate_; }
 	/// <summary>
-	/// ƒtƒŒ[ƒ€‚Ìİ’è
+	/// ãƒ•ãƒ¬ãƒ¼ãƒ ã®è¨­å®š
 	/// </summary>
 	/// <param name="count"></param>
 	void SetCount(int count) { countNum_ = count; }
 	/// <summary>
-	/// I—¹ƒtƒ‰ƒO‚Ìİ’è
+	/// çµ‚äº†ãƒ•ãƒ©ã‚°ã®è¨­å®š
 	/// </summary>
 	/// <param name="Flag"></param>
 	void SetEndFlag(bool flag) { endFlag_ = flag; }
 	/// <summary>
-	/// s“®ƒtƒ‰ƒO‚Ìİ’è
+	/// è¡Œå‹•ãƒ•ãƒ©ã‚°ã®è¨­å®š
 	/// </summary>
 	/// <param name="flag"></param>
 	void SetActFlag(bool flag) { actFlag_ = flag; }
 private:
-	// ƒC[ƒWƒ“ƒO‚Ìis“x—p
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®é€²è¡Œåº¦ç”¨
 	float timer_ = 0.0f;
 	float timeRate_ = 0.0f;
 	int countNum_ = 0;

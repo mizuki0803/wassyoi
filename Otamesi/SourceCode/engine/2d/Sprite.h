@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include <wrl.h>
 #include <d3d12.h>
@@ -7,68 +7,68 @@
 #include "Vector2.h"
 
 /// <summary>
-/// ƒXƒvƒ‰ƒCƒg
+/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class Sprite
 {
-protected: // ƒGƒCƒŠƒAƒX
-// Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct VertexPosUv
 	{
-		Vector3 pos;	//xyzÀ•W
-		Vector2 uv;	//uvÀ•W
+		Vector3 pos;	//xyzåº§æ¨™
+		Vector2 uv;	//uvåº§æ¨™
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
-		XMFLOAT4 color;	//F(RGBA)
-		XMMATRIX mat;	//3•ÏŠ·s—ñ
+		XMFLOAT4 color;	//è‰²(RGBA)
+		XMMATRIX mat;	//3å¤‰æ›è¡Œåˆ—
 	};
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒXƒvƒ‰ƒCƒg¶¬
+	/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <param name="isFlipX">¶‰E”½“]‚·‚é‚©</param>
-	/// <param name="isFlipY">ã‰º”½“]‚·‚é‚©</param>
-	/// <returns>ƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <param name="isFlipX">å·¦å³åè»¢ã™ã‚‹ã‹</param>
+	/// <param name="isFlipY">ä¸Šä¸‹åè»¢ã™ã‚‹ã‹</param>
+	/// <returns>ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static Sprite* Create(const Texture& texture, const Vector2& position, const Vector2& anchorpoint = { 0.5f, 0.5f }, bool isFlipX = false, bool isFlipY = false);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <param name="isFlipX">¶‰E”½“]‚·‚é‚©</param>
-	/// <param name="isFlipY">ã‰º”½“]‚·‚é‚©</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <param name="isFlipX">å·¦å³åè»¢ã™ã‚‹ã‹</param>
+	/// <param name="isFlipY">ä¸Šä¸‹åè»¢ã™ã‚‹ã‹</param>
+	/// <returns>æˆå¦</returns>
 	virtual bool Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY);
 
 	/// <summary>
-	/// ’¸“_ƒoƒbƒtƒ@‚Ì“]‘—
+	/// é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è»¢é€
 	/// </summary>
 	void TransferVertexBuffer();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
@@ -100,39 +100,39 @@ public: //ƒƒ“ƒoŠÖ”
 	void SetParent(Sprite* parent) { this->parent = parent; }
 
 
-protected: //ƒƒ“ƒo•Ï”
-	//’¸“_ƒoƒbƒtƒ@
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
-	//Z²‚Ü‚í‚è‚Ì‰ñ“]‚ğ‰ñ“]Šp
+	//Zè»¸ã¾ã‚ã‚Šã®å›è»¢ã‚’å›è»¢è§’
 	float rotation = 0.0f;
-	//À•W
+	//åº§æ¨™
 	Vector2 position = { 0, 0 };
-	//ƒ[ƒ‹ƒhs—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
 	XMMATRIX matWorld;
-	//F(RGBA)
+	//è‰²(RGBA)
 	XMFLOAT4 color = { 1, 1, 1, 1 };
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Texture texture;
-	//‘å‚«‚³
+	//å¤§ãã•
 	Vector2 size = { 100, 100 };
-	// Œ³‚Ì‘å‚«‚³
+	// å…ƒã®å¤§ãã•
 	Vector2 defSize_ = { 100.0f, 100.0f };
-	//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	Vector2 anchorpoint = { 0.5f, 0.5f };
-	//¶‰E”½“]
+	//å·¦å³åè»¢
 	bool isFlipX = false;
-	//ã‰º”½“]
+	//ä¸Šä¸‹åè»¢
 	bool isFlipY = false;
-	//ƒeƒNƒXƒ`ƒƒ¶ãÀ•W
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å·¦ä¸Šåº§æ¨™
 	Vector2 texLeftTop = { 0, 0 };
-	//ƒeƒNƒXƒ`ƒƒØ‚èo‚µƒTƒCƒY
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆ‡ã‚Šå‡ºã—ã‚µã‚¤ã‚º
 	Vector2 texSize = { 100, 100 };
-	//ƒXƒP[ƒ‹
+	//ã‚¹ã‚±ãƒ¼ãƒ«
 	float scale_ = 1.0f;
-	//eƒXƒvƒ‰ƒCƒg
+	//è¦ªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 	Sprite* parent = nullptr;
 };

@@ -1,17 +1,17 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 
 class FpsCheck
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”	
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°	
 	/// <summary>
-	/// •\¦
+	/// è¡¨ç¤º
 	/// </summary>
 	static void Display();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//‘O‰ñ‚ÌŠÔ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å‰å›ã®æ™‚é–“
 	static DWORD prevTime;
-	//ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg
+	//ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 	static int frameCount;
 };

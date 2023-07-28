@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <mutex>
 #include <assert.h>
@@ -16,7 +16,7 @@ class Singleton
 {
 public:
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
 	/// <returns></returns>
 	static T &GetInstance()
@@ -25,7 +25,7 @@ public:
 	}
 
 	/// <summary>
-	/// ¶¬
+	/// ç”Ÿæˆ
 	/// </summary>
 	static void CreateSingleton()
 	{
@@ -45,19 +45,19 @@ public:
 	}
 
 protected:
-	Singleton() = default;			// ŠO•”‚©‚ç‚Ì¶¬‹Ö~
-	virtual ~Singleton() = default;	// ŠO•”‚©‚ç‚Ì”jŠü‹Ö~
+	Singleton() = default;			// å¤–éƒ¨ã‹ã‚‰ã®ç”Ÿæˆç¦æ­¢
+	virtual ~Singleton() = default;	// å¤–éƒ¨ã‹ã‚‰ã®ç ´æ£„ç¦æ­¢
 
-	virtual bool StartUp() { return true; };	// ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ÌŒã‚ÉÀs‚³‚ê‚é‚à‚Ì
+	virtual bool StartUp() { return true; };	// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã®å¾Œã«å®Ÿè¡Œã•ã‚Œã‚‹ã‚‚ã®
 
 private:
-	void operator=(const Singleton &singleton) {};	// ‘ã“ü‰‰Z‹Ö~
-	//Singlton(const Singleton &singleton) {};			// ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‹Ö~
+	void operator=(const Singleton &singleton) {};	// ä»£å…¥æ¼”ç®—ç¦æ­¢
+	//Singlton(const Singleton &singleton) {};			// ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ç¦æ­¢
 
 
 
 	/// <summary>
-	/// ”jŠü
+	/// ç ´æ£„
 	/// </summary>
 	static void Destroy()
 	{
@@ -65,7 +65,7 @@ private:
 		instance_ = nullptr;
 	}
 
-	static T *instance_;				// ƒCƒ“ƒXƒ^ƒ“ƒX
+	static T *instance_;				// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 };
 
 template <typename T> T *Singleton<T>::instance_ = nullptr;

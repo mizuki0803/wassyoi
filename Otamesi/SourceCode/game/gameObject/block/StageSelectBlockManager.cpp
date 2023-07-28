@@ -1,4 +1,4 @@
-#include "StageSelectBlockManager.h"
+ï»¿#include "StageSelectBlockManager.h"
 #include "Easing.h"
 
 std::array<Vector3, StageSelectBlockManager::PositionNum> StageSelectBlockManager::managerPos = {
@@ -7,10 +7,10 @@ std::array<Vector3, StageSelectBlockManager::PositionNum> StageSelectBlockManage
 
 StageSelectBlockManager* StageSelectBlockManager::Create(const BlockManagerPositionPhase& positionPhase)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	StageSelectBlockManager* instance = new StageSelectBlockManager();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize(positionPhase)) {
 		delete instance;
 		assert(0);
@@ -22,20 +22,20 @@ StageSelectBlockManager* StageSelectBlockManager::Create(const BlockManagerPosit
 
 bool StageSelectBlockManager::Initialize(const BlockManagerPositionPhase& positionPhase)
 {
-	//ƒIƒuƒWƒFƒNƒg¶¬
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	if (!ObjObject3d::Initialize()) {
 		return false;
 	}
 
-	//À•W‚ğƒZƒbƒg
+	//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	position = managerPos[positionPhase];
 
-	//Œ»İ‚ÌêŠƒtƒF[ƒY‚ğƒZƒbƒg
+	//ç¾åœ¨ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºã‚’ã‚»ãƒƒãƒˆ
 	blockManagerPositionPhase = positionPhase;
 
-	//êŠƒtƒF[ƒY‚ª’†SˆÈŠO‚È‚ç
+	//å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºãŒä¸­å¿ƒä»¥å¤–ãªã‚‰
 	if (!positionPhase == Center) {
-		//’†S‚ÉˆÚ“®‚³‚¹‚é
+		//ä¸­å¿ƒã«ç§»å‹•ã•ã›ã‚‹
 		MoveStart(Center);
 	}
 
@@ -44,57 +44,57 @@ bool StageSelectBlockManager::Initialize(const BlockManagerPositionPhase& positi
 
 void StageSelectBlockManager::Update()
 {
-	//‚­‚é‚­‚é‰ñ“]‚³‚¹‚é
+	//ãã‚‹ãã‚‹å›è»¢ã•ã›ã‚‹
 	const float rotSpeed = 0.5f;
 	rotation.y += rotSpeed;
 
-	//ˆÚ“®
+	//ç§»å‹•
 	Move();
 
-	//ƒIƒuƒWƒFƒNƒgXV
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
 	ObjObject3d::Update();
 }
 
 void StageSelectBlockManager::MoveStart(const BlockManagerPositionPhase& nextPositionPhase)
 {
-	//Šù‚ÉˆÚ“®’†‚È‚ç”²‚¯‚é
+	//æ—¢ã«ç§»å‹•ä¸­ãªã‚‰æŠœã‘ã‚‹
 	if (isMove) { return; }
 
-	//Ÿ‚ÉˆÚ“®‚·‚éêŠƒtƒF[ƒY‚ğƒZƒbƒg
+	//æ¬¡ã«ç§»å‹•ã™ã‚‹å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºã‚’ã‚»ãƒƒãƒˆ
 	this->nextBlockManagerPositionPhase = nextPositionPhase;
 
-	//ˆÚ“®—pƒ^ƒCƒ}[‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
+	//ç§»å‹•ç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã—ã¦ãŠã
 	moveTimer = 0;
-	//ˆÚ“®’†‚Éİ’è‚·‚é
+	//ç§»å‹•ä¸­ã«è¨­å®šã™ã‚‹
 	isMove = true;
 }
 
 void StageSelectBlockManager::Move()
 {
-	//ˆÚ“®ó‘Ô‚Å‚È‚¢‚È‚ç”²‚¯‚é
+	//ç§»å‹•çŠ¶æ…‹ã§ãªã„ãªã‚‰æŠœã‘ã‚‹
 	if (!isMove) { return; }
 
-	//ˆÚ“®—pƒ^ƒCƒ}[‚ğXV‚µ‚Ä‚¢‚­
+	//ç§»å‹•ç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’æ›´æ–°ã—ã¦ã„ã
 	moveTimer++;
-	//ƒC[ƒWƒ“ƒO—p”’l‚ğŒvZ‚·‚é
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨æ•°å€¤ã‚’è¨ˆç®—ã™ã‚‹
 	const float time = moveTimer / (float)moveTime;
 
-	//À•W‚ğXV
+	//åº§æ¨™ã‚’æ›´æ–°
 	position.x = Easing::OutQuad(managerPos[blockManagerPositionPhase].x, managerPos[nextBlockManagerPositionPhase].x, time);
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔˆÈ‰º‚È‚ç”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ä»¥ä¸‹ãªã‚‰æŠœã‘ã‚‹
 	if (moveTimer < moveTime) { return; }
 
-	//Œ»İ‚ÌêŠƒtƒF[ƒY(ˆÚ“®‘O)‚ª’†S‚Å‚ ‚ê‚Îíœƒtƒ‰ƒO‚ğ—§‚Ä‚é
+	//ç¾åœ¨ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º(ç§»å‹•å‰)ãŒä¸­å¿ƒã§ã‚ã‚Œã°å‰Šé™¤ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 	if (blockManagerPositionPhase == BlockManagerPositionPhase::Center) {
 		isDelete = true;
 	}
-	//êŠƒtƒF[ƒY‚ª’†SˆÈŠO‚Å‚ ‚ê‚Î
+	//å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºãŒä¸­å¿ƒä»¥å¤–ã§ã‚ã‚Œã°
 	else {
-		//ˆÚ“®Œã—p‚Éİ’è‚µ‚Ä‚¢‚½êŠƒtƒF[ƒY‚ğŒ»İ‚ÌêŠƒtƒF[ƒY‚Éİ’è
+		//ç§»å‹•å¾Œç”¨ã«è¨­å®šã—ã¦ã„ãŸå ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºã‚’ç¾åœ¨ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚ºã«è¨­å®š
 		blockManagerPositionPhase = nextBlockManagerPositionPhase;
 	}
 
-	//ˆÚ“®ó‘Ô‚ğ‰ğœ‚µ‚Ä‚¨‚­
+	//ç§»å‹•çŠ¶æ…‹ã‚’è§£é™¤ã—ã¦ãŠã
 	isMove = false;
 }

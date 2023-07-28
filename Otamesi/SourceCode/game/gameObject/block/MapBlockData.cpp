@@ -1,23 +1,23 @@
-#include "MapBlockData.h"
+ï»¿#include "MapBlockData.h"
 
 bool MapBlockData::MapChipNumBlockCheck(const int mapChipNum)
 {
-    //ƒ}ƒbƒv”Ô†‚ªuƒS[ƒ‹v‚Å‚ ‚ê‚Îtrue‚ğ•Ô‚·
+    //ãƒãƒƒãƒ—ç•ªå·ãŒã€Œã‚´ãƒ¼ãƒ«ã€ã§ã‚ã‚Œã°trueã‚’è¿”ã™
     if (mapChipNum == (int)MapBlockType::Goal) { return true; }
-    //ƒ}ƒbƒv”Ô†‚ªuƒuƒƒbƒNv‚Å‚ ‚ê‚Îtrue‚ğ•Ô‚·
+    //ãƒãƒƒãƒ—ç•ªå·ãŒã€Œãƒ–ãƒ­ãƒƒã‚¯ã€ã§ã‚ã‚Œã°trueã‚’è¿”ã™
     if (mapChipNum == (int)MapBlockType::Block) { return true; }
 
-    //‘S‚Ä’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+    //å…¨ã¦é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
     return false;
 }
 
 bool MapBlockData::MapChipNumBlockPlaneCheck(const int mapChipNum, MapBlockType planeType)
 {
-    //ƒ}ƒbƒv”Ô†‚ªƒuƒƒbƒN(ƒS[ƒ‹)‚Å‚ ‚ê‚Îtrue‚ğ•Ô‚·
+    //ãƒãƒƒãƒ—ç•ªå·ãŒãƒ–ãƒ­ãƒƒã‚¯(ã‚´ãƒ¼ãƒ«)ã§ã‚ã‚Œã°trueã‚’è¿”ã™
     if (MapChipNumBlockCheck(mapChipNum)) { return true; }
-    //ƒ}ƒbƒv”Ô†‚ªˆø”‚Ég—p‚µ‚Ä‚¢‚éƒnƒŠƒ{ƒeƒ^ƒCƒv‚È‚ç‚Îtrue‚ğ•Ô‚·
+    //ãƒãƒƒãƒ—ç•ªå·ãŒå¼•æ•°ã«ä½¿ç”¨ã—ã¦ã„ã‚‹ãƒãƒªãƒœãƒ†ã‚¿ã‚¤ãƒ—ãªã‚‰ã°trueã‚’è¿”ã™
     if (mapChipNum == (int)planeType) { return true; }
 
-    //‘S‚Ä’Ê‰ß‚Å‚«‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+    //å…¨ã¦é€šéã§ããªã‘ã‚Œã°falseã‚’è¿”ã™
     return false;
 }

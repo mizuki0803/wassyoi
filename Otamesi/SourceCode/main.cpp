@@ -1,6 +1,6 @@
-#include "AndosGame.h"
+ï»¿#include "AndosGame.h"
 
-//WindowsƒAƒvƒŠ‚Å‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒgimainŠÖ”j
+//Windowsã‚¢ãƒ—ãƒªã§ã®ã‚¨ãƒ³ãƒˆãƒªãƒ¼ãƒã‚¤ãƒ³ãƒˆï¼ˆmainé–¢æ•°ï¼‰
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	FrameWork* game = new AndosGame();

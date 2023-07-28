@@ -1,7 +1,7 @@
-#include "Easing.h"
+ï»¿#include "Easing.h"
 #include <cmath>
 
-//“™‘¬’¼ü‰^“®
+//ç­‰é€Ÿç›´ç·šé‹å‹•
 float Easing::LerpFloat(const float start, const float end, const float time)
 {
 	return start * (1.0f - time) + end * time;
@@ -56,21 +56,21 @@ float Easing::InOutSine(const float start, const float end, const float time)
 	return start * (1.0f - y) + end * y;
 }
 
-//2æ In
+//2ä¹— In
 float Easing::InQuad(const float start, const float end, const float time)
 {
 	float y = time * time;
 	return start * (1.0f - y) + end * y;
 }
 
-//2æ Out
+//2ä¹— Out
 float Easing::OutQuad(const float start, const float end, const float time)
 {
 	float y = (1 - (1 - time) * (1 - time));
 	return start * (1.0f - y) + end * y;
 }
 
-//2æ InOut
+//2ä¹— InOut
 float Easing::InOutQuad(const float start, const float end, const float time)
 {
 	float y;
@@ -84,21 +84,21 @@ float Easing::InOutQuad(const float start, const float end, const float time)
 	return start * (1.0f - y) + end * y;
 }
 
-//3æ In
+//3ä¹— In
 float Easing::InCubic(const float start, const float end, const float time)
 {
 	float y = time * time * time;
 	return start * (1.0f - y) + end * y;
 }
 
-//3æ Out
+//3ä¹— Out
 float Easing::OutCubic(const float start, const float end, const float time)
 {
 	float y = (1 - powf(1 - time, 3));
 	return start * (1.0f - y) + end * y;
 }
 
-//3æ InOut
+//3ä¹— InOut
 float Easing::InOutCubic(const float start, const float end, const float time)
 {
 	float y;
@@ -112,21 +112,21 @@ float Easing::InOutCubic(const float start, const float end, const float time)
 	return start * (1.0f - y) + end * y;
 }
 
-//4æ In
+//4ä¹— In
 float Easing::InQuart(const float start, const float end, const float time)
 {
 	float y = time * time * time * time;
 	return start * (1.0f - y) + end * y;
 }
 
-//4æ Out
+//4ä¹— Out
 float Easing::OutQuart(const float start, const float end, const float time)
 {
 	float y = (1 - powf(1 - time, 4));
 	return start * (1.0f - y) + end * y;
 }
 
-//4æ InOut
+//4ä¹— InOut
 float Easing::InOutQuart(const float start, const float end, const float time)
 {
 	float y;
@@ -140,21 +140,21 @@ float Easing::InOutQuart(const float start, const float end, const float time)
 	return start * (1.0f - y) + end * y;
 }
 
-//5æ In
+//5ä¹— In
 float Easing::InQuint(const float start, const float end, const float time)
 {
 	float y = time * time * time * time * time;
 	return start * (1.0f - y) + end * y;
 }
 
-//5æ Out
+//5ä¹— Out
 float Easing::OutQuint(const float start, const float end, const float time)
 {
 	float y = (1 - powf(1 - time, 5));
 	return start * (1.0f - y) + end * y;
 }
 
-//5æ InOut
+//5ä¹— InOut
 float Easing::InOutQuint(const float start, const float end, const float time)
 {
 	float y;
@@ -354,7 +354,7 @@ float Easing::InOutBounce(const float start, const float end, const float time)
 	return start * (1.0f - y) + end * y;
 }
 
-//BounceŒvZ—p
+//Bounceè¨ˆç®—ç”¨
 float Easing::OutBounceCalculate(float time)
 {
 	float y;

@@ -1,211 +1,211 @@
-#pragma once
+ï»¿#pragma once
 #include "ParticleManager.h"
 
 /// <summary>
-/// ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[
+/// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼
 /// </summary>
 class ParticleEmitter final
 {
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	ParticleEmitter() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~ParticleEmitter() = default;
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	ParticleEmitter(const ParticleEmitter& particleEmitter) = delete;
-	//‘ã“ü‰‰Zq‚ğ–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const ParticleEmitter& particleEmitter) = delete;
 
-public: //ƒeƒNƒXƒ`ƒƒ–¼
+public: //ãƒ†ã‚¯ã‚¹ãƒãƒ£å
 	enum TextureName {
-		Circle,		//ŠÛ
-		Fluffy,	//ƒ‚ƒƒ‚ƒ
-		Shine,		//ƒLƒ‰ƒLƒ‰
-		Curve,		//‹Èü
+		Circle,		//ä¸¸
+		Fluffy,	//ãƒ¢ãƒ¯ãƒ¢ãƒ¯
+		Shine,		//ã‚­ãƒ©ã‚­ãƒ©
+		Curve,		//æ›²ç·š
 
-		ParticleTextureNum,	//ƒp[ƒeƒBƒNƒ‹ƒeƒNƒXƒ`ƒƒ‚Ì–‡”
+		ParticleTextureNum,	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°
 	};
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>ƒp[ƒeƒBƒNƒ‹ƒGƒ~ƒbƒ^[</returns>
+	/// <returns>ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã‚¨ãƒŸãƒƒã‚¿ãƒ¼</returns>
 	static ParticleEmitter* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ˆêÄ•`‰æ
+	/// ä¸€æ–‰æç”»
 	/// </summary>
 	void DrawAll();
 
 	/// <summary>
-	/// ‚¨‚µ—p‰‰o
+	/// ãŠè©¦ã—ç”¨æ¼”å‡º
 	/// </summary>
 	void DemoEffect();
 
 	/// <summary>
-	/// ‚¨‚µ—p‰‰o
+	/// ãŠè©¦ã—ç”¨æ¼”å‡º
 	/// </summary>
 	void DemoEffect2();
 
 	/// <summary>
-	/// ©‹@‚ÌƒWƒFƒbƒg•¬Ë‰‰o
+	/// è‡ªæ©Ÿã®ã‚¸ã‚§ãƒƒãƒˆå™´å°„æ¼”å‡º
 	/// </summary>
-	/// <param name="getTargetPos">ƒp[ƒeƒBƒNƒ‹‚ª’Ç]‚·‚éÀ•Wæ“¾ŠÖ”</param>
-	/// <param name="playerMatWorld">©‹@ƒ[ƒ‹ƒhs—ñ</param>
-	/// <param name="playerSpeedPhase">©‹@ˆÚ“®‘¬“xƒtƒF[ƒY</param>
+	/// <param name="getTargetPos">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒè¿½å¾“ã™ã‚‹åº§æ¨™å–å¾—é–¢æ•°</param>
+	/// <param name="playerMatWorld">è‡ªæ©Ÿãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—</param>
+	/// <param name="playerSpeedPhase">è‡ªæ©Ÿç§»å‹•é€Ÿåº¦ãƒ•ã‚§ãƒ¼ã‚º</param>
 	void PlayerJet(std::function<Vector3()> getTargetPos, const XMMATRIX& playerMatWorld, const int playerSpeedPhase = 0);
 
 	/// <summary>
-	/// ©‹@‚Ì€–SƒWƒFƒbƒg•‰Œ•¬Ë‰‰o
+	/// è‡ªæ©Ÿã®æ­»äº¡ã‚¸ã‚§ãƒƒãƒˆé»’ç…™å™´å°„æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
 	void PlayerBlackSmokeJet(const Vector3& position);
 
 	/// <summary>
-	/// ©‹@‚Ì—ƒ‚©‚ço‚é”òs‹@‰_(ƒ”ƒFƒCƒp[)
+	/// è‡ªæ©Ÿã®ç¿¼ã‹ã‚‰å‡ºã‚‹é£›è¡Œæ©Ÿé›²(ãƒ´ã‚§ã‚¤ãƒ‘ãƒ¼)
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">ƒp[ƒeƒBƒNƒ‹‘å‚«‚³</param>
-	/// <param name="velocity">ƒp[ƒeƒBƒNƒ‹ˆÚ“®‘¬“x</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤§ãã•</param>
+	/// <param name="velocity">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç§»å‹•é€Ÿåº¦</param>
 	void PlayerVapor(const Vector3& position, const float size, const Vector3& velocity = {});
 
 	/// <summary>
-	/// ©‹@‹Ù‹}‰ñ”ğ—p‰‰o
+	/// è‡ªæ©Ÿç·Šæ€¥å›é¿ç”¨æ¼”å‡º
 	/// </summary>
-	/// <param name="getTargetPos">ƒp[ƒeƒBƒNƒ‹‚ª’Ç]‚·‚éÀ•Wæ“¾ŠÖ”</param>
-	/// <param name="size">ƒp[ƒeƒBƒNƒ‹‘å‚«‚³</param>
+	/// <param name="getTargetPos">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒè¿½å¾“ã™ã‚‹åº§æ¨™å–å¾—é–¢æ•°</param>
+	/// <param name="size">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤§ãã•</param>
 	void PlayerRolling(const int lifeTime, std::function<Vector3()> getTargetPos, const Vector3& localPos, const float rotation, const float size, const XMFLOAT4& color);
 
 	/// <summary>
-	/// ƒVƒ‡ƒbƒg‰‰o
+	/// ã‚·ãƒ§ãƒƒãƒˆæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
 	void Shot(const Vector3& position);
 
 	/// <summary>
-	/// ƒVƒ‡ƒbƒg€–S‰‰o
+	/// ã‚·ãƒ§ãƒƒãƒˆæ­»äº¡æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void ShotDead(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ƒ`ƒƒ[ƒWƒVƒ‡ƒbƒg‰‰o
+	/// ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void ChargeShot(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ƒ`ƒƒ[ƒWƒVƒ‡ƒbƒg€–S‰‰o
+	/// ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆæ­»äº¡æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void ChargeShotDead(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ‰Î‰Š‹…‰‰o
+	/// ç«ç‚çƒæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="time">¶‘¶ŠÔ</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="time">ç”Ÿå­˜æ™‚é–“</param>
 	void FireBall(const Vector3& position, const float size = 1, const int time = 10);
 
 	/// <summary>
-	/// ƒ{ƒXƒ`ƒƒ[ƒW‰‰o
+	/// ãƒœã‚¹ãƒãƒ£ãƒ¼ã‚¸æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void BossCharge(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ƒ{ƒXƒ`ƒƒ[ƒWƒVƒ‡ƒbƒg‰‰o
+	/// ãƒœã‚¹ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void BossChargeShot(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ƒ{ƒXƒ`ƒƒ[ƒWƒVƒ‡ƒbƒg€–S‰‰o
+	/// ãƒœã‚¹ãƒãƒ£ãƒ¼ã‚¸ã‚·ãƒ§ãƒƒãƒˆæ­»äº¡æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
 	void BossChargeShotDead(const Vector3& position, const float size);
 
 	/// <summary>
-	/// ”š”­‰‰o
+	/// çˆ†ç™ºæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="time">¶‘¶ŠÔ</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="time">ç”Ÿå­˜æ™‚é–“</param>
 	void Explosion(const Vector3& position, const float size = 1, const int time = 10);
 
 	/// <summary>
-	/// ƒ{ƒX€–Sê—p”š”­‰‰o
+	/// ãƒœã‚¹æ­»äº¡å°‚ç”¨çˆ†ç™ºæ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="isGround">’n–Ê‚ª‘¶İ‚·‚é‚©</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="isGround">åœ°é¢ãŒå­˜åœ¨ã™ã‚‹ã‹</param>
 	void BossDeadExplosion(const Vector3& position, const float size, const bool isGround);
 
 	/// <summary>
-	/// •‰Œ‰‰o
+	/// é»’ç…™æ¼”å‡º
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">ƒp[ƒeƒBƒNƒ‹‘å‚«‚³</param>
-	/// <param name="time">¶‘¶ŠÔ</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤§ãã•</param>
+	/// <param name="time">ç”Ÿå­˜æ™‚é–“</param>
 	void BlackSmoke(const Vector3& position, const float size, const int time = 30);
 
 	/// <summary>
-	/// ƒAƒCƒeƒ€‚ÌƒLƒ‰ƒLƒ‰
+	/// ã‚¢ã‚¤ãƒ†ãƒ ã®ã‚­ãƒ©ã‚­ãƒ©
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">ƒp[ƒeƒBƒNƒ‹‘å‚«‚³</param>
-	/// <param name="num">ˆê“x‚Éo‚·”</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤§ãã•</param>
+	/// <param name="num">ä¸€åº¦ã«å‡ºã™æ•°</param>
 	void ItemShine(const Vector3& position, const float size, const int num);
 
 	/// <summary>
-	/// ƒLƒ‰ƒLƒ‰
+	/// ã‚­ãƒ©ã‚­ãƒ©
 	/// </summary>
-	/// <param name="position">ƒp[ƒeƒBƒNƒ‹¶¬À•W</param>
-	/// <param name="size">ƒp[ƒeƒBƒNƒ‹‘å‚«‚³</param>
-	/// <param name="num">ˆê“x‚Éo‚·”</param>
+	/// <param name="position">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”Ÿæˆåº§æ¨™</param>
+	/// <param name="size">ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«å¤§ãã•</param>
+	/// <param name="num">ä¸€åº¦ã«å‡ºã™æ•°</param>
 	void DemoShine(const Vector3& position, const float size, const int num);
 
 	/// <summary>
-	/// ‘Síœ
+	/// å…¨å‰Šé™¤
 	/// </summary>
 	void AllDelete();
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
 	void LoadTexture();
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Texture textures[ParticleTextureNum];
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[(ŠÛ)
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(ä¸¸)
 	std::unique_ptr<ParticleManager> circleParticle;
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[(”š”­)
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(çˆ†ç™º)
 	std::unique_ptr<ParticleManager> explosionParticle;
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[(•‰Œ)
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(é»’ç…™)
 	std::unique_ptr<ParticleManager> blackSmokeParticle;
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[(ƒLƒ‰ƒLƒ‰)
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(ã‚­ãƒ©ã‚­ãƒ©)
 	std::unique_ptr<ParticleManager> shineParticle;
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[(‹Èü)
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼(æ›²ç·š)
 	std::unique_ptr<ParticleManager> curveParticle;
 };

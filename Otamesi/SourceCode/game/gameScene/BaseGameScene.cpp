@@ -1,4 +1,4 @@
-#include "BaseGameScene.h"
+ï»¿#include "BaseGameScene.h"
 #include "SceneManager.h"
 #include "SceneChangeEffect.h"
 #include "JsonLoader.h"
@@ -7,31 +7,31 @@
 
 void BaseGameScene::SceneChangeStart(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime, const std::string& nextSceneName)
 {
-	//Šù‚ÉƒV[ƒ“•ÏXó‘Ô‚È‚ç”²‚¯‚é
+	//æ—¢ã«ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹ãªã‚‰æŠœã‘ã‚‹
 	if (isSceneChange) { return; }
 
-	//ƒV[ƒ“•ÏX‚É‚©‚©‚éŠÔ‚ğƒZƒbƒg
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´ã«ã‹ã‹ã‚‹æ™‚é–“ã‚’ã‚»ãƒƒãƒˆ
 	sceneChangeTime = deepenTime + waitTime;
-	//ƒV[ƒ“•ÏXó‘Ô‚É‚·‚é
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹ã«ã™ã‚‹
 	isSceneChange = true;
-	//Ÿ‚ÌƒV[ƒ“–¼‚ğƒZƒbƒg
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³åã‚’ã‚»ãƒƒãƒˆ
 	this->nextSceneName = nextSceneName;
 
-	//ƒV[ƒ“•ÏX—p‰‰o¶¬
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´ç”¨æ¼”å‡ºç”Ÿæˆ
 	SceneChangeEffect::CreateSceneChangeEffect(color, deepenTime, waitTime, returnTime);
 }
 
 void BaseGameScene::SceneChangeMode()
 {
-	//ƒV[ƒ“•ÏXó‘Ô‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!isSceneChange) { return; }
 
-	//ƒV[ƒ“•ÏXƒ^ƒCƒ}[‚ğXV
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´ã‚¿ã‚¤ãƒãƒ¼ã‚’æ›´æ–°
 	sceneChangeTimer++;
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔˆÈ‰º‚È‚ç”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ä»¥ä¸‹ãªã‚‰æŠœã‘ã‚‹
 	if (sceneChangeTimer < sceneChangeTime) { return; }
 
-	//ƒV[ƒ“Ø‚è‘Ö‚¦
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 	SceneManager::GetInstance()->ChangeScene(nextSceneName);
 }
 
@@ -46,7 +46,7 @@ void BaseGameScene::DeleteBinary()
 
 void BaseGameScene::KeepBinary(GameCamera& _camera, Player& _player)
 {
-	//‰Šúó‘Ô‚ğbinary•Û‘¶
+	//åˆæœŸçŠ¶æ…‹ã‚’binaryä¿å­˜
 	Vector3 cameraPos = _camera.GetEye();
 	Vector3 cameraRota = _camera.GetRotation();
 	Vector3 playerPos = _player.GetPosition();

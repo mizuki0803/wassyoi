@@ -1,4 +1,4 @@
-#include <JsonLoader.h>
+ï»¿#include <JsonLoader.h>
 #include <json.hpp>
 
 using njson = nlohmann::json;
@@ -8,45 +8,45 @@ void JsonLoader::LoadNlohmannJson(const std::string& _fileName, std::vector<std:
 {
     const std::string fullpath = base_directory + _fileName + ".json";
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
 
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(fullpath);
 	if (file.fail()) {
 		assert(0);
 	}
 
-	//‰ğ“€ƒf[ƒ^•Û‘¶æ
+	//è§£å‡ãƒ‡ãƒ¼ã‚¿ä¿å­˜å…ˆ
 	njson deserialized;
 
-	//‰ğ“€
+	//è§£å‡
 	file >> deserialized;
 
-	//ƒf[ƒ^‚ª³‚µ‚¢‚©‚Ìƒ`ƒFƒbƒN
+	//ãƒ‡ãƒ¼ã‚¿ãŒæ­£ã—ã„ã‹ã®ãƒã‚§ãƒƒã‚¯
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	//"name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	//"name"ã‚’æ–‡å­—åˆ—ã¨ã—ã¦å–å¾—
 	std::string name = deserialized["name"].get<std::string>();
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(name.compare("scene") == 0);
 
-	//"objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"objects"ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	for (njson& object : deserialized["objects"]) {
         std::array<DirectX::XMFLOAT3, int(transform::size)> addObject{};
-        //ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€î•ñ
+        //ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ æƒ…å ±
 		njson& transform = object["transform"];
-		// •½sˆÚ“®
+		// å¹³è¡Œç§»å‹•
         addObject[int(transform::translation)].x = float(transform["translation"][0]) * 10.0f;
         addObject[int(transform::translation)].y = (float(transform["translation"][2]) * 10.0f) - 100.0f;
         addObject[int(transform::translation)].z = float(transform["translation"][1]) * 10.0f;
-		// ‰ñ“]Šp
+		// å›è»¢è§’
 		addObject[int(transform::rotation)].x = -float(transform["rotation"][1]);
 		addObject[int(transform::rotation)].y = -float(transform["rotation"][2]);
 		addObject[int(transform::rotation)].z = float(transform["rotation"][0]);
-		// ƒXƒP[ƒŠƒ“ƒO
+		// ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
         addObject[int(transform::scaling)].x = float(transform["scaling"][1]) * 10.0f;
         addObject[int(transform::scaling)].y = float(transform["scaling"][2]) * 10.0f;
         addObject[int(transform::scaling)].z = float(transform["scaling"][0]) * 10.0f;
@@ -63,7 +63,7 @@ void JsonLoader::SerializeJsonMap(const std::string& _fileName, const std::array
     x.cameraDist = _cameraDist;
 	x.mapSize = _mapSize;
 	x.map = _map;
-	// ƒtƒ@ƒCƒ‹o—Í
+	// ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
     std::ofstream os(_fileName, std::ios::out);
     cereal::JSONOutputArchive archiveFile(os);
     x.serialize(archiveFile);
@@ -100,7 +100,7 @@ void JsonLoader::SerializeBinary(const std::string& _fileName, const bool _is2D,
     x.cameraRota = _cameraRota;
     x.playerPos = _playerPos;
 
-    // ƒtƒ@ƒCƒ‹o—Í
+    // ãƒ•ã‚¡ã‚¤ãƒ«å‡ºåŠ›
     std::ofstream os("Resources/binary/" + _fileName + ".binary", std::ios::out | std::ios::binary);
     cereal::BinaryOutputArchive archive(os);
     x.serialize(archive);

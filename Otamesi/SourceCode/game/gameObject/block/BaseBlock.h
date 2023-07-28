@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "InstanceObject.h"
 #include <array>
 
@@ -22,37 +22,37 @@ private:
 		size,
 	};
 
-	//objƒ‚ƒfƒ‹
+	//objãƒ¢ãƒ‡ãƒ«
 	std::array<std::unique_ptr<ObjModel>, int(BROCK_MODEL_TYPE::size)> model;
 
-	//•`‰æ—pƒNƒ‰ƒX
+	//æç”»ç”¨ã‚¯ãƒ©ã‚¹
 	std::array<std::unique_ptr<InstanceObject>, int(BROCK_TYPE::size)> block;
 
 public:
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void StaticInitialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
-	/// <param name="_blockType">ƒuƒƒbƒNí—Ş</param>
-	/// <param name="_pos">À•W</param>
-	/// <param name="_scale">‘å‚«‚³</param>
-	/// <param name="_rotation">‰ñ“]Šp</param>
-	/// <param name="_color">F</param>
+	/// <param name="_blockType">ãƒ–ãƒ­ãƒƒã‚¯ç¨®é¡</param>
+	/// <param name="_pos">åº§æ¨™</param>
+	/// <param name="_scale">å¤§ãã•</param>
+	/// <param name="_rotation">å›è»¢è§’</param>
+	/// <param name="_color">è‰²</param>
 	void Update(const int _blockType, const XMFLOAT3& _pos, const XMFLOAT3& _scale,
 		const XMFLOAT3& _rotation, const XMFLOAT4& _color = { 1.0f,1.0f,1.0f,1.0f }, const XMMATRIX* _parentWorld = nullptr);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 };

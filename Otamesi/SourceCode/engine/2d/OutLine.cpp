@@ -1,4 +1,4 @@
-#include "OutLine.h"
+ï»¿#include "OutLine.h"
 
 #include "WindowApp.h"
 #include "DescHeapSRV.h"
@@ -16,13 +16,13 @@ Camera *OutLine::camera_ = nullptr;
 
 OutLine *OutLine::Create()
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	OutLine *instance = new OutLine();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
@@ -36,15 +36,15 @@ bool OutLine::Initialize()
 {
 	HRESULT result;
 
-	//’¸“_ƒf[ƒ^
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
 	VertexPosUv vertices[] = {
-		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},	//¶‰º
-		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}},	//¶ã
-		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},	//‰E‰º
-		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}},	//‰Eã
+		{{ -1.0f, -1.0f, 0.0f}, {0.0f, 1.0f}},	//å·¦ä¸‹
+		{{ -1.0f, +1.0f, 0.0f}, {0.0f, 0.0f}},	//å·¦ä¸Š
+		{{ +1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},	//å³ä¸‹
+		{{ +1.0f, +1.0f, 0.0f}, {1.0f, 0.0f}},	//å³ä¸Š
 	};
 
-	//’¸“_ƒoƒbƒtƒ@¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -52,7 +52,7 @@ bool OutLine::Initialize()
 		D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertBuff));
 	assert(SUCCEEDED(result));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	VertexPosUv *vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void **)&vertMap);
 	if (SUCCEEDED(result)) {
@@ -60,12 +60,12 @@ bool OutLine::Initialize()
 		vertBuff->Unmap(0, nullptr);
 	}
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
 	vbView.SizeInBytes = sizeof(vertices);
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	////’è”ƒoƒbƒtƒ@‚Ì¶¬
+	////å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	//result = dev->CreateCommittedResource(
 	//	&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 	//	D3D12_HEAP_FLAG_NONE,
@@ -75,7 +75,7 @@ bool OutLine::Initialize()
 	//	IID_PPV_ARGS(&constBuff));
 	//assert(SUCCEEDED(result));
 
-	//ƒeƒNƒXƒ`ƒƒƒŠƒ\[ƒXİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM,
 		WindowApp::window_width,
@@ -85,7 +85,7 @@ bool OutLine::Initialize()
 
 	for (int i{ 0 }; i < kTexMax; ++i)
 	{
-		//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬	
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ	
 		float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 		result = dev->CreateCommittedResource(
 			&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
@@ -99,41 +99,41 @@ bool OutLine::Initialize()
 		assert(SUCCEEDED(result));
 
 
-		//ƒeƒNƒXƒ`ƒƒ‚ğÔƒNƒŠƒA
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’èµ¤ã‚¯ãƒªã‚¢
 		{
-			//‰æ‘f”(1280x720 = 921600ƒsƒNƒZƒ‹)
+			//ç”»ç´ æ•°(1280x720 = 921600ãƒ”ã‚¯ã‚»ãƒ«)
 			const UINT pixelCount = WindowApp::window_width * WindowApp::window_height;
-			//‰æ‘œ1s•ª‚Ìƒf[ƒ^ƒTƒCƒY
+			//ç”»åƒ1è¡Œåˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 			const UINT rowPitch = sizeof(UINT) * WindowApp::window_width;
-			//‰æ‘œ‘S‘Ì‚Ìƒf[ƒ^ƒTƒCƒY
+			//ç”»åƒå…¨ä½“ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
 			const UINT depthPitch = rowPitch * WindowApp::window_height;
-			//‰æ‘œƒCƒ[ƒW
+			//ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸
 			UINT *img = new UINT[pixelCount];
 			for (int i = 0; i < pixelCount; i++) {
 				img[i] = 0xff0000ff;
 			}
 
-			//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 			result = texture[i].texBuff->WriteToSubresource(0, nullptr,
 				img, rowPitch, depthPitch);
 			assert(SUCCEEDED(result));
 			delete[] img;
 		}
 
-		//SRVİ’è
-		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//İ’è\‘¢‘Ì
+		//SRVè¨­å®š
+		D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//è¨­å®šæ§‹é€ ä½“
 		srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+		srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 		srvDesc.Texture2D.MipLevels = 1;
-		//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉSRVì¬
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«SRVä½œæˆ
 		DescHeapSRV::CreateShaderResourceView(srvDesc, texture[i]);
 
-		//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+		//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 		D3D12_DESCRIPTOR_HEAP_DESC rtvDescHeapDesc{};
 		rtvDescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 		rtvDescHeapDesc.NumDescriptors = 2;
-		//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+		//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 		result = dev->CreateDescriptorHeap(&rtvDescHeapDesc, IID_PPV_ARGS(&descHeapRTV));
 		assert(SUCCEEDED(result));
 
@@ -143,7 +143,7 @@ bool OutLine::Initialize()
 	// RTV
 	for (int i{ 0 }; i < kTexMax; ++i)
 	{
-		//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉRTV¶¬
+		//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«RTVç”Ÿæˆ
 		dev->CreateRenderTargetView(
 			texture[i].texBuff.Get(),
 			nullptr,
@@ -157,7 +157,7 @@ bool OutLine::Initialize()
 	texture[kDepth].texBuff->SetName(L"DepthTex");
 
 
-	//[“xƒoƒbƒtƒ@ƒŠƒ\[ƒXİ’è
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC depthResDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_D32_FLOAT,
@@ -167,7 +167,7 @@ bool OutLine::Initialize()
 			1, 0,
 			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL
 		);
-	//[“xƒoƒbƒtƒ@‚Ì¶¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
 		D3D12_HEAP_FLAG_NONE,
@@ -178,15 +178,15 @@ bool OutLine::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
 	DescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	DescHeapDesc.NumDescriptors = 1;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	result = dev->CreateDescriptorHeap(&DescHeapDesc, IID_PPV_ARGS(&descHeapDSV_));
 	assert(SUCCEEDED(result));
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉDSVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«DSVä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
@@ -194,10 +194,10 @@ bool OutLine::Initialize()
 		&dsvDesc,
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart());
 
-	//’è”ƒoƒbƒtƒ@‚Ìƒq[ƒvİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_HEAP_PROPERTIES heapprop{};
 	heapprop.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//’è”ƒoƒbƒtƒ@‚ÌƒŠƒ\[ƒXİ’è
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	D3D12_RESOURCE_DESC resdesc{};
 	resdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resdesc.Width = (sizeof(CameraBuffer) + 0xff) & ~0xff;
@@ -206,7 +206,7 @@ bool OutLine::Initialize()
 	resdesc.MipLevels = 1;
 	resdesc.SampleDesc.Count = 1;
 	resdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&heapprop,
 		D3D12_HEAP_FLAG_NONE,
@@ -222,7 +222,7 @@ bool OutLine::Initialize()
 void OutLine::Draw()
 {
 
-	//’è”ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—(ŒõŒ¹ƒJƒƒ‰‹“_)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€(å…‰æºã‚«ãƒ¡ãƒ©è¦–ç‚¹)
 	CameraBuffer *camera_map = nullptr;
 	if (SUCCEEDED(camera_buffer_->Map(0, nullptr, (void **)&camera_map))) {
 		camera_map->view_projection = camera_->GetMatView() * camera_->GetMatProjection();
@@ -231,16 +231,16 @@ void OutLine::Draw()
 	}
 	cmdList->SetGraphicsRootConstantBufferView(0, camera_buffer_->GetGPUVirtualAddress());
 
-	//’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚ğƒZƒbƒg
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	DescHeapSRV::SetGraphicsRootDescriptorTable(1, texture[kColor].texNumber);
 	DescHeapSRV::SetGraphicsRootDescriptorTable(2, texture[kDepth].texNumber);
 
 
 
-	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ(4’¸“_‚ÅlŠpŒ`)
+	//ãƒãƒªã‚´ãƒ³ã®æç”»(4é ‚ç‚¹ã§å››è§’å½¢)
 	cmdList->DrawInstanced(4, 1, 0, 0);
 
 
@@ -250,13 +250,13 @@ void OutLine::DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV)
 {
 	for (int i{ 0 }; i < kTexMax; ++i)
 	{
-		//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(ƒVƒF[ƒ_ƒŠƒ\[ƒX¨•`‰æ‰Â”\)
+		//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹â†’æç”»å¯èƒ½)
 		cmdList->ResourceBarrier(1,
 			&CD3DX12_RESOURCE_BARRIER::Transition(texture[i].texBuff.Get(),
 				D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
 				D3D12_RESOURCE_STATE_RENDER_TARGET));
 	}
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvH[kTexMax];
 	for (int i{ 0 }; i < kTexMax; ++i)
 	{
@@ -266,13 +266,13 @@ void OutLine::DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV)
 		);
 	}
 
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 
 
 
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
 	cmdList->OMSetRenderTargets(kTexMax, rtvH, false, &dsvH);
 
 	CD3DX12_VIEWPORT viewports[kTexMax];
@@ -286,12 +286,12 @@ void OutLine::DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV)
 	}
 
 
-	//ƒrƒ…[ƒ|[ƒg‚Ìİ’è
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
 	cmdList->RSSetViewports(2, viewports);
-	//ƒVƒUƒŠƒ“ƒO‹éŒ`‚Ìİ’è
+	//ã‚·ã‚¶ãƒªãƒ³ã‚°çŸ©å½¢ã®è¨­å®š
 	cmdList->RSSetScissorRects(2, scissor_rects);
 
-	//‘S‰æ–ÊƒNƒŠƒA
+	//å…¨ç”»é¢ã‚¯ãƒªã‚¢
 	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	for (int i = 0; i < kTexMax; ++i)
 	{
@@ -302,7 +302,7 @@ void OutLine::DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV)
 
 void OutLine::DrawSceneRear()
 {
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX(•`‰æ‰Â”\¨ƒVƒF[ƒ_ƒŠƒ\[ƒX)
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(æç”»å¯èƒ½â†’ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹)
 	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(texture[kColor].texBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE));

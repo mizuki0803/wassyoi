@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "Vector3.h"
 
 /// <summary>
-/// “_ŒõŒ¹
+/// ç‚¹å…‰æº
 /// </summary>
 class PointLight
 {
-private://ƒGƒCƒŠƒAƒX
-	//DirectX::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public://ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
 		Vector3 lightpos;
@@ -27,7 +27,7 @@ public://ƒTƒuƒNƒ‰ƒX
 		unsigned int active;
 	};
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	//getter
 	inline const Vector3& GetLightPos() { return lightpos; }
@@ -41,13 +41,13 @@ public://ƒƒ“ƒoŠÖ”
 	inline void SetLightAtten(const XMFLOAT3& lightatten) { this->lightatten = lightatten; }
 	inline void SetActive(bool active) { this->active = active; }
 
-private://ƒƒ“ƒo•Ï”
-	//ƒ‰ƒCƒgÀ•W(ƒ[ƒ‹ƒhÀ•WŒn)
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ©ã‚¤ãƒˆåº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»)
 	Vector3 lightpos = { 0, 0, 0 };
-	//ƒ‰ƒCƒgF
+	//ãƒ©ã‚¤ãƒˆè‰²
 	XMFLOAT3 lightcolor = { 1, 1, 1 };
-	//ƒ‰ƒCƒg‹——£Œ¸ŠŒW”
+	//ãƒ©ã‚¤ãƒˆè·é›¢æ¸›è¡°ä¿‚æ•°
 	XMFLOAT3 lightatten = { 1.0f, 1.0f, 1.0f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active = false;
 };

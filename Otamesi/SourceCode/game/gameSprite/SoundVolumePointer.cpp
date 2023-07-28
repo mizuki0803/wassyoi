@@ -1,11 +1,11 @@
-#include "SoundVolumePointer.h"
+ï»¿#include "SoundVolumePointer.h"
 
 SoundVolumePointer* SoundVolumePointer::Create(const Texture& texture, const Vector2 barLeftPos, float barLength, float startPercentage)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	SoundVolumePointer* instance = new SoundVolumePointer();
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	if (!instance->Initialize(texture, barLeftPos, barLength, startPercentage)) {
 		delete instance;
 		assert(0);
@@ -17,17 +17,17 @@ SoundVolumePointer* SoundVolumePointer::Create(const Texture& texture, const Vec
 
 bool SoundVolumePointer::Initialize(const Texture& texture, const Vector2 barLeftPos, float barLength, float startPercentage)
 {
-	//ƒXƒvƒ‰ƒCƒg¶¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	if (!Sprite::Initialize(texture, barLeftPos, { 0.5f, 0.5f }, false, false)) {
 		return false;
 	}
 
-	//ƒo[‚Ì¶’[À•W‚ğƒZƒbƒg
+	//ãƒãƒ¼ã®å·¦ç«¯åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	this->barLeftPos = barLeftPos;
-	//ƒo[‚Ì’·‚³‚ğƒZƒbƒg
+	//ãƒãƒ¼ã®é•·ã•ã‚’ã‚»ãƒƒãƒˆ
 	this->barLength = barLength;
 
-	//¶¬‚Ìƒp[ƒZƒ“ƒe[ƒW‚É‡‚í‚¹‚ÄÀ•W‚ğƒZƒbƒg
+	//ç”Ÿæˆæ™‚ã®ãƒ‘ãƒ¼ã‚»ãƒ³ãƒ†ãƒ¼ã‚¸ã«åˆã‚ã›ã¦åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	SetPercentage(startPercentage);
 
 	return true;
@@ -35,6 +35,6 @@ bool SoundVolumePointer::Initialize(const Texture& texture, const Vector2 barLef
 
 void SoundVolumePointer::SetPercentage(float percentage)
 {
-	//Š„‡‚É‰‚¶‚ÄÀ•W‚ğ•ÏX
+	//å‰²åˆã«å¿œã˜ã¦åº§æ¨™ã‚’å¤‰æ›´
 	position.x = barLeftPos.x + (barLength * percentage);
 }

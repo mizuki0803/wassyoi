@@ -1,4 +1,4 @@
-#include "HintSprite.h"
+ï»¿#include "HintSprite.h"
 #include "Easing.h"
 #include "WindowApp.h"
 
@@ -8,13 +8,13 @@ const float HintSprite::largeTextureScale = 0.7f;
 
 HintSprite* HintSprite::Create(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	HintSprite* instance = new HintSprite();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize(texture, parent, position, anchorpoint)) {
 		delete instance;
 		assert(0);
@@ -26,18 +26,18 @@ HintSprite* HintSprite::Create(const Texture& texture, DrawerSprite* parent, con
 
 bool HintSprite::Initialize(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint)
 {
-	//ƒXƒvƒ‰ƒCƒg¶¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	if (!Sprite::Initialize(texture, position, anchorpoint, false, false)) {
 		return false;
 	}
 	this->parent = parent;
 
-	//•Û‘¶—pî•ñ‚ğƒZƒbƒg
+	//ä¿å­˜ç”¨æƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	parentStorage = parent;
 	positionStorage = position;
 	anchorpointStorage = anchorpoint;
 
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	SetScale(normalTextureScale);
 
 	return true;
@@ -45,90 +45,90 @@ bool HintSprite::Initialize(const Texture& texture, DrawerSprite* parent, const 
 
 void HintSprite::Update()
 {
-	//‘å‚«‚³•ÏX
+	//å¤§ãã•å¤‰æ›´
 	SizeChange();
 
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	Sprite::Update();
 }
 
 void HintSprite::SizeChangeStart()
 {
-	//‘å‚«‚³‚ğ•ÏX’†‚Ìê‡‚Í”²‚¯‚é
+	//å¤§ãã•ã‚’å¤‰æ›´ä¸­ã®å ´åˆã¯æŠœã‘ã‚‹
 	if (isSizeChange) { return; }
 
-	//‘å‚«‚³‚ª’Êí‚Ìê‡‚ÍA‘å‚«‚­‚·‚é
+	//å¤§ãã•ãŒé€šå¸¸ã®å ´åˆã¯ã€å¤§ããã™ã‚‹
 	if (!isSizeLarger) {
 
-		//ˆÚ“®‘OÀ•W‚ğƒZƒbƒg
+		//ç§»å‹•å‰åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		sizeChangeBeforePos = { matWorld.r[3].m128_f32[0], matWorld.r[3].m128_f32[1] };
-		//ˆÚ“®ŒãÀ•W‚ğƒZƒbƒg
+		//ç§»å‹•å¾Œåº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		sizeChangeAfterPos = { WindowApp::window_width / 2, WindowApp::window_height / 2 };
-		//e‚Æ‚Í•Ê‚Ì“®‚«‚ğ‚·‚é‚Ì‚ÅAeq\‘¢‚ğ‰ğœ
+		//è¦ªã¨ã¯åˆ¥ã®å‹•ãã‚’ã™ã‚‹ã®ã§ã€è¦ªå­æ§‹é€ ã‚’è§£é™¤
 		parent = nullptr;
 
-		//ƒTƒCƒY‚ª‘å‚«‚¢ó‘Ô‚É•ÏX
+		//ã‚µã‚¤ã‚ºãŒå¤§ãã„çŠ¶æ…‹ã«å¤‰æ›´
 		isSizeLarger = true;
 	}
-	//‘å‚«‚³‚ª‘å‚«‚¢ê‡‚ÍAŒ³‚É–ß‚·
+	//å¤§ãã•ãŒå¤§ãã„å ´åˆã¯ã€å…ƒã«æˆ»ã™
 	else {
-		//eq\‘¢‚ğ•œŠˆ‚³‚¹‚é
+		//è¦ªå­æ§‹é€ ã‚’å¾©æ´»ã•ã›ã‚‹
 		parent = parentStorage;
-		//ˆÚ“®‘OÀ•W‚ğƒZƒbƒg
+		//ç§»å‹•å‰åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		sizeChangeBeforePos = position - parent->GetPosition();
-		//ˆÚ“®ŒãÀ•W‚ğƒZƒbƒg
+		//ç§»å‹•å¾Œåº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 		sizeChangeAfterPos = positionStorage;
 
-		//ƒTƒCƒY‚ª¬‚³‚¢ó‘Ô‚É•ÏX
+		//ã‚µã‚¤ã‚ºãŒå°ã•ã„çŠ¶æ…‹ã«å¤‰æ›´
 		isSizeLarger = false;
 	}
 
-	//‘å‚«‚³‚ğ•ÏXó‘Ô‚É‚·‚é
+	//å¤§ãã•ã‚’å¤‰æ›´çŠ¶æ…‹ã«ã™ã‚‹
 	isSizeChange = true;
-	//ƒ^ƒCƒ}[‚ğ‰Šú‰»
+	//ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–
 	actionTimer = 0;
 }
 
 void HintSprite::SizeChange()
 {
-	//‘å‚«‚³•ÏX’†‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//å¤§ãã•å¤‰æ›´ä¸­ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!isSizeChange) { return; }
 
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	actionTimer++;
-	const float moveTime = 30; //À•WˆÚ“®‚É‚©‚©‚éŠÔ
+	const float moveTime = 30; //åº§æ¨™ç§»å‹•ã«ã‹ã‹ã‚‹æ™‚é–“
 
-	//ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°(0ï½1ã‚’ç®—å‡º)
 	const float time = actionTimer / moveTime;
-	//ˆÚ“®‚³‚¹‚é
+	//ç§»å‹•ã•ã›ã‚‹
 	position.x = Easing::OutQuint(sizeChangeBeforePos.x, sizeChangeAfterPos.x, time);
 	position.y = Easing::OutQuint(sizeChangeBeforePos.y, sizeChangeAfterPos.y, time);
 	
-	float size;	//‘å‚«‚³•ÏX—p•Ï”
-	//‘å‚«‚­‚·‚éê‡
+	float size;	//å¤§ãã•å¤‰æ›´ç”¨å¤‰æ•°
+	//å¤§ããã™ã‚‹å ´åˆ
 	if (isSizeLarger) {
-		//‘å‚«‚³‚ğ•ÏX
+		//å¤§ãã•ã‚’å¤‰æ›´
 		size = Easing::OutQuint(normalTextureScale, largeTextureScale, time);
 
-		//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg•ÏX
+		//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆå¤‰æ›´
 		anchorpoint.x = Easing::OutQuint(anchorpointStorage.x, 0.5f, time);
 		anchorpoint.y = Easing::OutQuint(anchorpointStorage.y, 0.5f, time);
 	}
-	//Œ³‚É–ß‚·ê‡
+	//å…ƒã«æˆ»ã™å ´åˆ
 	else {
-		//‘å‚«‚³‚ğ•ÏX
+		//å¤§ãã•ã‚’å¤‰æ›´
 		size = Easing::OutQuint(largeTextureScale, normalTextureScale, time);
 
-		//ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg•ÏX
+		//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆå¤‰æ›´
 		anchorpoint.x = Easing::OutQuint(0.5f, anchorpointStorage.x, time);
 		anchorpoint.y = Easing::OutQuint(0.5f, anchorpointStorage.y, time);
 	}
 	SetScale(size);
 	
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«æº€ãŸãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (actionTimer < moveTime) { return; }
 
-	//‘å‚«‚³•ÏXó‘Ô‚ğ‰ğœ
+	//å¤§ãã•å¤‰æ›´çŠ¶æ…‹ã‚’è§£é™¤
 	isSizeChange = false;
 }

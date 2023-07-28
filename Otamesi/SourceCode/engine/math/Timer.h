@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include "Singleton.h"
 
@@ -6,7 +6,7 @@ class Timer final
 	: public Singleton<Timer>
 {
 public:
-	friend class Singleton<Timer>; // ƒCƒ“ƒXƒ^ƒ“ƒXì¬‚ğ‹–‰Â
+	friend class Singleton<Timer>; // ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ä½œæˆã‚’è¨±å¯
 
 	void InstrumentationStart();
 	double InstrumentationEnd();
@@ -16,7 +16,7 @@ public:
 	}
 	void AddFixedTimer()
 	{
-		// ŒÅ’è’·XV—pƒ^ƒCƒ}[‚É‰ÁZ
+		// å›ºå®šé•·æ›´æ–°ç”¨ã‚¿ã‚¤ãƒãƒ¼ã«åŠ ç®—
 		fixed_update_time_ += delta_time_;
 	}
 	void SubFixedTimer()
@@ -33,15 +33,15 @@ private:
 
 	Timer();
 
-	int frame_count_;					// Å‰‚ÌƒV[ƒ“‚ª‹N“®‚µ‚Ä‚©‚ç‚ÌŒo‰ßƒtƒŒ[ƒ€
-	double time_;						// Å‰‚ÌƒV[ƒ“‚ª‹N“®‚µ‚Ä‚©‚ç‚ÌŒo‰ßŠÔi•bj
+	int frame_count_;					// æœ€åˆã®ã‚·ãƒ¼ãƒ³ãŒèµ·å‹•ã—ã¦ã‹ã‚‰ã®çµŒéãƒ•ãƒ¬ãƒ¼ãƒ 
+	double time_;						// æœ€åˆã®ã‚·ãƒ¼ãƒ³ãŒèµ·å‹•ã—ã¦ã‹ã‚‰ã®çµŒéæ™‚é–“ï¼ˆç§’ï¼‰
 
-	double frame_rate_;					// 1ƒtƒŒ[ƒ€‚É‚©‚¯‚éŠÔ
-	double fixed_delta_time_;			// ŒÅ’è’·XV‚É‚©‚¯‚éŠÔ
-	LARGE_INTEGER frequency_;			// ü”g”
-	LARGE_INTEGER time_count_start_;	// Œv‘ªŠJnŠÔ
-	LARGE_INTEGER time_count_end_;		// Œv‘ªI—¹ŠÔ
-	double delta_time_{0.0};					// 1ƒtƒŒ[ƒ€‚Å‚ÌŒo‰ßŠÔ
-	double fixed_update_time_;			// ŒÅ’è’·XV—pƒ^ƒCƒ}[
+	double frame_rate_;					// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã«ã‹ã‘ã‚‹æ™‚é–“
+	double fixed_delta_time_;			// å›ºå®šé•·æ›´æ–°ã«ã‹ã‘ã‚‹æ™‚é–“
+	LARGE_INTEGER frequency_;			// å‘¨æ³¢æ•°
+	LARGE_INTEGER time_count_start_;	// è¨ˆæ¸¬é–‹å§‹æ™‚é–“
+	LARGE_INTEGER time_count_end_;		// è¨ˆæ¸¬çµ‚äº†æ™‚é–“
+	double delta_time_{0.0};					// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®çµŒéæ™‚é–“
+	double fixed_update_time_;			// å›ºå®šé•·æ›´æ–°ç”¨ã‚¿ã‚¤ãƒãƒ¼
 };
 

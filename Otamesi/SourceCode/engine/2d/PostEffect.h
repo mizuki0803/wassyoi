@@ -1,39 +1,39 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "PipelineSet.h"
 #include "Texture.h"
 
 /// <summary>
-/// ƒ|ƒXƒgƒGƒtƒFƒNƒg
+/// ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 /// </summary>
 class PostEffect
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct VertexPosUv
 	{
-		XMFLOAT3 pos;	//xyzÀ•W
-		XMFLOAT2 uv;	//uvÀ•W
+		XMFLOAT3 pos;	//xyzåº§æ¨™
+		XMFLOAT2 uv;	//uvåº§æ¨™
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
-		unsigned int isRadialBlur; //ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ğ‚©‚¯‚é‚©
-		unsigned int radialBlurSampleNum; //ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ÌƒTƒ“ƒvƒ‹‰ñ”
-		float radialBlurStrength; //ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ÌL‚ª‚é‹­‚³
+		unsigned int isRadialBlur; //ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã‚’ã‹ã‘ã‚‹ã‹
+		unsigned int radialBlurSampleNum; //ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã®ã‚µãƒ³ãƒ—ãƒ«å›æ•°
+		float radialBlurStrength; //ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã®åºƒãŒã‚‹å¼·ã•
 		float pad1;
 	};
 
-	// ƒIƒuƒWƒFƒNƒg—pij
+	// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”¨ï¼ˆï¼‰
 	struct ObjectIdColor
 	{
 		float color[4];
@@ -48,47 +48,47 @@ public: //ƒTƒuƒNƒ‰ƒX
 		kMax
 	};
 
-public: //’è”
-	//ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ÌÅ¬ƒTƒ“ƒvƒ‹‰ñ”
+public: //å®šæ•°
+	//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã®æœ€å°ã‚µãƒ³ãƒ—ãƒ«å›æ•°
 	static const int radialBlurSampleNumMin = 1;
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒ|ƒXƒgƒGƒtƒFƒNƒg¶¬
+	/// ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
-	/// <returns>ƒ|ƒXƒgƒGƒtƒFƒNƒg</returns>
+	/// <returns>ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆ</returns>
 	static PostEffect* Create();
 
 	/// <summary>
-	/// ƒ|ƒXƒgƒGƒtƒFƒNƒg‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆå…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void PostEffectCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æ‘Oˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
 	/// </summary>
 	void DrawScenePrev();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æŒãˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	/// </summary>
 	void DrawSceneRear();
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	void CreateGraphicsPipelineState();
 
@@ -105,26 +105,26 @@ public: //ƒƒ“ƒoŠÖ”
 
 	void SetIdColorBuffer(int num, ObjectIdType type);
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//‰æ–ÊƒNƒŠƒAƒJƒ‰[
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ç”»é¢ã‚¯ãƒªã‚¢ã‚«ãƒ©ãƒ¼
 	static const float clearColor[4];
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSet;
 
-private: //ƒƒ“ƒo•Ï”
-	//’¸“_ƒoƒbƒtƒ@
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
 	
 	ComPtr<ID3D12Resource> objectIdConstBuff[kMax];
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	enum TextureName
 	{
 		kBaseTexture,
@@ -133,21 +133,21 @@ private: //ƒƒ“ƒo•Ï”
 		kGoalTexture,
 		kTexturMax,
 	};
-	Texture texture[kTexturMax];	// ’Êí‚Ìo—ÍŒ‹‰Ê—p
+	Texture texture[kTexturMax];	// é€šå¸¸ã®å‡ºåŠ›çµæœç”¨
 
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuff;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV;
-	//F(RGBA)
+	//è‰²(RGBA)
 	XMFLOAT4 color = { 1, 1, 1, 1 };
-	//ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ğ‚©‚¯‚é‚©
+	//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã‚’ã‹ã‘ã‚‹ã‹
 	bool isRadialBlur = false;
-	//ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ÌƒTƒ“ƒvƒ‹‰ñ”
+	//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã®ã‚µãƒ³ãƒ—ãƒ«å›æ•°
 	int radialBlurSampleNum = 10;
-	//ƒ‰ƒWƒAƒ‹ƒuƒ‰[‚ÌL‚ª‚é‹­‚³
+	//ãƒ©ã‚¸ã‚¢ãƒ«ãƒ–ãƒ©ãƒ¼ã®åºƒãŒã‚‹å¼·ã•
 	float radialBlurStrength = 0.5f;
 };
 

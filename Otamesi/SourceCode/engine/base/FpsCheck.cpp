@@ -1,18 +1,18 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include "FpsCheck.h"
 
 #pragma comment(lib, "Winmm.lib")
 
-DWORD FpsCheck::prevTime = timeGetTime();	// ‘O‰ñ‚ÌŽžŠÔ
-int FpsCheck::frameCount = 0;	// ƒtƒŒ[ƒ€ƒJƒEƒ“ƒg
+DWORD FpsCheck::prevTime = timeGetTime();	// å‰å›žã®æ™‚é–“
+int FpsCheck::frameCount = 0;	// ãƒ•ãƒ¬ãƒ¼ãƒ ã‚«ã‚¦ãƒ³ãƒˆ
 
 void FpsCheck::Display()
 {
-	DWORD now_time = timeGetTime();	//¡‰ñ‚ÌƒtƒŒ[ƒ€‚ÌŽžŠÔ
+	DWORD now_time = timeGetTime();	//ä»Šå›žã®ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
 
-	frameCount++;	//ƒtƒŒ[ƒ€”‚ðƒJƒEƒ“ƒg‚·‚é
+	frameCount++;	//ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã‚’ã‚«ã‚¦ãƒ³ãƒˆã™ã‚‹
 
-	// Œo‰ßŽžŠÔ‚ª‚P•b‚ð’´‚¦‚½‚çƒJƒEƒ“ƒg‚ÆŽžŠÔ‚ðƒŠƒZƒbƒg
+	// çµŒéŽæ™‚é–“ãŒï¼‘ç§’ã‚’è¶…ãˆãŸã‚‰ã‚«ã‚¦ãƒ³ãƒˆã¨æ™‚é–“ã‚’ãƒªã‚»ãƒƒãƒˆ
 	if (now_time - prevTime >= 1000)
 	{
 		char str[128];

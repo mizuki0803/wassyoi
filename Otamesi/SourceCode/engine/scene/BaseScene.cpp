@@ -1,3 +1,3 @@
-#include "BaseScene.h"
+﻿#include "BaseScene.h"
 
 DirectXBase* BaseScene::dxbase = nullptr;

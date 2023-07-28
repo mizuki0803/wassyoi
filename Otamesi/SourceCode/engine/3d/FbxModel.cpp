@@ -1,20 +1,20 @@
-#include "FbxModel.h"
+ï»¿#include "FbxModel.h"
 #include "DescHeapSRV.h"
 
 FbxModel::~FbxModel()
 {
-	//FBXƒV[ƒ“‚ÌÙ–D
+	//FBXã‚·ãƒ¼ãƒ³ã®è£ç¸«
 	//fbxScene->Destroy();
 }
 
 void FbxModel::CreateBuffers(ID3D12Device* device)
 {
 	HRESULT result;
-	//’¸“_ƒf[ƒ^‘S‘Ì‚ÌƒTƒCƒY
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿å…¨ä½“ã®ã‚µã‚¤ã‚º
 	UINT sizeVB =
 		static_cast<UINT>(sizeof(VertexPosNormalUvSkin) *
 			vertices.size());
-	//’¸“_ƒoƒbƒtƒ@¶¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	result = device->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -23,7 +23,7 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		nullptr,
 		IID_PPV_ARGS(&vertBuff));
 
-	//’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒf[ƒ^“]‘—
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒ‡ãƒ¼ã‚¿è»¢é€
 	VertexPosNormalUvSkin* vertMap = nullptr;
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	if (SUCCEEDED(result)) {
@@ -32,16 +32,16 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		vertBuff->Unmap(0, nullptr);
 	}
 
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[(VBV)‚Ìì¬
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(VBV)ã®ä½œæˆ
 	vbView.BufferLocation =
 		vertBuff->GetGPUVirtualAddress();
 	vbView.SizeInBytes = sizeVB;
 	vbView.StrideInBytes = sizeof(vertices[0]);
 
-	//’¸“_ƒCƒ“ƒfƒbƒNƒX‘S‘Ì‚ÌƒTƒCƒY
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹å…¨ä½“ã®ã‚µã‚¤ã‚º
 	UINT sizeIB = static_cast<UINT>(sizeof(unsigned short)) *
 		static_cast<UINT>(indices.size());
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@¶¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	result = device->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -50,7 +50,7 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		nullptr,
 		IID_PPV_ARGS(&indexBuff));
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚Ö‚Ì‘‚«‚İ
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®æ›¸ãè¾¼ã¿
 	unsigned short* indexMap = nullptr;
 	result = indexBuff->Map(0, nullptr, (void**)&indexMap);
 	if (SUCCEEDED(result)) {
@@ -58,17 +58,17 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		indexBuff->Unmap(0, nullptr);
 	}
 
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[(IBV)‚Ìì¬
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼(IBV)ã®ä½œæˆ
 	ibView.BufferLocation =
 		indexBuff->GetGPUVirtualAddress();
 	ibView.Format = DXGI_FORMAT_R16_UINT;
 	ibView.SizeInBytes = sizeIB;
 
-	//ƒeƒNƒXƒ`ƒƒ‰æ‘œƒf[ƒ^
-	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0); //¶ƒf[ƒ^’Šo
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”»åƒãƒ‡ãƒ¼ã‚¿
+	const DirectX::Image* img = scratchImg.GetImage(0, 0, 0); //ç”Ÿãƒ‡ãƒ¼ã‚¿æŠ½å‡º
 	assert(img);
 
-	//ƒŠƒ\[ƒXİ’è
+	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC texresDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		metadata.format,
 		metadata.width,
@@ -77,48 +77,48 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		(UINT16)metadata.mipLevels
 	);
 
-	//ƒeƒNƒXƒ`ƒƒ—pƒoƒbƒtƒ@‚Ì¶¬
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = device->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK,
 			D3D12_MEMORY_POOL_L0),
 		D3D12_HEAP_FLAG_NONE,
 		&texresDesc,
-		D3D12_RESOURCE_STATE_GENERIC_READ,	//ƒeƒNƒXƒ`ƒƒ—pw’è
+		D3D12_RESOURCE_STATE_GENERIC_READ,	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨æŒ‡å®š
 		nullptr,
 		IID_PPV_ARGS(&texture.texBuff));
 
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^“]‘—
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿è»¢é€
 	result = texture.texBuff->WriteToSubresource(
 		0,
-		nullptr,				//‘S—Ìˆæ‚ÖƒRƒs[
-		img->pixels,			//Œ³ƒf[ƒ^ƒAƒhƒŒƒX
-		(UINT)img->rowPitch,	//1ƒ‰ƒCƒ“ƒTƒCƒY
-		(UINT)img->slicePitch	//1–‡ƒTƒCƒY
+		nullptr,				//å…¨é ˜åŸŸã¸ã‚³ãƒ”ãƒ¼
+		img->pixels,			//å…ƒãƒ‡ãƒ¼ã‚¿ã‚¢ãƒ‰ãƒ¬ã‚¹
+		(UINT)img->rowPitch,	//1ãƒ©ã‚¤ãƒ³ã‚µã‚¤ã‚º
+		(UINT)img->slicePitch	//1æšã‚µã‚¤ã‚º
 	);
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[(SRV)ì¬
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼(SRV)ä½œæˆ
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	D3D12_RESOURCE_DESC resDesc = texture.texBuff->GetDesc();
 
 	srvDesc.Format = resDesc.Format;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	srvDesc.Texture2D.MipLevels = 1;
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉSRVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«SRVä½œæˆ
 	DescHeapSRV::CreateShaderResourceView(srvDesc, texture);
 }
 
 void FbxModel::Draw(ID3D12GraphicsCommandList* cmdList)
 {
-	//’¸“_ƒoƒbƒtƒ@‚ğƒZƒbƒg(VBV)
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ(VBV)
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@‚ğƒZƒbƒg(IBV)
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ã‚»ãƒƒãƒˆ(IBV)
 	cmdList->IASetIndexBuffer(&ibView);
 
-	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚ğƒZƒbƒg
+	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	DescHeapSRV::SetGraphicsRootDescriptorTable(1, texture.texNumber);
 
-	//•`‰æƒRƒ}ƒ“ƒh
+	//æç”»ã‚³ãƒãƒ³ãƒ‰
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }

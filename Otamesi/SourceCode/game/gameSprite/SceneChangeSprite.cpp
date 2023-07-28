@@ -1,4 +1,4 @@
-#include "SceneChangeSprite.h"
+ï»¿#include "SceneChangeSprite.h"
 #include "SpriteTextureLoader.h"
 #include "WindowApp.h"
 #include "Easing.h"
@@ -11,23 +11,23 @@ void (SceneChangeSprite::* SceneChangeSprite::intensityChangeActionFuncTable[])(
 
 SceneChangeSprite* SceneChangeSprite::Create(const XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime)
 {
-	//ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	SceneChangeSprite* sceneChangeSprite = new SceneChangeSprite();
 	if (sceneChangeSprite == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!sceneChangeSprite->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::White), {0, 0}, {0, 0}, false, false)) {
 		delete sceneChangeSprite;
 		assert(0);
 		return nullptr;
 	}
 
-	//F‚ğƒZƒbƒg
+	//è‰²ã‚’ã‚»ãƒƒãƒˆ
 	sceneChangeSprite->color = { color.x, color.y, color.z, 0 };
 
-	//ŠÔ‚ğƒZƒbƒg
+	//æ™‚é–“ã‚’ã‚»ãƒƒãƒˆ
 	sceneChangeSprite->deepenTime = deepenTime;
 	sceneChangeSprite->waitTime = waitTime;
 	sceneChangeSprite->returnTime = returnTime;
@@ -37,12 +37,12 @@ SceneChangeSprite* SceneChangeSprite::Create(const XMFLOAT4& color, int32_t deep
 
 bool SceneChangeSprite::Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
-	//ƒXƒvƒ‰ƒCƒg‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	if (!Sprite::Initialize(texture, position, anchorpoint, isFlipX, isFlipY)) {
 		return false;
 	}
 
-	//‰æ–Ê‘S‘Ì‚ğ•¢‚¤‚Ì‚É•K—v‚Èî•ñ‚ğƒZƒbƒg
+	//ç”»é¢å…¨ä½“ã‚’è¦†ã†ã®ã«å¿…è¦ãªæƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	size = { WindowApp::window_width, WindowApp::window_height };
 	texSize = { 1, 1 };
 
@@ -51,61 +51,61 @@ bool SceneChangeSprite::Initialize(const Texture& texture, const Vector2& positi
 
 void SceneChangeSprite::Update()
 {
-	//F‚Ì”Z‚³•ÏX‹““®
+	//è‰²ã®æ¿ƒã•å¤‰æ›´æŒ™å‹•
 	(this->*intensityChangeActionFuncTable[static_cast<size_t>(phase)])();
 
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	Sprite::Update();
 }
 
 void SceneChangeSprite::ColorDeepen()
 {
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	intensityChangeTimer++;
-	//ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ€
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒ 
 	const float time = (float)intensityChangeTimer / deepenTime;
 
-	//‚¾‚ñ‚¾‚ñF‚ğ”Z‚­‚µ‚Ä‚¢‚­
+	//ã ã‚“ã ã‚“è‰²ã‚’æ¿ƒãã—ã¦ã„ã
 	color.w = Easing::LerpFloat(0, 1, time);
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É‚È‚Á‚½‚ç
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«ãªã£ãŸã‚‰
 	if (intensityChangeTimer >= deepenTime) {
-		//Ÿ‚ÌƒtƒF[ƒY‚Ö
+		//æ¬¡ã®ãƒ•ã‚§ãƒ¼ã‚ºã¸
 		phase = IntensityChangePhase::Wait;
 
-		//ƒ^ƒCƒ}[‰Šú‰»
+		//ã‚¿ã‚¤ãƒãƒ¼åˆæœŸåŒ–
 		intensityChangeTimer = 0;
 	}
 }
 
 void SceneChangeSprite::ColorWait()
 {
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	intensityChangeTimer++;
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É‚È‚Á‚½‚ç
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«ãªã£ãŸã‚‰
 	if (intensityChangeTimer >= waitTime) {
-		//Ÿ‚ÌƒtƒF[ƒY‚Ö
+		//æ¬¡ã®ãƒ•ã‚§ãƒ¼ã‚ºã¸
 		phase = IntensityChangePhase::Return;
 
-		//ƒ^ƒCƒ}[‰Šú‰»
+		//ã‚¿ã‚¤ãƒãƒ¼åˆæœŸåŒ–
 		intensityChangeTimer = 0;
 	}
 }
 
 void SceneChangeSprite::ColorReturn()
 {
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	intensityChangeTimer++;
-	//ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ€
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒ 
 	const float time = (float)intensityChangeTimer / returnTime;
 
-	//‚¾‚ñ‚¾‚ñF‚ğ”–‚­‚µ‚Ä‚¢‚­
+	//ã ã‚“ã ã‚“è‰²ã‚’è–„ãã—ã¦ã„ã
 	color.w = Easing::LerpFloat(1, 0, time);
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É‚È‚Á‚½‚ç
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«ãªã£ãŸã‚‰
 	if (intensityChangeTimer >= returnTime) {
-		//€–Sƒtƒ‰ƒO‚ğ—§‚Ä‚é
+		//æ­»äº¡ãƒ•ãƒ©ã‚°ã‚’ç«‹ã¦ã‚‹
 		isDead = true;
 	}
 }

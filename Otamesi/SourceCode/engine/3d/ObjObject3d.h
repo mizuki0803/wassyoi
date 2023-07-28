@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <Windows.h>
 #include "DirectXBase.h"
 #include <DirectXMath.h>
@@ -10,116 +10,116 @@
 #include "Vector3.h"
 
 /// <summary>
-/// obj3DƒIƒuƒWƒFƒNƒg
+/// obj3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 /// </summary>
 class ObjObject3d
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘ÌB0
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“B0
 	struct ConstBufferDataB0
 	{
-		XMFLOAT4 color;		//F
-		XMMATRIX viewproj;	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX world;		//ƒ[ƒ‹ƒhs—ñ
-		Vector3 cameraPos;	//ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhÀ•W)
-		XMMATRIX lightViewproj;	//ƒ‰ƒCƒgƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX topLightViewproj;	//“ªãƒ‰ƒCƒgƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		unsigned int isShadowMap;	//‰e‚ğ•t‚¯‚é‚©
+		XMFLOAT4 color;		//è‰²
+		XMMATRIX viewproj;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX world;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		Vector3 cameraPos;	//ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
+		XMMATRIX lightViewproj;	//ãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX topLightViewproj;	//é ­ä¸Šãƒ©ã‚¤ãƒˆãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		unsigned int isShadowMap;	//å½±ã‚’ä»˜ã‘ã‚‹ã‹
 	};
-	//‰e—p
+	//å½±ç”¨
 	struct ConstBufferDataLightViewB0
 	{
-		XMMATRIX viewproj;	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX world;		//ƒ[ƒ‹ƒhs—ñ
-		Vector3 cameraPos;	//ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhÀ•W)
+		XMMATRIX viewproj;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX world;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		Vector3 cameraPos;	//ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 	};
 
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Object3d‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// Object3då…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void Object3dCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	static void CreatePipeline();
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	static void CreateLightViewPipeline();
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	static void CreateAddPipeline();
 
 	/// <summary>
-	/// ƒAƒEƒgƒ‰ƒCƒ“ƒpƒCƒvƒ‰ƒCƒ“
+	/// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	/// </summary>
 	static void CreateOutLinePipeline();
 
 
 	/// <summary>
-	/// •`‰æ‘Oˆ—
+	/// æç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawPrev();
 
 	/// <summary>
-	/// •`‰æ‘Oˆ—
+	/// æç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawLightViewPrev();
 
 	/// <summary>
-	/// •`‰æ‘Oˆ—
+	/// æç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawAddPrev();
 	
 	/// <summary>
-	/// •`‰æ‘Oˆ—
+	/// æç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawOutLinePrev();
 
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="model">ƒ‚ƒfƒ‹</param>
+	/// <param name="model">ãƒ¢ãƒ‡ãƒ«</param>
 	/// <returns>object3d</returns>
 	static ObjObject3d* Create(ObjModel* model);
 
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <returns>¬”Û</returns>
+	/// <returns>æˆå¦</returns>
 	virtual bool Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	virtual void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	virtual void Draw();
 
 	/// <summary>
-	/// ‰e—pŒõŒ¹ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_‚Å‚Ì•`‰æ
+	/// å½±ç”¨å…‰æºãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹ã§ã®æç”»
 	/// </summary>
 	virtual void DrawLightCameraView();
 
@@ -144,44 +144,44 @@ public: //ƒƒ“ƒoŠÖ”
 	static void SetLightCamera(LightCamera* lightCamera) { ObjObject3d::lightCamera = lightCamera; }
 
 
-protected: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+protected: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSet;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSetLightView;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSetAdd;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSetOutLine;
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	static LightGroup* lightGroup;
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	static Camera* camera;
-	//‰e—pŒõŒ¹ƒJƒƒ‰
+	//å½±ç”¨å…‰æºã‚«ãƒ¡ãƒ©
 	static LightCamera* lightCamera;
 
 
-protected: //ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuffB0;
 	ComPtr<ID3D12Resource> constBuffLightViewB0;
-	//ƒAƒtƒBƒ“•ÏŠ·î•ñ
+	//ã‚¢ãƒ•ã‚£ãƒ³å¤‰æ›æƒ…å ±
 	Vector3 scale = { 1, 1, 1 };
 	Vector3 rotation = { 0, 0, 0 };
 	Vector3 position = { 0, 0, 0 };
 	XMFLOAT4 color = { 1, 1, 1, 1 };
-	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	XMMATRIX matWorld = {};
-	//eq\‘¢
+	//è¦ªå­æ§‹é€ 
 	ObjObject3d* parent = nullptr;
-	//ƒ‚ƒfƒ‹
+	//ãƒ¢ãƒ‡ãƒ«
 	ObjModel* model = nullptr;
-	//ƒJƒƒ‰‚É’Ç]‚·‚é‚©
+	//ã‚«ãƒ¡ãƒ©ã«è¿½å¾“ã™ã‚‹ã‹
 	bool isCameraFollow = false;
-	//‰e‚ğ•t‚¯‚é‚©
+	//å½±ã‚’ä»˜ã‘ã‚‹ã‹
 	bool isShadowMap = false;
 };

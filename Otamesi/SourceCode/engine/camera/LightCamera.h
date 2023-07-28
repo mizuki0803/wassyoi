@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 #include "Camera.h"
 #include "Vector2.h"
 
 class LightCamera : public Camera
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="eye">‹“_</param>
-	/// <param name="target">’‹“_</param>
+	/// <param name="eye">è¦–ç‚¹</param>
+	/// <param name="target">æ³¨è¦–ç‚¹</param>
 	void Initialize(const Vector3& eye, const Vector3& target = { 0, 0, 0 });
 
 	/// <summary>
-	/// Ë‰es—ñ‚ğXV
+	/// å°„å½±è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateMatProjection() override;
 
@@ -29,9 +29,9 @@ public: //ƒƒ“ƒoŠÖ”
 		dirtyProjection = true;
 	}
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚ÌÅ‘å’l
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®æœ€å¤§å€¤
 	Vector2 projectionMax = { 100, 100 };
-	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚ÌÅ¬’l
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®æœ€å°å€¤
 	Vector2 projectionMin = { -100, -100 };
 };

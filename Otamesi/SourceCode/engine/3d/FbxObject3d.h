@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "FbxModel.h"
 #include "Camera.h"
@@ -12,37 +12,37 @@
 
 class FbxObject3d
 {
-protected: //ƒGƒCƒŠƒAƒX
-	//MIcrosoft::WRL::‚ğÈ—ª
+protected: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//MIcrosoft::WRL::ã‚’çœç•¥
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirectX:‚ğÈ—ª
+	//DirectX:ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public:	//’è”
-	//ƒ{[ƒ“‚ÌÅ‘å”
+public:	//å®šæ•°
+	//ãƒœãƒ¼ãƒ³ã®æœ€å¤§æ•°
 	static const int MAX_BONES = 32;
 
-public: //ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(À•W•ÏŠ·s—ñ—p)
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(åº§æ¨™å¤‰æ›è¡Œåˆ—ç”¨)
 	struct ConstBufferDataTransform
 	{
-		XMMATRIX viewproj;	//ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
-		XMMATRIX world;		//ƒ[ƒ‹ƒhs—ñ
-		Vector3 cameraPos;	//ƒJƒƒ‰À•W(ƒ[ƒ‹ƒhÀ•W)
+		XMMATRIX viewproj;	//ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
+		XMMATRIX world;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—
+		Vector3 cameraPos;	//ã‚«ãƒ¡ãƒ©åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™)
 	};
 
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì(ƒXƒLƒjƒ“ƒO)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“(ã‚¹ã‚­ãƒ‹ãƒ³ã‚°)
 	struct ConstBufferDataSkin 
 	{
 		XMMATRIX bones[MAX_BONES];
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“‚Ì¶¬
+	/// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã®ç”Ÿæˆ
 	/// </summary>
 	static void CreateGraphicsPipeline();
 
@@ -51,31 +51,31 @@ public: //Ã“Iƒƒ“ƒoŠÖ”
 	static void SetCommandList(ID3D12GraphicsCommandList* cmdList) { FbxObject3d::cmdList = cmdList; }
 	static void SetCamera(Camera* camera) { FbxObject3d::camera = camera; }
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒAƒjƒ[ƒVƒ‡ƒ“ŠJn
+	/// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹
 	/// </summary>
 	void PlayAnimation();
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚ÌƒZƒbƒg
+	/// ãƒ¢ãƒ‡ãƒ«ã®ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="fbxModel">FBXƒ‚ƒfƒ‹</param>
+	/// <param name="fbxModel">FBXãƒ¢ãƒ‡ãƒ«</param>
 	void SetFbxModel(FbxModel* fbxModel) { this->fbxModel = fbxModel; }
 
 	//getter
@@ -89,41 +89,41 @@ public: //ƒƒ“ƒoŠÖ”
 	void SetScale(const Vector3& scale) { this->scale = scale; }
 	void SetModel(FbxModel* fbxModel) { this->fbxModel = fbxModel; }
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* device;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	static Camera* camera;
-	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£
 	static ComPtr<ID3D12RootSignature> rootsignature;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	static ComPtr<ID3D12PipelineState> pipelinestate;
 
-protected: //ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBufferTransform;
-	//ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	Vector3 scale = { 1, 1, 1 };
-	//X,Y,Z²‰ñ‚è‚Ìƒ[ƒJƒ‹‰ñ“]Šp
+	//X,Y,Zè»¸å›ã‚Šã®ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	Vector3 rotation = { 0, 0, 0 };
-	//ƒ[ƒJƒ‹À•W
+	//ãƒ­ãƒ¼ã‚«ãƒ«åº§æ¨™
 	Vector3 position = { 0, 0, 0 };
-	//ƒ[ƒJƒ‹ƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//ãƒ­ãƒ¼ã‚«ãƒ«ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	XMMATRIX matWorld;
-	//FBXƒ‚ƒfƒ‹
+	//FBXãƒ¢ãƒ‡ãƒ«
 	FbxModel* fbxModel = nullptr;
-	//’è”ƒoƒbƒtƒ@(ƒXƒLƒ“)
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡(ã‚¹ã‚­ãƒ³)
 	ComPtr<ID3D12Resource> constBufferSkin;
-	//1ƒtƒŒ[ƒ€‚ÌŠÔ
+	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã®æ™‚é–“
 	FbxTime frameTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³é–‹å§‹æ™‚é–“
 	FbxTime startTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“I—¹ŠÔ
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³çµ‚äº†æ™‚é–“
 	FbxTime endTime;
-	//Œ»İŠÔ(ƒAƒjƒ[ƒVƒ‡ƒ“)
+	//ç¾åœ¨æ™‚é–“(ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³)
 	FbxTime currentTime;
-	//ƒAƒjƒ[ƒVƒ‡ƒ“Ä¶’†
+	//ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å†ç”Ÿä¸­
 	bool isPlay = false;
 };

@@ -1,58 +1,58 @@
-#pragma once
+ï»¿#pragma once
 #include "MapData.h"
 #include "StageSelectBlock.h"
 #include "StageSelectBlockManager.h"
 
 /// <summary>
-/// ƒXƒe[ƒW‘I‘ğ—pƒ}ƒbƒvƒf[ƒ^
+/// ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 class MapDataStageSelect : public MapData
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="selectStageNum">‘I‘ğ’†‚ÌƒXƒe[ƒW”Ô†</param>
-	/// <param name="positionPhase">ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY</param>
-	/// <returns>ƒXƒe[ƒW‘I‘ğ—pƒ}ƒbƒvƒf[ƒ^</returns>
+	/// <param name="selectStageNum">é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
+	/// <param name="positionPhase">ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿</returns>
 	static MapDataStageSelect* Create(const int selectStageNum, const StageSelectBlockManager::BlockManagerPositionPhase& positionPhase);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="selectStageNum">‘I‘ğ’†‚ÌƒXƒe[ƒW”Ô†</param>
-	/// <param name="positionPhase">ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="selectStageNum">é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·</param>
+	/// <param name="positionPhase">ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const int selectStageNum, const StageSelectBlockManager::BlockManagerPositionPhase& positionPhase);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 
 	//getter
 	StageSelectBlockManager* GetStageSelectBlockManager() { return blockManager.get(); }
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒ}ƒbƒvƒuƒƒbƒN¶¬
+	/// ãƒãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	/// </summary>
 	void CreateMapBlock() override;
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒN
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	std::vector<std::unique_ptr<StageSelectBlock>> blocks;
-	//ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒNŠÇ—
+	//ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†
 	std::unique_ptr<StageSelectBlockManager> blockManager;
 };

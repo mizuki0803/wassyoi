@@ -1,41 +1,41 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjObject3d.h"
 
 /// <summary>
-/// “V‹…
+/// å¤©çƒ
 /// </summary>
 class Skydome : public ObjObject3d
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="model">ƒ‚ƒfƒ‹</param>
-	/// <returns>“V‹…</returns>
+	/// <param name="model">ãƒ¢ãƒ‡ãƒ«</param>
+	/// <returns>å¤©çƒ</returns>
 	static Skydome* Create(ObjModel* model);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	//setter
 	void SetIsRotate(const bool isRotate) { this->isRotate = isRotate; }
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰ñ“]
+	/// å›è»¢
 	/// </summary>
 	void Rotate();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒTƒCƒY
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚µã‚¤ã‚º
 	static const float size;
-	//‰ñ“]ƒXƒs[ƒh
+	//å›è»¢ã‚¹ãƒ”ãƒ¼ãƒ‰
 	static const float rotSpeed;
 
-private: //ƒƒ“ƒo•Ï”
-	//‰ñ“]‚·‚é‚©
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å›è»¢ã™ã‚‹ã‹
 	bool isRotate = false;
 };

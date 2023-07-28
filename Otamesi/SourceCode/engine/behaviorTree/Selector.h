@@ -1,32 +1,32 @@
-#pragma once
+ï»¿#pragma once
 #include <d3dx12.h>
 #include <vector>
 #include <functional>
 
 /// <summary>
-/// ƒZƒŒƒNƒ^[
+/// ã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼
 /// </summary>
 class Selector
 {
 public:
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <returns>ƒZƒŒƒNƒ^[</returns>
+	/// <returns>ã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼</returns>
 	static Selector* Create();
 
 	/// <summary>
-	/// ƒZƒŒƒNƒg
+	/// ã‚»ãƒ¬ã‚¯ãƒˆ
 	/// </summary>
 	bool Select();
 
 	/// <summary>
-	/// qƒm[ƒh‚ğ’Ç‰Á‚·‚é
+	/// å­ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
 	/// </summary>
-	/// <param name="func()">ŠÖ”</param>
+	/// <param name="func()">é–¢æ•°</param>
 	void AddNode(std::function<bool()> func);
 
 private:
-	//qƒm[ƒh
+	//å­ãƒãƒ¼ãƒ‰
 	std::vector<std::function<bool()>> nodes;
 };

@@ -1,12 +1,12 @@
-#include "LightCamera.h"
+ï»¿#include "LightCamera.h"
 #include "WindowApp.h"
 
 void LightCamera::Initialize(const Vector3& eye, const Vector3& target)
 {
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	Camera::Initialize();
 
-	//‹“_A’‹“_‚ğƒZƒbƒg
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	this->eye = eye;
 	this->target = target;
 	up = { 0, 1, 0 };

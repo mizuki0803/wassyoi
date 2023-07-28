@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseGameScene.h"
 #include "LightGroup.h"
 #include "GameCamera.h"
@@ -10,68 +10,74 @@
 #include "UserInterface.h"
 
 /// <summary>
-/// ƒ^ƒCƒgƒ‹ƒV[ƒ“
+/// ã‚¿ã‚¤ãƒˆãƒ«ã‚·ãƒ¼ãƒ³
 /// </summary>
 class TitleScene :public BaseGameScene
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	/// </summary>
 	void DrawBackSprite() override;
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ
+	/// 3Dã‚·ãƒ¼ãƒ³æç”»
 	/// </summary>
 	void Draw3D() override;
 	void AfterBloomDraw() override;
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ(ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_)
+	/// 3Dã‚·ãƒ¼ãƒ³æç”»(ãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹)
 	/// </summary>
 	void Draw3DLightView() override;
 
 	/// <summary>
-	/// ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	/// </summary>
 	void DrawFrontSprite() override;
 
 	/// <summary>
-	/// ƒƒjƒ…[‚Ì“®‚«
+	/// UIç”¨ã®ç”»åƒæç”»
+	/// </summary>
+	void DrawImageForUI() override;
+
+
+	/// <summary>
+	/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‹•ã
 	/// </summary>
 	void MenuAction() override;
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset()override;
 
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒJƒƒ‰
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚«ãƒ¡ãƒ©
 	std::unique_ptr<GameCamera> camera;
-	//‰e—pŒõŒ¹ƒJƒƒ‰
+	//å½±ç”¨å…‰æºã‚«ãƒ¡ãƒ©
 	std::unique_ptr<GameLightCamera> lightCamera;
 
-	//ƒ‰ƒCƒg
+	//ãƒ©ã‚¤ãƒˆ
 	std::unique_ptr<LightGroup> lightGroup;
 	float ambientColor0[3] = { 1,1,1 };
-	// Œõü•ûŒü‰Šú’l
+	// å…‰ç·šæ–¹å‘åˆæœŸå€¤
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 1,0,0 };
 
@@ -81,29 +87,30 @@ private: //ƒƒ“ƒo•Ï”
 	float lightDir2[3] = { 1,0,0 };
 	float lightColor2[3] = { 0,0,1 };
 
-	//objƒ‚ƒfƒ‹
+	//objãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelPlayerEffect;
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	std::unique_ptr<Player> player;
 
-	//ƒXƒe[ƒW—pƒ}ƒbƒvƒf[ƒ^
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿
 	std::unique_ptr<MapDataStage> mapData;
 
-	//“V‹…
+	//å¤©çƒ
 	std::unique_ptr<Skydome> skydome;
 
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	std::unique_ptr<BackGround> backGround;
 
-	//UIŠÖŒW
+	//UIé–¢ä¿‚
 	std::unique_ptr<UserInterface> userInterface_;
 
-	//ƒ^ƒCƒgƒ‹ƒƒS
+	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
 	std::unique_ptr<Sprite> titleLogo;
 
-	//ƒXƒe[ƒWƒNƒŠƒAƒtƒ‰ƒO
+
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢ãƒ•ãƒ©ã‚°
 	bool isStageClear = false;
 };

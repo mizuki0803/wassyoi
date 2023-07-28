@@ -1,4 +1,4 @@
-#include "Menu.h"
+ï»¿#include "Menu.h"
 #include "SpriteTextureLoader.h"
 #include "Easing.h"
 
@@ -15,12 +15,12 @@ std::unique_ptr<Menu> Menu::Create(Vector2 pos)
 
 bool Menu::Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY)
 {
-	//ƒXƒvƒ‰ƒCƒg‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆåˆæœŸåŒ–
 	if (!Sprite::Initialize(texture, position, anchorpoint, isFlipX, isFlipY)) {
 		return false;
 	}
 
-	//‰æ–Ê‘S‘Ì‚ğ•¢‚¤‚Ì‚É•K—v‚Èî•ñ‚ğƒZƒbƒg
+	//ç”»é¢å…¨ä½“ã‚’è¦†ã†ã®ã«å¿…è¦ãªæƒ…å ±ã‚’ã‚»ãƒƒãƒˆ
 	size = { 0.0f, 0.0f };
 	texSize = { 256, 256 };
 
@@ -33,7 +33,7 @@ void Menu::Update()
 {
 	size = { Easing::OutBack(0.0f, 256.0f, menuEaseData_->GetTimeRate()), Easing::OutBack(0.0f, 96.0f, menuEaseData_->GetTimeRate()) };
 	menuEaseData_->Update();
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	Sprite::Update();
 }
 

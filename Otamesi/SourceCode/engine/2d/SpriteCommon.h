@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "PipelineSet.h"
 #include "Texture.h"
 #include <DirectXMath.h>
@@ -6,100 +6,100 @@
 #include <map>
 
 /// <summary>
-/// ƒXƒvƒ‰ƒCƒg‹¤’Ê•”•ª
+/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šéƒ¨åˆ†
 /// </summary>
 class SpriteCommon final
 {
-private: //ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	SpriteCommon() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~SpriteCommon() = default;
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	SpriteCommon(const SpriteCommon& spriteCommon) = delete;
-	//‘ã“ü‰‰Zq‚ğ–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const SpriteCommon& spriteCommon) = delete;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>ƒXƒvƒ‰ƒCƒg‹¤’Ê•”•ª</returns>
+	/// <returns>ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šéƒ¨åˆ†</returns>
 	static SpriteCommon* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
-	/// <param name="window_width">ƒEƒCƒ“ƒhƒE‰¡•</param>
-	/// <param name="window_height">ƒEƒCƒ“ƒhƒEc•</param>
-	/// <param name="directoryPath">ƒfƒBƒŒƒNƒgƒŠƒpƒX</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
+	/// <param name="window_width">ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦æ¨ªå¹…</param>
+	/// <param name="window_height">ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ç¸¦å¹…</param>
+	/// <param name="directoryPath">ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹</param>
 	void Initialize(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList, int window_width, int window_height);
 
 	/// <summary>
-	/// •`‰æ‘Oˆ—	
+	/// æç”»å‰å‡¦ç†	
 	/// </summary>
 	void DrawPrev(const std::string &name = "Default");
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	void CreatePipeline();
 
 	/// <summary>
-	/// ƒXƒJƒCƒh[ƒ€—pƒpƒCƒvƒ‰ƒCƒ“
+	/// ã‚¹ã‚«ã‚¤ãƒ‰ãƒ¼ãƒ ç”¨ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³
 	/// </summary>
 	void CreateSkyDormPipeline();
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
 	void AddCreatePipeline();
 
 public: //getter
 	/// <summary>
-	/// ƒfƒoƒCƒXæ“¾
+	/// ãƒ‡ãƒã‚¤ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>ƒfƒoƒCƒX</returns>
+	/// <returns>ãƒ‡ãƒã‚¤ã‚¹</returns>
 	ID3D12Device* GetDevice() { return dev; }
 
 	/// <summary>
-	/// Ë‰es—ñæ“¾
+	/// å°„å½±è¡Œåˆ—å–å¾—
 	/// </summary>
-	/// <returns>Ë‰es—ñ</returns>
+	/// <returns>å°„å½±è¡Œåˆ—</returns>
 	const XMMATRIX& GetMatProjection() { return matProjection; }
 
 	/// <summary>
-	/// ƒRƒ}ƒ“ƒhƒŠƒXƒgæ“¾
+	/// ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆå–å¾—
 	/// </summary>
-	/// <returns>ƒRƒ}ƒ“ƒhƒŠƒXƒg</returns>
+	/// <returns>ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</returns>
 	ID3D12GraphicsCommandList* GetCmdList() { return cmdList; }
 
 	/// <summary>
-	/// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgæ“¾
+	/// ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆå–å¾—
 	/// </summary>
-	/// <returns>ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg</returns>
+	/// <returns>ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆ</returns>
 	const PipelineSet& GetPipelineSet(const std::string &name = "Default") { return pipelineSet[name]; }
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	ID3D12Device* dev = nullptr;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	ID3D12GraphicsCommandList* cmdList = nullptr;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	std::map<std::string,PipelineSet> pipelineSet;
-	//Ë‰es—ñ
+	//å°„å½±è¡Œåˆ—
 	XMMATRIX matProjection;
 };

@@ -1,4 +1,4 @@
-#include "SceneChange.h"
+ï»¿#include "SceneChange.h"
 #include "Easing.h"
 #include "SpriteTextureLoader.h"
 #include "SceneManager.h"
@@ -13,9 +13,9 @@ void SceneChange::Initialize()
 {
 	type_ = TYPE::FadeIn;
 
-	// ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	// ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	XMFLOAT2 anchorPoint = { 0.5f, 0.5f };
-	// F
+	// è‰²
 	XMFLOAT4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	blackBox_.clear();
@@ -61,7 +61,7 @@ void SceneChange::Update()
 		}
 	}
 
-	//––’[‚ªtrue‚È‚ç‚»‚ê‚ð‘S‘Ì‚É“K‰ž
+	//æœ«ç«¯ãŒtrueãªã‚‰ãã‚Œã‚’å…¨ä½“ã«é©å¿œ
 	if (blackBox_[0][17]->inEnd_)
 	{
 		inEndFlag_ = true;
@@ -111,7 +111,7 @@ void SceneChange::SceneChangeStart(const std::string& sceneName)
 
 void BlackBox::Spin(TYPE type)
 {
-	//I—¹‚µ‚Ä‚¢‚ê‚Îˆ—‚ðÈ—ª
+	//çµ‚äº†ã—ã¦ã„ã‚Œã°å‡¦ç†ã‚’çœç•¥
 	if (type == TYPE::FadeIn && inEnd_ || type == TYPE::FadeOut && outEnd_)
 	{
 		return;
@@ -122,7 +122,7 @@ void BlackBox::Spin(TYPE type)
 	timeRate = easeTimer_ / countNum;
 	easeTimer_++;
 
-	//k¬
+	//ç¸®å°
 	float scale = 0.0f;
 	if (type == TYPE::FadeIn)
 	{
@@ -133,7 +133,7 @@ void BlackBox::Spin(TYPE type)
 		scale = Easing::InOutQuart(0.0f, 64.0f, timeRate);
 	}
 
-	//Œ©‚¦‚È‚­‚È‚Á‚½‚çI—¹
+	//è¦‹ãˆãªããªã£ãŸã‚‰çµ‚äº†
 	if (type == TYPE::FadeIn && easeTimer_ > countNum)
 	{
 		scale = 0.0f;

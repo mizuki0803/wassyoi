@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 #include "EaseData.h"
 #include <memory>
@@ -9,85 +9,85 @@ class ClearStaging
 {
 public: //enum
 	/// <summary>
-	/// ‘S‘Ì—¬‚ê
+	/// å…¨ä½“æµã‚Œ
 	/// </summary>
 	enum class MovePhase
 	{
-		Start,			//ŠJn
-		End,			//I—¹
-		None,	//‰½‚à‚µ‚È‚¢
+		Start,			//é–‹å§‹
+		End,			//çµ‚äº†
+		None,	//ä½•ã‚‚ã—ãªã„
 	};
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="pos">ˆÊ’u</param>
+	/// <param name="pos">ä½ç½®</param>
 	/// <returns></returns>
 	static std::unique_ptr<ClearStaging> Create();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// s“®‚Ìİ’è
+	/// è¡Œå‹•ã®è¨­å®š
 	/// </summary>
-	/// <param name="movePhase">s“®</param>
+	/// <param name="movePhase">è¡Œå‹•</param>
 	void SetMovePhase(MovePhase movePhase) { phase_ = static_cast<int>(movePhase); }
 
 	/// <summary>
-	/// I—¹ƒtƒ‰ƒO‚Ìæ“¾
+	/// çµ‚äº†ãƒ•ãƒ©ã‚°ã®å–å¾—
 	/// </summary>
-	/// <returns>I—¹ƒtƒ‰ƒO</returns>
+	/// <returns>çµ‚äº†ãƒ•ãƒ©ã‚°</returns>
 	bool GetEndFlag() { return endFlag_; }
 
 	/// <summary>
-	/// “r’†Œo‰ß‚Ìƒtƒ‰ƒO‚Ìæ“¾
+	/// é€”ä¸­çµŒéã®ãƒ•ãƒ©ã‚°ã®å–å¾—
 	/// </summary>
-	/// <returns>“r’†Œo‰ß‚Ìƒtƒ‰ƒO</returns>
+	/// <returns>é€”ä¸­çµŒéã®ãƒ•ãƒ©ã‚°</returns>
 	bool GetIntermediateTrigger();
 
 	/// <summary>
-	/// ƒŠƒZƒbƒg
+	/// ãƒªã‚»ãƒƒãƒˆ
 	/// </summary>
 	void Reset();
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰“®
+	/// åˆå‹•
 	/// </summary>
 	void StartMove();
 	/// <summary>
-	/// I—¹‚Ì“®‚«
+	/// çµ‚äº†ã®å‹•ã
 	/// </summary>
 	void EndMove();
 
-private: //ƒƒ“ƒo•Ï”
-	// ƒC[ƒWƒ“ƒO
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	std::unique_ptr<EaseData> easeData_;
-	// ”wŒi
+	// èƒŒæ™¯
 	std::unique_ptr<Sprite> backScreen_;
-	// ƒeƒLƒXƒg
+	// ãƒ†ã‚­ã‚¹ãƒˆ
 	std::unique_ptr<Sprite> textSprite_;
-	// ŠÖ”‚ÌŠÇ—
+	// é–¢æ•°ã®ç®¡ç†
 	std::vector<std::function<void()>> func_;
-	// ŠÖ”‚Ì”Ô†
+	// é–¢æ•°ã®ç•ªå·
 	size_t phase_ = 0;
-	// I—¹ƒtƒ‰ƒO
+	// çµ‚äº†ãƒ•ãƒ©ã‚°
 	bool endFlag_ = false;
-	// “r’†Œo‰ß‚Ìƒtƒ‰ƒO
+	// é€”ä¸­çµŒéã®ãƒ•ãƒ©ã‚°
 	bool intermediateFlag_ = false;
 };
 

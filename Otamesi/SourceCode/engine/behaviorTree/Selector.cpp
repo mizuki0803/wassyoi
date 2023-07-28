@@ -1,9 +1,9 @@
-#include "Selector.h"
+ï»¿#include "Selector.h"
 #include <assert.h>
 
 Selector* Selector::Create()
 {
-	//ƒZƒŒƒNƒ^[‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚»ãƒ¬ã‚¯ã‚¿ãƒ¼ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	Selector* selector = new Selector();
 	if (selector == nullptr) {
 		return nullptr;
@@ -14,7 +14,7 @@ Selector* Selector::Create()
 
 bool Selector::Select()
 {
-	//true‚ª‹A‚Á‚Ä‚«‚½‚ç‘¦I—¹
+	//trueãŒå¸°ã£ã¦ããŸã‚‰å³çµ‚äº†
 	for (int i = 0; i < (signed)nodes.size(); i++) {
 		if ((nodes[i])()) {
 			return true;
@@ -26,6 +26,6 @@ bool Selector::Select()
 
 void Selector::AddNode(std::function<bool()> func)
 {
-	//qƒm[ƒh”z—ñ‚É“o˜^
+	//å­ãƒãƒ¼ãƒ‰é…åˆ—ã«ç™»éŒ²
 	nodes.push_back(func);
 }

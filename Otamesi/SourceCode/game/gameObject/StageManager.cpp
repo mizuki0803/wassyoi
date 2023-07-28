@@ -1,4 +1,4 @@
-#include "StageManager.h"
+ï»¿#include "StageManager.h"
 #include <cassert>
 
 int StageManager::selectStage = 1;
@@ -7,7 +7,7 @@ bool StageManager::isAllStageClear = false;
 
 bool StageManager::GetIsClear(const int selectStage)
 {
-	//‘¶İ‚µ‚È‚¢ƒXƒe[ƒW”Ô†‚Ìê‡‚ÍŒx‚ğo‚·
+	//å­˜åœ¨ã—ãªã„ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã®å ´åˆã¯è­¦å‘Šã‚’å‡ºã™
 	if (selectStage < 0 || selectStage > stageNum - 1) {
 		assert(0);
 	}
@@ -22,21 +22,21 @@ void StageManager::StageClear()
 
 void StageManager::SetSelectStage(const int selectStage)
 {
-	//‘¶İ‚µ‚È‚¢ƒXƒe[ƒW”Ô†‚Ìê‡‚ÍŒx‚ğo‚·
+	//å­˜åœ¨ã—ãªã„ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã®å ´åˆã¯è­¦å‘Šã‚’å‡ºã™
 	if (selectStage < 0 || selectStage > stageNum - 1) {
 		assert(0);
 	}
 
-	//ˆø”‚ÌƒXƒe[ƒW”Ô†‚ğ‘I‘ğ’†‚É‚·‚é
+	//å¼•æ•°ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’é¸æŠä¸­ã«ã™ã‚‹
 	StageManager::selectStage = selectStage;
 }
 
 bool StageManager::NextStageSelect()
 {
-	//Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğŸ‚ÉˆÚ“®
+	//ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’æ¬¡ã«ç§»å‹•
 	selectStage++;
 
-	//Å‘åƒXƒe[ƒW”‚ğ’´‚¦‚È‚¢‚æ‚¤‚É‚·‚é
+	//æœ€å¤§ã‚¹ãƒ†ãƒ¼ã‚¸æ•°ã‚’è¶…ãˆãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (selectStage > stageNum - 1) {
 		selectStage = stageNum - 1;
 		return false;
@@ -47,10 +47,10 @@ bool StageManager::NextStageSelect()
 
 bool StageManager::PrevStageSelect()
 {
-	//Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğŸ‚ÉˆÚ“®
+	//ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’æ¬¡ã«ç§»å‹•
 	selectStage--;
 
-	//ƒXƒe[ƒW1‚æ‚è‰º‚É‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+	//ã‚¹ãƒ†ãƒ¼ã‚¸1ã‚ˆã‚Šä¸‹ã«ãªã‚‰ãªã„ã‚ˆã†ã«ã™ã‚‹
 	if (selectStage < 1) {
 		selectStage = 1;
 		return false;
@@ -61,17 +61,17 @@ bool StageManager::PrevStageSelect()
 
 bool StageManager::AllStageClearTriggerCheck()
 {
-	//Šù‚É‚·‚×‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½ó‘Ô‚È‚ç”²‚¯‚é
+	//æ—¢ã«ã™ã¹ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸçŠ¶æ…‹ãªã‚‰æŠœã‘ã‚‹
 	if (isAllStageClear) { return false; }
 
-	//‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½‚©ƒ`ƒFƒbƒN
+	//å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	for (int i = 1; i <= stageNum - 1; i++) {
 		if (!(GetIsClear(i))) { return false; }
 	}
 
-	//‰‚ß‚Ä‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½‚Æ‚«‚Ì‚İ“Á•Ê‚ÈƒXƒe[ƒW‚Éi‚ß‚é
+	//åˆã‚ã¦å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸã¨ãã®ã¿ç‰¹åˆ¥ãªã‚¹ãƒ†ãƒ¼ã‚¸ã«é€²ã‚ã‚‹
 	selectStage = 100;
-	//‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½ó‘Ô‚É‚·‚é
+	//å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸçŠ¶æ…‹ã«ã™ã‚‹
 	isAllStageClear = true;
 
 	return true;

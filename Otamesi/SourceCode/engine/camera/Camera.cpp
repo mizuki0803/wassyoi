@@ -1,14 +1,14 @@
-#include "Camera.h"
+ï»¿#include "Camera.h"
 #include "WindowApp.h"
 
 
 void Camera::Initialize()
 {
-	//ƒJƒƒ‰ƒAƒ“ƒOƒ‹‚ÌXV
+	//ã‚«ãƒ¡ãƒ©ã‚¢ãƒ³ã‚°ãƒ«ã®æ›´æ–°
 	UpdateAngle();
-	//ƒrƒ…[s—ñ‚Ì¶¬
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®ç”Ÿæˆ
 	UpdateMatView();
-	//“§‹“Š‰e‚É‚æ‚éË‰es—ñ‚Ì¶¬
+	//é€è¦–æŠ•å½±ã«ã‚ˆã‚‹å°„å½±è¡Œåˆ—ã®ç”Ÿæˆ
 	UpdateMatProjection();
 }
 
@@ -16,29 +16,29 @@ void Camera::Update()
 {
 	if (dirtyAngle || dirtyView) {
 		if (dirtyAngle) {
-			//ƒJƒƒ‰ƒAƒ“ƒOƒ‹‚ÌXV
+			//ã‚«ãƒ¡ãƒ©ã‚¢ãƒ³ã‚°ãƒ«ã®æ›´æ–°
 			UpdateAngle();
-			//ƒtƒ‰ƒO‚ğ‰º‚°‚é
+			//ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã’ã‚‹
 			dirtyAngle = false;
 		}
 
-		//ƒrƒ…[s—ñ‚Ì¶¬
+		//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã®ç”Ÿæˆ
 		UpdateMatView();
-		//ƒtƒ‰ƒO‚ğ‰º‚°‚é
+		//ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã’ã‚‹
 		dirtyView = false;
 	}
 
 	if (dirtyProjection) {
-		//“§‹“Š‰e‚É‚æ‚éË‰es—ñ‚Ì¶¬
+		//é€è¦–æŠ•å½±ã«ã‚ˆã‚‹å°„å½±è¡Œåˆ—ã®ç”Ÿæˆ
 		UpdateMatProjection();
-		//ƒtƒ‰ƒO‚ğ‰º‚°‚é
+		//ãƒ•ãƒ©ã‚°ã‚’ä¸‹ã’ã‚‹
 		dirtyProjection = false;
 	}
 }
 
 void Camera::UpdateAngle()
 {
-	//‹“_‰ñ“]
+	//è¦–ç‚¹å›è»¢
 	XMMATRIX matRot;
 	matRot = XMMatrixIdentity();
 	matRot *= XMMatrixRotationZ(XMConvertToRadians(angle.z));
@@ -48,93 +48,93 @@ void Camera::UpdateAngle()
 	XMVECTOR targetEyeV = { 0.0f, 0.0f, -distance, 1.0f };
 	targetEyeV = XMVector3TransformNormal(targetEyeV, matRot);
 
-	//ƒJƒƒ‰‚Ítarget‚ğ’Ç]‚·‚é
+	//ã‚«ãƒ¡ãƒ©ã¯targetã‚’è¿½å¾“ã™ã‚‹
 	XMVECTOR targetV = { target.x, target.y, target.z, 0 };
 	XMVECTOR eyeV = targetV + targetEyeV;
 
-	//ŒvZ‚µ‚½eyeV‚ğeye‚ÉƒZƒbƒg‚·‚é
+	//è¨ˆç®—ã—ãŸeyeVã‚’eyeã«ã‚»ãƒƒãƒˆã™ã‚‹
 	SetEye({ eyeV.m128_f32[0], eyeV.m128_f32[1], eyeV.m128_f32[2] });
 }
 
 void Camera::UpdateMatView()
 {
-	//‹“_À•W
+	//è¦–ç‚¹åº§æ¨™
 	XMVECTOR eyePosition = XMLoadFloat3(&XMFLOAT3(eye.x, eye.y, eye.z));
-	//’‹“XÀ•W
+	//æ³¨è¦–åº—åº§æ¨™
 	XMVECTOR targetPosition = XMLoadFloat3(&XMFLOAT3(target.x, target.y, target.z));
-	//(‰¼‚Ì)ã•ûŒü
+	//(ä»®ã®)ä¸Šæ–¹å‘
 	XMVECTOR upVector = XMLoadFloat3(&XMFLOAT3(up.x, up.y, up.z));
 
-	//ƒJƒƒ‰‚ÌZ²(‹“_•ûŒü)
+	//ã‚«ãƒ¡ãƒ©ã®Zè»¸(è¦–ç‚¹æ–¹å‘)
 	XMVECTOR cameraAxisZ = XMVectorSubtract(targetPosition, eyePosition);
 
-	//0ƒxƒNƒgƒ‹‚¾‚ÆŒü‚«‚ª’è‚Ü‚ç‚È‚¢‚Ì‚ÅœŠO
+	//0ãƒ™ã‚¯ãƒˆãƒ«ã ã¨å‘ããŒå®šã¾ã‚‰ãªã„ã®ã§é™¤å¤–
 	assert(!XMVector3Equal(cameraAxisZ, XMVectorZero()));
 	assert(!XMVector3IsInfinite(cameraAxisZ));
 	assert(!XMVector3Equal(upVector, XMVectorZero()));
 	assert(!XMVector3IsInfinite(upVector));
 
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisZ = XMVector3Normalize(cameraAxisZ);
 
-	//ƒJƒƒ‰‚ÌX²(‰E•ûŒü)
+	//ã‚«ãƒ¡ãƒ©ã®Xè»¸(å³æ–¹å‘)
 	XMVECTOR cameraAxisX;
 
-	//X²‚Íã•ûŒü¨Z²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Xè»¸ã¯ä¸Šæ–¹å‘â†’Zè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	cameraAxisX = XMVector3Cross(upVector, cameraAxisZ);
 
-	//ƒxƒNƒgƒ‹‚ğ³‹K‰»
+	//ãƒ™ã‚¯ãƒˆãƒ«ã‚’æ­£è¦åŒ–
 	cameraAxisX = XMVector3Normalize(cameraAxisX);
 
-	//ƒJƒƒ‰‚ÌX²(ã•ûŒü)
+	//ã‚«ãƒ¡ãƒ©ã®Xè»¸(ä¸Šæ–¹å‘)
 	XMVECTOR cameraAxisY;
 
-	//X²‚ÍZ²¨X²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Xè»¸ã¯Zè»¸â†’Xè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	cameraAxisY = XMVector3Cross(cameraAxisZ, cameraAxisX);
 
-	//ƒJƒƒ‰‰ñ“]s—ñ
+	//ã‚«ãƒ¡ãƒ©å›è»¢è¡Œåˆ—
 	XMMATRIX matCameraRot;
-	//ƒJƒƒ‰À•WŒn¨ƒ[ƒ‹ƒhÀ•WŒn‚Ì•ÏŠ·s—ñ
+	//ã‚«ãƒ¡ãƒ©åº§æ¨™ç³»â†’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®å¤‰æ›è¡Œåˆ—
 	matCameraRot.r[0] = cameraAxisX;
 	matCameraRot.r[1] = cameraAxisY;
 	matCameraRot.r[2] = cameraAxisZ;
 	matCameraRot.r[3] = XMVectorSet(0, 0, 0, 1);
 
-	//“]’u‚É‚æ‚è‹ts—ñ(‹t‰ñ“])‚ğŒvZ
+	//è»¢ç½®ã«ã‚ˆã‚Šé€†è¡Œåˆ—(é€†å›è»¢)ã‚’è¨ˆç®—
 	matView = XMMatrixTranspose(matCameraRot);
 
-	//‹“_À•W‚É-1‚ğŠ|‚¯‚½À•W
+	//è¦–ç‚¹åº§æ¨™ã«-1ã‚’æ›ã‘ãŸåº§æ¨™
 	XMVECTOR reverseEyePosition = XMVectorNegate(eyePosition);
-	//ƒJƒƒ‰‚ÌˆÊ’u‚©‚çƒ[ƒ‹ƒhŒ´“_‚Ö‚ÌƒxƒNƒgƒ‹(ƒJƒƒ‰À•WŒn)
-	XMVECTOR tX = XMVector3Dot(matCameraRot.r[0], reverseEyePosition); //X¬•ª
-	XMVECTOR tY = XMVector3Dot(matCameraRot.r[1], reverseEyePosition); //Y¬•ª
-	XMVECTOR tZ = XMVector3Dot(matCameraRot.r[2], reverseEyePosition); //Z¬•ª
-	//ˆê‚Â‚ÌƒxƒNƒgƒ‹‚É‚Ü‚Æ‚ß‚é
+	//ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‹ã‚‰ãƒ¯ãƒ¼ãƒ«ãƒ‰åŸç‚¹ã¸ã®ãƒ™ã‚¯ãƒˆãƒ«(ã‚«ãƒ¡ãƒ©åº§æ¨™ç³»)
+	XMVECTOR tX = XMVector3Dot(matCameraRot.r[0], reverseEyePosition); //Xæˆåˆ†
+	XMVECTOR tY = XMVector3Dot(matCameraRot.r[1], reverseEyePosition); //Yæˆåˆ†
+	XMVECTOR tZ = XMVector3Dot(matCameraRot.r[2], reverseEyePosition); //Zæˆåˆ†
+	//ä¸€ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã«ã¾ã¨ã‚ã‚‹
 	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
 
-	//ƒrƒ…[s—ñ‚É•½sˆÚ“®¬•ª‚ğİ’è
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã«å¹³è¡Œç§»å‹•æˆåˆ†ã‚’è¨­å®š
 	matView.r[3] = translation;
 
-#pragma region ‘S•ûŒüƒrƒ‹ƒ{[ƒhs—ñ‚ÌŒvZ
-	//ƒrƒ‹ƒ{[ƒhs—ñ
+#pragma region å…¨æ–¹å‘ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã®è¨ˆç®—
+	//ãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	matBillboard.r[0] = cameraAxisX;
 	matBillboard.r[1] = cameraAxisY;
 	matBillboard.r[2] = cameraAxisZ;
 	matBillboard.r[3] = XMVectorSet(0, 0, 0, 1);
 #pragma region
 
-#pragma region Y²‰ñ‚èƒrƒ‹ƒ{[ƒhs—ñ‚ÌŒvZ
-	//ƒJƒƒ‰X²AY²AZ²
+#pragma region Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—ã®è¨ˆç®—
+	//ã‚«ãƒ¡ãƒ©Xè»¸ã€Yè»¸ã€Zè»¸
 	XMVECTOR ybillCameraAxisX, ybillCameraAxisY, ybillCameraAxisZ;
 
-	//X²‚Í‹¤’Ê
+	//Xè»¸ã¯å…±é€š
 	ybillCameraAxisX = cameraAxisX;
-	//Y²‚Íƒ[ƒ‹ƒhÀ•WŒn‚Ìy²
+	//Yè»¸ã¯ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã®yè»¸
 	ybillCameraAxisY = XMVector3Normalize(upVector);
-	//Z²‚ÍX²¨Y²‚ÌŠOÏ‚Å‹‚Ü‚é
+	//Zè»¸ã¯Xè»¸â†’Yè»¸ã®å¤–ç©ã§æ±‚ã¾ã‚‹
 	ybillCameraAxisZ = XMVector3Cross(ybillCameraAxisX, ybillCameraAxisY);
 
-	//Y²‰ñ‚èƒrƒ‹ƒ{[ƒhs—ñ
+	//Yè»¸å›ã‚Šãƒ“ãƒ«ãƒœãƒ¼ãƒ‰è¡Œåˆ—
 	matBillboardY.r[0] = ybillCameraAxisX;
 	matBillboardY.r[1] = ybillCameraAxisY;
 	matBillboardY.r[2] = ybillCameraAxisZ;
@@ -144,15 +144,15 @@ void Camera::UpdateMatView()
 void Camera::UpdateMatProjection()
 {
 	matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(60.0f),				//ã‰º‰æŠp60“x
-		(float)WindowApp::window_width / WindowApp::window_height,	//ƒAƒXƒyƒNƒg”äi‰æ–Ê‰¡• / ‰æ–Êc•j
-		0.1f, 2000.0f							//‘O’[A‰œ’[
+		XMConvertToRadians(60.0f),				//ä¸Šä¸‹ç”»è§’60åº¦
+		(float)WindowApp::window_width / WindowApp::window_height,	//ã‚¢ã‚¹ãƒšã‚¯ãƒˆæ¯”ï¼ˆç”»é¢æ¨ªå¹… / ç”»é¢ç¸¦å¹…ï¼‰
+		0.1f, 2000.0f							//å‰ç«¯ã€å¥¥ç«¯
 	);
 }
 
 void Camera::MoveVector(const Vector3& move)
 {
-	//‹“_‚Æ’‹“_‚ğ“¯‚¶—Ê“®‚©‚·
+	//è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã‚’åŒã˜é‡å‹•ã‹ã™
 	MoveEyeVector(move);
 	MoveTargetVector(move);
 }

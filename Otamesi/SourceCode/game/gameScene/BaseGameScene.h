@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 #include <DirectXMath.h>
 
@@ -6,83 +6,83 @@ class GameCamera;
 class Player;
 
 /// <summary>
-/// ƒQ[ƒ€ŒÅ—L‚ÌŠî’êƒV[ƒ“
+/// ã‚²ãƒ¼ãƒ å›ºæœ‰ã®åŸºåº•ã‚·ãƒ¼ãƒ³
 /// </summary>
 class BaseGameScene : public BaseScene
 {
-protected: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+protected: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-protected: //ƒƒ“ƒoŠÖ”
+protected: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒV[ƒ“•ÏXî•ñ‚ğƒZƒbƒg‚µAƒV[ƒ“•ÏX‚ğŠJn‚·‚é
+	/// ã‚·ãƒ¼ãƒ³å¤‰æ›´æƒ…å ±ã‚’ã‚»ãƒƒãƒˆã—ã€ã‚·ãƒ¼ãƒ³å¤‰æ›´ã‚’é–‹å§‹ã™ã‚‹
 	/// </summary>
-	/// <param name="color">‰æ–Ê‚ğ•¢‚¤F</param>
-	/// <param name="deepenTime">F‚ğ”Z‚­‚·‚éŠÔ</param>
-	/// <param name="waitTime">F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚éŠÔ</param>
-	/// <param name="returnTime">F‚ğ–ß‚·ŠÔ</param>
-	/// <param name="nextSceneName">ƒV[ƒ“•ÏXŒã‚ÌƒV[ƒ“–¼</param>
+	/// <param name="color">ç”»é¢ã‚’è¦†ã†è‰²</param>
+	/// <param name="deepenTime">è‰²ã‚’æ¿ƒãã™ã‚‹æ™‚é–“</param>
+	/// <param name="waitTime">è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹æ™‚é–“</param>
+	/// <param name="returnTime">è‰²ã‚’æˆ»ã™æ™‚é–“</param>
+	/// <param name="nextSceneName">ã‚·ãƒ¼ãƒ³å¤‰æ›´å¾Œã®ã‚·ãƒ¼ãƒ³å</param>
 	void SceneChangeStart(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime, const std::string& nextSceneName);
 
 	/// <summary>
-	/// ƒV[ƒ“•ÏXó‘Ô
+	/// ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹
 	/// </summary>
 	void SceneChangeMode();
 
 	/// <summary>
-	/// binaryíœ
+	/// binaryå‰Šé™¤
 	/// </summary>
 	void DeleteBinary();
 
 	/// <summary>
-	/// ó‘Ô‚Ì•Û‘¶
+	/// çŠ¶æ…‹ã®ä¿å­˜
 	/// </summary>
-	/// <param name="_camera">ƒJƒƒ‰ƒNƒ‰ƒX</param>
-	/// <param name="_player">ƒvƒŒƒCƒ„[ƒNƒ‰ƒX</param>
+	/// <param name="_camera">ã‚«ãƒ¡ãƒ©ã‚¯ãƒ©ã‚¹</param>
+	/// <param name="_player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹</param>
 	void KeepBinary(GameCamera& _camera, Player& _player);
 
 	/// <summary>
 	/// undo
 	/// </summary>
-	/// <param name="_camera">ƒJƒƒ‰ƒNƒ‰ƒX</param>
-	/// <param name="_player">ƒvƒŒƒCƒ„[ƒNƒ‰ƒX</param>
+	/// <param name="_camera">ã‚«ãƒ¡ãƒ©ã‚¯ãƒ©ã‚¹</param>
+	/// <param name="_player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹</param>
 	void Undo(GameCamera* _camera, Player* _player);
 
 	/// <summary>
 	/// redo
 	/// </summary>
-	/// <param name="_camera">ƒJƒƒ‰ƒNƒ‰ƒX</param>
-	/// <param name="_player">ƒvƒŒƒCƒ„[ƒNƒ‰ƒX</param>
+	/// <param name="_camera">ã‚«ãƒ¡ãƒ©ã‚¯ãƒ©ã‚¹</param>
+	/// <param name="_player">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹</param>
 	void Redo(GameCamera* _camera, Player* _player);
 
 	/// <summary>
-	/// ƒƒjƒ…[‚Ì“®‚«
+	/// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®å‹•ã
 	/// </summary>
 	virtual void MenuAction() = 0;
 
-protected: //ƒƒ“ƒo•Ï”
-	//ƒV[ƒ“•ÏX‚É‚©‚©‚éŠÔ
+protected: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´ã«ã‹ã‹ã‚‹æ™‚é–“
 	int32_t sceneChangeTime = 0;
-	//ƒV[ƒ“•ÏXŠJn‚©‚ç‚Ìƒ^ƒCƒ}[
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´é–‹å§‹ã‹ã‚‰ã®ã‚¿ã‚¤ãƒãƒ¼
 	int32_t sceneChangeTimer = 0;
-	//ƒV[ƒ“•ÏXó‘Ô‚©
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹ã‹
 	bool isSceneChange = false;
-	//Ÿ‚ÌƒV[ƒ“
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³
 	std::string nextSceneName;
 #pragma region
-	//Œ»İ‚Ìè‡
+	//ç¾åœ¨ã®æ‰‹é †
 	int orderNum;
-	//Œ»İ‚ÌÅ‘åè‡
+	//ç¾åœ¨ã®æœ€å¤§æ‰‹é †
 	int orderMaxNum;
-	//Á‹‚ÌÅ‘å”Ô†
+	//æ¶ˆå»æ™‚ã®æœ€å¤§ç•ªå·
 	int deleteOrderMaxNum;
-#pragma endregion undo redo—p
+#pragma endregion undo redoç”¨
 
 };

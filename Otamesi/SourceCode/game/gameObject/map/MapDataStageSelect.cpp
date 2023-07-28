@@ -1,13 +1,13 @@
-#include "MapDataStageSelect.h"
+ï»¿#include "MapDataStageSelect.h"
 #include "MapBlockData.h"
 #include "StageManager.h"
 
 MapDataStageSelect* MapDataStageSelect::Create(const int selectStageNum, const StageSelectBlockManager::BlockManagerPositionPhase& positionPhase)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	MapDataStageSelect* instance = new MapDataStageSelect();
 
-	//ƒ}ƒbƒv¶¬
+	//ãƒãƒƒãƒ—ç”Ÿæˆ
 	if (!instance->Initialize(selectStageNum, positionPhase)) {
 		delete instance;
 		assert(0);
@@ -20,13 +20,13 @@ MapDataStageSelect* MapDataStageSelect::Create(const int selectStageNum, const S
 
 bool MapDataStageSelect::Initialize(const int selectStageNum, const StageSelectBlockManager::BlockManagerPositionPhase& positionPhase)
 {
-	//ƒuƒƒbƒNŠÇ—¶¬
+	//ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ç”Ÿæˆ
 	blockManager.reset(StageSelectBlockManager::Create(positionPhase));
 
-	//ƒ}ƒbƒv¶¬
+	//ãƒãƒƒãƒ—ç”Ÿæˆ
 	CreateMap(selectStageNum);
 
-	//‘I‘ğ‚µ‚Ä‚¢‚éƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚Ä‚¢‚È‚¯‚ê‚ÎƒuƒƒbƒN‚ğ^‚ÁˆÃ‚É‚·‚é
+	//é¸æŠã—ã¦ã„ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ã¦ã„ãªã‘ã‚Œã°ãƒ–ãƒ­ãƒƒã‚¯ã‚’çœŸã£æš—ã«ã™ã‚‹
 	if (!StageManager::GetIsClear(selectStageNum)) {
 		for (const std::unique_ptr<StageSelectBlock>& block : blocks) {
 			const XMFLOAT4 black = { 0,0,0,1 };
@@ -39,10 +39,10 @@ bool MapDataStageSelect::Initialize(const int selectStageNum, const StageSelectB
 
 void MapDataStageSelect::Update()
 {
-	//ƒuƒƒbƒNŠÇ—
+	//ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†
 	blockManager->Update();
 
-	//ƒuƒƒbƒN
+	//ãƒ–ãƒ­ãƒƒã‚¯
 	for (const std::unique_ptr<StageSelectBlock>& block : blocks) {
 		block->Update();
 	}
@@ -50,7 +50,7 @@ void MapDataStageSelect::Update()
 
 void MapDataStageSelect::Draw()
 {
-	//ƒuƒƒbƒN•`‰æ
+	//ãƒ–ãƒ­ãƒƒã‚¯æç”»
 	Block::Draw();
 }
 
@@ -63,74 +63,74 @@ void MapDataStageSelect::FrameReset()
 
 void MapDataStageSelect::CreateMapBlock()
 {
-	//ƒuƒƒbƒN¶¬
+	//ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	for (int i = 0; i < mapChipNum.size(); i++) {
 		for (int j = 0; j < mapChipNum[i].size(); j++) {
 			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
-				//ƒ}ƒbƒv”Ô†
+				//ãƒãƒƒãƒ—ç•ªå·
 				const XMINT3 chipNum = { i, j, k };
-				//ƒvƒŒƒCƒ„[‚Ì¶¬—pƒ}ƒbƒv”Ô†‚ğ•Û‘¶
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆç”¨ãƒãƒƒãƒ—ç•ªå·ã‚’ä¿å­˜
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::player), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
-				//ƒS[ƒ‹¶¬
+				//ã‚´ãƒ¼ãƒ«ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::goal), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
-				//ƒuƒƒbƒN¶¬
+				//ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageSelectBlock> newBlock;
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::block), chipNum, shiftPos, blockManager.get()));
 					blocks.push_back(std::move(newBlock));
 				}
-				//ãŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//ä¸Šå‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = {};	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = {};	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰ºŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//ä¸‹å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = { 180, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 180, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//¶Œü‚«ƒnƒŠƒ{ƒe¶¬
+				//å·¦å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = { 0, 0, 90 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 0, 0, 90 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰EŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//å³å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = { 0, 0, -90 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 0, 0, -90 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//³–ÊŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//æ­£é¢å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = { -90, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { -90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰œŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//å¥¥å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageSelectBlock> newBlock;
-					const XMFLOAT3 rot = { 90, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageSelectBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, blockManager.get()));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));

@@ -1,14 +1,14 @@
-#include "DrawerSprite.h"
+ï»¿#include "DrawerSprite.h"
 #include "Input.h"
 #include "Easing.h"
 #include "WindowApp.h"
 
 DrawerSprite* DrawerSprite::Create(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	DrawerSprite* instance = new DrawerSprite();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	instance->Initialize(texture, drawerKey, hidePlace, posY, stickoutNum, isOpenDrawer);
 
 	return instance;
@@ -16,32 +16,32 @@ DrawerSprite* DrawerSprite::Create(const Texture& texture, BYTE drawerKey, HideP
 
 bool DrawerSprite::Initialize(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
-	//ˆø‚«o‚µ‚ÌŠJ•Â‚Ég—p‚·‚éƒL[‚ğƒZƒbƒg
+	//å¼•ãå‡ºã—ã®é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	this->drawerKey = drawerKey;
 
-	//‰B‚ê‚éêŠ‚É‰‚¶‚ÄƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚ğƒZƒbƒg
+	//éš ã‚Œã‚‹å ´æ‰€ã«å¿œã˜ã¦ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Vector2 anchorpoint;
 	if (hidePlace == HidePlace::Left) { anchorpoint = { 1.0f, 0.0f }; }
 	else if (hidePlace == HidePlace::Right) { anchorpoint = { 0.0f, 0.0f }; }
 
-	//ƒXƒvƒ‰ƒCƒg¶¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	if (!Sprite::Initialize(texture, position, anchorpoint, false, false)) {
 		return false;
 	}
 
-	//•Â‚¶‚Ä‚¢‚éê‡‚ÌÀ•W‚ğƒZƒbƒg
+	//é–‰ã˜ã¦ã„ã‚‹å ´åˆã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	if (hidePlace == HidePlace::Left) { closedStatePos = { stickoutNum, posY }; }
 	else if (hidePlace == HidePlace::Right) { closedStatePos = { WindowApp::window_width - stickoutNum, posY }; }
-	//ŠJ‚¢‚Ä‚¢‚éê‡‚ÌÀ•W‚ğƒZƒbƒg
+	//é–‹ã„ã¦ã„ã‚‹å ´åˆã®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	openStatePos = closedStatePos;
 	if (hidePlace == HidePlace::Left) { openStatePos.x += size.x - stickoutNum-10; }
 	else if (hidePlace == HidePlace::Right) { openStatePos.x -= size.x - stickoutNum-10; }
 
-	//ŠJn‚Éˆø‚«o‚µ‚ğŠJ‚¢‚Ä‚¢‚éó‘Ô‚©ƒZƒbƒg
+	//é–‹å§‹æ™‚ã«å¼•ãå‡ºã—ã‚’é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ã‹ã‚»ãƒƒãƒˆ
 	isOpenDrawerSceneStart = isOpenDrawer;
 	this->isOpenDrawer = isOpenDrawer;
 
-	//ŠJn‚ÌŠJ•Âó‘Ô‚É‡‚í‚¹‚ÄÀ•W‚ğƒZƒbƒg
+	//é–‹å§‹æ™‚ã®é–‹é–‰çŠ¶æ…‹ã«åˆã‚ã›ã¦åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	if (isOpenDrawer) { position = openStatePos; }
 	else { position = closedStatePos; }
 
@@ -50,31 +50,31 @@ bool DrawerSprite::Initialize(const Texture& texture, BYTE drawerKey, HidePlace 
 
 void DrawerSprite::Update()
 {
-	//ŠJ•ÂˆÚ“®
+	//é–‹é–‰ç§»å‹•
 	Move();
 
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	Sprite::Update();
 }
 
 void DrawerSprite::MoveStart()
 {
-	//ˆÚ“®ŠJnÀ•W‚ğƒZƒbƒg
+	//ç§»å‹•é–‹å§‹æ™‚åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	moveStartPos = position;
 
-	//ƒ^ƒCƒ}[‚ğ‰Šú‰»
+	//ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–
 	moveTimer = 0;
-	//ŠJ•ÂŠJn’†ó‘Ô‚É‚·‚é
+	//é–‹é–‰é–‹å§‹ä¸­çŠ¶æ…‹ã«ã™ã‚‹
 	isMoveDrawer = true;
 
-	//ŠJ•Â‚Ìó‘Ô‚ğ”½“]‚³‚¹‚é
+	//é–‹é–‰ã®çŠ¶æ…‹ã‚’åè»¢ã•ã›ã‚‹
 	if (isOpenDrawer) { isOpenDrawer = false; }
 	else { isOpenDrawer = true; }
 }
 
 void DrawerSprite::Reset()
 {
-	//À•W‚ÆŠJ•Âó‘Ô‚ğƒV[ƒ“ŠJnó‘Ô‚É–ß‚·
+	//åº§æ¨™ã¨é–‹é–‰çŠ¶æ…‹ã‚’ã‚·ãƒ¼ãƒ³é–‹å§‹çŠ¶æ…‹ã«æˆ»ã™
 	isOpenDrawer = isOpenDrawerSceneStart;
 	if (isOpenDrawer) { position = openStatePos; }
 	else { position = closedStatePos; }
@@ -83,29 +83,29 @@ void DrawerSprite::Reset()
 
 void DrawerSprite::Move()
 {
-	//ŠJ•ÂˆÚ“®’†‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//é–‹é–‰ç§»å‹•ä¸­ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!isMoveDrawer) { return; }
 
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	moveTimer++;
-	//À•WˆÚ“®ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//åº§æ¨™ç§»å‹•ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°(0ï½1ã‚’ç®—å‡º)
 	const float time = moveTimer / (float)moveTime;
 
-	//ˆÚ“®‚³‚¹‚é
-	//ŠJ‚­
+	//ç§»å‹•ã•ã›ã‚‹
+	//é–‹ã
 	if (isOpenDrawer) {
 		position.x = Easing::OutQuint(moveStartPos.x, openStatePos.x, time);
 		position.y = Easing::OutQuint(moveStartPos.y, openStatePos.y, time);
 	}
-	//•Â‚¶‚é
+	//é–‰ã˜ã‚‹
 	else {
 		position.x = Easing::OutQuint(moveStartPos.x, closedStatePos.x, time);
 		position.y = Easing::OutQuint(moveStartPos.y, closedStatePos.y, time);
 	}
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«æº€ãŸãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (moveTimer < moveTime) { return; }
 
-	//Š®—¹‚µ‚½‚Ì‚ÅˆÚ“®ó‘Ô‚ğ‰ğœ‚·‚é
+	//å®Œäº†ã—ãŸã®ã§ç§»å‹•çŠ¶æ…‹ã‚’è§£é™¤ã™ã‚‹
 	isMoveDrawer = false;
 }

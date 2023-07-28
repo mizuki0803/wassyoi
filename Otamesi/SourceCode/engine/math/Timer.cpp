@@ -1,12 +1,12 @@
-#include "Timer.h"
+ï»¿#include "Timer.h"
 #include <thread>
 
 Timer::Timer():
 
-	frame_count_(0),             // Œo‰ßƒtƒŒ[ƒ€‰Šú‰»
-	time_(0),                    // Œo‰ßŠÔ‰Šú‰»
+	frame_count_(0),             // çµŒéãƒ•ãƒ¬ãƒ¼ãƒ åˆæœŸåŒ–
+	time_(0),                    // çµŒéæ™‚é–“åˆæœŸåŒ–
 
-	fixed_delta_time_(0.02),     // 0.02•b‚²‚Æ‚ÉFixedUpdate
+	fixed_delta_time_(0.02),     // 0.02ç§’ã”ã¨ã«FixedUpdate
 	fixed_update_time_(0.0),
 
 	frame_rate_(1.0f / 60.0f)
@@ -16,25 +16,25 @@ Timer::Timer():
 
 void Timer::InstrumentationStart()
 {
-    // ü”g”æ“¾
+    // å‘¨æ³¢æ•°å–å¾—
     QueryPerformanceFrequency(&frequency_);
-    // Œv‘ªŠJn
+    // è¨ˆæ¸¬é–‹å§‹
     QueryPerformanceCounter(&time_count_start_);
 }
 
 double Timer::InstrumentationEnd()
 {
-    // Œ»İŠÔ‚ğæ“¾
+    // ç¾åœ¨æ™‚é–“ã‚’å–å¾—
     QueryPerformanceCounter(&time_count_end_);
-    // Œo‰ßŠÔŒv‘ª
+    // çµŒéæ™‚é–“è¨ˆæ¸¬
     delta_time_ = static_cast<double>(time_count_end_.QuadPart - time_count_start_.QuadPart) / static_cast<double>(frequency_.QuadPart);
 
-    // Œo‰ß•b”‰ÁZ
+    // çµŒéç§’æ•°åŠ ç®—
     time_ += delta_time_;
-    // Œo‰ßƒtƒŒ[ƒ€”‘‰Á
+    // çµŒéãƒ•ãƒ¬ãƒ¼ãƒ æ•°å¢—åŠ 
     ++frame_count_;
 
-    // ƒtƒŒ[ƒ€ƒŒ[ƒgŒÅ’è
+    // ãƒ•ãƒ¬ãƒ¼ãƒ ãƒ¬ãƒ¼ãƒˆå›ºå®š
     if (delta_time_ <= frame_rate_)
     {
         DWORD sleep_time = static_cast<DWORD>((frame_rate_ - delta_time_) * 1000);

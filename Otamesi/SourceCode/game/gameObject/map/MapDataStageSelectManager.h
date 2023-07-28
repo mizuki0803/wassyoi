@@ -1,62 +1,62 @@
-#pragma once
+ï»¿#pragma once
 #include "MapDataStageSelect.h"
 #include "StageSelectBlockManager.h"
 #include "StageNumberUI.h"
 
 /// <summary>
-/// ƒXƒe[ƒW‘I‘ğƒV[ƒ“‘SƒuƒƒbƒNŠÖ˜A‚ÌŠÇ—
+/// ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã‚·ãƒ¼ãƒ³å…¨ãƒ–ãƒ­ãƒƒã‚¯é–¢é€£ã®ç®¡ç†
 /// </summary>
 class MapDataStageSelectManager
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <returns>ƒXƒe[ƒW‘I‘ğƒV[ƒ“‘SƒuƒƒbƒNŠÖ˜A‚ÌŠÇ—</returns>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠã‚·ãƒ¼ãƒ³å…¨ãƒ–ãƒ­ãƒƒã‚¯é–¢é€£ã®ç®¡ç†</returns>
 	static MapDataStageSelectManager* Create();
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <returns>¬”Û</returns>
+	/// <returns>æˆå¦</returns>
 	bool Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// UI•`‰æ
+	/// UIæç”»
 	/// </summary>
 	void DrawUI();
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 
 	void SetNotMove(bool flag1) { menuFlag_ = flag1; }
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‘I‘ğ‚·‚éƒXƒe[ƒW‚ğ•ÏX‚·‚é
+	/// é¸æŠã™ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å¤‰æ›´ã™ã‚‹
 	/// </summary>
 	void ChangeStage();
 
-private: //ƒƒ“ƒo•Ï”
-	//1ƒXƒe[ƒW•ª‚Ìƒ}ƒbƒvƒf[ƒ^ŒQ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//1ã‚¹ãƒ†ãƒ¼ã‚¸åˆ†ã®ãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿ç¾¤
 	std::list<std::unique_ptr<MapDataStageSelect>> mapDatas;
 
-	//ƒXƒe[ƒW”Ô†•\¦—pUI
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºç”¨UI
 	std::unique_ptr<StageNumberUI> stageNumberUI;
 
-	// ƒƒjƒ…[‚ğŠJ‚¢‚Ä‚¢‚é‚©
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’é–‹ã„ã¦ã„ã‚‹ã‹
 	bool menuFlag_ = false;
 };

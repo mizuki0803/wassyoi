@@ -1,60 +1,60 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 #include <string>
 
 
 /// <summary>
-/// ƒfƒoƒbƒOƒeƒLƒXƒg
+/// ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆ
 /// </summary>
 class DebugText final
 {
-public: //Ã“Iƒƒ“ƒo•Ï”
-	static const int maxCharCount = 256;	//1ƒtƒŒ[ƒ€‚Å‚ÌÅ‘å•\¦•¶š”
-	static const int fontWidth = 9;			//ƒtƒHƒ“ƒg‰æ‘œ“à1•¶š•ª‚Ì‰¡•
-	static const int fontHeight = 18;		//ƒtƒHƒ“ƒg‰æ‘œ“à1•¶š•ª‚Ìc•
-	static const int fontLineCount = 14;	//ƒtƒHƒ“ƒg‰æ‘œ“à1s•ª‚Ì•¶š”
+public: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	static const int maxCharCount = 256;	//1ãƒ•ãƒ¬ãƒ¼ãƒ ã§ã®æœ€å¤§è¡¨ç¤ºæ–‡å­—æ•°
+	static const int fontWidth = 9;			//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1æ–‡å­—åˆ†ã®æ¨ªå¹…
+	static const int fontHeight = 18;		//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1æ–‡å­—åˆ†ã®ç¸¦å¹…
+	static const int fontLineCount = 14;	//ãƒ•ã‚©ãƒ³ãƒˆç”»åƒå†…1è¡Œåˆ†ã®æ–‡å­—æ•°
 
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	DebugText() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~DebugText();
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	DebugText(const DebugText& debugText) = delete;
-	//‘ã“ü‰‰Zq‚ğ–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const DebugText& debugText) = delete;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>ƒfƒoƒbƒOƒeƒLƒXƒg</returns>
+	/// <returns>ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆ</returns>
 	static DebugText* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
 	void Initialize(const Texture& texture);
 
 	/// <summary>
-	/// ƒeƒLƒXƒg•¶š“ü—Í
+	/// ãƒ†ã‚­ã‚¹ãƒˆæ–‡å­—å…¥åŠ›
 	/// </summary>
-	/// <param name="text">ƒeƒLƒXƒg</param>
-	/// <param name="x">XÀ•W</param>
-	/// <param name="y">YÀ•W</param>
-	/// <param name="scale">‘å‚«‚³</param>
+	/// <param name="text">ãƒ†ã‚­ã‚¹ãƒˆ</param>
+	/// <param name="x">Xåº§æ¨™</param>
+	/// <param name="y">Yåº§æ¨™</param>
+	/// <param name="scale">å¤§ãã•</param>
 	void Print(const std::string& text, float x, float y, float scale = 1.0f);
 
 	/// <summary>
-	/// ˆêÄ•`‰æ
+	/// ä¸€æ–‰æç”»
 	/// </summary>
 	void DrawAll();
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒXƒvƒ‰ƒCƒg‚Ì”z—ñ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é…åˆ—
 	Sprite* sprites[maxCharCount];
-	//ƒXƒvƒ‰ƒCƒg”z—ñ‚Ì“Y‚¦š”Ô†
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆé…åˆ—ã®æ·»ãˆå­—ç•ªå·
 	int spriteIndex = 0;
 };

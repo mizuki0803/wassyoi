@@ -1,23 +1,23 @@
-#include "PlayerEffect.h"
+ï»¿#include "PlayerEffect.h"
 #include "Player.h"
 #include "Easing.h"
 
 PlayerEffect *PlayerEffect::Create(ObjModel *model,float scale)
 {
-	//objƒIƒuƒWƒFƒNƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ð¶¬
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	PlayerEffect *object3d = new PlayerEffect();
 	if (object3d == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!object3d->Initialize()) {
 		delete object3d;
 		assert(0);
 		return nullptr;
 	}
 
-	//ƒ‚ƒfƒ‹‚ðƒZƒbƒg
+	//ãƒ¢ãƒ‡ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	object3d->SetModel(model);
 
 	object3d->scale =

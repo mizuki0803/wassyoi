@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include <wrl.h>
-#define DIRECTINPUT_VERSION 0x0800	//DirectInput‚Ìƒo[ƒWƒ‡ƒ“Žw’è
+#define DIRECTINPUT_VERSION 0x0800	//DirectInputã®ãƒãƒ¼ã‚¸ãƒ§ãƒ³æŒ‡å®š
 #include <dinput.h>
 #include <DirectXMath.h>
 
 #include "WindowApp.h"
 
 /// <summary>
-/// “ü—Í
+/// å…¥åŠ›
 /// </summary>
 class Input final
 {
-public: //ƒGƒCƒŠƒAƒX
-	//namespaceÈ—ª
+public: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//namespaceçœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
-public: //—ñ‹“
-	//ƒ}ƒEƒXƒ{ƒ^ƒ“
+public: //åˆ—æŒ™
+	//ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³
 	enum MouseButton
 	{
 		MOUSE_LEFT,
 		MOUSE_RIGHT,
 		MOUSE_WHEEL
 	};
-	//ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³
 	enum GamePadButton
 	{
 		PAD_A,
@@ -42,251 +42,251 @@ public: //—ñ‹“
 		PAD_DOWN,
 	};
 
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ð‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	Input() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ð‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~Input() = default;
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ð–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	Input(const Input& input) = delete;
-	//‘ã“ü‰‰ŽZŽq‚ð–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const Input& input) = delete;
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒXŽæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	/// </summary>
-	/// <returns>“ü—Í</returns>
+	/// <returns>å…¥åŠ›</returns>
 	static Input* GetInstance();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="win">ƒEƒCƒ“ƒhƒEƒAƒvƒŠƒP[ƒVƒ‡ƒ“</param>
+	/// <param name="win">ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³</param>
 	void Initialize(WindowApp* win);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ƒL[‚Ì‰Ÿ‰º‚ðƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name = "keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool PushKey(const BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ÌƒgƒŠƒK[‚ðƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <returns>ƒgƒŠƒK[‚©</returns>
+	/// <param name = "keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <returns>ãƒˆãƒªã‚¬ãƒ¼ã‹</returns>
 	bool TriggerKey(const BYTE keyNumber);
 
 	/// <summary>
-	/// ƒL[‚ð—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚­ãƒ¼ã‚’é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "keyNumber">ƒL[”Ô†( DIK_0 “™)</param>
-	/// <returns>—£‚µ‚½‚©</returns>
+	/// <param name = "keyNumber">ã‚­ãƒ¼ç•ªå·( DIK_0 ç­‰)</param>
+	/// <returns>é›¢ã—ãŸã‹</returns>
 	bool ReleaseKey(const BYTE keyNumber);
 
 	/// <summary>
-	/// ƒ}ƒEƒXƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‚ðƒ`ƒFƒbƒN
+	/// ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "mouseButton">ƒ}ƒEƒXƒ{ƒ^ƒ“</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name = "mouseButton">ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool PushMouseButton(const int mouseButton);
 
 	/// <summary>
-	/// ƒ}ƒEƒXƒ{ƒ^ƒ“‚ÌƒgƒŠƒK[‚ðƒ`ƒFƒbƒN
+	/// ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "mouseButton">ƒ}ƒEƒXƒ{ƒ^ƒ“</param>
-	/// <returns>ƒgƒŠƒK[‚©</returns>
+	/// <param name = "mouseButton">ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³</param>
+	/// <returns>ãƒˆãƒªã‚¬ãƒ¼ã‹</returns>
 	bool TriggerMouseButton(const int mouseButton);
 
 	/// <summary>
-	/// ƒ}ƒEƒXƒ{ƒ^ƒ“‚ð—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "mouseButton">ƒ}ƒEƒXƒ{ƒ^ƒ“</param>
-	/// <returns>—£‚µ‚½‚©</returns>
+	/// <param name = "mouseButton">ãƒžã‚¦ã‚¹ãƒœã‚¿ãƒ³</param>
+	/// <returns>é›¢ã—ãŸã‹</returns>
 	bool ReleaseMouseButton(const int mouseButton);
 
 	/// <summary>
-	/// ƒ}ƒEƒXƒ|ƒCƒ“ƒ^[‚ÌÀ•W‚ðŽæ“¾
+	/// ãƒžã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã®åº§æ¨™ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒ}ƒEƒXƒ|ƒCƒ“ƒ^[‚ÌÀ•W</returns>
+	/// <returns>ãƒžã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã®åº§æ¨™</returns>
 	DirectX::XMFLOAT2 GetMousePoint();
 
 	/// <summary>
-	/// 1ƒtƒŒ[ƒ€‚Ìƒ}ƒEƒX‚ÌˆÚ“®—Ê‚ÌŽæ“¾
+	/// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒžã‚¦ã‚¹ã®ç§»å‹•é‡ã®å–å¾—
 	/// </summary>
-	/// <returns>1ƒtƒŒ[ƒ€‚Ìƒ}ƒEƒX‚ÌˆÚ“®—Ê</returns>
+	/// <returns>1ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒžã‚¦ã‚¹ã®ç§»å‹•é‡</returns>
 	DirectX::XMFLOAT2 GetMouseVelocity();
 
 	/// <summary>
-	/// 1ƒtƒŒ[ƒ€‚Ìƒ}ƒEƒXƒzƒC[ƒ‹‚ÌˆÚ“®—Ê‚ÌŽæ“¾
+	/// 1ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒžã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç§»å‹•é‡ã®å–å¾—
 	/// </summary>
-	/// <returns>1ƒtƒŒ[ƒ€‚Ìƒ}ƒEƒXƒzƒC[ƒ‹‚ÌˆÚ“®—Ê</returns>
+	/// <returns>1ãƒ•ãƒ¬ãƒ¼ãƒ ã®ãƒžã‚¦ã‚¹ãƒ›ã‚¤ãƒ¼ãƒ«ã®ç§»å‹•é‡</returns>
 	float GetMouseWheelVelocity();
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“‚Ì‰Ÿ‰º‚ðƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³ã®æŠ¼ä¸‹ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "gamePadButton">ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“</param>
-	/// <returns>‰Ÿ‚³‚ê‚Ä‚¢‚é‚©</returns>
+	/// <param name = "gamePadButton">ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³</param>
+	/// <returns>æŠ¼ã•ã‚Œã¦ã„ã‚‹ã‹</returns>
 	bool PushGamePadButton(const int gamePadButton);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“‚ÌƒgƒŠƒK[‚ðƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³ã®ãƒˆãƒªã‚¬ãƒ¼ã‚’ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "gamePadButton">ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“</param>
-	/// <returns>ƒgƒŠƒK[‚©</returns>
+	/// <param name = "gamePadButton">ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³</param>
+	/// <returns>ãƒˆãƒªã‚¬ãƒ¼ã‹</returns>
 	bool TriggerGamePadButton(const int gamePadButton);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“‚ð—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name = "gamePadButton">ƒQ[ƒ€ƒpƒbƒhƒ{ƒ^ƒ“</param>
-	/// <returns>—£‚µ‚½‚©</returns>
+	/// <param name = "gamePadButton">ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒœã‚¿ãƒ³</param>
+	/// <returns>é›¢ã—ãŸã‹</returns>
 	bool ReleaseGamePadButton(const int gamePadButton);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸã‹</returns>
 	bool TiltGamePadLStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸã‹</returns>
 	bool TiltGamePadLStickY(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸã‹</returns>
 	bool TiltGamePadRStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸã‹</returns>
 	bool TiltGamePadRStickY(const float incline);
 
 
 	bool PushGamePadTrigger(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹</returns>
 	bool TriggerGamePadLStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹</returns>
 	bool TriggerGamePadLStickY(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹</returns>
 	bool TriggerGamePadRStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚ÉŒX‚¯‚½uŠÔ‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã«å‚¾ã‘ãŸçž¬é–“ã‹</returns>
 	bool TriggerGamePadRStickY(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðX•ûŒü‚©‚ç—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚©‚ç—£‚µ‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹</returns>
 	bool ReleaseGamePadLStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ðY•ûŒü‚©‚ç—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚©‚ç—£‚µ‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹</returns>
 	bool ReleaseGamePadLStickY(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðX•ûŒü‚©‚ç—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðX•ûŒü‚©‚ç—£‚µ‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Xæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹</returns>
 	bool ReleaseGamePadRStickX(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ðY•ûŒü‚©‚ç—£‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="incline">‚Ç‚±‚Ü‚ÅŒX‚¯‚½‚ç”»’è‚ðŽæ‚é‚©(-1000`1000)</param>
-	/// <returns>ƒXƒeƒBƒbƒN‚ðY•ûŒü‚©‚ç—£‚µ‚½‚©</returns>
+	/// <param name="incline">ã©ã“ã¾ã§å‚¾ã‘ãŸã‚‰åˆ¤å®šã‚’å–ã‚‹ã‹(-1000ï½ž1000)</param>
+	/// <returns>ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã‚’Yæ–¹å‘ã‹ã‚‰é›¢ã—ãŸã‹</returns>
 	bool ReleaseGamePadRStickY(const float incline);
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ÌŒX‚«‚ðŽæ“¾
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ÌŒX‚«(-1`1)</returns>
+	/// <returns>ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ã(-1ï½ž1)</returns>
 	DirectX::XMFLOAT2 GetPadLStickIncline();
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ÌŒX‚«‚ðŽæ“¾
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ãã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ÌŒX‚«(-1`1)</returns>
+	/// <returns>ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾ã(-1ï½ž1)</returns>
 	DirectX::XMFLOAT2 GetPadRStickIncline();
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ÌŠp“x‚ðŽæ“¾
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è§’åº¦ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒQ[ƒ€ƒpƒbƒh‚Ì¶ƒXƒeƒBƒbƒN‚ÌŠp“x</returns>
+	/// <returns>ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å·¦ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è§’åº¦</returns>
 	float GetPadLStickAngle();
 
 	/// <summary>
-	/// ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ÌŠp“x‚ðŽæ“¾
+	/// ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è§’åº¦ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒQ[ƒ€ƒpƒbƒh‚Ì‰EƒXƒeƒBƒbƒN‚ÌŠp“x</returns>
+	/// <returns>ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å³ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®è§’åº¦</returns>
 	float GetPadRStickAngle();
 
-private: //ƒƒ“ƒo•Ï”
-	//DirectInput‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//DirectInputã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	ComPtr<IDirectInput8> dinput;
-	//ƒL[ƒ{[ƒh‚ÌƒfƒoƒCƒX
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ã®ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<IDirectInputDevice8> devkeyboard;
-	//‘SƒL[‚Ìó‘Ô
+	//å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE key[256] = {};
-	//‘O‰ñ‚Ì‘SƒL[‚Ìó‘Ô
+	//å‰å›žã®å…¨ã‚­ãƒ¼ã®çŠ¶æ…‹
 	BYTE keyPre[256] = {};
-	//ƒ}ƒEƒX‚ÌƒfƒoƒCƒX
+	//ãƒžã‚¦ã‚¹ã®ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<IDirectInputDevice8> devmouse;
-	//ƒ}ƒEƒX‚Ìó‘Ô
+	//ãƒžã‚¦ã‚¹ã®çŠ¶æ…‹
 	DIMOUSESTATE mouse;
-	//‘O‰ñ‚Ìƒ}ƒEƒX‚Ìó‘Ô
+	//å‰å›žã®ãƒžã‚¦ã‚¹ã®çŠ¶æ…‹
 	DIMOUSESTATE mousePre;
-	//ƒ}ƒEƒXƒ|ƒCƒ“ƒ^[
+	//ãƒžã‚¦ã‚¹ãƒã‚¤ãƒ³ã‚¿ãƒ¼
 	POINT mousePoint;
-	//ƒQ[ƒ€ƒpƒbƒh‚ÌƒfƒoƒCƒX
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®ãƒ‡ãƒã‚¤ã‚¹
 	ComPtr<IDirectInputDevice8> devgamepad;
-	//ƒQ[ƒ€ƒpƒbƒh‚Ìó‘Ô
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®çŠ¶æ…‹
 	DIJOYSTATE pad;
-	//‘O‰ñ‚ÌƒQ[ƒ€ƒpƒbƒh‚Ìó‘Ô
+	//å‰å›žã®ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®çŠ¶æ…‹
 	DIJOYSTATE padPre;
-	//ƒpƒ‰ƒ[ƒ^
+	//ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿
 	LPVOID parameter;
 	//WindowApp
 	WindowApp* win = nullptr;

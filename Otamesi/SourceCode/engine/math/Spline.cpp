@@ -1,21 +1,21 @@
-#include "Spline.h"
+ï»¿#include "Spline.h"
 
 Vector3 Spline::splinePosition(const std::vector<Vector3>& points, int startIndex, float t)
 {
-	//•âŠÔ‚·‚×‚«“_‚Ì”
+	//è£œé–“ã™ã¹ãç‚¹ã®æ•°
 	int n = (int)points.size() - 2;
 
 	if (n < 2) { return {}; }
-	if (startIndex > n) { return points[n]; } //P0‚Ì’l‚ğ•Ô‚·
-	if (startIndex < 1) { return points[1]; } //P1‚Ì’l‚ğ•Ô‚·
+	if (startIndex > n) { return points[n]; } //P0ã®å€¤ã‚’è¿”ã™
+	if (startIndex < 1) { return points[1]; } //P1ã®å€¤ã‚’è¿”ã™
 
-	// P0`P3 ‚Ì§Œä“_‚ğæ“¾‚·‚é ¦ P1`P2 ‚ğ•âŠÔ‚·‚é
+	// P0ï½P3 ã®åˆ¶å¾¡ç‚¹ã‚’å–å¾—ã™ã‚‹ â€» P1ï½P2 ã‚’è£œé–“ã™ã‚‹
 	Vector3 p0 = points[startIndex - 1];
 	Vector3 p1 = points[startIndex];
 	Vector3 p2 = points[startIndex + 1];
 	Vector3 p3 = points[startIndex + 2];
 
-	//Catmull-Rom ‚Ì®‚É‚æ‚é•âŠÔ
+	//Catmull-Rom ã®å¼ã«ã‚ˆã‚‹è£œé–“
 	Vector3 position =
 		0.5f * (2 * p1 + (-p0 + p2) * t +
 			(2 * p0 - 5 * p1 + 4 * p2 - p3) * t * t +

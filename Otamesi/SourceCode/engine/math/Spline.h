@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 #include "Vector3.h"
 #include <vector>
 
 /// <summary>
-/// ƒXƒvƒ‰ƒCƒ“•âŠÔ
+/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“
 /// </summary>
 class Spline
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// n + 2ŒÂ‚Ì“_‚ğg‚Á‚ÄAP1`Pn‚ÌŠÔ‚ğƒXƒvƒ‰ƒCƒ“•âŠÔ‚·‚é
+	/// n + 2å€‹ã®ç‚¹ã‚’ä½¿ã£ã¦ã€P1ï½Pnã®é–“ã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒ³è£œé–“ã™ã‚‹
 	/// </summary>
-	/// <param name="points">§Œä“_‚ÌW‡</param>
-	/// <param name="startIndex">•âŠÔ‚·‚é‹æŠÔ‚Ì“Y‚¦š</param>
-	/// <param name="t">ŠÔŒo‰ß—¦</param>
+	/// <param name="points">åˆ¶å¾¡ç‚¹ã®é›†åˆ</param>
+	/// <param name="startIndex">è£œé–“ã™ã‚‹åŒºé–“ã®æ·»ãˆå­—</param>
+	/// <param name="t">æ™‚é–“çµŒéç‡</param>
 	/// <returns></returns>
 	static Vector3 splinePosition(const std::vector<Vector3>& points, int startIndex, float t);
 };

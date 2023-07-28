@@ -1,23 +1,23 @@
-#include "HintTextureLoader.h"
+ï»¿#include "HintTextureLoader.h"
 #include "TextureManager.h"
 
 std::array<Texture, 2> HintTextureLoader::textures;
 
 void HintTextureLoader::LoadTextures(const int stageNum)
 {
-	//ƒqƒ“ƒgƒeƒNƒXƒ`ƒƒ—pƒfƒBƒŒƒNƒgƒŠƒpƒX
+	//ãƒ’ãƒ³ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	const std::string directoryPath = "Resources/hintTexture/";
-	//ƒXƒe[ƒW”Ô†‚ğ•¶š—ñ‚É•ÏŠ·‚·‚é
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 	std::string stageName = std::to_string(stageNum);
 
-	//ŠeƒXƒe[ƒWƒqƒ“ƒg‚ª2‚Â‚ ‚é‚Ì‚ÅA2–‡“Ç‚İ‚Ş
+	//å„ã‚¹ãƒ†ãƒ¼ã‚¸ãƒ’ãƒ³ãƒˆãŒ2ã¤ã‚ã‚‹ã®ã§ã€2æšèª­ã¿è¾¼ã‚€
 	for (int i = 0; i < 2; i++) {
-		//ƒqƒ“ƒg”Ô†‚ğ•¶š—ñ‚É•ÏŠ·‚·‚é
+		//ãƒ’ãƒ³ãƒˆç•ªå·ã‚’æ–‡å­—åˆ—ã«å¤‰æ›ã™ã‚‹
 		std::string hintNum = std::to_string(i + 1);
-		//ƒtƒ@ƒCƒ‹ƒpƒX‚ğŒ‹‡
+		//ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹ã‚’çµåˆ
 		std::string filename = stageName + "_" + hintNum + ".png";
 
-		//ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 		TextureManager::LoadTexture(textures[i], directoryPath, filename);
 	}
 }

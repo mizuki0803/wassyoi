@@ -386,7 +386,7 @@
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClCompile>
-<!-- <<<<<<< HEAD
+    <!-- <<<<<<< HEAD
     <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp">
       <Filter>ソース ファイル</Filter>
 ======= -->
@@ -395,7 +395,10 @@
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameSprite\HintTextureLoader.cpp">
       <Filter>ソース ファイル\game\gameSprite</Filter>
-<!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
+      <!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -775,7 +778,7 @@
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
-<!-- <<<<<<< HEAD
+    <!-- <<<<<<< HEAD
     <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
 ======= -->
     <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h">
@@ -784,6 +787,7 @@
     <ClInclude Include="SourceCode\game\gameSprite\HintTextureLoader.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
-<!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
+    <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
+    <!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
   </ItemGroup>
 </Project>

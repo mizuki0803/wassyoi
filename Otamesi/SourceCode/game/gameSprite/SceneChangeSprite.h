@@ -1,44 +1,44 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 
 /// <summary>
-/// ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg
+/// ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class SceneChangeSprite : public Sprite
 {
 public:
-	//F‚Ì”Z‚³•ÏXƒtƒF[ƒY
+	//è‰²ã®æ¿ƒã•å¤‰æ›´ãƒ•ã‚§ãƒ¼ã‚º
 	enum class IntensityChangePhase {
-		Deepen, //”Z‚­‚·‚é
-		Wait,	//F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚é
-		Return, //”–‚­‚·‚é(–ß‚·)
+		Deepen, //æ¿ƒãã™ã‚‹
+		Wait,	//è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹
+		Return, //è–„ãã™ã‚‹(æˆ»ã™)
 	};
 
 public:
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="color">‰æ–Ê‚ğ•¢‚¤F</param>
-	/// <param name="deepenTime">F‚ğ”Z‚­‚µ‚Ä‚¢‚­ŠÔ</param>
-	/// <param name="waitTime">F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚éŠÔ</param>
-	/// <param name="returnTime">F‚ğ”–‚­‚µ‚Ä‚¢‚­ŠÔ</param>
-	/// <returns>ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="color">ç”»é¢ã‚’è¦†ã†è‰²</param>
+	/// <param name="deepenTime">è‰²ã‚’æ¿ƒãã—ã¦ã„ãæ™‚é–“</param>
+	/// <param name="waitTime">è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹æ™‚é–“</param>
+	/// <param name="returnTime">è‰²ã‚’è–„ãã—ã¦ã„ãæ™‚é–“</param>
+	/// <returns>ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static SceneChangeSprite* Create(const XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <param name="isFlipX">¶‰E”½“]‚·‚é‚©</param>
-	/// <param name="isFlipY">ã‰º”½“]‚·‚é‚©</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <param name="isFlipX">å·¦å³åè»¢ã™ã‚‹ã‹</param>
+	/// <param name="isFlipY">ä¸Šä¸‹åè»¢ã™ã‚‹ã‹</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
@@ -46,37 +46,37 @@ public: //ƒƒ“ƒoŠÖ”
 	bool GetIsDead() { return isDead; }
 
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// F‚ğ”Z‚­‚·‚é
+	/// è‰²ã‚’æ¿ƒãã™ã‚‹
 	/// </summary>
 	void ColorDeepen();
 
-	/// F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚é
+	/// è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹
 	/// </summary>
 	void ColorWait();
 
 	/// <summary>
-	/// ”Z‚­‚µ‚½F‚ğ–ß‚·
+	/// æ¿ƒãã—ãŸè‰²ã‚’æˆ»ã™
 	/// </summary>
 	void ColorReturn();
 
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//F‚Ì”Z‚³•ÏX‹““®‘JˆÚ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//è‰²ã®æ¿ƒã•å¤‰æ›´æŒ™å‹•é·ç§»
 	static void (SceneChangeSprite::* intensityChangeActionFuncTable[])();
 
-private: //ƒƒ“ƒo•Ï”
-	//F‚Ì”Z‚³•ÏXƒtƒF[ƒY
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//è‰²ã®æ¿ƒã•å¤‰æ›´ãƒ•ã‚§ãƒ¼ã‚º
 	IntensityChangePhase phase = IntensityChangePhase::Deepen;
-	//F‚ğ”Z‚­‚·‚éŠÔ
+	//è‰²ã‚’æ¿ƒãã™ã‚‹æ™‚é–“
 	int32_t deepenTime = 0;
-	//F‚ğ”Z‚­‚µ‚½‚Ü‚Ü‘Ò‹@‚·‚éŠÔ
+	//è‰²ã‚’æ¿ƒãã—ãŸã¾ã¾å¾…æ©Ÿã™ã‚‹æ™‚é–“
 	int32_t waitTime = 0;
-	//”Z‚­‚µ‚½F‚ğ–ß‚·ŠÔ
+	//æ¿ƒãã—ãŸè‰²ã‚’æˆ»ã™æ™‚é–“
 	int32_t returnTime = 0;
-	//F‚Ì”Z‚³‚ğ•ÏX‚·‚éƒ^ƒCƒ}[
+	//è‰²ã®æ¿ƒã•ã‚’å¤‰æ›´ã™ã‚‹ã‚¿ã‚¤ãƒãƒ¼
 	int32_t intensityChangeTimer = 0;
-	//€–Sƒtƒ‰ƒO
+	//æ­»äº¡ãƒ•ãƒ©ã‚°
 	bool isDead = false;
 };

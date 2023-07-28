@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <DirectXMath.h>
 #include "Texture.h"
@@ -7,39 +7,39 @@
 
 class OutLine
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct VertexPosUv
 	{
-		XMFLOAT3 pos;	//xyzÀ•W
-		XMFLOAT2 uv;	//uvÀ•W
+		XMFLOAT3 pos;	//xyzåº§æ¨™
+		XMFLOAT2 uv;	//uvåº§æ¨™
 	};
 
 
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒAƒEƒgƒ‰ƒCƒ“¶¬
+	/// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
-	/// <returns>ƒVƒƒƒhƒEƒ}ƒbƒv</returns>
+	/// <returns>ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—</returns>
 	static OutLine *Create();
 
 	/// <summary>
-	/// ƒVƒƒƒhƒEƒ}ƒbƒv‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—å…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void OutLineCommon(ID3D12Device *dev, ID3D12GraphicsCommandList *cmdList)
 	{
-		//nullptrƒ`ƒFƒbƒN
+		//nullptrãƒã‚§ãƒƒã‚¯
 		assert(dev);
 		assert(cmdList);
 
@@ -47,24 +47,24 @@ public: //Ã“Iƒƒ“ƒoŠÖ”
 		OutLine::cmdList = cmdList;
 	};
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æ‘Oˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
 	/// </summary>
 	void DrawScenePrev(ID3D12DescriptorHeap *descHeapDSV);
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æŒãˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	/// </summary>
 	void DrawSceneRear();
 
@@ -73,23 +73,23 @@ public: //ƒƒ“ƒoŠÖ”
 		camera_ = camera;
 	}
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device *dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList *cmdList;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	
 	static PipelineSet pipelineSet;
 
-private: //ƒƒ“ƒo•Ï”
-	//’¸“_ƒoƒbƒtƒ@
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//’è”ƒoƒbƒtƒ@
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	//ComPtr<ID3D12Resource> constBuff;
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	enum TextureType
 	{
 		kColor,
@@ -97,17 +97,17 @@ private: //ƒƒ“ƒo•Ï”
 		kTexMax
 	};
 	Texture texture[kTexMax];
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuff;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV;
-	//[“xƒoƒbƒtƒ@—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
 	struct CameraBuffer
 	{
-		XMMATRIX view_projection; // ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“
-		XMMATRIX inv_view_projection; // ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“‹ts—ñ
+		XMMATRIX view_projection; // ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³
+		XMMATRIX inv_view_projection; // ãƒ“ãƒ¥ãƒ¼ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³é€†è¡Œåˆ—
 	};
 	ComPtr<ID3D12Resource> camera_buffer_;
 

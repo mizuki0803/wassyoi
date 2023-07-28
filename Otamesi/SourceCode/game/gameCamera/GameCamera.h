@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Camera.h"
 #include "EaseData.h"
 #include <array>
@@ -6,136 +6,136 @@
 #include <vector>
 #include <functional>
 
-//ƒvƒŒƒCƒ„[ƒNƒ‰ƒX‚Ì‘O•ûéŒ¾
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚¯ãƒ©ã‚¹ã®å‰æ–¹å®£è¨€
 class Player;
 
 /// <summary>
-/// ƒQ[ƒ€ƒJƒƒ‰
+/// ã‚²ãƒ¼ãƒ ã‚«ãƒ¡ãƒ©
 /// </summary>
 class GameCamera : public Camera
 {
 public: //enum
 	/// <summary>
-	/// ƒXƒe[ƒW‚©‚çŒ©‚Ä‚Ì‰¡²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸ã‹ã‚‰è¦‹ã¦ã®æ¨ªè»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚º
 	/// </summary>
 	enum CameraXPosPhase
 	{
-		Front,	//è‘O
-		Right,	//‰E
-		Back,	//‰œ
-		Left,	//¶
+		Front,	//æ‰‹å‰
+		Right,	//å³
+		Back,	//å¥¥
+		Left,	//å·¦
 
-		XPosPhaseNum	//ƒtƒF[ƒY‚Ì”(4)
+		XPosPhaseNum	//ãƒ•ã‚§ãƒ¼ã‚ºã®æ•°(4)
 	};
 
 	/// <summary>
-	/// ƒXƒe[ƒW‚©‚çŒ©‚Ä‚Ìc²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY
+	/// ã‚¹ãƒ†ãƒ¼ã‚¸ã‹ã‚‰è¦‹ã¦ã®ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚º
 	/// </summary>
 	enum CameraYPosPhase
 	{
-		Top,		//ã
-		Side,		//‰¡
-		Buttom,		//‰º
-		ReverseSide,//‹tŒü‚«‚Ì‰¡
+		Top,		//ä¸Š
+		Side,		//æ¨ª
+		Buttom,		//ä¸‹
+		ReverseSide,//é€†å‘ãã®æ¨ª
 
-		YPosPhaseNum	//ƒtƒF[ƒY‚Ì”(3)
+		YPosPhaseNum	//ãƒ•ã‚§ãƒ¼ã‚ºã®æ•°(3)
 	};
 
 	/// <summary>
-	/// s“®ƒtƒF[ƒY
+	/// è¡Œå‹•ãƒ•ã‚§ãƒ¼ã‚º
 	/// </summary>
 	enum class ActionPhase
 	{
-		None,			//‰½‚à‚µ‚È‚¢
-		Rotation,		//ƒJƒƒ‰‰ñ“]
-		ChangeDimension,//ŸŒ³Ø‚è‘Ö‚¦
+		None,			//ä½•ã‚‚ã—ãªã„
+		Rotation,		//ã‚«ãƒ¡ãƒ©å›è»¢
+		ChangeDimension,//æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆ
 	};
 
 	/// <summary>
-	/// ƒQ[ƒ€‚Ì‘S‘Ì
+	/// ã‚²ãƒ¼ãƒ ã®å…¨ä½“
 	/// </summary>
 	enum class GamePhase
 	{
-		Start,	//ŠJn
-		Play,	//ƒQ[ƒ€’†
-		ClearReturn3D,	//ƒNƒŠƒA‚É3ŸŒ³‚É–ß‚·
-		ClearReturnRotate,	//ƒNƒŠƒA‚É‰ñ“]Šp‚ğ–ß‚·
-		ReStart,//Ä“x¶¬
-		None,	//‰½‚à‚µ‚È‚¢
+		Start,	//é–‹å§‹
+		Play,	//ã‚²ãƒ¼ãƒ ä¸­
+		ClearReturn3D,	//ã‚¯ãƒªã‚¢æ™‚ã«3æ¬¡å…ƒã«æˆ»ã™
+		ClearReturnRotate,	//ã‚¯ãƒªã‚¢æ™‚ã«å›è»¢è§’ã‚’æˆ»ã™
+		ReStart,//å†åº¦ç”Ÿæˆ
+		None,	//ä½•ã‚‚ã—ãªã„
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="distanceStageCenter">ƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£</param>
-	/// <param name="stageCenterPos">ƒXƒe[ƒW’†‰›À•W</param>
-	/// <returns>ƒQ[ƒ€ƒJƒƒ‰</returns>
+	/// <param name="distanceStageCenter">ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢</param>
+	/// <param name="stageCenterPos">ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®åº§æ¨™</param>
+	/// <returns>ã‚²ãƒ¼ãƒ ã‚«ãƒ¡ãƒ©</returns>
 	GameCamera* Create(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary> 
-	/// <param name="distanceStageCenter">ƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£</param>
-	/// <param name="stageCenterPos">ƒXƒe[ƒW’†‰›À•W</param>
+	/// <param name="distanceStageCenter">ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢</param>
+	/// <param name="stageCenterPos">ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®åº§æ¨™</param>
 	void Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ƒQ[ƒ€’†
+	/// ã‚²ãƒ¼ãƒ ä¸­
 	/// </summary>
 	void PlayGame();
 	/// <summary>
-	/// ƒQ[ƒ€ŠJn
+	/// ã‚²ãƒ¼ãƒ é–‹å§‹
 	/// </summary>
 	void GameStart();
 	/// <summary>
-	/// ƒNƒŠƒAŠJn‚Ìˆ—
+	/// ã‚¯ãƒªã‚¢æ™‚é–‹å§‹ã®å‡¦ç†
 	/// </summary>
 	void SetClearMode();
 	/// <summary>
-	/// ƒNƒŠƒA‚É3ŸŒ³‚É–ß‚·ˆ—
+	/// ã‚¯ãƒªã‚¢æ™‚ã«3æ¬¡å…ƒã«æˆ»ã™å‡¦ç†
 	/// </summary>
 	void ClearReturn3D();
 	/// <summary>
-	/// ƒNƒŠƒA‚É‰ñ“]Šp‚É–ß‚·ˆ—
+	/// ã‚¯ãƒªã‚¢æ™‚ã«å›è»¢è§’ã«æˆ»ã™å‡¦ç†
 	/// </summary>
 	void ClearReturnRotate();
 	/// <summary>
-	/// ƒQ[ƒ€ÄŠJn
+	/// ã‚²ãƒ¼ãƒ å†é–‹å§‹
 	/// </summary>
 	void GameReStart();
 	/// <summary>
-	/// ‰½‚à‚µ‚È‚¢
+	/// ä½•ã‚‚ã—ãªã„
 	/// </summary>
 	void StayGame();
 	/// <summary>
-	/// ŠÖ”‚Ìİ’è
+	/// é–¢æ•°ã®è¨­å®š
 	/// </summary>
 	void CreateAct();
 
 	/// <summary>
-	/// ŸŒ³Ø‚è‘Ö‚¦ŠJn
+	/// æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆé–‹å§‹
 	/// </summary>
 	void ChanegeDimensionStart();
 
 	/// <summary>
-	/// ƒNƒŠƒAŒã‰‰o‚ÌƒJƒƒ‰‰ñ“]‚ğ‰ŠúˆÊ’u‚ÉC³‚·‚éˆ—
+	/// ã‚¯ãƒªã‚¢å¾Œæ¼”å‡ºã®ã‚«ãƒ¡ãƒ©å›è»¢ã‚’åˆæœŸä½ç½®ã«ä¿®æ­£ã™ã‚‹å‡¦ç†
 	/// </summary>
 	void SetClearResetAround();
 	/// <summary>
-	/// Ä¶¬‚É“®‚©‚·‚½‚ß‚Ìˆ—
+	/// å†ç”Ÿæˆæ™‚ã«å‹•ã‹ã™ãŸã‚ã®å‡¦ç†
 	/// </summary>
-	/// <param name="distanceStageCenter">ƒXƒe[ƒW’†S‚©‚ç—£‚·‹——£</param>
+	/// <param name="distanceStageCenter">ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¿ƒã‹ã‚‰é›¢ã™è·é›¢</param>
 	void SetReCreateMove(const XMFLOAT3& distanceStageCenter);
 
 	/// <summary>
-	/// ŠJnó‘Ô‚É–ß‚·
+	/// é–‹å§‹çŠ¶æ…‹ã«æˆ»ã™
 	/// </summary>
 	void Reset();
 
@@ -162,146 +162,146 @@ public: //ƒƒ“ƒoŠÖ”
 		hintFlag_ = hintFlag;
 	}
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Ë‰es—ñ‚ğXV
+	/// å°„å½±è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateMatProjection() override;
 
 	/// <summary>
-	/// ƒ[ƒ‹ƒhs—ñ‚ğXV
+	/// ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	/// </summary>
-	/// <param name="matTrans">•½sˆÚ“®s—ñ</param>
+	/// <param name="matTrans">å¹³è¡Œç§»å‹•è¡Œåˆ—</param>
 	void UpdateMatWorld(const XMMATRIX& matTrans);
 
 	/// <summary>
-	/// ‹“_‚Æ’‹“_‚ğXV
+	/// è¦–ç‚¹ã¨æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	/// </summary>
 	void UpdateEyeTarget();
 
 	/// <summary>
-	/// À•WXV
+	/// åº§æ¨™æ›´æ–°
 	/// </summary>
 	Vector3 UpdatePosition();
 
 	/// <summary>
-	/// ‰ñ“]ŠJn‚Ì“ü—Í‚É‚æ‚é‰ñ“]•ûŒüİ’è
+	/// å›è»¢é–‹å§‹æ™‚ã®å…¥åŠ›ã«ã‚ˆã‚‹å›è»¢æ–¹å‘è¨­å®š
 	/// </summary>
 	/// <returns></returns>
 	Vector3 InputRotateNum();
 
 	/// <summary>
-	/// ‰ñ“]ŠJn
+	/// å›è»¢é–‹å§‹
 	/// </summary>
-	/// <param name="is2D">2ŸŒ³ó‘Ô‚©</param>
+	/// <param name="is2D">2æ¬¡å…ƒçŠ¶æ…‹ã‹</param>
 	void RotateStart();
 
 	/// <summary>
-	/// ‰ñ“]ˆ—
+	/// å›è»¢å‡¦ç†
 	/// </summary>
 	void Rotate();
 
 	/// <summary>
-	/// ‰ñ“]Šp‚ª‘å‚«‚·‚¬‚½‚è¬‚³‚·‚¬‚½‚è‚µ‚È‚¢‚æ‚¤A0`360“à‚Éû‚Ü‚é—p‚æ‚¤‚É’²®
+	/// å›è»¢è§’ãŒå¤§ãã™ããŸã‚Šå°ã•ã™ããŸã‚Šã—ãªã„ã‚ˆã†ã€0ï½360å†…ã«åã¾ã‚‹ç”¨ã‚ˆã†ã«èª¿æ•´
 	/// </summary>
-	/// <param name="rotation">‰ñ“]Šp</param>
+	/// <param name="rotation">å›è»¢è§’</param>
 	void MaxMinRotate(float& rotation);
 
 	/// <summary>
-	///	ƒJƒƒ‰‚Ì‰ñ“]Šp‚ÌŒX‚«‚©‚çƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ğ•Ô‚·
+	///	ã‚«ãƒ¡ãƒ©ã®å›è»¢è§’ã®å‚¾ãã‹ã‚‰ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºã‚’è¿”ã™
 	/// </summary>
 	void CameraPosPhaseCheck();
 
 	/// <summary>
-	/// ŸŒ³Ø‚è‘Ö‚¦
+	/// æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆ
 	/// </summary>
 	void ChanegeDimension();
 
 	/// <summary>
-	/// ƒC[ƒWƒ“ƒOƒf[ƒ^‚Ìİ’è
+	/// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿ã®è¨­å®š
 	/// </summary>
-	/// <param name="count">ƒtƒŒ[ƒ€‚ÌƒJƒEƒ“ƒg</param>
+	/// <param name="count">ãƒ•ãƒ¬ãƒ¼ãƒ ã®ã‚«ã‚¦ãƒ³ãƒˆ</param>
 	void SetEaseData(const int count);
 
 	/// <summary>
-	/// 2d‚É‚È‚éÛ‚ÌƒC[ƒWƒ“ƒO
+	/// 2dã«ãªã‚‹éš›ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	/// </summary>
-	/// <param name="_mat1">ƒC[ƒWƒ“ƒO‘O</param>
-	/// <param name="_mat2">ƒC[ƒWƒ“ƒOŒã</param>
-	/// <param name="_timer">ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ}[</param>
-	/// <returns>Œ»İÀ•W</returns>
+	/// <param name="_mat1">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å‰</param>
+	/// <param name="_mat2">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å¾Œ</param>
+	/// <param name="_timer">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼</param>
+	/// <returns>ç¾åœ¨åº§æ¨™</returns>
 	XMMATRIX Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer);
 
 	/// <summary>
-	/// 3d‚É‚È‚éÛ‚ÌƒC[ƒWƒ“ƒO
+	/// 3dã«ãªã‚‹éš›ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	/// </summary>
-	/// <param name="_mat1">ƒC[ƒWƒ“ƒO‘O</param>
-	/// <param name="_mat2">ƒC[ƒWƒ“ƒOŒã</param>
-	/// <param name="_timer">ƒC[ƒWƒ“ƒO—pƒ^ƒCƒ}[</param>
-	/// <returns>Œ»İÀ•W</returns>
+	/// <param name="_mat1">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å‰</param>
+	/// <param name="_mat2">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å¾Œ</param>
+	/// <param name="_timer">ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ç”¨ã‚¿ã‚¤ãƒãƒ¼</param>
+	/// <returns>ç¾åœ¨åº§æ¨™</returns>
 	XMMATRIX Ease4x4_out(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer);
 
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ˆê“x‚Ì‰ñ“]‚É‚©‚©‚éŠÔ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ä¸€åº¦ã®å›è»¢ã«ã‹ã‹ã‚‹æ™‚é–“
 	static const int32_t rotateTime = 40;
-	//3D‚Å‚Ì‹“_‚ÉƒJƒƒ‰‚ğŒX‚¯‚é—Ê
+	//3Dã§ã®è¦–ç‚¹æ™‚ã«ã‚«ãƒ¡ãƒ©ã‚’å‚¾ã‘ã‚‹é‡
 	static const float rotate3DDistance;
-	//2d‚ÌƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	//2dã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	static const XMMATRIX matProj2D;
-	//3d‚ÌƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+	//3dã®ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—
 	static const XMMATRIX matProj3D;
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒvƒŒƒCƒ„[‚Ìî•ñ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æƒ…å ±
 	Player* player;
-	//‰ñ“]Šp
+	//å›è»¢è§’
 	Vector3 rotation = { 0, 0, 0 };
-	//À•W
+	//åº§æ¨™
 	Vector3 position = { 0, 0, 0 };
-	//ÀÛ‚ÉƒJƒƒ‰‚Ì‹“_,’‹“_,ãƒxƒNƒgƒ‹‚Ég—p‚·‚éƒ[ƒ‹ƒh•ÏŠ·s—ñ
+	//å®Ÿéš›ã«ã‚«ãƒ¡ãƒ©ã®è¦–ç‚¹,æ³¨è¦–ç‚¹,ä¸Šãƒ™ã‚¯ãƒˆãƒ«ã«ä½¿ç”¨ã™ã‚‹ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
 	XMMATRIX cameraMatWorld = {};
-	//ƒXƒe[ƒW’†‰›À•W
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®åº§æ¨™
 	Vector3 stageCenterPos;
-	//ƒXƒe[ƒW‚©‚çŒ©‚Ä‚Ì‰¡²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‹ã‚‰è¦‹ã¦ã®æ¨ªè»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚º
 	int cameraXPosPhase = (int)CameraXPosPhase::Front;
-	//ƒXƒe[ƒW‚©‚çŒ©‚Ä‚Ìc²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‹ã‚‰è¦‹ã¦ã®ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚º
 	int cameraYPosPhase = (int)CameraYPosPhase::Side;
-	//ƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢
 	XMFLOAT3 distanceStageCenter;
-	//ƒC[ƒWƒ“ƒO•ÏX‘O‚ÌƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å¤‰æ›´å‰ã®ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢
 	XMFLOAT3 beforeDistanceStageCenter;
-	//ƒC[ƒWƒ“ƒO•ÏXŒã‚ÌƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°å¤‰æ›´å¾Œã®ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢
 	XMFLOAT3 afterDistanceStageCenter;
-	//ƒAƒNƒVƒ‡ƒ“
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³
 	ActionPhase actionPhase = ActionPhase::None;
-	//ƒAƒNƒVƒ‡ƒ“—pƒ^ƒCƒ}[
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	int32_t actionTimer = 0;
-	//‰ñ“]‘O‰ñ“]Šp
+	//å›è»¢å‰å›è»¢è§’
 	Vector3 rotateBefore;
-	//‰ñ“]Œã‰ñ“]Šp
+	//å›è»¢å¾Œå›è»¢è§’
 	Vector3 rotateAfter;
-	//2ŸŒ³ó‘Ô‚©
+	//2æ¬¡å…ƒçŠ¶æ…‹ã‹
 	bool is2D = false;
-	//ŸŒ³•ÏX‚ªŠ®—¹‚µ‚½uŠÔ‚©
+	//æ¬¡å…ƒå¤‰æ›´ãŒå®Œäº†ã—ãŸç¬é–“ã‹
 	bool isTriggerDimensionChange = false;
-	// ŠÖ”‚ÌŠÇ—
+	// é–¢æ•°ã®ç®¡ç†
 	std::vector<std::function<void()>> func_;
-	// ŠÖ”‚Ì”Ô†
+	// é–¢æ•°ã®ç•ªå·
 	size_t phase_ = 0;
-	// ƒC[ƒWƒ“ƒOƒf[ƒ^
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ãƒ‡ãƒ¼ã‚¿
 	std::unique_ptr<EaseData> easeData_;
 	std::unique_ptr<EaseData> reStartEaseData_;
-	// ƒJƒƒ‰‚ÌƒC[ƒWƒ“ƒO‚ÌØ‚è‘Ö‚¦‚µ
+	// ã‚«ãƒ¡ãƒ©ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®åˆ‡ã‚Šæ›¿ãˆã—
 	bool cameraEaseChangeFlag_ = false;
-	// ƒJƒƒ‰‚ÌƒC[ƒWƒ“ƒO‚ÌØ‚è‘Ö‚¦‚µ
+	// ã‚«ãƒ¡ãƒ©ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®åˆ‡ã‚Šæ›¿ãˆã—
 	bool reStartEaseChangeFlag_ = false;
-	//ƒXƒe[ƒWƒNƒŠƒAó‘Ô‚©
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢çŠ¶æ…‹ã‹
 	bool isStageClear = false;
-	// ƒƒjƒ…[‚ğŠJ‚¢‚Ä‚¢‚é‚©
+	// ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’é–‹ã„ã¦ã„ã‚‹ã‹
 	bool menuFlag_ = false;
-	// s“®‚ªI‚í‚Á‚½‚©
+	// è¡Œå‹•ãŒçµ‚ã‚ã£ãŸã‹
 	bool isCreateMove_ = false;
-	// ƒqƒ“ƒg‚ğŠg‘å•\¦‚µ‚Ä‚¢‚é‚©
+	// ãƒ’ãƒ³ãƒˆã‚’æ‹¡å¤§è¡¨ç¤ºã—ã¦ã„ã‚‹ã‹
 	bool hintFlag_ = false;
 };

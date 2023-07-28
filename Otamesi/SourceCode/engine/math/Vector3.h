@@ -1,65 +1,65 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 
 class Vector3
 {
 public:
-	float x;	//x¬•ª
-	float y;	//y¬•ª
-	float z;	//z¬•ª
+	float x;	//xæˆåˆ†
+	float y;	//yæˆåˆ†
+	float z;	//zæˆåˆ†
 
-public: //ƒRƒ“ƒXƒgƒ‰ƒNƒ^
-	Vector3();					//—ëƒxƒNƒgƒ‹‚Æ‚µ‚Ä¶¬
-	Vector3(float x, float y, float z);	//x¬•ªAy¬•ªAz¬•ª‚ğw’è‚µ‚Ä‚Ì¶¬
+public: //ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+	Vector3();					//é›¶ãƒ™ã‚¯ãƒˆãƒ«ã¨ã—ã¦ç”Ÿæˆ
+	Vector3(float x, float y, float z);	//xæˆåˆ†ã€yæˆåˆ†ã€zæˆåˆ†ã‚’æŒ‡å®šã—ã¦ã®ç”Ÿæˆ
 	Vector3(const Vector3& vec3);
 	Vector3(const float* array);
 
-public:	//Ã“Iƒƒ“ƒoŠÖ”
+public:	//é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒ[ƒJƒ‹ˆÚ“®‚Å‚Ìƒ[ƒ‹ƒhÀ•Wæ“¾
+	/// ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•ã§ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™å–å¾—
 	/// </summary>
-	/// <param name="distance">’†S‚©‚ç‚Ì‹——£</param>
-	/// <param name="m">Šî€‚Æ‚È‚és—ñ</param>
-	/// <returns>ƒ[ƒJƒ‹ˆÚ“®‚Å‚Ìƒ[ƒ‹ƒhÀ•W</returns>
+	/// <param name="distance">ä¸­å¿ƒã‹ã‚‰ã®è·é›¢</param>
+	/// <param name="m">åŸºæº–ã¨ãªã‚‹è¡Œåˆ—</param>
+	/// <returns>ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•ã§ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™</returns>
 	static const Vector3 LocalTranslation(const Vector3& distance, const DirectX::XMMATRIX& m); 
 
 
 	/// <summary>
-	/// •ûŒü‚ÌŠp“xæ“¾
+	/// æ–¹å‘ã®è§’åº¦å–å¾—
 	/// </summary>
-	/// <param name="vec">‘¬“xƒxƒNƒgƒ‹</param>
-	/// <param name="isMinusYRotaFix">y²Šp“x‚ª•‰‚Ì”‚Ìê‡³‚Ì”‚ÉC³‚·‚é‚©</param>
-	/// <returns>•ûŒü‚ÌŠp“x</returns>
+	/// <param name="vec">é€Ÿåº¦ãƒ™ã‚¯ãƒˆãƒ«</param>
+	/// <param name="isMinusYRotaFix">yè»¸è§’åº¦ãŒè² ã®æ•°ã®å ´åˆæ­£ã®æ•°ã«ä¿®æ­£ã™ã‚‹ã‹</param>
+	/// <returns>æ–¹å‘ã®è§’åº¦</returns>
 	static const Vector3 VelocityRotate(const Vector3& vec, const bool isMinusYRotaFix = false);
 	
 	/// <summary>
-	/// 2“_ŠÔ‚ÌŠp“xæ“¾
+	/// 2ç‚¹é–“ã®è§’åº¦å–å¾—
 	/// </summary>
-	/// <param name="v1">“_1</param>
-	/// <param name="v2">“_2</param>
-	/// <param name="isMinusYRotaFix">y²Šp“x‚ª•‰‚Ì”‚Ìê‡³‚Ì”‚ÉC³‚·‚é‚©</param>
-	/// <returns>2“_ŠÔ‚ÌŠp“x</returns>
+	/// <param name="v1">ç‚¹1</param>
+	/// <param name="v2">ç‚¹2</param>
+	/// <param name="isMinusYRotaFix">yè»¸è§’åº¦ãŒè² ã®æ•°ã®å ´åˆæ­£ã®æ•°ã«ä¿®æ­£ã™ã‚‹ã‹</param>
+	/// <returns>2ç‚¹é–“ã®è§’åº¦</returns>
 	static const Vector3 BetweenPointRotate(const Vector3& v1, const Vector3& v2, const bool isMinusYRotaFix = false);
 
-public: //ƒƒ“ƒoŠÖ”
-	float length() const;					//ƒmƒ‹ƒ€(’·‚³)‚ğ‹‚ß‚é
-	Vector3& normalize();					//³‹K‰»‚·‚é
-	float dot(const Vector3& v) const;		//“àÏ‚ğ‹‚ß‚é
-	Vector3 cross(const Vector3& v) const;	//ŠOÏ‚ğ‹‚ß‚é
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
+	float length() const;					//ãƒãƒ«ãƒ (é•·ã•)ã‚’æ±‚ã‚ã‚‹
+	Vector3& normalize();					//æ­£è¦åŒ–ã™ã‚‹
+	float dot(const Vector3& v) const;		//å†…ç©ã‚’æ±‚ã‚ã‚‹
+	Vector3 cross(const Vector3& v) const;	//å¤–ç©ã‚’æ±‚ã‚ã‚‹
 
-	//’P€‰‰ZqƒI[ƒo[ƒ[ƒh
+	//å˜é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Vector3 operator+() const;
 	Vector3 operator-() const;
 
-	//‘ã“ü‰‰ZqƒI[ƒo[ƒ[ƒh
+	//ä»£å…¥æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
 	Vector3& operator+=(const Vector3& v);
 	Vector3& operator-=(const Vector3& v);
 	Vector3& operator*=(float s);
 	Vector3& operator/=(float s);
 };
 
-//2€‰‰ZqƒI[ƒo[ƒ[ƒh
-//¦‚¢‚ë‚ñ‚Èˆø”(ˆø”‚ÌŒ^‚Æ‡˜)‚Ìƒpƒ^[ƒ“‚É‘Î‰‚·‚é‚½‚ßAˆÈ‰º‚Ì‚æ‚¤‚É€”õ‚µ‚Ä‚¢‚éB
+//2é …æ¼”ç®—å­ã‚ªãƒ¼ãƒãƒ¼ãƒ­ãƒ¼ãƒ‰
+//â€»ã„ã‚ã‚“ãªå¼•æ•°(å¼•æ•°ã®å‹ã¨é †åº)ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã«å¯¾å¿œã™ã‚‹ãŸã‚ã€ä»¥ä¸‹ã®ã‚ˆã†ã«æº–å‚™ã—ã¦ã„ã‚‹ã€‚
 const Vector3 operator+(const Vector3& v1, const Vector3& v2);
 const Vector3 operator-(const Vector3& v1, const Vector3& v2);
 const Vector3 operator*(const Vector3& v, float s);

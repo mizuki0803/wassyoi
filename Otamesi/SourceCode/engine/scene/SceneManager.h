@@ -1,61 +1,61 @@
-#pragma once
+ï»¿#pragma once
 #include "BaseScene.h"
 #include "AbstractSceneFactory.h"
 
 /// <summary>
-/// ƒV[ƒ“ŠÇ—
+/// ã‚·ãƒ¼ãƒ³ç®¡ç†
 /// </summary>
 class SceneManager final
 {
-private: //ƒVƒ“ƒOƒ‹ƒgƒ“‰»
-	//ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+private: //ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³åŒ–
+	//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	SceneManager() = default;
-	//ƒfƒXƒgƒ‰ƒNƒ^‚ğ‰B•Á
+	//ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’éš è”½
 	~SceneManager();
 public:
-	//ƒRƒs[ƒRƒ“ƒXƒgƒ‰ƒNƒ^‚ğ–³Œø‰»
+	//ã‚³ãƒ”ãƒ¼ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿ã‚’ç„¡åŠ¹åŒ–
 	SceneManager(const SceneManager& sceneManager) = delete;
-	//‘ã“ü‰‰Zq‚ğ–³Œø‰»
+	//ä»£å…¥æ¼”ç®—å­ã‚’ç„¡åŠ¹åŒ–
 	void operator = (const SceneManager& sceneManager) = delete;
 
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾
+	/// ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’å–å¾—
 	/// </summary>
-	/// <returns>ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[</returns>
+	/// <returns>ã‚·ãƒ¼ãƒ³ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼</returns>
 	static SceneManager* GetInstance();
 
 	/// <summary>
-	/// I—¹ˆ—
+	/// çµ‚äº†å‡¦ç†
 	/// </summary>
 	void Finalize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// ”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	/// </summary>
 	void DrawBackSprite();
 
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ
+	/// 3Dã‚·ãƒ¼ãƒ³æç”»
 	/// </summary>
 	void Draw3D();
 
 	/// <summary>
-	/// Œã‚©‚çƒuƒ‹[ƒ€
+	/// å¾Œã‹ã‚‰ãƒ–ãƒ«ãƒ¼ãƒ 
 	/// </summary>
 	void AfterBloomDraw();
 	/// <summary>
-	/// ƒAƒEƒgƒ‰ƒCƒ“—p
+	/// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”¨
 	/// </summary>
 	void OutLineDraw();
 	/// <summary>
-	/// 3DƒV[ƒ“•`‰æ(ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_)
+	/// 3Dã‚·ãƒ¼ãƒ³æç”»(ãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹)
 	/// </summary>
 	void Draw3DLightView();
 
@@ -63,36 +63,36 @@ public: //ƒƒ“ƒoŠÖ”
 
 
 	/// <summary>
-	/// ‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	/// å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	/// </summary>
 	void DrawFrontSprite();
 
 	/// <summary>
-	/// Ÿ‚ÌƒV[ƒ“‚ğƒZƒbƒg
+	/// æ¬¡ã®ã‚·ãƒ¼ãƒ³ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="sceneName">Ÿ‚ÌƒV[ƒ“</param>
+	/// <param name="sceneName">æ¬¡ã®ã‚·ãƒ¼ãƒ³</param>
 	void ChangeScene(const std::string& sceneName);
 
 	/// <summary>
-	/// ƒV[ƒ“Hê‚ğƒZƒbƒg
+	/// ã‚·ãƒ¼ãƒ³å·¥å ´ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="sceneFactory">ƒV[ƒ“Hê</param>
+	/// <param name="sceneFactory">ã‚·ãƒ¼ãƒ³å·¥å ´</param>
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { this->sceneFactory = sceneFactory; }
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 
 	//getter
 	bool GetIsEndRequest() { return scene->GetIsEndRequest(); }
 
-private: //ƒƒ“ƒo•Ï”
-	//¡‚ÌƒV[ƒ“
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ä»Šã®ã‚·ãƒ¼ãƒ³
 	BaseScene* scene = nullptr;
-	//Ÿ‚ÌƒV[ƒ“
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³
 	BaseScene* nextScene = nullptr;
-	//ƒV[ƒ“Hê
+	//ã‚·ãƒ¼ãƒ³å·¥å ´
 	AbstractSceneFactory* sceneFactory = nullptr;
 };
 

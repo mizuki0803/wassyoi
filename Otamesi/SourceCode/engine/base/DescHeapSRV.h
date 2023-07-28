@@ -1,65 +1,65 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 #include <wrl.h>
 #include <d3d12.h>
 
 /// <summary>
-/// SRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+/// SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 /// </summary>
 class DescHeapSRV
 {
-private: //ƒGƒCƒŠƒAƒX
-	//Microsoft::WRL::‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//Microsoft::WRL::ã‚’çœç•¥
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 
 public:
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÅ‘å–‡”
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æœ€å¤§æšæ•°
 	static const int SRVCount = 512;
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‹¤’Ê‰Šú‰»İ’è
+	/// å…±é€šåˆæœŸåŒ–è¨­å®š
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void Initialize(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
-	/// ‘SƒV[ƒ“‹¤’Ê‚Åg—p‚·‚éƒeƒNƒXƒ`ƒƒ–‡”‚ğŠm’è‚³‚¹‚é
+	/// å…¨ã‚·ãƒ¼ãƒ³å…±é€šã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£æšæ•°ã‚’ç¢ºå®šã•ã›ã‚‹
 	/// </summary>
 	static void SetAllSceneTextureNum();
 
 	/// <summary>
-	/// ƒV[ƒ“Ø‚è‘Ö‚¦‚É‘SƒV[ƒ“‹¤’ÊƒeƒNƒXƒ`ƒƒˆÈŠO‚Ì•ªƒCƒ“ƒfƒbƒNƒX‚ğ–ß‚·
+	/// ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆæ™‚ã«å…¨ã‚·ãƒ¼ãƒ³å…±é€šãƒ†ã‚¯ã‚¹ãƒãƒ£ä»¥å¤–ã®åˆ†ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’æˆ»ã™
 	/// </summary>
 	static void TextureDestruction();
 
 	/// <summary>
-	/// SRV‹¤’ÊSetDescriptorHeaps
+	/// SRVå…±é€šSetDescriptorHeaps
 	/// </summary>
 	static void SetDescriptorHeaps();
 
 	/// <summary>
-	/// SRV‹¤’ÊCreateShaderResourceView
+	/// SRVå…±é€šCreateShaderResourceView
 	/// </summary>
 	static void CreateShaderResourceView(const D3D12_SHADER_RESOURCE_VIEW_DESC& srvDesc, Texture& texture);
 
 	/// <summary>
-	/// SRV‹¤’ÊSetGraphicsRootDescriptorTable
+	/// SRVå…±é€šSetGraphicsRootDescriptorTable
 	/// </summary>
 	static void SetGraphicsRootDescriptorTable(UINT rootParameterIndex, UINT texNumber);
 
-public: //Ã“Iƒƒ“ƒo•Ï”  (‚½‚­‚³‚ñg‚¤‚Ì‚ÅAg‚¢‚â‚·‚¢‚æ‚¤‚Épublic‚É‚µ‚Ä‚¨‚­)
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+public: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°  (ãŸãã•ã‚“ä½¿ã†ã®ã§ã€ä½¿ã„ã‚„ã™ã„ã‚ˆã†ã«publicã«ã—ã¦ãŠã)
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	static ComPtr<ID3D12DescriptorHeap> descHeapSRV;
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//‘SƒV[ƒ“‹¤’Ê‚Åg—p‚·‚éƒeƒNƒXƒ`ƒƒ‚Ì–‡”
+	//å…¨ã‚·ãƒ¼ãƒ³å…±é€šã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°
 	static UINT allSceneTextureNum;
-	//ƒeƒNƒXƒ`ƒƒ”Ô†ƒJƒEƒ“ƒ^[
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç•ªå·ã‚«ã‚¦ãƒ³ã‚¿ãƒ¼
 	static UINT texNumCount;
 };

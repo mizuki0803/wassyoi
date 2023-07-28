@@ -1,21 +1,21 @@
-#include "NumberSprite.h"
+ï»¿#include "NumberSprite.h"
 
 NumberSprite* NumberSprite::Create(const Texture& texture, const Vector2& position, const Vector2& size, const Vector2& texSize)
 {
-	//”šƒXƒvƒ‰ƒCƒg‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	NumberSprite* numberSprite = new NumberSprite();
 	if (numberSprite == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!numberSprite->Initialize(texture, position, { 0.5f, 0.5f }, false, false)) {
 		delete numberSprite;
 		assert(0);
 		return nullptr;
 	}
 
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	numberSprite->size = size;
 	numberSprite->texSize = texSize;
 
@@ -24,6 +24,6 @@ NumberSprite* NumberSprite::Create(const Texture& texture, const Vector2& positi
 
 void NumberSprite::SetNumber(const int number)
 {
-	//ƒXƒvƒ‰ƒCƒg‚Ì¶ãØ‚èo‚µÀ•W‚ğƒeƒNƒXƒ`ƒƒƒTƒCƒY * ”š‚ÅZo‚·‚é
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å·¦ä¸Šåˆ‡ã‚Šå‡ºã—åº§æ¨™ã‚’ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º * æ•°å­—ã§ç®—å‡ºã™ã‚‹
 	texLeftTop.x = texSize.x * number;
 }

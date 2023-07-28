@@ -1,4 +1,4 @@
-#include "GameCamera.h"
+ï»¿#include "GameCamera.h"
 #include "Input.h"
 #include "Easing.h"
 #include "Player.h"
@@ -20,10 +20,10 @@ const DirectX::XMMATRIX GameCamera::matProj3D = XMMatrixPerspectiveFovLH(
 
 GameCamera* GameCamera::Create(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	GameCamera* instance = new GameCamera();
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	instance->Initialize(distanceStageCenter, stageCenterPos);
 
 	return instance;
@@ -31,25 +31,25 @@ GameCamera* GameCamera::Create(const XMFLOAT3& distanceStageCenter, const Vector
 
 void GameCamera::Initialize(const XMFLOAT3& distanceStageCenter, const Vector3& stageCenterPos)
 {
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	Camera::Initialize();
 
-	//ƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£‚ğƒZƒbƒg
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢ã‚’ã‚»ãƒƒãƒˆ
 	this->distanceStageCenter = distanceStageCenter;
-	//ƒXƒe[ƒW‚Ì’†‰›À•W‚ğƒZƒbƒg
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã®ä¸­å¤®åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	this->stageCenterPos = stageCenterPos;
 
-	// Å‰‚É“®‚©‚·ŠÖ”‚Ìİ’è
+	// æœ€åˆã«å‹•ã‹ã™é–¢æ•°ã®è¨­å®š
 	phase_ = static_cast<int>(GamePhase::Play);
-	// ƒC[ƒWƒ“ƒO‚Ì‰Šú‰»
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®åˆæœŸåŒ–
 	easeData_ = std::make_unique<EaseData>(29);
 	reStartEaseData_ = std::make_unique<EaseData>(29);
-	//ŠÖ”‚Ìİ’è
+	//é–¢æ•°ã®è¨­å®š
 	CreateAct();
 
-	//‰Šú‚Ì‰ñ“]Šp‚ğƒZƒbƒg
+	//åˆæœŸã®å›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotation.x = rotate3DDistance;
-	//ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ğXV‚·‚é
+	//ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºã‚’æ›´æ–°ã™ã‚‹
 	CameraPosPhaseCheck();
 }
 
@@ -60,30 +60,30 @@ void GameCamera::Update()
 
 void GameCamera::PlayGame()
 {
-	//ƒXƒe[ƒWƒNƒŠƒAó‘Ô‚È‚ç”²‚¯‚é
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢çŠ¶æ…‹ãªã‚‰æŠœã‘ã‚‹
 	if (isStageClear || menuFlag_ || isCreateMove_ || hintFlag_) { return; }
 
-	//ƒgƒŠƒK[ƒtƒ‰ƒO‚ªtrueó‘Ô‚È‚ç‚Îfalse‚É’¼‚µ‚Ä‚¨‚­
+	//ãƒˆãƒªã‚¬ãƒ¼ãƒ•ãƒ©ã‚°ãŒtrueçŠ¶æ…‹ãªã‚‰ã°falseã«ç›´ã—ã¦ãŠã
 	if (isTriggerDimensionChange) { isTriggerDimensionChange = false; }
 
-	//ƒJƒƒ‰‰ñ“]ŠJn
+	//ã‚«ãƒ¡ãƒ©å›è»¢é–‹å§‹
 	RotateStart();
-	//ƒJƒƒ‰‰ñ“]
+	//ã‚«ãƒ¡ãƒ©å›è»¢
 	Rotate();
 
-	//ŸŒ³Ø‚è‘Ö‚¦
+	//æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆ
 	ChanegeDimension();
 
-	//À•WXV
+	//åº§æ¨™æ›´æ–°
 	position = UpdatePosition();
 
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-	//ƒ[ƒ‹ƒhs—ñ‚ğXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	UpdateMatWorld(matTrans);
-	//‹“_A’‹“_‚ğXV
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	UpdateEyeTarget();
-	//ƒrƒ…[s—ñ‚ÆË‰es—ñ‚ÌXV
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨å°„å½±è¡Œåˆ—ã®æ›´æ–°
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 }
@@ -94,19 +94,19 @@ void GameCamera::GameStart()
 
 void GameCamera::SetClearMode()
 {
-	//ƒNƒŠƒAó‘Ô‚É‚·‚é
+	//ã‚¯ãƒªã‚¢çŠ¶æ…‹ã«ã™ã‚‹
 	isStageClear = true;
 
-	//Šù‚É3D‚Ìê‡‚Í‰½‚à‚µ‚È‚¢ó‘Ô‚É‚µ‚Ä”²‚¯‚é
+	//æ—¢ã«3Dã®å ´åˆã¯ä½•ã‚‚ã—ãªã„çŠ¶æ…‹ã«ã—ã¦æŠœã‘ã‚‹
 	if (!is2D) { 
 		phase_ = static_cast<int>(GamePhase::None);
 		return; 
 	}
 
-	//‰ñ“]‘O‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å‰å›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotateBefore = rotation;
 
-	//‰ñ“]Œã‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å¾Œå›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	if (is2D) {
 		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
 	}
@@ -115,77 +115,77 @@ void GameCamera::SetClearMode()
 	}
 	dirtyProjection = true;
 
-	//ƒAƒNƒVƒ‡ƒ“—pƒ^ƒCƒ}[‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã—ã¦ãŠã
 	actionTimer = 0;
 
-	//ƒNƒŠƒA‚É3ŸŒ³‚É–ß‚·ó‘Ô‚É‚·‚é
+	//ã‚¯ãƒªã‚¢æ™‚ã«3æ¬¡å…ƒã«æˆ»ã™çŠ¶æ…‹ã«ã™ã‚‹
 	phase_ = static_cast<int>(GamePhase::ClearReturn3D);
 }
 
 void GameCamera::ClearReturn3D()
 {
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	actionTimer++;
-	const float rotTime = 40; //ŸŒ³Ø‚è‘Ö‚¦‰ñ“]‚É‚©‚©‚éŠÔ
+	const float rotTime = 40; //æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆå›è»¢ã«ã‹ã‹ã‚‹æ™‚é–“
 
-	//ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°(0ï½1ã‚’ç®—å‡º)
 	const float time = actionTimer / rotTime;
 
-	//‰ñ“]‚³‚¹‚é
+	//å›è»¢ã•ã›ã‚‹
 	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
 	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
 	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
-	//À•WXV
+	//åº§æ¨™æ›´æ–°
 	position = UpdatePosition();
 
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-	//ƒ[ƒ‹ƒhs—ñ‚ğXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	UpdateMatWorld(matTrans);
-	//‹“_A’‹“_‚ğXV
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	UpdateEyeTarget();
-	//ƒrƒ…[s—ñ‚ÆË‰es—ñ‚ÌXV
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨å°„å½±è¡Œåˆ—ã®æ›´æ–°
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
-	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ÌƒC[ƒWƒ“ƒO
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	if (is2D) {
 		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
 	}
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«æº€ãŸãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (actionTimer < rotTime) { return; }
 
-	//2Dó‘Ô‚©ƒtƒ‰ƒO‚ğØ‚è‘Ö‚¦‚é
+	//2DçŠ¶æ…‹ã‹ãƒ•ãƒ©ã‚°ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	if (is2D) { is2D = false; }
 	else { is2D = true; }
 
 	dirtyProjection = true;
 
-	//ŸŒ³‚É•ÏX‚ªŠ®—¹‚µ‚½ƒgƒŠƒK[‚ğ—§‚Ä‚é
+	//æ¬¡å…ƒã«å¤‰æ›´ãŒå®Œäº†ã—ãŸãƒˆãƒªã‚¬ãƒ¼ã‚’ç«‹ã¦ã‚‹
 	isTriggerDimensionChange = true;
 
-	//s“®‚ğu‰½‚à‚µ‚È‚¢v‚É–ß‚·
+	//è¡Œå‹•ã‚’ã€Œä½•ã‚‚ã—ãªã„ã€ã«æˆ»ã™
 	phase_ = static_cast<int>(GamePhase::None);
 }
 
 void GameCamera::ClearReturnRotate()
 {
 	easeData_->SetCount(29);
-	//Ÿ‚ÌƒXƒe[ƒWŠJn‚Ì‚½‚ßA³–Ê‚ğŒü‚­‚æ‚¤‚ÉƒC[ƒWƒ“ƒO‚Å‰ñ“]‚³‚¹‚é
+	//æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸é–‹å§‹ã®ãŸã‚ã€æ­£é¢ã‚’å‘ãã‚ˆã†ã«ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã§å›è»¢ã•ã›ã‚‹
 	rotation.x = Easing::InCubic(rotateBefore.x, rotateAfter.x, easeData_->GetTimeRate());
 	rotation.y = Easing::InCubic(rotateBefore.y, rotateAfter.y, easeData_->GetTimeRate());
 	rotation.z = Easing::InCubic(rotateBefore.z, rotateAfter.z, easeData_->GetTimeRate());
-	//³®‚ÈÀ•W‚ğZo
+	//æ­£å¼ãªåº§æ¨™ã‚’ç®—å‡º
 	position = UpdatePosition();
 
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-	//ƒ[ƒ‹ƒhs—ñ‚ğXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	UpdateMatWorld(matTrans);
-	//‹“_A’‹“_‚ğXV
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	UpdateEyeTarget();
-	//ƒrƒ…[s—ñ‚ÆË‰es—ñ‚ÌXV
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨å°„å½±è¡Œåˆ—ã®æ›´æ–°
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
@@ -217,20 +217,20 @@ void GameCamera::GameReStart()
 		moveNum.x = Easing::InQuint(-28.0f, 0.0f, reStartEaseData_->GetTimeRate());
 	}
 
-	//‰ñ“]Šp‚©‚çŒvZ‚µ‚½À•W‚ÉˆÚ“®—Ê‚ğ‰Á‚¦‚Ä³®‚ÈÀ•W‚ğZo
+	//å›è»¢è§’ã‹ã‚‰è¨ˆç®—ã—ãŸåº§æ¨™ã«ç§»å‹•é‡ã‚’åŠ ãˆã¦æ­£å¼ãªåº§æ¨™ã‚’ç®—å‡º
 	position = moveNum + UpdatePosition();
 
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-	//ƒ[ƒ‹ƒhs—ñ‚ğXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	UpdateMatWorld(matTrans);
-	//‹“_A’‹“_‚ğXV
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	UpdateEyeTarget();
-	//ƒrƒ…[s—ñ‚ÆË‰es—ñ‚ÌXV
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨å°„å½±è¡Œåˆ—ã®æ›´æ–°
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 
-	//ƒXƒe[ƒW‚ğ•ÏX‚·‚é‚Ì‚ÅAƒXƒe[ƒW‚ÆƒJƒƒ‰‚Ì‹——£‚ğƒC[ƒWƒ“ƒO‚Å•ÏX‚µ‚Ä‚¢‚­
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å¤‰æ›´ã™ã‚‹ã®ã§ã€ã‚¹ãƒ†ãƒ¼ã‚¸ã¨ã‚«ãƒ¡ãƒ©ã®è·é›¢ã‚’ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã§å¤‰æ›´ã—ã¦ã„ã
 	distanceStageCenter.x = Easing::InCubic(beforeDistanceStageCenter.x, afterDistanceStageCenter.x, easeData_->GetTimeRate());
 	distanceStageCenter.y = Easing::InCubic(beforeDistanceStageCenter.y, afterDistanceStageCenter.y, easeData_->GetTimeRate());
 	distanceStageCenter.z = Easing::InCubic(beforeDistanceStageCenter.z, afterDistanceStageCenter.z, easeData_->GetTimeRate());
@@ -248,13 +248,13 @@ void GameCamera::GameReStart()
 
 void GameCamera::StayGame()
 {
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	const XMMATRIX matTrans = XMMatrixTranslation(position.x, position.y, position.z);
-	//ƒ[ƒ‹ƒhs—ñ‚ğXV
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’æ›´æ–°
 	UpdateMatWorld(matTrans);
-	//‹“_A’‹“_‚ğXV
+	//è¦–ç‚¹ã€æ³¨è¦–ç‚¹ã‚’æ›´æ–°
 	UpdateEyeTarget();
-	//ƒrƒ…[s—ñ‚ÆË‰es—ñ‚ÌXV
+	//ãƒ“ãƒ¥ãƒ¼è¡Œåˆ—ã¨å°„å½±è¡Œåˆ—ã®æ›´æ–°
 	UpdateMatView();
 	if (dirtyProjection) { UpdateMatProjection(); }
 }
@@ -271,10 +271,10 @@ void GameCamera::CreateAct()
 
 void GameCamera::ChanegeDimensionStart()
 {
-	//‰ñ“]‘O‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å‰å›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotateBefore = rotation;
 
-	//‰ñ“]Œã‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å¾Œå›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	if (is2D) {
 		rotateAfter = { rotation.x + rotate3DDistance, rotation.y, rotation.z };
 	}
@@ -283,10 +283,10 @@ void GameCamera::ChanegeDimensionStart()
 	}
 	dirtyProjection = true;
 
-	//ƒAƒNƒVƒ‡ƒ“—pƒ^ƒCƒ}[‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã—ã¦ãŠã
 	actionTimer = 0;
 
-	//s“®‚ğuŸŒ³Ø‚è‘Ö‚¦v‚É‚·‚é
+	//è¡Œå‹•ã‚’ã€Œæ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆã€ã«ã™ã‚‹
 	actionPhase = ActionPhase::ChangeDimension;
 
 	if (is2D) {
@@ -300,9 +300,9 @@ void GameCamera::SetClearResetAround()
 {
 	phase_ = static_cast<int>(GamePhase::ClearReturnRotate);
 
-	//‰ñ“]‘O‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å‰å›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotateBefore = rotation;
-	//‰ñ“]Œã‰ñ“]Šp‚ğƒZƒbƒg(0‚Ü‚½‚Í360‚É‹ß‚¢‚Ù‚¤‚É)
+	//å›è»¢å¾Œå›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ(0ã¾ãŸã¯360ã«è¿‘ã„ã»ã†ã«)
 	const float aroundMax = 360;
 	if (rotation.x - rotate3DDistance < aroundMax / 2) { rotateAfter.x = rotate3DDistance; }
 	else { rotateAfter.x = aroundMax + rotate3DDistance; }
@@ -314,7 +314,7 @@ void GameCamera::SetClearResetAround()
 
 void GameCamera::SetReCreateMove(const XMFLOAT3& distanceStageCenter)
 {
-	// •Û‘¶‚·‚éÀ•W‚ÌXV
+	// ä¿å­˜ã™ã‚‹åº§æ¨™ã®æ›´æ–°
 	beforeDistanceStageCenter = this->distanceStageCenter;
 	afterDistanceStageCenter = distanceStageCenter;
 	phase_ = static_cast<int>(GamePhase::Play);
@@ -346,11 +346,11 @@ void GameCamera::UpdateMatProjection()
 {
 	if (actionPhase == ActionPhase::ChangeDimension) { return; }
 
-	//2Dó‘Ô‚Ìê‡‚Í•½s“Š‰e
+	//2DçŠ¶æ…‹ã®å ´åˆã¯å¹³è¡ŒæŠ•å½±
 	if (is2D) {
 		matProjection = matProj2D;
 	}
-	//3Dó‘Ô‚Ìê‡‚Í“§‹“Š‰e
+	//3DçŠ¶æ…‹ã®å ´åˆã¯é€è¦–æŠ•å½±
 	else {
 		matProjection = matProj3D;
 	}
@@ -358,52 +358,52 @@ void GameCamera::UpdateMatProjection()
 
 void GameCamera::UpdateMatWorld(const XMMATRIX& matTrans)
 {
-	//‰ñ“]@
+	//å›è»¢ã€€
 	XMMATRIX matRot;
 	matRot = XMMatrixIdentity();
 	matRot *= XMMatrixRotationZ(XMConvertToRadians(rotation.z));
 	matRot *= XMMatrixRotationX(XMConvertToRadians(rotation.x));
 	matRot *= XMMatrixRotationY(XMConvertToRadians(rotation.y));
-	//q‚Å‚ ‚é©‹@—p‚Ìƒ[ƒ‹ƒhs—ñ‚Ì‡¬
-	matWorld = XMMatrixIdentity();	//•ÏŒ`‚ğƒŠƒZƒbƒg
-	matWorld *= matRot;		//ƒ[ƒ‹ƒhs—ñ‚É‰ñ“]‚ğ”½‰f
-	matWorld *= matTrans;	//ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ğ”½‰f
+	//å­ã§ã‚ã‚‹è‡ªæ©Ÿç”¨ã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
+	matWorld = XMMatrixIdentity();	//å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld *= matRot;		//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å›è»¢ã‚’åæ˜ 
+	matWorld *= matTrans;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
 }
 
 void GameCamera::UpdateEyeTarget()
 {
-	//‹“_‚ğƒ[ƒ‹ƒhÀ•W‚Éİ’è
+	//è¦–ç‚¹ã‚’ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ã«è¨­å®š
 	eye = { matWorld.r[3].m128_f32[0], matWorld.r[3].m128_f32[1], matWorld.r[3].m128_f32[2] };
-	//ƒ[ƒ‹ƒh‘O•ûƒxƒNƒgƒ‹
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å‰æ–¹ãƒ™ã‚¯ãƒˆãƒ«
 	Vector3 forward(0, 0, 1);
-	//ƒJƒƒ‰‚Ì‰ñ“]‚ğ”½‰f‚³‚¹‚é
+	//ã‚«ãƒ¡ãƒ©ã®å›è»¢ã‚’åæ˜ ã•ã›ã‚‹
 	forward = MatrixTransformDirection(forward, matWorld);
-	//‹“_‚©‚ç‘O•û‚Éi‚ñ‚¾ˆÊ’u‚ğ’‹“_‚Éİ’è
+	//è¦–ç‚¹ã‹ã‚‰å‰æ–¹ã«é€²ã‚“ã ä½ç½®ã‚’æ³¨è¦–ç‚¹ã«è¨­å®š
 	target = eye + forward;
-	//“V’n‚ª”½“]‚µ‚Ä‚à‚¢‚¢‚æ‚¤‚Éã•ûŒüƒxƒNƒgƒ‹‚à‰ñ“]‚³‚¹‚é
+	//å¤©åœ°ãŒåè»¢ã—ã¦ã‚‚ã„ã„ã‚ˆã†ã«ä¸Šæ–¹å‘ãƒ™ã‚¯ãƒˆãƒ«ã‚‚å›è»¢ã•ã›ã‚‹
 	Vector3 baseUp(0, 1, 0);
 	up = MatrixTransformDirection(baseUp, matWorld);
 }
 
 Vector3 GameCamera::UpdatePosition()
 {
-	//X,Y‰ñ“]Šp‚ğƒ‰ƒWƒAƒ“‚É’¼‚·
+	//X,Yå›è»¢è§’ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«ç›´ã™
 	const float angleX = XMConvertToRadians(rotation.x);
 	const float angleY = XMConvertToRadians(rotation.y);
-	//ƒAƒ“ƒ_[ƒtƒ[‚·‚é‰Â”\«‚ª‚ ‚é‚Ì‚ÅA¬”“_‚ğØ‚èÌ‚Ä‚é
+	//ã‚¢ãƒ³ãƒ€ãƒ¼ãƒ•ãƒ­ãƒ¼ã™ã‚‹å¯èƒ½æ€§ãŒã‚ã‚‹ã®ã§ã€å°æ•°ç‚¹ã‚’åˆ‡ã‚Šæ¨ã¦ã‚‹
 	const float divNum = 1000;
 	const float roundAngleX = floorf(angleX * divNum) / divNum;
 	const float roundAngleY = floorf(angleY * divNum) / divNum;
 
-	//X,Yƒ‰ƒWƒAƒ“‚ğg—p‚µAsin,cos‚ğZo
+	//X,Yãƒ©ã‚¸ã‚¢ãƒ³ã‚’ä½¿ç”¨ã—ã€sin,cosã‚’ç®—å‡º
 	const float sinfAngleY = sinf(roundAngleY);
 	const float cosfAngleY = cosf(roundAngleY);
 	const float sinfAngleX = sinf(roundAngleX);
 	const float cosfAngleX = cosf(roundAngleX);
 
-	//ŒvZŒ‹‰Ê‚ğŠ„‚è“–‚Ä‚ÄÀ•W‚ğƒZƒbƒg
-	//YÀ•W‚ÍX‰ñ“]Šp‚Ìsin‚ğg—p
-	//X,ZÀ•W‚ÍY‰ñ“]Šp‚Ìsin,cos‚ÅŒvZ‚µAX‰ñ“]Šp(YÀ•W)‚Ìcos‚ğæZ‚µ‚ÄZo
+	//è¨ˆç®—çµæœã‚’å‰²ã‚Šå½“ã¦ã¦åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
+	//Yåº§æ¨™ã¯Xå›è»¢è§’ã®sinã‚’ä½¿ç”¨
+	//X,Zåº§æ¨™ã¯Yå›è»¢è§’ã®sin,cosã§è¨ˆç®—ã—ã€Xå›è»¢è§’(Yåº§æ¨™)ã®cosã‚’ä¹—ç®—ã—ã¦ç®—å‡º
 	Vector3 pos;
 	pos.x = (-sinfAngleY * cosfAngleX) * distanceStageCenter.x + stageCenterPos.x;
 	pos.y = sinfAngleX * distanceStageCenter.y + stageCenterPos.y;
@@ -414,81 +414,81 @@ Vector3 GameCamera::UpdatePosition()
 
 Vector3 GameCamera::InputRotateNum()
 {
-	//‰ñ“]Šp‚É‰ÁZ‚·‚é’l
+	//å›è»¢è§’ã«åŠ ç®—ã™ã‚‹å€¤
 	Vector3 addRot;
-	//ˆê“x‚Ì‰ñ“]‚Å‰ñ‚é—Ê
+	//ä¸€åº¦ã®å›è»¢ã§å›ã‚‹é‡
 	const float rotNum = 90;
 
-	//ƒL[“ü—Í‚É‚æ‚é‰ñ‚é—Ê‚ğİ’è
+	//ã‚­ãƒ¼å…¥åŠ›ã«ã‚ˆã‚‹å›ã‚‹é‡ã‚’è¨­å®š
 	if (Input::GetInstance()->PushKey(DIK_UP)) { addRot = { rotNum, 0, 0 }; }
 	else if (Input::GetInstance()->PushKey(DIK_DOWN)) { addRot = { -rotNum, 0, 0 }; }
 	else if (Input::GetInstance()->PushKey(DIK_LEFT)) { addRot = { 0, rotNum, 0 }; }
 	else if (Input::GetInstance()->PushKey(DIK_RIGHT)) { addRot = { 0, -rotNum, 0 }; }
 
-	//c²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ª‹t‚³‚Ì‰¡‚Ü‚½‚Í‚È‚ç‚Î¶‰E‚ª‹t‚É‚È‚é‚Ì‚Å”½“]‚³‚¹‚Ä‚¨‚­
+	//ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºãŒé€†ã•ã®æ¨ªã¾ãŸã¯ãªã‚‰ã°å·¦å³ãŒé€†ã«ãªã‚‹ã®ã§åè»¢ã•ã›ã¦ãŠã
 	if (cameraYPosPhase == CameraYPosPhase::ReverseSide || cameraYPosPhase == CameraYPosPhase::Buttom) { addRot.y = -addRot.y; }
 
-	//Œ»İ‚Ì‰ñ“]Šp‚É‰ÁZ‚·‚é—Ê‚ğ‘«‚µ‚½’l‚ğ•Ô‚·
+	//ç¾åœ¨ã®å›è»¢è§’ã«åŠ ç®—ã™ã‚‹é‡ã‚’è¶³ã—ãŸå€¤ã‚’è¿”ã™
 	return rotation + addRot;
 }
 
 void GameCamera::RotateStart()
 {
-	//ƒvƒŒƒCƒ„[‚Ìs“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¡Œå‹•ãŒã€Œä½•ã‚‚ã—ãªã„ã€ä»¥å¤–ãªã‚‰æŠœã‘ã‚‹
 	if (!(player->GetActionPhase() == Player::ActionPhase::None)) { return; }
-	//s“®‚ªu‰½‚à‚µ‚È‚¢vˆÈŠO‚È‚ç”²‚¯‚é
+	//è¡Œå‹•ãŒã€Œä½•ã‚‚ã—ãªã„ã€ä»¥å¤–ãªã‚‰æŠœã‘ã‚‹
 	if (!(actionPhase == ActionPhase::None)) { return; }
-	//2Dó‘Ô‚È‚ç”²‚¯‚é
+	//2DçŠ¶æ…‹ãªã‚‰æŠœã‘ã‚‹
 	if (is2D) { return; }
 
-	//“ü—Í‚ª‚È‚¯‚ê‚Î”²‚¯‚é
+	//å…¥åŠ›ãŒãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!(Input::GetInstance()->PushKey(DIK_UP) || Input::GetInstance()->PushKey(DIK_DOWN) || Input::GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->PushKey(DIK_RIGHT))) { return; }
 
-	//‰ñ“]‘O‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å‰å›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotateBefore = rotation;
-	//‰ñ“]Œã‰ñ“]Šp‚ğƒZƒbƒg
+	//å›è»¢å¾Œå›è»¢è§’ã‚’ã‚»ãƒƒãƒˆ
 	rotateAfter = InputRotateNum();
 
-	//ƒAƒNƒVƒ‡ƒ“—pƒ^ƒCƒ}[‚ğ‰Šú‰»‚µ‚Ä‚¨‚­
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ç”¨ã‚¿ã‚¤ãƒãƒ¼ã‚’åˆæœŸåŒ–ã—ã¦ãŠã
 	actionTimer = 0;
 
-	//s“®‚ğuƒJƒƒ‰‰ñ“]v‚É‚·‚é
+	//è¡Œå‹•ã‚’ã€Œã‚«ãƒ¡ãƒ©å›è»¢ã€ã«ã™ã‚‹
 	actionPhase = ActionPhase::Rotation;
 }
 
 void GameCamera::Rotate()
 {
-	//s“®‚ªuƒJƒƒ‰‰ñ“]vˆÈŠO‚È‚ç”²‚¯‚é
+	//è¡Œå‹•ãŒã€Œã‚«ãƒ¡ãƒ©å›è»¢ã€ä»¥å¤–ãªã‚‰æŠœã‘ã‚‹
 	if (!(actionPhase == ActionPhase::Rotation)) { return; }
 
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	actionTimer++;
-	//‰ñ“]ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//å›è»¢ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°(0ï½1ã‚’ç®—å‡º)
 	const float time = (float)actionTimer / rotateTime;
 
-	//‰ñ“]‚³‚¹‚é
+	//å›è»¢ã•ã›ã‚‹
 	rotation.x = Easing::OutQuart(rotateBefore.x, rotateAfter.x, time);
 	rotation.y = Easing::OutQuart(rotateBefore.y, rotateAfter.y, time);
 	rotation.z = Easing::OutQuart(rotateBefore.z, rotateAfter.z, time);
 
-	//‰ñ“]Šp‚ª0`360ˆÈ“à‚Éû‚Ü‚é‚æ‚¤‚É’²®
+	//å›è»¢è§’ãŒ0ï½360ä»¥å†…ã«åã¾ã‚‹ã‚ˆã†ã«èª¿æ•´
 	MaxMinRotate(rotation.x);
 	MaxMinRotate(rotation.y);
 	MaxMinRotate(rotation.z);
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«æº€ãŸãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (actionTimer < rotateTime) { return; }
 
-	//ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ğXV‚·‚é
+	//ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºã‚’æ›´æ–°ã™ã‚‹
 	CameraPosPhaseCheck();
 
-	//s“®‚ğu‰½‚à‚µ‚È‚¢v‚É–ß‚·
+	//è¡Œå‹•ã‚’ã€Œä½•ã‚‚ã—ãªã„ã€ã«æˆ»ã™
 	actionPhase = ActionPhase::None;
 }
 
 void GameCamera::MaxMinRotate(float& rotation)
 {
-	//0`360ˆÈ“à‚Éû‚Ü‚é‚æ‚¤‚É’²®
+	//0ï½360ä»¥å†…ã«åã¾ã‚‹ã‚ˆã†ã«èª¿æ•´
 	const float rotMax = 360.0f;
 	if (rotation >= rotMax) {
 		rotation -= rotMax;
@@ -500,17 +500,17 @@ void GameCamera::MaxMinRotate(float& rotation)
 
 void GameCamera::CameraPosPhaseCheck()
 {
-	//3D‚Å‚Ì‹“_‚ÉƒJƒƒ‰‚ğŒX‚¯‚é—Ê‚ğœ‚¢‚½Šp“x
+	//3Dã§ã®è¦–ç‚¹æ™‚ã«ã‚«ãƒ¡ãƒ©ã‚’å‚¾ã‘ã‚‹é‡ã‚’é™¤ã„ãŸè§’åº¦
 	const float rotX = rotation.x - rotate3DDistance;
 
-	//X²‰ñ“]‚É‚æ‚éc²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ğİ’è
+	//Xè»¸å›è»¢ã«ã‚ˆã‚‹ç¸¦è»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºã‚’è¨­å®š
 	if ((int)(rotX) == 0) { cameraYPosPhase = CameraYPosPhase::Side; }
 	else if ((int)(rotX) == 90) { cameraYPosPhase = CameraYPosPhase::Top; }
 	else if ((int)(rotX) == 180) { cameraYPosPhase = CameraYPosPhase::ReverseSide; }
 	else if ((int)(rotX) == 270) { cameraYPosPhase = CameraYPosPhase::Buttom; }
 	else { assert(0); }
 
-	//Y²‰ñ“]‚É‚æ‚é‰¡²ƒJƒƒ‰ˆÊ’uƒtƒF[ƒY‚ğİ’è
+	//Yè»¸å›è»¢ã«ã‚ˆã‚‹æ¨ªè»¸ã‚«ãƒ¡ãƒ©ä½ç½®ãƒ•ã‚§ãƒ¼ã‚ºã‚’è¨­å®š
 	if ((int)(rotX) == 0 || (int)(rotX) == 90 || (int)(rotX) == 270) {
 		if ((int)rotation.y == 0) { cameraXPosPhase = CameraXPosPhase::Front; }
 		else if ((int)rotation.y == 90) { cameraXPosPhase = CameraXPosPhase::Left; }
@@ -518,7 +518,7 @@ void GameCamera::CameraPosPhaseCheck()
 		else if ((int)rotation.y == 270) { cameraXPosPhase = CameraXPosPhase::Right; }
 		else { assert(0); }
 	}
-	else if ((int)(rotX) == 180) {//X²‰ñ“]‚Å180“x‚ğŒü‚¢‚Ä‚¢‚é‚Æ‚«‚Ì‚İ‚Íã‰º‚ª‹t‚É‚È‚é
+	else if ((int)(rotX) == 180) {//Xè»¸å›è»¢ã§180åº¦ã‚’å‘ã„ã¦ã„ã‚‹ã¨ãã®ã¿ã¯ä¸Šä¸‹ãŒé€†ã«ãªã‚‹
 		if ((int)rotation.y == 0) { cameraXPosPhase = CameraXPosPhase::Back; }
 		else if ((int)rotation.y == 90) { cameraXPosPhase = CameraXPosPhase::Right; }
 		else if ((int)rotation.y == 180) { cameraXPosPhase = CameraXPosPhase::Front; }
@@ -532,22 +532,22 @@ void GameCamera::CameraPosPhaseCheck()
 
 void GameCamera::ChanegeDimension()
 {
-	//s“®‚ªuŸŒ³Ø‚è‘Ö‚¦vˆÈŠO‚È‚ç”²‚¯‚é
+	//è¡Œå‹•ãŒã€Œæ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆã€ä»¥å¤–ãªã‚‰æŠœã‘ã‚‹
 	if (!(actionPhase == ActionPhase::ChangeDimension)) { return; }
 
-	//ƒ^ƒCƒ}[XV
+	//ã‚¿ã‚¤ãƒãƒ¼æ›´æ–°
 	actionTimer++;
-	const float rotTime = 40; //ŸŒ³Ø‚è‘Ö‚¦‰ñ“]‚É‚©‚©‚éŠÔ
+	const float rotTime = 40; //æ¬¡å…ƒåˆ‡ã‚Šæ›¿ãˆå›è»¢ã«ã‹ã‹ã‚‹æ™‚é–“
 
-	//ƒC[ƒWƒ“ƒO‚Ég—p‚·‚é•Ï”(0`1‚ğZo)
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã«ä½¿ç”¨ã™ã‚‹å¤‰æ•°(0ï½1ã‚’ç®—å‡º)
 	const float time = actionTimer / rotTime;
 
-	//‰ñ“]‚³‚¹‚é
+	//å›è»¢ã•ã›ã‚‹
 	rotation.x = Easing::OutCubic(rotateBefore.x, rotateAfter.x, time);
 	rotation.y = Easing::OutCubic(rotateBefore.y, rotateAfter.y, time);
 	rotation.z = Easing::OutCubic(rotateBefore.z, rotateAfter.z, time);
 
-	//ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ‚ÌƒC[ƒWƒ“ƒO
+	//ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³è¡Œåˆ—ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	if (is2D) {
 		matProjection = Ease4x4_out(matProj2D, matProj3D, time);
 	}
@@ -555,19 +555,19 @@ void GameCamera::ChanegeDimension()
 		matProjection = Ease4x4_in(matProj3D, matProj2D, time);
 	}
 
-	//ƒ^ƒCƒ}[‚ªw’è‚µ‚½ŠÔ‚É–‚½‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚¿ã‚¤ãƒãƒ¼ãŒæŒ‡å®šã—ãŸæ™‚é–“ã«æº€ãŸãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (actionTimer < rotTime) { return; }
 
-	//2Dó‘Ô‚©ƒtƒ‰ƒO‚ğØ‚è‘Ö‚¦‚é
+	//2DçŠ¶æ…‹ã‹ãƒ•ãƒ©ã‚°ã‚’åˆ‡ã‚Šæ›¿ãˆã‚‹
 	if (is2D) { is2D = false; }
 	else { is2D = true; }
 
 	dirtyProjection = true;
 
-	//ŸŒ³‚É•ÏX‚ªŠ®—¹‚µ‚½ƒgƒŠƒK[‚ğ—§‚Ä‚é
+	//æ¬¡å…ƒã«å¤‰æ›´ãŒå®Œäº†ã—ãŸãƒˆãƒªã‚¬ãƒ¼ã‚’ç«‹ã¦ã‚‹
 	isTriggerDimensionChange = true;
 
-	//s“®‚ğu‰½‚à‚µ‚È‚¢v‚É–ß‚·
+	//è¡Œå‹•ã‚’ã€Œä½•ã‚‚ã—ãªã„ã€ã«æˆ»ã™
 	actionPhase = ActionPhase::None;
 }
 
@@ -585,12 +585,12 @@ void GameCamera::SetEaseData(const int count)
 
 XMMATRIX GameCamera::Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer)
 {
-	//4x4‚É•ÏŠ·
+	//4x4ã«å¤‰æ›
 	XMFLOAT4X4 a, b;
 	XMStoreFloat4x4(&a, _mat1);
 	XMStoreFloat4x4(&b, _mat2);
 
-	//ƒC[ƒWƒ“ƒO
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	XMFLOAT4X4 out4x4 = {};
 	out4x4._11 = Easing::OutQuart(a._11, b._11, _timer);
 	out4x4._12 = Easing::OutQuart(a._12, b._12, _timer);
@@ -614,7 +614,7 @@ XMMATRIX GameCamera::Ease4x4_in(const XMMATRIX& _mat1, const XMMATRIX& _mat2, co
 
 XMMATRIX GameCamera::Ease4x4_out(const XMMATRIX& _mat1, const XMMATRIX& _mat2, const float _timer)
 {
-	//4x4‚É•ÏŠ·
+	//4x4ã«å¤‰æ›
 	XMFLOAT4X4 a, b;
 	XMStoreFloat4x4(&a, _mat1);
 	XMStoreFloat4x4(&b, _mat2);

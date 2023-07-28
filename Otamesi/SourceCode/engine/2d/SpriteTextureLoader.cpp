@@ -1,29 +1,30 @@
-#include "SpriteTextureLoader.h"
+ï»¿#include "SpriteTextureLoader.h"
 #include "TextureManager.h"
 
 Texture SpriteTextureLoader::textures[SpriteTextureLoader::SpriteTextureNum];
 
 void SpriteTextureLoader::TextureLoad()
 {
-	//ƒXƒvƒ‰ƒCƒgƒeƒNƒXƒ`ƒƒ—pƒfƒBƒŒƒNƒgƒŠƒpƒX
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	const std::string directoryPath = "Resources/spriteTexture/";
 
-	//ƒXƒvƒ‰ƒCƒg—pƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”¨ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	TextureManager::LoadTexture(textures[DebugFont], directoryPath, "debugFont.png");
 	TextureManager::LoadTexture(textures[White], directoryPath, "white1x1.png");
 	TextureManager::LoadTexture(textures[Number], directoryPath, "number.png");
 	TextureManager::LoadTexture(textures[Block], directoryPath, "block.png");
-	//ƒ^ƒCƒgƒ‹ƒƒS
+	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
 	TextureManager::LoadTexture(textures[TitleLogo], directoryPath, "title.png");
-	//ƒƒjƒ…[ŠÖŒW
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼é–¢ä¿‚
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
 	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
 	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
-	//‘€ì•û–@ŠÖŒW
+	//æ“ä½œæ–¹æ³•é–¢ä¿‚
 	TextureManager::LoadTexture(textures[Husen], directoryPath, "husen.png");
 	TextureManager::LoadTexture(textures[HusenL], directoryPath, "husen_L.png");
 	TextureManager::LoadTexture(textures[HusenR], directoryPath, "husen_R.png");
+	TextureManager::LoadTexture(textures[HusenH], directoryPath, "husen_hint.png");
 
 	TextureManager::LoadTexture(textures[HowToPlayPlayer], directoryPath, "howToPlayPlayerText.png");
 	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "howToPlayCameraText.png");
@@ -31,7 +32,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[Hint2Text], directoryPath, "hint2Text.png");
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
 	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "stageSelect.png");
-	//ƒXƒe[ƒWƒNƒŠƒAŠÖŒW
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢é–¢ä¿‚
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");
 	TextureManager::LoadTexture(textures[ClearBack], directoryPath, "Clear_Back.png");
 	TextureManager::LoadTexture(textures[PressSpace], directoryPath, "pressSpace.png");

@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "Vector3.h"
 
 /// <summary>
-/// ŠÛ‰e
+/// ä¸¸å½±
 /// </summary>
 class CircleShadow
 {
-private://ƒGƒCƒŠƒAƒX
-	//DirectX::‚ğÈ—ª
+private://ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public://ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+public://ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
 		XMVECTOR dir;
@@ -29,7 +29,7 @@ public://ƒTƒuƒNƒ‰ƒX
 		float pad4;
 	};
 
-public://ƒƒ“ƒoŠÖ”
+public://ãƒ¡ãƒ³ãƒé–¢æ•°
 
 	//getter
 	inline const XMVECTOR& GetDir() { return dir; }
@@ -51,17 +51,17 @@ public://ƒƒ“ƒoŠÖ”
 	inline void SetActive(bool active) { this->active = active; }
 
 
-private://ƒƒ“ƒo•Ï”
-	//•ûŒü(’PˆÊƒxƒNƒgƒ‹)
+private://ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//æ–¹å‘(å˜ä½ãƒ™ã‚¯ãƒˆãƒ«)
 	XMVECTOR dir = { 1, 0, 0, 0 };
-	//ƒLƒƒƒXƒ^[‚Æƒ‰ƒCƒg‚Ì‹——£
+	//ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼ã¨ãƒ©ã‚¤ãƒˆã®è·é›¢
 	float distanceCasterLight = 100.0f;
-	//ƒLƒƒƒXƒ^[À•W(ƒ[ƒ‹ƒhÀ•WŒn)
+	//ã‚­ãƒ£ã‚¹ã‚¿ãƒ¼åº§æ¨™(ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»)
 	Vector3 casterPos = { 0, 0, 0 };
-	//‹——£Œ¸ŠŒW”
+	//è·é›¢æ¸›è¡°ä¿‚æ•°
 	XMFLOAT3 atten = { 0.5f, 0.6f, 0.0f };
-	//Œ¸ŠŠp“x
+	//æ¸›è¡°è§’åº¦
 	XMFLOAT2 factorAngleCos = { 0.2f, 0.5f };
-	//—LŒøƒtƒ‰ƒO
+	//æœ‰åŠ¹ãƒ•ãƒ©ã‚°
 	bool active = false;
 };

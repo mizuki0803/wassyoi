@@ -1,15 +1,15 @@
-#include "SceneChangeEffect.h"
+ï»¿#include "SceneChangeEffect.h"
 
 std::list<std::unique_ptr<SceneChangeSprite>> SceneChangeEffect::sceneChangeSprites;
 
 void SceneChangeEffect::Update()
 {
-	//€–Só‘Ô‚ÌƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg‚Ìíœ
+	//æ­»äº¡çŠ¶æ…‹ã®ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å‰Šé™¤
 	sceneChangeSprites.remove_if([](std::unique_ptr<SceneChangeSprite>& sceneChangeSprite) {
 		return sceneChangeSprite->GetIsDead();
 		});
 
-	//ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒgXV
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	for (const std::unique_ptr<SceneChangeSprite>& sceneChangeSprite : sceneChangeSprites) {
 		sceneChangeSprite->Update();
 	}
@@ -17,7 +17,7 @@ void SceneChangeEffect::Update()
 
 void SceneChangeEffect::Draw()
 {
-	//ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg•`‰æ
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	for (const std::unique_ptr<SceneChangeSprite>& sceneChangeSprite : sceneChangeSprites) {
 		sceneChangeSprite->Draw();
 	}
@@ -25,7 +25,7 @@ void SceneChangeEffect::Draw()
 
 void SceneChangeEffect::CreateSceneChangeEffect(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime)
 {
-	//V‚µ‚¢ƒV[ƒ“•ÏX‰‰o—pƒXƒvƒ‰ƒCƒg‚ğ¶¬‚·‚é
+	//æ–°ã—ã„ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 	std::unique_ptr<SceneChangeSprite> newSceneChangeSprite;
 	newSceneChangeSprite.reset(SceneChangeSprite::Create(color, deepenTime, waitTime, returnTime));
 	sceneChangeSprites.push_back(std::move(newSceneChangeSprite));

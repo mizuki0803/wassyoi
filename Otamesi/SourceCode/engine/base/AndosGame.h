@@ -1,29 +1,29 @@
-#pragma once
+ï»¿#pragma once
 #include "FrameWork.h"
 
 /// <summary>
-/// ƒQ[ƒ€ŒÅ—L‚ÌƒNƒ‰ƒX
+/// ã‚²ãƒ¼ãƒ å›ºæœ‰ã®ã‚¯ãƒ©ã‚¹
 /// </summary>
 class AndosGame : public FrameWork
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize() override;
 
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw() override;
 };

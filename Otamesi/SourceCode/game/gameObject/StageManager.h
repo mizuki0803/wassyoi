@@ -1,65 +1,65 @@
-#pragma once
+ï»¿#pragma once
 #include <array>
 
 /// <summary>
-/// ƒXƒe[ƒWŠÇ—
+/// ã‚¹ãƒ†ãƒ¼ã‚¸ç®¡ç†
 /// </summary>
 class StageManager
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// w’è‚µ‚½ƒXƒe[ƒW‚ªƒNƒŠƒA‚µ‚Ä‚¢‚é‚©
+	/// æŒ‡å®šã—ãŸã‚¹ãƒ†ãƒ¼ã‚¸ãŒã‚¯ãƒªã‚¢ã—ã¦ã„ã‚‹ã‹
 	/// </summary>
-	/// <param name="stageName">ƒXƒe[ƒW–¼</param>
-	/// <returns>ƒXƒe[ƒW‚ªƒNƒŠƒA‚µ‚Ä‚¢‚é‚©</returns>
+	/// <param name="stageName">ã‚¹ãƒ†ãƒ¼ã‚¸å</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸ãŒã‚¯ãƒªã‚¢ã—ã¦ã„ã‚‹ã‹</returns>
 	static bool GetIsClear(const int selectStage);
 
 	/// <summary>
-	/// Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğƒNƒŠƒAó‘Ô‚É‚·‚é
+	/// ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢çŠ¶æ…‹ã«ã™ã‚‹
 	/// </summary>
 	static void StageClear();
 
 	/// <summary>
-	/// Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚Ìgetter
+	/// ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã®getter
 	/// </summary>
-	/// <returns>Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW</returns>
+	/// <returns>ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸</returns>
 	static int GetSelectStage() { return StageManager::selectStage; }
 
 	/// <summary>
-	/// ‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½‚©
+	/// å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸã‹
 	/// </summary>
-	/// <returns>ƒtƒ‰ƒO</returns>
+	/// <returns>ãƒ•ãƒ©ã‚°</returns>
 	static bool GetIsAllStageClear() { return StageManager::isAllStageClear; }
 
 	/// <summary>
-	/// Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚Ìsetter
+	/// ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã®setter
 	/// </summary>
 	static void SetSelectStage(const int selectStage);
 
 	/// <summary>
-	/// ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğŸ‚ÉˆÚ“®‚³‚¹‚é
+	/// é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’æ¬¡ã«ç§»å‹•ã•ã›ã‚‹
 	/// </summary>
 	static bool NextStageSelect();
 
 	/// <summary>
-	/// ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğ‘O‚ÉˆÚ“®‚³‚¹‚é
+	/// é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å‰ã«ç§»å‹•ã•ã›ã‚‹
 	/// </summary>
 	static bool PrevStageSelect();
 
 	/// <summary>
-	/// ‘S‚Ä‚ÌƒXƒe[ƒW‚ğ‰‚ß‚ÄƒNƒŠƒA‚µ‚½‚©ƒ`ƒFƒbƒN
+	/// å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’åˆã‚ã¦ã‚¯ãƒªã‚¢ã—ãŸã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
 	/// <returns></returns>
 	static bool AllStageClearTriggerCheck();
 
-private: //Ã“Iƒƒ“ƒo•Ï”(’è”)
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°(å®šæ•°)
 	static const int stageNum = 3;
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//‘I‘ğ’†‚ÌƒXƒe[ƒW
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸
 	static int selectStage;
-	//ƒXƒe[ƒWƒNƒŠƒA‚µ‚Ä‚¢‚é‚©
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢ã—ã¦ã„ã‚‹ã‹
 	static std::array<bool, stageNum> isClear;
-	//‘S‚Ä‚ÌƒXƒe[ƒW‚ğƒNƒŠƒA‚µ‚½ó‘Ô‚©
+	//å…¨ã¦ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ã‚¯ãƒªã‚¢ã—ãŸçŠ¶æ…‹ã‹
 	static bool isAllStageClear;
 };

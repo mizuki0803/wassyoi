@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 #include <array>
 
 /// <summary>
-/// ƒqƒ“ƒg‰æ‘œ“Ç‚İ‚İ
+/// ãƒ’ãƒ³ãƒˆç”»åƒèª­ã¿è¾¼ã¿
 /// </summary>
 class HintTextureLoader
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
 	static void LoadTextures(const int stageNum);
 
@@ -17,7 +17,7 @@ public: //ƒƒ“ƒoŠÖ”
 	static Texture& GetTexture(const int num) { return textures[num]; }
 
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒ
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	static std::array<Texture, 2> textures;
 };

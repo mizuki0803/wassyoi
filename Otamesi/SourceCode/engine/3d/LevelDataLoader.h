@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjObject3d.h"
 #include "Vector3.h"
 #include <string>
@@ -8,91 +8,91 @@
 #include <json.hpp>
 
 /// <summary>
-/// ƒŒƒxƒ‹ƒf[ƒ^“Ç‚İ‚İ
+/// ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 /// </summary>
 class LevelDataLoader
 {
 	/// <summary>
-	/// ƒŒƒxƒ‹ƒf[ƒ^
+	/// ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿
 	/// </summary>
 	struct LevelData
 	{
-		//ƒIƒuƒWƒFƒNƒg1ŒÂ•ª‚Ìƒf[ƒ^
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ1å€‹åˆ†ã®ãƒ‡ãƒ¼ã‚¿
 		struct ObjectData {
-			std::string fileName;	//ƒtƒ@ƒCƒ‹–¼
-			Vector3 translation;	//•½sˆÚ“®
-			Vector3 rotation;		//‰ñ“]Šp
-			Vector3 scaling;		//ƒXƒP[ƒŠƒ“ƒO
+			std::string fileName;	//ãƒ•ã‚¡ã‚¤ãƒ«å
+			Vector3 translation;	//å¹³è¡Œç§»å‹•
+			Vector3 rotation;		//å›è»¢è§’
+			Vector3 scaling;		//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 			bool isParent;
 			std::vector<ObjectData> children;
 		};
 
-		//ƒIƒuƒWƒFƒNƒg‚ÌƒRƒ“ƒeƒi
+		//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ã‚³ãƒ³ãƒ†ãƒŠ
 		std::vector<ObjectData> objects;
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <returns>JSONƒtƒ@ƒCƒ‹“Ç‚İ‚İ</returns>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <returns>JSONãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿</returns>
 	static LevelDataLoader* Create(const std::string& filename);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ‰e—pŒõŒ¹ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_‚Å‚Ì•`‰æ
+	/// å½±ç”¨å…‰æºãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹ã§ã®æç”»
 	/// </summary>
 	void DrawLightCameraView();
 
 	/// <summary>
-	/// ƒ‚ƒfƒ‹‚ğŠi”[
+	/// ãƒ¢ãƒ‡ãƒ«ã‚’æ ¼ç´
 	/// </summary>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="model">ƒ‚ƒfƒ‹</param>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="model">ãƒ¢ãƒ‡ãƒ«</param>
 	void InsertModel(const std::string& filename, ObjModel* model);
 
 	/// <summary>
-	/// “Ç‚İ‚ñ‚¾ƒŒƒxƒ‹ƒf[ƒ^ƒIƒuƒWƒFƒNƒg¶¬
+	/// èª­ã¿è¾¼ã‚“ã ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	/// </summary>
 	void CreateLevelDataObjects();
 
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	/// ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	void LoadFile(const std::string& filename);
 
 	/// <summary>
-	/// ƒV[ƒ“‚ğÄ‹A“I‚É‰ğÍ‚·‚é
+	/// ã‚·ãƒ¼ãƒ³ã‚’å†å¸°çš„ã«è§£æã™ã‚‹
 	/// </summary>
-	/// <param name="object">ƒIƒuƒWƒFƒNƒg</param>
+	/// <param name="object">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
 	void ParseSceneRecursive(const nlohmann::json& object);
 
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒBƒŒƒNƒgƒŠƒpƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	const static std::string directoryPath;
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒ‚ƒfƒ‹ƒf[ƒ^ƒRƒ“ƒeƒi
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	std::map<std::string, ObjModel*> models;
-	//ƒIƒuƒWƒFƒNƒgƒf[ƒ^ƒRƒ“ƒeƒi
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆãƒ‡ãƒ¼ã‚¿ã‚³ãƒ³ãƒ†ãƒŠ
 	std::vector<std::unique_ptr<ObjObject3d>> objects;
-	//JSON•¶š—ñ‚©‚ç‰ğ“€‚·‚éƒf[ƒ^
+	//JSONæ–‡å­—åˆ—ã‹ã‚‰è§£å‡ã™ã‚‹ãƒ‡ãƒ¼ã‚¿
 	nlohmann::json deserialized;
-	//ƒŒƒxƒ‹ƒf[ƒ^Ši”[—pƒCƒ“ƒXƒ^ƒ“ƒX
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
 	LevelData* levelData;
 };

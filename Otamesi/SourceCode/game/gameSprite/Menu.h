@@ -1,43 +1,43 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 #include "EaseData.h"
 #include <memory>
 
 class Menu : public Sprite
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="pos">ˆÊ’u</param>
+	/// <param name="pos">ä½ç½®</param>
 	/// <returns></returns>
 	static std::unique_ptr<Menu> Create(Vector2 pos);
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <param name="isFlipX">¶‰E”½“]‚·‚é‚©</param>
-	/// <param name="isFlipY">ã‰º”½“]‚·‚é‚©</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <param name="isFlipX">å·¦å³åè»¢ã™ã‚‹ã‹</param>
+	/// <param name="isFlipY">ä¸Šä¸‹åè»¢ã™ã‚‹ã‹</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Texture& texture, const Vector2& position, const Vector2& anchorpoint, bool isFlipX, bool isFlipY) override;
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ƒŠƒZƒbƒg
+	/// ãƒªã‚»ãƒƒãƒˆ
 	/// </summary>
 	void Reset();
 
 	const bool EaseEnd() {return menuEaseData_->GetEndFlag(); }
 
-private: //ƒƒ“ƒo•Ï”
-	// ƒC[ƒWƒ“ƒO
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	std::unique_ptr<EaseData> menuEaseData_;
 };
 

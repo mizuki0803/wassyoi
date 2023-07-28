@@ -1,10 +1,10 @@
-#include "SceneManager.h"
+ï»¿#include "SceneManager.h"
 #include "DescHeapSRV.h"
 #include <cassert>
 
 SceneManager::~SceneManager()
 {
-	//ÅŒã‚ÌƒV[ƒ“‚ÌI—¹‚Æ‰ð•ú
+	//æœ€å¾Œã®ã‚·ãƒ¼ãƒ³ã®çµ‚äº†ã¨è§£æ”¾
 	delete scene;
 }
 
@@ -22,38 +22,38 @@ void SceneManager::Finalize()
 
 void SceneManager::Update()
 {
-	//ƒV[ƒ“Ø‚è‘Ö‚¦‚ª‚ ‚é‚È‚ç
+	//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆãŒã‚ã‚‹ãªã‚‰
 	if (nextScene) {
-		//‹ŒƒV[ƒ“‚ª‚ ‚é‚È‚ç
+		//æ—§ã‚·ãƒ¼ãƒ³ãŒã‚ã‚‹ãªã‚‰
 		if (scene) {
-			//‹ŒƒV[ƒ“‚ÌI—¹
+			//æ—§ã‚·ãƒ¼ãƒ³ã®çµ‚äº†
 			delete scene;
 		}
-		//ƒV[ƒ“‚ðØ‚è‘Ö‚¦
+		//ã‚·ãƒ¼ãƒ³ã‚’åˆ‡ã‚Šæ›¿ãˆ
 		scene = nextScene;
-		//ŽŸ‚ÌƒV[ƒ“‚Í‹ó‚É‚µ‚Ä‚¨‚­
+		//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã¯ç©ºã«ã—ã¦ãŠã
 		nextScene = nullptr;
 
-		//‘SƒV[ƒ“‹¤’Ê‚ÅŽg—p‚·‚éƒeƒNƒXƒ`ƒƒ‚Ì–‡”‚Ü‚ÅƒCƒ“ƒfƒbƒNƒX‚ð–ß‚·
+		//å…¨ã‚·ãƒ¼ãƒ³å…±é€šã§ä½¿ç”¨ã™ã‚‹ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æžšæ•°ã¾ã§ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã‚’æˆ»ã™
 		DescHeapSRV::TextureDestruction();
 
-		//V‚µ‚¢ƒV[ƒ“‰Šú‰»
+		//æ–°ã—ã„ã‚·ãƒ¼ãƒ³åˆæœŸåŒ–
 		scene->Initialize();
 	}
 
-	//–ˆƒtƒŒ[ƒ€XV
+	//æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	scene->Update();
 }
 
 void SceneManager::DrawBackSprite()
 {
-	//”wŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	scene->DrawBackSprite();
 }
 
 void SceneManager::Draw3D()
 {
-	//3DƒV[ƒ“•`‰æ
+	//3Dã‚·ãƒ¼ãƒ³æç”»
 	scene->Draw3D();
 }
 
@@ -70,7 +70,7 @@ void SceneManager::OutLineDraw()
 
 void SceneManager::Draw3DLightView()
 {
-	//3DƒV[ƒ“•`‰æ(ƒ‰ƒCƒg‚©‚ç‚ÌŽ‹“_)
+	//3Dã‚·ãƒ¼ãƒ³æç”»(ãƒ©ã‚¤ãƒˆã‹ã‚‰ã®è¦–ç‚¹)
 	scene->Draw3DLightView();
 }
 
@@ -81,7 +81,7 @@ void SceneManager::DrawImageForUI()
 
 void SceneManager::DrawFrontSprite()
 {
-	//‘OŒiƒXƒvƒ‰ƒCƒg•`‰æ
+	//å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	scene->DrawFrontSprite();
 }
 
@@ -90,7 +90,7 @@ void SceneManager::ChangeScene(const std::string& sceneName)
 	assert(sceneFactory);
 	assert(nextScene == nullptr);
 
-	//ŽŸ‚ÌƒV[ƒ“‚ðƒZƒbƒg
+	//æ¬¡ã®ã‚·ãƒ¼ãƒ³ã‚’ã‚»ãƒƒãƒˆ
 	nextScene = sceneFactory->CreateScene(sceneName);
 }
 

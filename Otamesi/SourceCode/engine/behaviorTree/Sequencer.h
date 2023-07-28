@@ -1,32 +1,32 @@
-#pragma once
+ï»¿#pragma once
 #include <d3dx12.h>
 #include <vector>
 #include <functional>
 
 /// <summary>
-/// ƒV[ƒPƒ“ƒT[
+/// ã‚·ãƒ¼ã‚±ãƒ³ã‚µãƒ¼
 /// </summary>
 class Sequencer
 {
 public:
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <returns>ƒV[ƒPƒ“ƒT[</returns>
+	/// <returns>ã‚·ãƒ¼ã‚±ãƒ³ã‚µãƒ¼</returns>
 	static Sequencer* Create();
 
 	/// <summary>
-	/// ƒV[ƒPƒ“ƒX
+	/// ã‚·ãƒ¼ã‚±ãƒ³ã‚¹
 	/// </summary>
 	bool Sequence();
 
 	/// <summary>
-	/// qƒm[ƒh‚ğ’Ç‰Á‚·‚é
+	/// å­ãƒãƒ¼ãƒ‰ã‚’è¿½åŠ ã™ã‚‹
 	/// </summary>
-	/// <param name="func()">ŠÖ”</param>
+	/// <param name="func()">é–¢æ•°</param>
 	void AddNode(std::function<bool()> func);
 
 private:
-	//qƒm[ƒh
+	//å­ãƒãƒ¼ãƒ‰
 	std::vector<std::function<bool()>> nodes;
 };

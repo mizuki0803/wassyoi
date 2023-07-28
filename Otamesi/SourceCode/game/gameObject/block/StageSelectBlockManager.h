@@ -1,77 +1,77 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjObject3d.h"
 #include <array>
 
 /// <summary>
-/// ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒNŠÇ—ƒIƒuƒWƒFƒNƒg
+/// ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 /// </summary>
 class StageSelectBlockManager : public ObjObject3d
 {
 public: //enum
 	/// <summary>
-	/// ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY
+	/// ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º
 	/// </summary>
 	enum BlockManagerPositionPhase
 	{
-		Center,	//’†S
-		OutscreenRight, //‰æ–ÊŠO(‰E)
-		OutscreenLeft, //‰æ–ÊŠO(¶)
+		Center,	//ä¸­å¿ƒ
+		OutscreenRight, //ç”»é¢å¤–(å³)
+		OutscreenLeft, //ç”»é¢å¤–(å·¦)
 
-		PositionNum,	//À•W‚Ì”
+		PositionNum,	//åº§æ¨™ã®æ•°
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="positionPhase">ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY</param>
-	/// <returns>ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒNŠÇ—ƒIƒuƒWƒFƒNƒg</returns>
+	/// <param name="positionPhase">ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</returns>
 	static StageSelectBlockManager* Create(const BlockManagerPositionPhase& positionPhase);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="positionPhase">ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="positionPhase">ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const BlockManagerPositionPhase& positionPhase);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ˆÚ“®ŠJn
+	/// ç§»å‹•é–‹å§‹
 	/// </summary>
-	/// <param name="nextPositionPhase">ƒuƒƒbƒNŠÇ—‚ÌêŠƒtƒF[ƒY</param>
+	/// <param name="nextPositionPhase">ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º</param>
 	void MoveStart(const BlockManagerPositionPhase& nextPositionPhase);
 
 	//getter
 	bool GetIsDelete() { return isDelete; }
 	bool GetIsMove() { return isMove; }
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ˆÚ“®ˆ—
+	/// ç§»å‹•å‡¦ç†
 	/// </summary>
 	void Move();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒuƒƒbƒNŠÇ—‚ÌêŠ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å ´æ‰€
 	static std::array<Vector3, PositionNum> managerPos;
-	//ˆê“x‚ÌˆÚ“®‚É‚©‚©‚éŠÔ
+	//ä¸€åº¦ã®ç§»å‹•ã«ã‹ã‹ã‚‹æ™‚é–“
 	static const int32_t moveTime = 50;
 
-private: //ƒƒ“ƒo•Ï”
-	//êŠƒtƒF[ƒY
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º
 	BlockManagerPositionPhase blockManagerPositionPhase;
-	//Ÿ‚ÉˆÚ“®‚·‚éêŠƒtƒF[ƒY
+	//æ¬¡ã«ç§»å‹•ã™ã‚‹å ´æ‰€ãƒ•ã‚§ãƒ¼ã‚º
 	BlockManagerPositionPhase nextBlockManagerPositionPhase;
-	//íœƒtƒ‰ƒO
+	//å‰Šé™¤ãƒ•ãƒ©ã‚°
 	bool isDelete = false;
-	//ˆÚ“®’†‚©
+	//ç§»å‹•ä¸­ã‹
 	bool isMove = false;
-	//ˆÚ“®—pƒ^ƒCƒ}[
+	//ç§»å‹•ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	int32_t moveTimer;
 };

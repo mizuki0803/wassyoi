@@ -1,4 +1,4 @@
-#include "ShadowMap.h"
+ï»¿#include "ShadowMap.h"
 #include "DescHeapSRV.h"
 #include <d3dx12.h>
 #include <d3dcompiler.h>
@@ -12,13 +12,13 @@ ID3D12GraphicsCommandList* ShadowMap::cmdList = nullptr;
 
 ShadowMap* ShadowMap::Create()
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ð¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	ShadowMap* instance = new ShadowMap();
 	if (instance == nullptr) {
 		return nullptr;
 	}
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
@@ -30,7 +30,7 @@ ShadowMap* ShadowMap::Create()
 
 void ShadowMap::ShadowMapCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList)
 {
-	//nullptrƒ`ƒFƒbƒN
+	//nullptrãƒã‚§ãƒƒã‚¯
 	assert(dev);
 	assert(cmdList);
 
@@ -42,7 +42,7 @@ bool ShadowMap::Initialize()
 {
 	HRESULT result;
 
-	//’è”ƒoƒbƒtƒ@‚Ì¶¬
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD),
 		D3D12_HEAP_FLAG_NONE,
@@ -52,7 +52,7 @@ bool ShadowMap::Initialize()
 		IID_PPV_ARGS(&constBuff));
 	assert(SUCCEEDED(result));
 
-	//[“xƒoƒbƒtƒ@ƒŠƒ\[ƒXÝ’è
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
 	CD3DX12_RESOURCE_DESC depthResDesc =
 		CD3DX12_RESOURCE_DESC::Tex2D(
 			DXGI_FORMAT_D32_FLOAT,
@@ -62,7 +62,7 @@ bool ShadowMap::Initialize()
 			1, 0,
 			D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL
 		);
-	//[“xƒoƒbƒtƒ@‚Ì¶¬
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
 	result = dev->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT),
 		D3D12_HEAP_FLAG_NONE,
@@ -73,15 +73,15 @@ bool ShadowMap::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvÝ’è
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
 	D3D12_DESCRIPTOR_HEAP_DESC DescHeapDesc{};
 	DescHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	DescHeapDesc.NumDescriptors = 1;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ð¶¬
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
 	result = dev->CreateDescriptorHeap(&DescHeapDesc, IID_PPV_ARGS(&descHeapDSV));
 	assert(SUCCEEDED(result));
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉDSVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«DSVä½œæˆ
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
@@ -89,14 +89,14 @@ bool ShadowMap::Initialize()
 		&dsvDesc,
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart());
 
-	//SRVÝ’è
-	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//Ý’è\‘¢‘Ì
+	//SRVè¨­å®š
+	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};	//è¨­å®šæ§‹é€ ä½“
 	srvDesc.Format = DXGI_FORMAT_R32_FLOAT;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2DƒeƒNƒXƒ`ƒƒ
+	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;	//2Dãƒ†ã‚¯ã‚¹ãƒãƒ£
 	srvDesc.Texture2D.MipLevels = 1;
 
-	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉSRVì¬
+	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«SRVä½œæˆ
 	DescHeapSRV::CreateShaderResourceView(srvDesc, depthTexture);
 
 	return true;
@@ -104,32 +104,32 @@ bool ShadowMap::Initialize()
 
 void ShadowMap::DrawScenePrev()
 {
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ð•ÏX(ƒVƒF[ƒ_ƒŠƒ\[ƒX¨•`‰æ‰Â”\)
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹â†’æç”»å¯èƒ½)
 	cmdList->ResourceBarrier(1,
 		&CD3DX12_RESOURCE_BARRIER::Transition(depthTexture.texBuff.Get(),
 			D3D12_RESOURCE_STATE_GENERIC_READ, D3D12_RESOURCE_STATE_DEPTH_WRITE));
 
-	//[“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ðŽæ“¾
+	//æ·±åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvH =
 		descHeapDSV->GetCPUDescriptorHandleForHeapStart();
-	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ðƒZƒbƒg
+	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
 	cmdList->OMSetRenderTargets(0, nullptr, false, &dsvH);
 
-	//ƒrƒ…[ƒ|[ƒg‚ÌÝ’è
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
 	cmdList->RSSetViewports(1, &CD3DX12_VIEWPORT(0.0f, 0.0f,
 		shadowMapTexSize, shadowMapTexSize));
-	//ƒVƒUƒŠƒ“ƒO‹éŒ`‚ÌÝ’è
+	//ã‚·ã‚¶ãƒªãƒ³ã‚°çŸ©å½¢ã®è¨­å®š
 	cmdList->RSSetScissorRects(1, &CD3DX12_RECT(0, 0,
 		shadowMapTexSize, shadowMapTexSize));
 
-	//[“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
 	cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0,
 		nullptr);
 }
 
 void ShadowMap::DrawSceneRear()
 {
-	//ƒŠƒ\[ƒXƒoƒŠƒA‚ð•ÏX(•`‰æ‰Â”\¨ƒVƒF[ƒ_ƒŠƒ\[ƒX)
+	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´(æç”»å¯èƒ½â†’ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹)
 	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(depthTexture.texBuff.Get(),
 		D3D12_RESOURCE_STATE_DEPTH_WRITE, D3D12_RESOURCE_STATE_GENERIC_READ));
 }

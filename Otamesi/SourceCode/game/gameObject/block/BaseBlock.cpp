@@ -1,4 +1,4 @@
-#include "BaseBlock.h"
+Ôªø#include "BaseBlock.h"
 #include "GamePostEffect.h"
 
 void BaseBlock::StaticInitialize()
@@ -8,22 +8,22 @@ void BaseBlock::StaticInitialize()
 	model[int(BROCK_MODEL_TYPE::goal)].reset(ObjModel::LoadFromOBJ("goal"));
 	model[int(BROCK_MODEL_TYPE::player)].reset(ObjModel::LoadFromOBJ("player"));
 
-	//ÉXÉeÅ[ÉWÉuÉçÉbÉN
+	//„Çπ„ÉÜ„Éº„Ç∏„Éñ„É≠„ÉÉ„ÇØ
 	for (int i = 0; i<int(BROCK_TYPE::plane); i++) {
 		block[i].reset(InstanceObject::Create(model[int(BROCK_MODEL_TYPE::block)].get()));
 	}
-	//ÉnÉäÉ{Ée
+	//„Éè„É™„Éú„ÉÜ
 	block[int(BROCK_TYPE::plane)].reset(InstanceObject::Create(model[int(BROCK_MODEL_TYPE::plane)].get()));
-	//ÉSÅ[Éã
+	//„Ç¥„Éº„É´
 	block[int(BROCK_TYPE::goal)].reset(InstanceObject::Create(model[int(BROCK_MODEL_TYPE::goal)].get()));
-	//ÉvÉåÉCÉÑÅ[
+	//„Éó„É¨„Ç§„É§„Éº
 	block[int(BROCK_TYPE::player)].reset(InstanceObject::Create(model[int(BROCK_MODEL_TYPE::player)].get()));
 }
 
 void BaseBlock::Update(const int _blockType, const XMFLOAT3& _pos, const XMFLOAT3& _scale,
 const XMFLOAT3& _rotation, const XMFLOAT4& _color, const XMMATRIX* _parentWorld)
 {
-	//ÉuÉçÉbÉNÇæÇ¡ÇΩèÍçáï`âÊêîÇ…ÇÊÇ¡ÇƒédólîzóÒÇïœçX
+	//„Éñ„É≠„ÉÉ„ÇØ„Å†„Å£„ÅüÂ†¥ÂêàÊèèÁîªÊï∞„Å´„Çà„Å£„Å¶‰ªïÊßòÈÖçÂàó„ÇíÂ§âÊõ¥
 	if (_blockType == int(BROCK_TYPE::block)) {
 		for (int i = 0; i < int(BROCK_TYPE::plane); i++) {
 			if (block[i]->GetInstanceDrawCheck()) {

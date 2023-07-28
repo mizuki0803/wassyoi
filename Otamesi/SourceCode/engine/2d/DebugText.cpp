@@ -1,4 +1,4 @@
-#include "DebugText.h"
+ï»¿#include "DebugText.h"
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -12,7 +12,7 @@ DebugText* DebugText::GetInstance()
 
 DebugText::~DebugText()
 {
-	//‘S‚Ä‚ÌƒXƒvƒ‰ƒCƒgƒf[ƒ^‚É‚Â‚¢‚Ä
+	//å…¨ã¦ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦
 	for (int i = 0; i < _countof(sprites); i++) {
 		delete sprites[i];
 	}
@@ -20,24 +20,24 @@ DebugText::~DebugText()
 
 void DebugText::Initialize(const Texture& texture)
 {
-	//‘S‚Ä‚ÌƒXƒvƒ‰ƒCƒgƒf[ƒ^‚É‚Â‚¢‚Ä
+	//å…¨ã¦ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿ã«ã¤ã„ã¦
 	for (int i = 0; i < _countof(sprites); i++) {
-		//ƒXƒvƒ‰ƒCƒg‚ğ¶¬‚·‚é(ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg‚ğ{ 0, 0 }‚Éİ’è)
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’ç”Ÿæˆã™ã‚‹(ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’{ 0, 0 }ã«è¨­å®š)
 		sprites[i] = Sprite::Create(texture, { 0, 0 });
 	}
 }
 
 void DebugText::Print(const std::string& text, float x, float y, float scale)
 {
-	//‘S‚Ä‚Ì•¶š‚É‚Â‚¢‚Ä
+	//å…¨ã¦ã®æ–‡å­—ã«ã¤ã„ã¦
 	for (int i = 0; i < text.size(); i++) {
-		//Å‘å•¶š”‚ğ’´‰ß‚µ‚Ä‚¢‚½‚ç”²‚¯‚é
+		//æœ€å¤§æ–‡å­—æ•°ã‚’è¶…éã—ã¦ã„ãŸã‚‰æŠœã‘ã‚‹
 		if (spriteIndex >= maxCharCount) { break; }
 
-		//1•¶šæ‚èo‚·(¦ASCIIƒR[ƒh‚Å‚µ‚©¬‚è—§‚½‚È‚¢)
+		//1æ–‡å­—å–ã‚Šå‡ºã™(â€»ASCIIã‚³ãƒ¼ãƒ‰ã§ã—ã‹æˆã‚Šç«‹ãŸãªã„)
 		const unsigned char& character = text[i];
 
-		//ASCIIƒR[ƒh‚Ì1’i•ª”ò‚Î‚µ‚½”Ô†‚ğŒvZ
+		//ASCIIã‚³ãƒ¼ãƒ‰ã®1æ®µåˆ†é£›ã°ã—ãŸç•ªå·ã‚’è¨ˆç®—
 		const int ASCIISkipNum = 32;
 		int fontIndex = character - ASCIISkipNum;
 		if (character >= 0x7f) {
@@ -47,27 +47,27 @@ void DebugText::Print(const std::string& text, float x, float y, float scale)
 		int fontIndexY = fontIndex / fontLineCount;
 		int fontIndexX = fontIndex % fontLineCount;
 
-		//À•WŒvZ
+		//åº§æ¨™è¨ˆç®—
 		sprites[spriteIndex]->SetPosition({ x + fontWidth * scale * i, y });
 		sprites[spriteIndex]->SetTexLeftTop({ (float)fontIndexX * fontWidth, (float)fontIndexY * fontHeight });
 		sprites[spriteIndex]->SetTexSize({ (float)fontWidth, (float)fontHeight });
 		sprites[spriteIndex]->SetSize({ fontWidth * scale, fontHeight * scale });
-		//XV
+		//æ›´æ–°
 		sprites[spriteIndex]->Update();
-		//•¶š‚ğ1‚Âi‚ß‚é
+		//æ–‡å­—ã‚’1ã¤é€²ã‚ã‚‹
 		spriteIndex++;
 	}
 }
 
-//‚Ü‚Æ‚ß‚Ä•`‰æ
+//ã¾ã¨ã‚ã¦æç”»
 void DebugText::DrawAll()
 {
-	//‘S‚Ä‚Ì•¶š‚ÌƒXƒvƒ‰ƒCƒg‚É‚Â‚¢‚Ä
+	//å…¨ã¦ã®æ–‡å­—ã®ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«ã¤ã„ã¦
 	for (int i = 0; i < spriteIndex; i++) {
-		//ƒXƒvƒ‰ƒCƒg•`‰æ
+		//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 		sprites[i]->Draw();
 	}
 
-	//•¶š”‚ğƒŠƒZƒbƒg‚µ‚Ä‚¨‚­
+	//æ–‡å­—æ•°ã‚’ãƒªã‚»ãƒƒãƒˆã—ã¦ãŠã
 	spriteIndex = 0;
 }

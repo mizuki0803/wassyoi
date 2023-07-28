@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <d3dx12.h>
 #include <DirectXMath.h>
 #include <cereal/types/string.hpp>
@@ -57,58 +57,58 @@ private:
 public:
 
 	/// <summary>
-	/// json‚Ì“Ç‚İ‚İ
+	/// jsonã®èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="_fileName">ƒtƒ@ƒCƒ‹–¼</param>
-	/// <param name="_object">ƒIƒuƒWƒFƒNƒgî•ñ</param>
+	/// <param name="_fileName">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
+	/// <param name="_object">ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæƒ…å ±</param>
 	static void LoadNlohmannJson(const std::string& _fileName, std::vector<std::array<DirectX::XMFLOAT3, int(transform::size)>>* _object);
 
 	/// <summary>
-	/// o—Í
+	/// å‡ºåŠ›
 	/// </summary>
-	/// <param name="_fileName">ƒtƒ@ƒCƒ‹‚Ì–¼‘O</param>
-	/// <param name="_cameraDist">ƒJƒƒ‰‚Ì‹——£</param>
-	/// <param name="_mapSize">ƒ}ƒbƒvƒTƒCƒY</param>
-	/// <param name="_map">ƒ}ƒbƒvƒ`ƒbƒv</param>
+	/// <param name="_fileName">ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰</param>
+	/// <param name="_cameraDist">ã‚«ãƒ¡ãƒ©ã®è·é›¢</param>
+	/// <param name="_mapSize">ãƒãƒƒãƒ—ã‚µã‚¤ã‚º</param>
+	/// <param name="_map">ãƒãƒƒãƒ—ãƒãƒƒãƒ—</param>
 	static void SerializeJsonMap(const std::string& _fileName = "out.json", const std::array<float, 3> _cameraDist = {},
 		const std::array<int, 3> _mapSize = { 10,10,10 }, std::vector<std::vector<std::vector<int>>> _map = { {{}} });
 
 	/// <summary>
-	/// “ü—Í
+	/// å…¥åŠ›
 	/// </summary>
-	/// <param name="_fileName">ƒtƒ@ƒCƒ‹‚Ì–¼‘O</param>
-	/// <param name="_cameraDist">ƒJƒƒ‰‚Ì‹——£</param>
-	/// <param name="_installationSurface">‰ŠúÚ’n–Ê</param>
-	/// <param name="_map">ƒ}ƒbƒvƒ`ƒbƒv</param>
+	/// <param name="_fileName">ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰</param>
+	/// <param name="_cameraDist">ã‚«ãƒ¡ãƒ©ã®è·é›¢</param>
+	/// <param name="_installationSurface">åˆæœŸæ¥åœ°é¢</param>
+	/// <param name="_map">ãƒãƒƒãƒ—ãƒãƒƒãƒ—</param>
 	static bool DeserializeJsonMap(const std::string _fileName, std::array<float, 3>* _cameraDist,
 		int* _installationSurface, std::vector<std::vector<std::vector<int>>>* _map);
 
 	/// <summary>
-	/// o—Í
+	/// å‡ºåŠ›
 	/// </summary>
-	/// <param name="_fileName">ƒtƒ@ƒCƒ‹‚Ì–¼‘O</param>
-	/// <param name="_is2D">2D‚©‚Ç‚¤‚©</param>
-	/// <param name="_moveSurface">ˆÚ“®–Ê</param>
-	/// <param name="_mapChip">ƒvƒŒƒCƒ„[ƒ}ƒbƒvƒ`ƒbƒv</param>
-	/// <param name="_cameraPos">ƒJƒƒ‰À•W</param>
-	/// <param name="_cameraPosPhase">ƒJƒƒ‰‚Ì•ûŒü</param>
-	/// <param name="_cameraRota">ƒJƒƒ‰Šp“x</param>
-	/// <param name="_playerPos">ƒvƒŒƒCƒ„[À•W</param>
+	/// <param name="_fileName">ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰</param>
+	/// <param name="_is2D">2Dã‹ã©ã†ã‹</param>
+	/// <param name="_moveSurface">ç§»å‹•é¢</param>
+	/// <param name="_mapChip">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒãƒƒãƒ—ãƒãƒƒãƒ—</param>
+	/// <param name="_cameraPos">ã‚«ãƒ¡ãƒ©åº§æ¨™</param>
+	/// <param name="_cameraPosPhase">ã‚«ãƒ¡ãƒ©ã®æ–¹å‘</param>
+	/// <param name="_cameraRota">ã‚«ãƒ¡ãƒ©è§’åº¦</param>
+	/// <param name="_playerPos">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åº§æ¨™</param>
 	static void SerializeBinary(const std::string& _fileName, const bool _is2D, const int _moveSurface,
 		const std::array<int, 3>& _mapChip, const std::array<float, 3>& _cameraPos, const std::array<int, 2>& _cameraPosPhase,
 		const std::array<float, 3>& _cameraRota, const std::array<float, 3>& _playerPos);
 
 	/// <summary>
-	/// “ü—Í
+	/// å…¥åŠ›
 	/// </summary>
-	/// <param name="_fileName">ƒtƒ@ƒCƒ‹‚Ì–¼‘O</param>
-	/// <param name="_is2D">2D‚©‚Ç‚¤‚©</param>
-	/// <param name="_moveSurface">ˆÚ“®–Ê</param>
-	/// <param name="_mapChip">ƒvƒŒƒCƒ„[ƒ}ƒbƒvƒ`ƒbƒv</param>
-	/// <param name="_cameraPos">ƒJƒƒ‰À•W</param>
-	/// <param name="_cameraPosPhase">ƒJƒƒ‰‚Ì•ûŒü</param>
-	/// <param name="_cameraRota">ƒJƒƒ‰Šp“x</param>
-	/// <param name="_playerPos">ƒvƒŒƒCƒ„[À•W</param>
+	/// <param name="_fileName">ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰</param>
+	/// <param name="_is2D">2Dã‹ã©ã†ã‹</param>
+	/// <param name="_moveSurface">ç§»å‹•é¢</param>
+	/// <param name="_mapChip">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒãƒƒãƒ—ãƒãƒƒãƒ—</param>
+	/// <param name="_cameraPos">ã‚«ãƒ¡ãƒ©åº§æ¨™</param>
+	/// <param name="_cameraPosPhase">ã‚«ãƒ¡ãƒ©ã®æ–¹å‘</param>
+	/// <param name="_cameraRota">ã‚«ãƒ¡ãƒ©è§’åº¦</param>
+	/// <param name="_playerPos">ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åº§æ¨™</param>
 	static bool DeserializeBinary(const std::string _fileName, bool* _is2D, int* _moveSurface,
 		std::array<int, 3>* _mapChip, std::array<float, 3>* _cameraPos, std::array<int, 2>* _cameraPosPhase,
 		std::array<float, 3>* _cameraRota, std::array<float, 3>* _playerPos);

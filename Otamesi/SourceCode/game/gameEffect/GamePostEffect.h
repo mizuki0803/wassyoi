@@ -1,30 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include "PostEffect.h"
 #include <memory>
 
 /// <summary>
-/// ƒQ[ƒ€‚Åg—p‚·‚éƒIƒuƒWƒFƒNƒg“à‚Å•ÏX‰Â”\‚Èƒ|ƒXƒgƒGƒtƒFƒNƒgƒNƒ‰ƒX
+/// ã‚²ãƒ¼ãƒ ã§ä½¿ç”¨ã™ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆå†…ã§å¤‰æ›´å¯èƒ½ãªãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚¯ãƒ©ã‚¹
 /// </summary>
 class GamePostEffect
 {
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	static void Initialize();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	static void Draw();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æ‘Oˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
 	/// </summary>
 	static void DrawScenePrev();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æŒãˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	/// </summary>
 	static void DrawSceneRear();
 
@@ -36,7 +36,7 @@ public: //ƒƒ“ƒoŠÖ”
 	//getter
 	static PostEffect* GetPostEffect() { return GamePostEffect::postEffect.get(); }
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒ|ƒXƒgƒGƒtƒFƒNƒg
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒã‚¹ãƒˆã‚¨ãƒ•ã‚§ã‚¯ãƒˆ
 	static std::unique_ptr<PostEffect> postEffect;
 };

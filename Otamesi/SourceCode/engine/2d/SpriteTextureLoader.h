@@ -1,52 +1,53 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 
 /// <summary>
-/// ƒXƒvƒ‰ƒCƒgƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İƒNƒ‰ƒX
+/// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿ã‚¯ãƒ©ã‚¹
 /// </summary>
 class SpriteTextureLoader
 {
-public: //ƒeƒNƒXƒ`ƒƒ–¼
+public: //ãƒ†ã‚¯ã‚¹ãƒãƒ£å
 	enum TextureName {
-		DebugFont,		//ƒfƒoƒbƒO—pƒtƒHƒ“ƒg
-		White,			//^‚Á”’
-		Number,			//”š
-		TitleLogo,		//ƒ^ƒCƒgƒ‹ƒƒS
-		Block,			//ƒuƒƒbƒN
-		MenuBackScreen, //ƒƒjƒ…[‰æ–Ê—p‚Ì”wŒi
-		MenuFrame,		//ƒƒjƒ…[‚Ì˜g‘g‚İ
-		SoundVolumeBar,	//‰¹—Ê•ÏX—pƒo[
-		SoundVolumePointer,	//‰¹—Ê•ÏX—pƒ|ƒCƒ“ƒ^[
-		Husen,	//ƒm[ƒ}ƒ‹•tâ³
-		HusenL,	//¶Œü‚«•tâ³
-		HusenR,	//‰EŒü‚«•tâ³
-		HowToPlayPlayer,	//‘€ì•û–@(ƒvƒŒƒCƒ„[)
-		HowToPlayCamera,//‘€ì•û–@(ƒJƒƒ‰)
-		Hint1Text,//‘€ì•û–@(ƒqƒ“ƒg1)
-		Hint2Text,	//‘€ì•û–@(ƒqƒ“ƒg2)
-		Hint1,	//ƒqƒ“ƒg1
-		Hint2,	//ƒqƒ“ƒg2
-		HowToPlayChengeDemension,//‘€ì•û–@(ŸŒ³•ÏX)
-		HowToPlayMenu,	//‘€ì•û–@(ƒƒjƒ…[)
-		StageClear,		//ƒXƒe[ƒWƒNƒŠƒA
-		ClearBack,		//ƒXƒe[ƒWƒNƒŠƒA‚Ì”wŒi
+		DebugFont,		//ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ•ã‚©ãƒ³ãƒˆ
+		White,			//çœŸã£ç™½
+		Number,			//æ•°å­—
+		TitleLogo,		//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
+		Block,			//ãƒ–ãƒ­ãƒƒã‚¯
+		MenuBackScreen, //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ç”¨ã®èƒŒæ™¯
+		MenuFrame,		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã®æ çµ„ã¿
+		SoundVolumeBar,	//éŸ³é‡å¤‰æ›´ç”¨ãƒãƒ¼
+		SoundVolumePointer,	//éŸ³é‡å¤‰æ›´ç”¨ãƒã‚¤ãƒ³ã‚¿ãƒ¼
+		Husen,	//ãƒãƒ¼ãƒãƒ«ä»˜ç®‹
+		HusenL,	//å·¦å‘ãä»˜ç®‹
+		HusenR,	//å³å‘ãä»˜ç®‹
+		HusenH,	//ãƒ’ãƒ³ãƒˆä»˜ç®‹
+		HowToPlayPlayer,	//æ“ä½œæ–¹æ³•(ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼)
+		HowToPlayCamera,//æ“ä½œæ–¹æ³•(ã‚«ãƒ¡ãƒ©)
+		Hint1Text,//æ“ä½œæ–¹æ³•(ãƒ’ãƒ³ãƒˆ1)
+		Hint2Text,	//æ“ä½œæ–¹æ³•(ãƒ’ãƒ³ãƒˆ2)
+		Hint1,	//ãƒ’ãƒ³ãƒˆ1
+		Hint2,	//ãƒ’ãƒ³ãƒˆ2
+		HowToPlayChengeDemension,//æ“ä½œæ–¹æ³•(æ¬¡å…ƒå¤‰æ›´)
+		HowToPlayMenu,	//æ“ä½œæ–¹æ³•(ãƒ¡ãƒ‹ãƒ¥ãƒ¼)
+		StageClear,		//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢
+		ClearBack,		//ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢ã®èƒŒæ™¯
 		PressSpace,		//PRESS SPACE
-		ParanomaSky,	// ƒXƒJƒCƒh[ƒ€—p
+		ParanomaSky,	// ã‚¹ã‚«ã‚¤ãƒ‰ãƒ¼ãƒ ç”¨
 
-		SpriteTextureNum,	//ƒXƒvƒ‰ƒCƒgƒeƒNƒXƒ`ƒƒ‚Ì–‡”
+		SpriteTextureNum,	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãƒ†ã‚¯ã‚¹ãƒãƒ£ã®æšæ•°
 	};
 
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ‘S“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£å…¨èª­ã¿è¾¼ã¿
 	/// </summary>
 	static void TextureLoad();
 
 	//getter
 	static Texture& GetTexture(const TextureName textureName) { return textures[textureName]; };
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒeƒNƒXƒ`ƒƒ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	static Texture textures[SpriteTextureNum];
 };

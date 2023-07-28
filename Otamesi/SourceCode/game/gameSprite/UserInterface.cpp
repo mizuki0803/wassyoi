@@ -1,4 +1,4 @@
-#include "UserInterface.h"
+ï»¿#include "UserInterface.h"
 #include "WindowApp.h"
 #include "SpriteTextureLoader.h"
 #include "Input.h"
@@ -12,15 +12,29 @@ std::unique_ptr<UserInterface> UserInterface::Create(GamePhase gamePhase)
 {
 	UserInterface* temp = new UserInterface;
 	temp->Initialize(gamePhase);
+
+	// a
+
 	return std::unique_ptr<UserInterface>(temp);
+}
+
+void UserInterface::Common(ID3D12Device *dev, ID3D12GraphicsCommandList *cmdList)
+{
+	//nullptrãƒã‚§ãƒƒã‚¯
+	assert(dev);
+	assert(cmdList);
+	ImageUIRenderer::Common(dev, cmdList);
+
 }
 
 void UserInterface::Initialize(GamePhase gamePhase)
 {
-	const float	stickoutNum = 50.0f; //ˆø‚«o‚µƒXƒvƒ‰ƒCƒg‚ª‰æ–Ê“à‚É‚Í‚İo‚·—Ê
-	const float drawerHandleSize = 45.0f;	//ˆø‚«o‚µƒXƒvƒ‰ƒCƒg‚Ìæ‚Áè‚ÌƒTƒCƒY
+	const float	stickoutNum = 50.0f; //å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒç”»é¢å†…ã«ã¯ã¿å‡ºã™é‡
+	const float drawerHandleSize = 45.0f;	//å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å–ã£æ‰‹ã®ã‚µã‚¤ã‚º
 
-	//ƒƒjƒ…[—pƒXƒvƒ‰ƒCƒg¶¬
+	imageUiRendere_.reset(ImageUIRenderer::Create());
+
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	if (GamePhase::Title == gamePhase)
 	{
 		for (int i = 0; i < 2; i++)
@@ -29,7 +43,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			menuframe_.push_back(std::move(temp));
 		}
 
-		//ŸŒ³•ÏX‰Â”\Šm”FƒXƒvƒ‰ƒCƒg¶¬
+		//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ç¢ºèªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 		float size = 1.0f;
 		for (auto& i : ChangeDimenisonSpriteEffect) {
@@ -42,22 +56,43 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
 
-		//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒg¶¬
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ƒƒjƒ…[‰æ–ÊˆÚs esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //ƒvƒŒƒCƒ„[‘€ìà–¾
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //ƒJƒƒ‰‘€ìà–¾
+		//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ç§»è¡Œ esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 460, stickoutNum, true); //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 460, stickoutNum, true); //ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜
 
-		//q‹ŸƒXƒvƒ‰ƒCƒg¶¬
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
-			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//ƒƒjƒ…[‰æ–Êà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayPlayer].get(),
-			{}, drawerSprites[HowToPlayPlayer]->GetAnchorpoint());	//ƒvƒŒƒCƒ„[‘€ìà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayPlayer].get(),
-			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });	//ƒvƒŒƒCƒ„[‘€ìà–¾‚Ì‰æ‘œ
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(),
-			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//ƒJƒƒ‰‘€ìà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
-			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//ƒJƒƒ‰‘€ìà–¾‚Ì‰æ‘œ
+		//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢èª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(
+			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), 
+			drawerSprites[HowToPlayMenu].get(),
+			{}, 
+			drawerSprites[HowToPlayMenu]->GetAnchorpoint());
+
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer),
+			drawerSprites[HowToPlayPlayer].get(),
+			{ -11,55},
+			drawerSprites[HowToPlayPlayer]->GetAnchorpoint());
+		
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜ã®ç”»åƒ
+		CreateChildSprite(
+			imageUiRendere_->GetTex(ImageUIRenderer::TexName::Move),
+			drawerSprites[HowToPlayPlayer].get(),
+			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + 25/*+ drawerHandleSize / 2*/),
+			drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });
+
+		// ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera),
+			drawerSprites[HowToPlayCamera].get(),
+			{ 11,50 },
+			drawerSprites[HowToPlayCamera]->GetAnchorpoint());
+
+		// ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜ã®ç”»åƒ
+		CreateChildSprite(
+			imageUiRendere_->GetTex(ImageUIRenderer::TexName::Camera),
+			drawerSprites[HowToPlayCamera].get(),
+			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
@@ -67,12 +102,14 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			menuframe_.push_back(std::move(temp));
 		}
 
-		//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒg¶¬
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ƒƒjƒ…[‰æ–ÊˆÚs esc
+		//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ç§»è¡Œ esc
 
-		//q‹ŸƒXƒvƒ‰ƒCƒg¶¬
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
-			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//ƒƒjƒ…[‰æ–Êà–¾‚Ì•¶š
+		//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		CreateChildSprite(
+			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu),
+			drawerSprites[HowToPlayMenu].get(),
+			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢èª¬æ˜ã®æ–‡å­—
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -82,7 +119,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			menuframe_.push_back(std::move(temp));
 		}
 
-		//ŸŒ³•ÏX‰Â”\Šm”FƒXƒvƒ‰ƒCƒg¶¬
+		//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ç¢ºèªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 		float size = 1.0f;
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 		for (auto& i : ChangeDimenisonSpriteEffect) {
@@ -95,30 +132,60 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
 
-		//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒg¶¬
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ƒƒjƒ…[‰æ–ÊˆÚs esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //ƒvƒŒƒCƒ„[‘€ìà–¾
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //ƒJƒƒ‰‘€ìà–¾
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ƒqƒ“ƒg1
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ƒqƒ“ƒg2
+		//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 
-		//q‹ŸƒXƒvƒ‰ƒCƒg¶¬
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
-			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//ƒƒjƒ…[‰æ–Êà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayPlayer].get(),
-			{}, drawerSprites[HowToPlayPlayer]->GetAnchorpoint());	//ƒvƒŒƒCƒ„[‘€ìà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayPlayer].get(),
-			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });	//ƒvƒŒƒCƒ„[‘€ìà–¾‚Ì‰æ‘œ
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera), drawerSprites[HowToPlayCamera].get(),
-			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//ƒJƒƒ‰‘€ìà–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
-			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//ƒJƒƒ‰‘€ìà–¾‚Ì‰æ‘œ
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint1Text), drawerSprites[Hint1].get(),
-			{}, drawerSprites[Hint1]->GetAnchorpoint());	//ƒqƒ“ƒg1à–¾‚Ì•¶š
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint2Text), drawerSprites[Hint2].get(),
-			{}, drawerSprites[Hint2]->GetAnchorpoint());	//ƒqƒ“ƒg2à–¾‚Ì•¶š
+		//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢ç§»è¡Œ esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 460, stickoutNum, true); //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 460, stickoutNum, true); //ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜
+		
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenH), DIK_1, DrawerSprite::Right, 0, stickoutNum, false); //ãƒ’ãƒ³ãƒˆ1
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenH), DIK_2, DrawerSprite::Right, 230, stickoutNum, false); //ãƒ’ãƒ³ãƒˆ2
 
-		//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg¶¬
+		//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu),
+			drawerSprites[HowToPlayMenu].get(),
+			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ç”»é¢èª¬æ˜ã®æ–‡å­—
+		
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer),
+			drawerSprites[HowToPlayPlayer].get(),
+			{ -11,55 },
+			drawerSprites[HowToPlayPlayer]->GetAnchorpoint());
+
+		// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼æ“ä½œèª¬æ˜ã®ç”»åƒ
+		CreateChildSprite(
+			imageUiRendere_->GetTex(ImageUIRenderer::TexName::Move),
+			drawerSprites[HowToPlayPlayer].get(),
+			{ -(drawerSprites[HowToPlayPlayer]->GetSize().x / 2 + 25/*+ drawerHandleSize / 2*/),
+			drawerSprites[HowToPlayPlayer]->GetSize().y / 2 }, { 0.5f, 0.5f });
+
+
+		// ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayCamera),
+			drawerSprites[HowToPlayCamera].get(),
+			{ 11,50 },
+			drawerSprites[HowToPlayCamera]->GetAnchorpoint());
+		// ã‚«ãƒ¡ãƒ©æ“ä½œèª¬æ˜ã®ç”»åƒ
+		CreateChildSprite(
+			imageUiRendere_->GetTex(ImageUIRenderer::TexName::Camera),
+			drawerSprites[HowToPlayCamera].get(),
+			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });
+
+		// ãƒ’ãƒ³ãƒˆ1èª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(
+			SpriteTextureLoader::Hint1Text),
+			drawerSprites[Hint1].get(),
+			{ 12,65 },
+			drawerSprites[Hint1]->GetAnchorpoint());
+		// ãƒ’ãƒ³ãƒˆ2èª¬æ˜ã®æ–‡å­—
+		CreateChildSprite(SpriteTextureLoader::GetTexture(
+			SpriteTextureLoader::Hint2Text), 
+			drawerSprites[Hint2].get(),
+			{ 12,65 },
+			drawerSprites[Hint2]->GetAnchorpoint());
+
+		//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 		hintSprites[0].reset(HintSprite::Create(HintTextureLoader::GetTexture(0), drawerSprites[Hint1].get(),
 			drawerSprites[Hint1]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f }));
 		hintSprites[1].reset(HintSprite::Create(HintTextureLoader::GetTexture(1), drawerSprites[Hint2].get(),
@@ -133,10 +200,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	menuFunc_.push_back([this] { return MenuOpen(); });
 	menuFunc_.push_back([this] { return MenuSelection(); });
 
-	//‰¹—Ê•ÏX—pƒXƒvƒ‰ƒCƒg¶¬
+	//éŸ³é‡å¤‰æ›´ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	soundVolumeBar = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumeBar),
 		{ menuframe_[0]->GetPosition().x + 150, menuframe_[0]->GetPosition().y }, { 0.0f, 0.5f }, false, false));
-	const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //Å‘å‰¹—Ê‚Æ”äŠr‚Ì‰¹—ÊŠ„‡
+	const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //æœ€å¤§éŸ³é‡ã¨æ¯”è¼ƒæ™‚ã®éŸ³é‡å‰²åˆ
 	soundVolumePointer = std::unique_ptr<SoundVolumePointer>(SoundVolumePointer::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumePointer),
 		soundVolumeBar->GetPosition(), soundVolumeBar->GetSize().x, soundVolumeStartPercentage));
 }
@@ -145,35 +212,49 @@ void UserInterface::Update()
 {
 	if (notMove_) { return; }
 
-	//ŸŒ³•ÏX‰Â”\Šm”FƒXƒvƒ‰ƒCƒgXV
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ç¢ºèªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	if (isChangeDimenisonSprite) {
 		SpaceEffect();
 		isChangeDimenisonSprite->Update();
 	}
 
-	//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒgXV
+	//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	DrawerSpriteMoveStartKey();
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Update();
 	}
 
-	//ƒƒjƒ…[ƒXƒvƒ‰ƒCƒgXV
+	//imageUiRendere_->Update(
+	//	drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsOpenDrawer(),
+	//	drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsOpenDrawer());
+
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	MenuUpdate();
 	menuBackScreen_->Update();
 
-	//‰¹—Ê•ÏX—pƒXƒvƒ‰ƒCƒgXV
+	//éŸ³é‡å¤‰æ›´ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	soundVolumeBar->Update();
 	soundVolumePointer->Update();
 
-	//q‹ŸƒXƒvƒ‰ƒCƒgXV
+	//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
 		childSprite->Update();
 	}
-	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒgXV
-	HintSpriteSizeChange();	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚Ì‘å‚«‚³•ÏX
+	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
+	HintSpriteSizeChange();	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å¤§ãã•å¤‰æ›´
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
 		if (!hintSprite) { continue; }
 		hintSprite->Update();
+	}
+
+	if (imageUiRendere_ != nullptr)
+	{
+		imageUiRendere_->Update(
+			(drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsOpenDrawer() ||
+				drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsMoveDrawer()),
+			(drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsOpenDrawer() ||
+				drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsMoveDrawer())
+		);
 	}
 }
 
@@ -193,33 +274,33 @@ void UserInterface::Draw()
 {
 	if (notMove_) { return; }
 
-	//ŸŒ³•ÏX‰Â”\Šm”FƒXƒvƒ‰ƒCƒg•`‰æ
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ç¢ºèªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	if (isChangeDimenisonSprite) {
 		isChangeDimenisonSprite->Draw();
 	}
 
-	//à–¾—pˆø‚«o‚µƒXƒvƒ‰ƒCƒg•`‰æ
+	//èª¬æ˜ç”¨å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
 	}
 
-	//q‹ŸƒXƒvƒ‰ƒCƒg•`‰æ
+	//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
 		childSprite->Draw();
 	}
-	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg•`‰æ
+	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
 		if (!hintSprite) { continue; }
 		hintSprite->Draw();
 	}
 
-	//‚©‚³‚ñ‚²[‚¹[
+	//ã‹ã•ã‚“ã”ãƒ¼ã›ãƒ¼
 	SpriteCommon::GetInstance()->DrawPrev("Add");
 	AddDraw();
 
 	SpriteCommon::GetInstance()->DrawPrev();
 
-	//ƒƒjƒ…[ƒXƒvƒ‰ƒCƒg•`‰æ
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	if (menuFlag_)
 	{
 		menuBackScreen_->Draw();
@@ -228,10 +309,23 @@ void UserInterface::Draw()
 			menu->Draw();
 		}
 
-		//‰¹—Ê•ÏX—pƒXƒvƒ‰ƒCƒg•`‰æ
+		//éŸ³é‡å¤‰æ›´ç”¨ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 		soundVolumeBar->Draw();
 		soundVolumePointer->Draw();
 	}
+}
+
+void UserInterface::DrawMenuImage()
+{
+	if (true)
+	{
+		imageUiRendere_->DrawMoveDescription();
+	}
+	if (true)
+	{
+		imageUiRendere_->DrawCameraDescription();
+	}
+
 }
 
 void UserInterface::MenuUpdate()
@@ -298,6 +392,7 @@ void UserInterface::MenuOpen()
 	{
 		menuPhase_ = static_cast<int>(MenuPhase::Selection);
 	}
+
 }
 
 void UserInterface::MenuSelection()
@@ -323,10 +418,10 @@ void UserInterface::MenuSelection()
 
 	if (selectionNumber_ == 0)
 	{
-		//‰¹—Ê•ÏXƒL[“ü—Í‚ª‚ ‚éê‡‚Ì‚İ”»’è
+		//éŸ³é‡å¤‰æ›´ã‚­ãƒ¼å…¥åŠ›ãŒã‚ã‚‹å ´åˆã®ã¿åˆ¤å®š
 		if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT) || Input::GetInstance()->GetInstance()->PushKey(DIK_RIGHT))
 		{
-			const float soundVolumeChangeSpeed = 0.01f;	//‰¹—Ê•ÏX—Ê
+			const float soundVolumeChangeSpeed = 0.01f;	//éŸ³é‡å¤‰æ›´é‡
 
 			if (Input::GetInstance()->GetInstance()->PushKey(DIK_LEFT))
 			{
@@ -338,8 +433,8 @@ void UserInterface::MenuSelection()
 				soundVolume_ += soundVolumeChangeSpeed;
 				soundVolume_ = min(soundVolume_, soundMaxVolume_);
 			}
-			//‰¹—Ê•ÏX—pƒ|ƒCƒ“ƒ^[‚ÌŠ„‡À•W‚ğ•ÏX
-			const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //Å‘å‰¹—Ê‚Æ”äŠr‚Ì‰¹—ÊŠ„‡
+			//éŸ³é‡å¤‰æ›´ç”¨ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã®å‰²åˆåº§æ¨™ã‚’å¤‰æ›´
+			const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //æœ€å¤§éŸ³é‡ã¨æ¯”è¼ƒæ™‚ã®éŸ³é‡å‰²åˆ
 			soundVolumePointer->SetPercentage(soundVolumeStartPercentage);
 
 			Audio::GetInstance()->ChangeVolume(soundVolume_);
@@ -354,50 +449,50 @@ void UserInterface::MenuSelection()
 
 void UserInterface::IsChangeDimensionCheck(bool isChangeDimension)
 {
-	float spriteVividness{}; //ƒXƒvƒ‰ƒCƒg‚ÌF‚Ì‘N‚â‚©‚³
+	float spriteVividness{}; //ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®è‰²ã®é®®ã‚„ã‹ã•
 
-	//ŸŒ³•ÏX‰Â”\‚Ìê‡‚ÍƒXƒvƒ‰ƒCƒg‚ÌF‚ğ–¾‚é‚­‚·‚é
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã®å ´åˆã¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®è‰²ã‚’æ˜ã‚‹ãã™ã‚‹
 	if (isChangeDimension) {
 		spriteVividness = 1.0f;
 		isChangeDimenison = true;
 	}
-	//ŸŒ³•ÏX‰Â”\‚Å‚È‚¢ê‡‚ÍƒXƒvƒ‰ƒCƒg‚ÌF‚ğˆÃ‚­‚·‚é
+	//æ¬¡å…ƒå¤‰æ›´å¯èƒ½ã§ãªã„å ´åˆã¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®è‰²ã‚’æš—ãã™ã‚‹
 	else {
 		spriteVividness = 0.3f;
 		isChangeDimenison = false;
 	}
 
-	//‘N‚â‚©‚³‚ğƒZƒbƒg
+	//é®®ã‚„ã‹ã•ã‚’ã‚»ãƒƒãƒˆ
 	isChangeDimenisonSprite->SetColor({ spriteVividness, spriteVividness, spriteVividness,1 });
 }
 
 void UserInterface::StageChangeUpdate()
 {
-	//ˆø‚«o‚µƒXƒvƒ‰ƒCƒg‚ÌŠJ•Âó‘Ô‚ğƒŠƒZƒbƒg
+	//å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®é–‹é–‰çŠ¶æ…‹ã‚’ãƒªã‚»ãƒƒãƒˆ
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Reset();
 	}
 
-	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚ÌƒeƒNƒXƒ`ƒƒ‚ğŸ‚ÌƒXƒe[ƒW—p‚ÉXV
+	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç”¨ã«æ›´æ–°
 	hintSprites[0]->SetTexture(HintTextureLoader::GetTexture(0));
 	hintSprites[1]->SetTexture(HintTextureLoader::GetTexture(1));
 }
 
 bool UserInterface::GetIsHintViewMode()
 {
-	//‚Ç‚ê‚©ˆê‚Â‚Å‚àƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚ª‘å‚«‚¢ó‘Ô ‚Ü‚½‚Í ‘å‚«‚³•ÏX’†‚È‚çtrue
+	//ã©ã‚Œã‹ä¸€ã¤ã§ã‚‚ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒå¤§ãã„çŠ¶æ…‹ ã¾ãŸã¯ å¤§ãã•å¤‰æ›´ä¸­ãªã‚‰true
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
 		if (!hintSprite) { continue; }
 		if (hintSprite->GetIsSizeLarger() || hintSprite->GetIsSizeChange()) { return true; }
 	}
 
-	//‘S‚Ä‚Ìƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚ª¬‚³‚¢ó‘Ô‚È‚çfalse
+	//å…¨ã¦ã®ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒå°ã•ã„çŠ¶æ…‹ãªã‚‰false
 	return false;
 }
 
 void UserInterface::CreateDrawerSprite(const Texture& texture, BYTE drawerKey, DrawerSprite::HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer)
 {
-	//ˆø‚«o‚µƒXƒvƒ‰ƒCƒg¶¬
+	//å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	std::unique_ptr<DrawerSprite> newSprite;
 	newSprite.reset(DrawerSprite::Create(texture, drawerKey, hidePlace, posY, stickoutNum, isOpenDrawer));
 	drawerSprites.push_back(std::move(newSprite));
@@ -405,7 +500,7 @@ void UserInterface::CreateDrawerSprite(const Texture& texture, BYTE drawerKey, D
 
 void UserInterface::CreateChildSprite(const Texture& texture, Sprite* parent, const Vector2& position, const Vector2& anchorpoint)
 {
-	//q‹ŸƒXƒvƒ‰ƒCƒg¶¬
+	//å­ä¾›ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	std::unique_ptr<Sprite> newSprite;
 	newSprite.reset(Sprite::Create(texture, position, anchorpoint));
 	newSprite->SetParent(parent);
@@ -414,31 +509,31 @@ void UserInterface::CreateChildSprite(const Texture& texture, Sprite* parent, co
 
 void UserInterface::DrawerSpriteMoveStartKey()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚éó‘Ô‚È‚ç”²‚¯‚é
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ãªã‚‰æŠœã‘ã‚‹
 	if (menuFlag_) { return; }
-	//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚ğŠg‘å•\¦‚µ‚Ä‚¢‚éê‡‚Í”²‚¯‚é
+	//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’æ‹¡å¤§è¡¨ç¤ºã—ã¦ã„ã‚‹å ´åˆã¯æŠœã‘ã‚‹
 	if (GetIsHintViewMode()) { return; }
 
-	//ƒL[“ü—Í‚É‚æ‚éˆø‚«o‚µƒXƒvƒ‰ƒCƒgˆÚ“®ŠJn
+	//ã‚­ãƒ¼å…¥åŠ›ã«ã‚ˆã‚‹å¼•ãå‡ºã—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç§»å‹•é–‹å§‹
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
-		//ŠJ•Â‚Ég—p‚·‚éƒL[‚ª“ü—Í‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î”ò‚Î‚·
+		//é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼ãŒå…¥åŠ›ã•ã‚Œã¦ã„ãªã‘ã‚Œã°é£›ã°ã™
 		if (!(Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey()))) { continue; }
-		//ƒGƒXƒP[ƒvƒL[‚Ìà–¾‚¾‚¯‚ÍƒL[‚Å‚Í‚È‚­“Áê‚È•û–@‚ÅŠJ•Â‚·‚é‚Ì‚Å”ò‚Î‚·
+		//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚­ãƒ¼ã®èª¬æ˜ã ã‘ã¯ã‚­ãƒ¼ã§ã¯ãªãç‰¹æ®Šãªæ–¹æ³•ã§é–‹é–‰ã™ã‚‹ã®ã§é£›ã°ã™
 		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
 
-		//ŠJ•ÂŠJn
+		//é–‹é–‰é–‹å§‹
 		drawerSprite->MoveStart();
 
-		//‚»‚à‚»‚àƒqƒ“ƒg‚ª‚È‚¯‚ê‚Î”ò‚Î‚·
+		//ãã‚‚ãã‚‚ãƒ’ãƒ³ãƒˆãŒãªã‘ã‚Œã°é£›ã°ã™
 		if (drawerSprites.size() <= Hint1) { continue; }
 
-		//ŠJ•Â‚³‚¹‚éƒXƒvƒ‰ƒCƒg‚ªƒqƒ“ƒg1‚ÅAŠJ‚­ó‘Ô‚ğŠJn‚·‚éê‡‚Íƒqƒ“ƒg2‚ğ‘S‚Ä•Â‚¶‚é
+		//é–‹é–‰ã•ã›ã‚‹ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒãƒ’ãƒ³ãƒˆ1ã§ã€é–‹ãçŠ¶æ…‹ã‚’é–‹å§‹ã™ã‚‹å ´åˆã¯ãƒ’ãƒ³ãƒˆ2ã‚’å…¨ã¦é–‰ã˜ã‚‹
 		if (drawerSprite == drawerSprites[Hint1] && drawerSprite->GetIsOpenDrawer()) {
 			if (drawerSprites[Hint2]->GetIsOpenDrawer()) {
 				drawerSprites[Hint2]->MoveStart();
 			}
 		}
-		//ŠJ•Â‚³‚¹‚éƒXƒvƒ‰ƒCƒg‚ªƒqƒ“ƒg2‚ÅAŠJ‚­ó‘Ô‚ğŠJn‚·‚éê‡‚Íƒqƒ“ƒg1‚ğ‘S‚Ä•Â‚¶‚é
+		//é–‹é–‰ã•ã›ã‚‹ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒãƒ’ãƒ³ãƒˆ2ã§ã€é–‹ãçŠ¶æ…‹ã‚’é–‹å§‹ã™ã‚‹å ´åˆã¯ãƒ’ãƒ³ãƒˆ1ã‚’å…¨ã¦é–‰ã˜ã‚‹
 		if (drawerSprite == drawerSprites[Hint2] && drawerSprite->GetIsOpenDrawer()) {
 			if (drawerSprites[Hint1]->GetIsOpenDrawer()) {
 				drawerSprites[Hint1]->MoveStart();
@@ -449,30 +544,30 @@ void UserInterface::DrawerSpriteMoveStartKey()
 
 void UserInterface::HintSpriteSizeChange()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚éê‡‚Í”²‚¯‚é
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã„ã‚‹å ´åˆã¯æŠœã‘ã‚‹
 	if (menuFlag_) { return; }
-	//ƒL[“ü—Í‚ª‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//ã‚­ãƒ¼å…¥åŠ›ãŒã•ã‚Œã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!Input::GetInstance()->TriggerKey(DIK_RETURN)) { return; }
 
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
-		//ƒCƒ“ƒXƒ^ƒ“ƒX‚ª‚È‚¯‚ê‚Î”ò‚Î‚·
+		//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ãŒãªã‘ã‚Œã°é£›ã°ã™
 		if (!hintSprite) { continue; }
-		//e‚Ìˆø‚«o‚µ‚ªŠJ‚¢‚Ä‚¢‚é ‚©‚Â e‚Ìˆø‚«o‚µ‚ªˆÚ“®’†‚Å‚È‚¢@‚ÌğŒ‚ğ–‚½‚¹‚Ä‚¢‚È‚¯‚ê‚Î”ò‚Î‚·
+		//è¦ªã®å¼•ãå‡ºã—ãŒé–‹ã„ã¦ã„ã‚‹ ã‹ã¤ è¦ªã®å¼•ãå‡ºã—ãŒç§»å‹•ä¸­ã§ãªã„ã€€ã®æ¡ä»¶ã‚’æº€ãŸã›ã¦ã„ãªã‘ã‚Œã°é£›ã°ã™
 		if (!(hintSprite->GetParentStorage()->GetIsOpenDrawer() && !hintSprite->GetParentStorage()->GetIsMoveDrawer())) { continue; }
-		//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚ª‘å‚«‚³‚ğ•ÏX’†‚È‚ç”ò‚Î‚·
+		//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆãŒå¤§ãã•ã‚’å¤‰æ›´ä¸­ãªã‚‰é£›ã°ã™
 		if (hintSprite->GetIsSizeChange()) { continue; }
 
-		//ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg‚Ì‘å‚«‚³‚ğ•ÏX
+		//ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®å¤§ãã•ã‚’å¤‰æ›´
 		hintSprite->SizeChangeStart();
 	}
 }
 
 void UserInterface::SpaceEffect()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚éê‡‚Í”²‚¯‚é
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã„ã‚‹å ´åˆã¯æŠœã‘ã‚‹
 	if (menuFlag_) { return; }
 
-	//space‚Ì”½‰‰‰o§Œä
+	//spaceã®åå¿œæ¼”å‡ºåˆ¶å¾¡
 	bool frameUp = false;
 	if (isChangeDimenison && SpriteEffectCount % 50 == 0) {
 		for (auto& i : ChangeDimenisonSpriteEffect) {

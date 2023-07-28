@@ -1,17 +1,17 @@
-#include "LevelDataLoader.h"
+ï»¿#include "LevelDataLoader.h"
 #include <fstream>
 
 const std::string LevelDataLoader::directoryPath = "Resources/levels/";
 
 LevelDataLoader* LevelDataLoader::Create(const std::string& filename)
 {
-	//•¡”Œ‚”jUI‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//è¤‡æ•°æ’ƒç ´UIã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	LevelDataLoader* jsonLoader = new LevelDataLoader();
 	if (jsonLoader == nullptr) {
 		return nullptr;
 	}
 
-	//ƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	//ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	jsonLoader->LoadFile(filename);
 
 	return jsonLoader;
@@ -19,7 +19,7 @@ LevelDataLoader* LevelDataLoader::Create(const std::string& filename)
 
 void LevelDataLoader::Update()
 {
-	//ƒIƒuƒWƒFƒNƒgXV
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
 	for (const std::unique_ptr<ObjObject3d>& object : objects) {
 		object->Update();
 	}
@@ -27,7 +27,7 @@ void LevelDataLoader::Update()
 
 void LevelDataLoader::Draw()
 {
-	//ƒIƒuƒWƒFƒNƒg•`‰æ
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»
 	for (const std::unique_ptr<ObjObject3d>& object : objects) {
 		object->Draw();
 	}
@@ -35,7 +35,7 @@ void LevelDataLoader::Draw()
 
 void LevelDataLoader::DrawLightCameraView()
 {
-	//ƒIƒuƒWƒFƒNƒg•`‰æ
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæç”»
 	for (const std::unique_ptr<ObjObject3d>& object : objects) {
 		object->DrawLightCameraView();
 	}
@@ -43,114 +43,114 @@ void LevelDataLoader::DrawLightCameraView()
 
 void LevelDataLoader::InsertModel(const std::string& filename, ObjModel* model)
 {
-	//ƒ‚ƒfƒ‹‚ğƒRƒ“ƒeƒi‚ÉŠi”[
+	//ãƒ¢ãƒ‡ãƒ«ã‚’ã‚³ãƒ³ãƒ†ãƒŠã«æ ¼ç´
 	models.insert(std::make_pair(filename, model));
 }
 
 void LevelDataLoader::CreateLevelDataObjects()
 {
-	//ƒŒƒxƒ‹ƒf[ƒ^Ši”[—pƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿æ ¼ç´ç”¨ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	levelData = new LevelData();
 
-	//"objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"objects"ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	for (nlohmann::json& object : deserialized["objects"]) {
 		ParseSceneRecursive(object);
 	}
 
-	//ƒŒƒxƒ‹ƒf[ƒ^‚©‚çƒIƒuƒWƒFƒNƒg‚ğ¶¬A”z’u
+	//ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ã‹ã‚‰ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã€é…ç½®
 	for (auto& objectData : levelData->objects) {
-		// ƒtƒ@ƒCƒ‹–¼‚©‚ç“o˜^Ï‚İƒ‚ƒfƒ‹‚ğŒŸõ
+		// ãƒ•ã‚¡ã‚¤ãƒ«åã‹ã‚‰ç™»éŒ²æ¸ˆã¿ãƒ¢ãƒ‡ãƒ«ã‚’æ¤œç´¢
 		ObjModel* model = nullptr;
 		decltype(models)::iterator it = models.find(objectData.fileName);
 		if (it != models.end()) {
 			model = it->second;
 		}
 
-		//3DƒIƒuƒWƒFƒNƒg‚ğ¶¬
+		//3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 		std::unique_ptr<ObjObject3d> newObject;
 		newObject.reset(ObjObject3d::Create(model));
-		//•½sˆÚ“®
+		//å¹³è¡Œç§»å‹•
 		newObject->SetPosition(objectData.translation);
-		//‰ñ“]Šp
+		//å›è»¢è§’
 		newObject->SetRotation(objectData.rotation);
-		//ƒXƒP[ƒŠƒ“ƒO
+		//ã‚¹ã‚±ãƒ¼ãƒªãƒ³ã‚°
 		newObject->SetScale(objectData.scaling);
-		//ƒVƒƒƒhƒEƒ}ƒbƒv‚Å‚Ì‰e•`‰æ‚ğ‰Â”\‚É‚µ‚Ä‚¨‚­
+		//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ã§ã®å½±æç”»ã‚’å¯èƒ½ã«ã—ã¦ãŠã
 		newObject->SetIsShadowMap(true);
 
-		//”z—ñ‚É“o˜^
+		//é…åˆ—ã«ç™»éŒ²
 		objects.push_back(std::move(newObject));
 	}
 }
 
 void LevelDataLoader::LoadFile(const std::string& filename)
 {
-	//˜AŒ‹‚µ‚Äƒtƒ‹ƒpƒX‚ğ“¾‚é
+	//é€£çµã—ã¦ãƒ•ãƒ«ãƒ‘ã‚¹ã‚’å¾—ã‚‹
 	const std::string fullpath = directoryPath + filename;
 
-	//ƒtƒ@ƒCƒ‹ƒXƒgƒŠ[ƒ€
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	std::ifstream file;
 
-	//ƒtƒ@ƒCƒ‹‚ğŠJ‚­
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚’é–‹ã
 	file.open(fullpath);
-	//ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“¸”s‚ğƒ`ƒFƒbƒN
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã‚ªãƒ¼ãƒ—ãƒ³å¤±æ•—ã‚’ãƒã‚§ãƒƒã‚¯
 	if (file.fail()) {
 		assert(0);
 	}
 
-	//‰ğ“€
+	//è§£å‡
 	file >> deserialized;
 
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(deserialized.is_object());
 	assert(deserialized.contains("name"));
 	assert(deserialized["name"].is_string());
 
-	//"name"‚ğ•¶š—ñ‚Æ‚µ‚Äæ“¾
+	//"name"ã‚’æ–‡å­—åˆ—ã¨ã—ã¦å–å¾—
 	std::string name =
 		deserialized["name"].get<std::string>();
-	//³‚µ‚¢ƒŒƒxƒ‹ƒf[ƒ^ƒtƒ@ƒCƒ‹‚©ƒ`ƒFƒbƒN
+	//æ­£ã—ã„ãƒ¬ãƒ™ãƒ«ãƒ‡ãƒ¼ã‚¿ãƒ•ã‚¡ã‚¤ãƒ«ã‹ãƒã‚§ãƒƒã‚¯
 	assert(name.compare("scene") == 0);
 }
 
 void LevelDataLoader::ParseSceneRecursive(const nlohmann::json& object)
 {
-	//"objects"‚Ì‘SƒIƒuƒWƒFƒNƒg‚ğ‘–¸
+	//"objects"ã®å…¨ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’èµ°æŸ»
 	assert(object.contains("type"));
 
-	//í•Ê‚ğæ“¾
+	//ç¨®åˆ¥ã‚’å–å¾—
 	std::string type = object["type"].get<std::string>();
 
-	//í—Ş‚²‚Æ‚Ìˆ—
+	//ç¨®é¡ã”ã¨ã®å‡¦ç†
 	//MESH
 	if (type.compare("MESH") == 0) {
-		//—v‘f’Ç‰Á
+		//è¦ç´ è¿½åŠ 
 		levelData->objects.emplace_back(LevelData::ObjectData{});
-		//¡’Ç‰Á‚µ‚½—v‘f‚ÌQÆ‚ğ“¾‚é
+		//ä»Šè¿½åŠ ã—ãŸè¦ç´ ã®å‚ç…§ã‚’å¾—ã‚‹
 		LevelData::ObjectData& objectData = levelData->objects.back();
 
 		if (object.contains("file_name")) {
-			//ƒtƒ@ƒCƒ‹–¼
+			//ãƒ•ã‚¡ã‚¤ãƒ«å
 			objectData.fileName = object["file_name"];
 		}
 
-		//ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚Ìƒpƒ‰ƒ[ƒ^“Ç‚İ‚İ
+		//ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã®ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 		nlohmann::json transform = object["transform"];
-		//•½sˆÚ“®
+		//å¹³è¡Œç§»å‹•
 		objectData.translation.x = (float)transform["translation"][1];
 		objectData.translation.y = (float)transform["translation"][2];
 		objectData.translation.z = -(float)transform["translation"][0];
-		//‰ñ“]Šp
+		//å›è»¢è§’
 		objectData.rotation.x = -(float)transform["rotation"][1];
 		objectData.rotation.y = -(float)transform["rotation"][2];
 		objectData.rotation.z = (float)transform["rotation"][0];
-		//‰ñ“]Šp
+		//å›è»¢è§’
 		objectData.scaling.x = (float)transform["scaling"][1];
 		objectData.scaling.y = (float)transform["scaling"][2];
 		objectData.scaling.z = (float)transform["scaling"][0];
 	}
 
-	//qƒm[ƒh‚ª‚ ‚ê‚ÎÄ‹Aˆ—
+	//å­ãƒãƒ¼ãƒ‰ãŒã‚ã‚Œã°å†å¸°å‡¦ç†
 	if (object.contains("children")) {
 		for (const nlohmann::json& child : object["children"]) {
 			ParseSceneRecursive(child);

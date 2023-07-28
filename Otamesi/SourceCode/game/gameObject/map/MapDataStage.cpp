@@ -1,14 +1,14 @@
-#include "MapDataStage.h"
+ï»¿#include "MapDataStage.h"
 #include "MapBlockData.h"
 #include "ParticleEmitter.h"
 #include <sstream>
 
 MapDataStage* MapDataStage::Create(const int selectStageNum)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	MapDataStage* instance = new MapDataStage();
 
-	//ƒ}ƒbƒv¶¬
+	//ãƒãƒƒãƒ—ç”Ÿæˆ
 	if (!instance->CreateMap(selectStageNum)) {
 		delete instance;
 		assert(0);
@@ -27,8 +27,8 @@ void MapDataStage::Update()
 
 void MapDataStage::Draw()
 {
-	//•`‰æ
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//æç”»
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	Block::Draw();
 }
 
@@ -50,7 +50,7 @@ void MapDataStage::PlayGame()
 		}
 	}
 
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	for (const std::unique_ptr<StageBlock>& block : blocks) {
 		block->Update();
 	}
@@ -59,7 +59,7 @@ void MapDataStage::PlayGame()
 void MapDataStage::GameStart()
 {
 	isMoveEnd_ = true;
-	// ‰½ŒÂ‚¸‚Âã‚°‚é‚©‚ÌŒvZ(‘S‘Ì‚Ì30%)
+	// ä½•å€‹ãšã¤ä¸Šã’ã‚‹ã‹ã®è¨ˆç®—(å…¨ä½“ã®30%)
 	int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
 
 	if (blockActTimer_ >= 10)
@@ -72,11 +72,11 @@ void MapDataStage::GameStart()
 	}
 	blockActTimer_++;
 
-	// ¡ŒŸõ‚µ‚Ä‚¢‚éƒuƒƒbƒN‚Ì”
+	// ä»Šæ¤œç´¢ã—ã¦ã„ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã®æ•°
 	int blockCount = 0;
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	for (const std::unique_ptr<StageBlock>& block : blocks) {
-		// ŒŸõ‚ª“–‚½‚Á‚½‚©
+		// æ¤œç´¢ãŒå½“ãŸã£ãŸã‹
 		bool hitFlag = false;
 		for (auto& cnt : rndcount)
 		{
@@ -93,7 +93,7 @@ void MapDataStage::GameStart()
 		block->Update();
 	}
 
-	// ŒŸõ‚ª“–‚½‚Á‚½‚©
+	// æ¤œç´¢ãŒå½“ãŸã£ãŸã‹
 	bool hitFlag = false;
 	int count = 0;
 	for (auto& block : blocks)
@@ -114,7 +114,7 @@ void MapDataStage::GameStart()
 void MapDataStage::GameReStart()
 {
 	isMoveEnd_ = true;
-	// ‰½ŒÂ‚¸‚Âã‚°‚é‚©‚ÌŒvZ(‘S‘Ì‚Ì30%)
+	// ä½•å€‹ãšã¤ä¸Šã’ã‚‹ã‹ã®è¨ˆç®—(å…¨ä½“ã®30%)
 	int UpBlockSize = static_cast<int>(blocks.size() * 30.0f / 100.0f);
 
 	if (blockActTimer_ >= 10)
@@ -127,11 +127,11 @@ void MapDataStage::GameReStart()
 	}
 	blockActTimer_++;
 
-	// ¡ŒŸõ‚µ‚Ä‚¢‚éƒuƒƒbƒN‚Ì”
+	// ä»Šæ¤œç´¢ã—ã¦ã„ã‚‹ãƒ–ãƒ­ãƒƒã‚¯ã®æ•°
 	int blockCount = 0;
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	for (const std::unique_ptr<StageBlock>& block : blocks) {
-		// ŒŸõ‚ª“–‚½‚Á‚½‚©
+		// æ¤œç´¢ãŒå½“ãŸã£ãŸã‹
 		bool hitFlag = false;
 		for (auto& cnt : rndcount)
 		{
@@ -154,7 +154,7 @@ void MapDataStage::GameReStart()
 		block->Update();
 	}
 
-	// ŒŸõ‚ª“–‚½‚Á‚½‚©
+	// æ¤œç´¢ãŒå½“ãŸã£ãŸã‹
 	bool hitFlag = false;
 	int count = 0;
 	for (auto& block : blocks)
@@ -186,68 +186,68 @@ void MapDataStage::CreateMapBlock()
 	for (int i = 0; i < mapChipNum.size(); i++) {
 		for (int j = 0; j < mapChipNum[i].size(); j++) {
 			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
-				//ƒ}ƒbƒv”Ô†
+				//ãƒãƒƒãƒ—ç•ªå·
 				const XMINT3 chipNum = { i, j, k };
-				//ƒvƒŒƒCƒ„[‚Ì¶¬—pƒ}ƒbƒv”Ô†‚ğ•Û‘¶
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆç”¨ãƒãƒƒãƒ—ç•ªå·ã‚’ä¿å­˜
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
 					playerCreateMapChipNum = chipNum;
 				}
-				//ƒS[ƒ‹¶¬
+				//ã‚´ãƒ¼ãƒ«ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Goal) {
 					std::unique_ptr<StageBlock> newBlock;
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::goal), chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
 					blocks.push_back(std::move(newBlock));
 				}
-				//ƒuƒƒbƒN¶¬
+				//ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Block) {
 					std::unique_ptr<StageBlock> newBlock;
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::block), chipNum, shiftPos, MapBlockData::MapBlockType::Block));
 					blocks.push_back(std::move(newBlock));
 				}
-				//ãŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//ä¸Šå‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::UpPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = {};	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = {};	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰ºŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//ä¸‹å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::DownPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = { 180, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 180, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//¶Œü‚«ƒnƒŠƒ{ƒe¶¬
+				//å·¦å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::LeftPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = { 0, 0, 90 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 0, 0, 90 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰EŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//å³å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::RightPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = { 0, 0, -90 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 0, 0, -90 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//³–ÊŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//æ­£é¢å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::ForwardPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = { -90, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { -90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
 				}
-				//‰œŒü‚«ƒnƒŠƒ{ƒe¶¬
+				//å¥¥å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 				else if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::AwayPlane) {
 					std::unique_ptr<StageBlock> newBlock;
-					const XMFLOAT3 rot = { 90, 0, 0 };	//ŒX‚¯‚éŠp“x
+					const XMFLOAT3 rot = { 90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 					newBlock.reset(StageBlock::Create(int(Block::BROCK_TYPE::plane), chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 					newBlock->SetRotation(rot);
 					blocks.push_back(std::move(newBlock));
@@ -267,7 +267,7 @@ void MapDataStage::CreateAct()
 void MapDataStage::ReCreateMapBlock(const int selectStageNum)
 {
 	mapChipNum.clear();
-	//jsonƒ}ƒbƒvƒf[ƒ^“Ç‚İ‚İ
+	//jsonãƒãƒƒãƒ—ãƒ‡ãƒ¼ã‚¿èª­ã¿è¾¼ã¿
 	std::ostringstream  fileName;
 	fileName << selectStageNum;
 	LoadMapData(fileName.str());
@@ -278,16 +278,16 @@ void MapDataStage::ReCreateMapBlock(const int selectStageNum)
 	for (int i = 0; i < mapChipNum.size(); i++) {
 		for (int j = 0; j < mapChipNum[i].size(); j++) {
 			for (int k = 0; k < mapChipNum[i][j].size(); k++) {
-				//‰½‚à‚È‚¢‚ÍƒŠƒ^[ƒ“
+				//ä½•ã‚‚ãªã„æ™‚ã¯ãƒªã‚¿ãƒ¼ãƒ³
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::None)
 				{
 					continue;
 				}
 
-				//ƒ}ƒbƒv”Ô†
+				//ãƒãƒƒãƒ—ç•ªå·
 				const XMINT3 chipNum = { i, j, k };
 				
-				//ƒvƒŒƒCƒ„[‚Ì¶¬—pƒ}ƒbƒv”Ô†‚ğ•Û‘¶
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç”Ÿæˆç”¨ãƒãƒƒãƒ—ç•ªå·ã‚’ä¿å­˜
 				if (mapChipNum[i][j][k] == MapBlockData::MapBlockType::Player) {
 					playerCreateMapChipNum = chipNum;
 					continue;
@@ -330,68 +330,68 @@ void MapDataStage::BlockCreate(const MapBlockData::MapBlockType type, const XMIN
 	{
 		blocks[count]->ReCreate(StageBlock::GamePhase::Move, chipNum, shiftPos);
 	}
-	//ƒS[ƒ‹¶¬
+	//ã‚´ãƒ¼ãƒ«ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::Goal) {
 		newBlock.reset(StageBlock::Create(2, chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//ƒuƒƒbƒN¶¬
+	//ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::Block) {
 		newBlock.reset(StageBlock::Create(0, chipNum, shiftPos, MapBlockData::MapBlockType::Block));
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//ãŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//ä¸Šå‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::UpPlane) {
-		const XMFLOAT3 rot = {};	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = {};	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 		newBlock->SetRotation(rot);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//‰ºŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//ä¸‹å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::DownPlane) {
-		const XMFLOAT3 rot = { 180, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 180, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 		newBlock->SetRotation(rot);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//¶Œü‚«ƒnƒŠƒ{ƒe¶¬
+	//å·¦å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::LeftPlane) {
-		const XMFLOAT3 rot = { 0, 0, 90 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 0, 0, 90 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 		newBlock->SetRotation(rot);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//‰EŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//å³å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::RightPlane) {
-		const XMFLOAT3 rot = { 0, 0, -90 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 0, 0, -90 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 		newBlock->SetRotation(rot);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//³–ÊŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//æ­£é¢å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::ForwardPlane) {
-		const XMFLOAT3 rot = { -90, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { -90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 		newBlock->SetRotation(rot);
 
 		blocks.insert(blocks.begin() + count, std::move(newBlock));
 		blocks[count]->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 	}
-	//‰œŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//å¥¥å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::AwayPlane) {
-		const XMFLOAT3 rot = { 90, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 		newBlock->SetRotation(rot);
 
@@ -404,61 +404,61 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 {
 	std::unique_ptr<StageBlock> newBlock;
 
-	//ƒS[ƒ‹¶¬
+	//ã‚´ãƒ¼ãƒ«ç”Ÿæˆ
 	if (type == MapBlockData::MapBlockType::Goal) {
 		newBlock.reset(StageBlock::Create(2, chipNum, shiftPos, MapBlockData::MapBlockType::Goal));
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//ƒuƒƒbƒN¶¬
+	//ãƒ–ãƒ­ãƒƒã‚¯ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::Block) {
 		newBlock.reset(StageBlock::Create(0, chipNum, shiftPos, MapBlockData::MapBlockType::Block));
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//ãŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//ä¸Šå‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::UpPlane) {
-		const XMFLOAT3 rot = {};	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = {};	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::UpPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//‰ºŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//ä¸‹å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::DownPlane) {
-		const XMFLOAT3 rot = { 180, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 180, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::DownPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//¶Œü‚«ƒnƒŠƒ{ƒe¶¬
+	//å·¦å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::LeftPlane) {
-		const XMFLOAT3 rot = { 0, 0, 90 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 0, 0, 90 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::LeftPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//‰EŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//å³å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::RightPlane) {
-		const XMFLOAT3 rot = { 0, 0, -90 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 0, 0, -90 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::RightPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//³–ÊŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//æ­£é¢å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::ForwardPlane) {
-		const XMFLOAT3 rot = { -90, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { -90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::ForwardPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
 		blocks.push_back(std::move(newBlock));
 	}
-	//‰œŒü‚«ƒnƒŠƒ{ƒe¶¬
+	//å¥¥å‘ããƒãƒªãƒœãƒ†ç”Ÿæˆ
 	else if (type == MapBlockData::MapBlockType::AwayPlane) {
-		const XMFLOAT3 rot = { 90, 0, 0 };	//ŒX‚¯‚éŠp“x
+		const XMFLOAT3 rot = { 90, 0, 0 };	//å‚¾ã‘ã‚‹è§’åº¦
 		newBlock.reset(StageBlock::Create(1, chipNum, shiftPos, MapBlockData::MapBlockType::AwayPlane));
 		newBlock->SetRotation(rot);
 		newBlock->ReCreate(StageBlock::GamePhase::ReStart, chipNum, shiftPos);
@@ -468,7 +468,7 @@ void MapDataStage::BlockAdd(const MapBlockData::MapBlockType type, const XMINT3 
 
 void MapDataStage::BlockCountCreate()
 {
-	// size‚ª“¯‚¶‚É‚È‚Á‚½‚ç‘ŠúƒŠƒ^[ƒ“
+	// sizeãŒåŒã˜ã«ãªã£ãŸã‚‰æ—©æœŸãƒªã‚¿ãƒ¼ãƒ³
 	if (blocks.size() <= rndcount.size())
 	{
 		return;
@@ -485,13 +485,13 @@ void MapDataStage::BlockCountCreate()
 
 bool MapDataStage::BlockCount()
 {
-	// ŒŸõ‚É“–‚½‚Á‚½‚©
+	// æ¤œç´¢ã«å½“ãŸã£ãŸã‹
 	bool hitFlag = false;
-	// ƒ‰ƒ“ƒ_ƒ€‚É”’l‚ğŒˆ‚ß‚é
+	// ãƒ©ãƒ³ãƒ€ãƒ ã«æ•°å€¤ã‚’æ±ºã‚ã‚‹
 	int temp = rand() % blocks.size();
 	for (auto& count : rndcount)
 	{
-		// ’†‚É“¯‚¶”‚ª‚ ‚é‚©
+		// ä¸­ã«åŒã˜æ•°ãŒã‚ã‚‹ã‹
 		if (count == temp)
 		{
 			hitFlag = true;
@@ -499,7 +499,7 @@ bool MapDataStage::BlockCount()
 		}
 	}
 
-	// –³‚©‚Á‚½‚ç
+	// ç„¡ã‹ã£ãŸã‚‰
 	if (!hitFlag)
 	{
 		rndcount.push_back(temp);

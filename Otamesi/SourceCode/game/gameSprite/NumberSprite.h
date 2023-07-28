@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 
 /// <summary>
-/// ”šƒXƒvƒ‰ƒCƒg
+/// æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class NumberSprite : public Sprite
 {
 public:
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="position">À•W</param>
-	/// <param name="size">‘å‚«‚³</param>
-	/// <param name="texSize">ƒeƒNƒXƒ`ƒƒƒTƒCƒY</param>
-	/// <returns>”šƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="size">å¤§ãã•</param>
+	/// <param name="texSize">ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º</param>
+	/// <returns>æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static NumberSprite* Create(const Texture& texture, const Vector2& position, const Vector2& size, const Vector2& texSize);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// •\¦‚·‚é”Ô†‚ğƒZƒbƒg
+	/// è¡¨ç¤ºã™ã‚‹ç•ªå·ã‚’ã‚»ãƒƒãƒˆ
 	/// </summary>
-	/// <param name="number">•\¦‚·‚é”Ô†(0`9, 10‚Í.)</param>
+	/// <param name="number">è¡¨ç¤ºã™ã‚‹ç•ªå·(0ï½9, 10ã¯.)</param>
 	void SetNumber(const int number);
 };

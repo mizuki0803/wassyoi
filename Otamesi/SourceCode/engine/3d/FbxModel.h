@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 #include <DirectXMath.h>
 #include <DirectXTex.h>
@@ -12,87 +12,87 @@
 
 struct Node
 {
-	//–¼‘O
+	//åå‰
 	std::string name;
-	//ƒ[ƒJƒ‹ƒXƒP[ƒ‹
+	//ãƒ­ãƒ¼ã‚«ãƒ«ã‚¹ã‚±ãƒ¼ãƒ«
 	DirectX::XMVECTOR scaling = { 1,1,1,0 };
-	//ƒ[ƒJƒ‹‰ñ“]Šp
+	//ãƒ­ãƒ¼ã‚«ãƒ«å›è»¢è§’
 	DirectX::XMVECTOR rotation = { 0,0,0,0 };
-	//ƒ[ƒJƒ‹ˆÚ“®
+	//ãƒ­ãƒ¼ã‚«ãƒ«ç§»å‹•
 	DirectX::XMVECTOR translation = { 0,0,0,1 };
-	//ƒ[ƒJƒ‹•ÏŠ·s—ñ
+	//ãƒ­ãƒ¼ã‚«ãƒ«å¤‰æ›è¡Œåˆ—
 	DirectX::XMMATRIX transform;
-	//ƒOƒ[ƒoƒ‹•ÏŠ·s—ñ
+	//ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ›è¡Œåˆ—
 	DirectX::XMMATRIX glabalTransform;
-	//eƒm[ƒh
+	//è¦ªãƒãƒ¼ãƒ‰
 	Node* parent = nullptr;
 };
 
 class FbxModel
 {
-private: //ƒGƒCƒŠƒAƒX
-	//MIcrosoft::WRL::‚ğÈ—ª
+private: //ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	//MIcrosoft::WRL::ã‚’çœç•¥
 	template<class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	//DirectX:‚ğÈ—ª
+	//DirectX:ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 	using TexMetadata = DirectX::TexMetadata;
 	using ScratchImage = DirectX::ScratchImage;
-	//std::‚ğÈ—ª
+	//std::ã‚’çœç•¥
 	using string = std::string;
 	template<class T> using vector = std::vector<T>;
 
-public: //ƒtƒŒƒ“ƒhƒNƒ‰ƒX
+public: //ãƒ•ãƒ¬ãƒ³ãƒ‰ã‚¯ãƒ©ã‚¹
 	friend class FbxLoader;
 
-public: //’è”
-	//ƒ{[ƒ“ƒCƒ“ƒfƒbƒNƒX‚ÌÅ‘å”
+public: //å®šæ•°
+	//ãƒœãƒ¼ãƒ³ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ã®æœ€å¤§æ•°
 	static const int MAX_BONE_INDICES = 4;
 
-public: //ƒTƒuƒNƒ‰ƒX
-	//’¸“_ƒf[ƒ^\‘¢‘Ì
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct VertexPosNormalUvSkin
 	{
-		DirectX::XMFLOAT3 pos;		//xyzÀ•W
-		DirectX::XMFLOAT3 normal;	//–@üƒxƒNƒgƒ‹
-		DirectX::XMFLOAT3 uv;		//uvÀ•W
-		UINT boneIndex[MAX_BONE_INDICES];	//ƒ{[ƒ“@”Ô†
-		float boneWeight[MAX_BONE_INDICES];	//ƒ{[ƒ“d‚İ
+		DirectX::XMFLOAT3 pos;		//xyzåº§æ¨™
+		DirectX::XMFLOAT3 normal;	//æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
+		DirectX::XMFLOAT3 uv;		//uvåº§æ¨™
+		UINT boneIndex[MAX_BONE_INDICES];	//ãƒœãƒ¼ãƒ³ã€€ç•ªå·
+		float boneWeight[MAX_BONE_INDICES];	//ãƒœãƒ¼ãƒ³é‡ã¿
 	};
 
-	//ƒ{[ƒ“\‘¢‘Ì
+	//ãƒœãƒ¼ãƒ³æ§‹é€ ä½“
 	struct Bone
 	{
-		//–¼‘O
+		//åå‰
 		std::string name;
-		//‰Šúp¨‚Ì‹ts—ñ
+		//åˆæœŸå§¿å‹¢ã®é€†è¡Œåˆ—
 		DirectX::XMMATRIX invInitialPose;
-		//ƒNƒ‰ƒXƒ^[(FBX‘¤‚Ìƒ{[ƒ“î•ñ)
+		//ã‚¯ãƒ©ã‚¹ã‚¿ãƒ¼(FBXå´ã®ãƒœãƒ¼ãƒ³æƒ…å ±)
 		FbxCluster* fbxCluster;
-		//ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+		//ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 		Bone(const std::string& name) {
 			this->name = name;
 		}
 	};
 
-public://ƒƒ“ƒoŠÖ”	
+public://ãƒ¡ãƒ³ãƒé–¢æ•°	
 	/// <summary>
-	/// ƒfƒXƒgƒ‰ƒNƒ^
+	/// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 	/// </summary>
 	~FbxModel();
 
 	/// <summary>
-	/// ƒoƒbƒtƒ@¶¬
+	/// ãƒãƒƒãƒ•ã‚¡ç”Ÿæˆ
 	/// </summary>
-	/// <param name="device">ƒfƒoƒCƒX</param>
+	/// <param name="device">ãƒ‡ãƒã‚¤ã‚¹</param>
 	void CreateBuffers(ID3D12Device* device);
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	//getter
@@ -100,37 +100,37 @@ public://ƒƒ“ƒoŠÖ”
 	std::vector<Bone>& GetBones() { return bones; }
 	FbxScene* GetFbxScene() { return fbxScene; }
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒ‚ƒfƒ‹–¼
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ¢ãƒ‡ãƒ«å
 	std::string name;
-	//ƒm[ƒh”z—ñ
+	//ãƒãƒ¼ãƒ‰é…åˆ—
 	std::vector<Node> nodes;
-	//ƒƒbƒVƒ…‚ğ‚Âƒm[ƒh
+	//ãƒ¡ãƒƒã‚·ãƒ¥ã‚’æŒã¤ãƒãƒ¼ãƒ‰
 	Node* meshNode = nullptr;
-	//’¸“_ƒf[ƒ^”z—ñ
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿é…åˆ—
 	std::vector<VertexPosNormalUvSkin> vertices;
-	//’¸“_ƒCƒ“ƒfƒbƒNƒX”z—ñ
+	//é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹é…åˆ—
 	std::vector<unsigned short> indices;
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> indexBuff;
-	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡
 	Texture texture;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView = {};
-	//ƒCƒ“ƒfƒbƒNƒXƒoƒbƒtƒ@ƒrƒ…[
+	//ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_INDEX_BUFFER_VIEW ibView = {};
-	//ƒAƒ“ƒrƒGƒ“ƒgŒW”
+	//ã‚¢ãƒ³ãƒ“ã‚¨ãƒ³ãƒˆä¿‚æ•°
 	DirectX::XMFLOAT3 ambient = { 1,1,1 };
-	//ƒfƒBƒtƒ…[ƒYŒW”
+	//ãƒ‡ã‚£ãƒ•ãƒ¥ãƒ¼ã‚ºä¿‚æ•°
 	DirectX::XMFLOAT3 diffuse = { 1,1,1 };
-	//ƒeƒNƒXƒ`ƒƒƒƒ^ƒf[ƒ^
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¡ã‚¿ãƒ‡ãƒ¼ã‚¿
 	DirectX::TexMetadata metadata = {};
-	//ƒXƒNƒ‰ƒbƒ`ƒCƒ[ƒW
+	//ã‚¹ã‚¯ãƒ©ãƒƒãƒã‚¤ãƒ¡ãƒ¼ã‚¸
 	DirectX::ScratchImage scratchImg = {};
-	//ƒ{[ƒ“”z—ñ
+	//ãƒœãƒ¼ãƒ³é…åˆ—
 	std::vector<Bone> bones;
-	//FBXƒV[ƒ“
+	//FBXã‚·ãƒ¼ãƒ³
 	FbxScene* fbxScene = nullptr;
 };

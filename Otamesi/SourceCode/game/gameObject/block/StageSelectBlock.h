@@ -1,30 +1,30 @@
-#pragma once
+ï»¿#pragma once
 #include "Block.h"
 
 /// <summary>
-/// ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒN
+/// ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯
 /// </summary>
 class StageSelectBlock : public Block
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>	
-	/// <param name="_blockType">ƒ‚ƒfƒ‹”Ô†</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <param name="shiftPos">ƒ}ƒbƒv‚ğ’†S‚É‚¸‚ç‚·’l</param>
-	/// <param name="parent">’†S“_—p‚ÌeƒIƒuƒWƒFƒNƒg</param>
-	/// <returns>ƒXƒe[ƒW‘I‘ğ—pƒuƒƒbƒN</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«ç•ªå·</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <param name="shiftPos">ãƒãƒƒãƒ—ã‚’ä¸­å¿ƒã«ãšã‚‰ã™å€¤</param>
+	/// <param name="parent">ä¸­å¿ƒç‚¹ç”¨ã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+	/// <returns>ã‚¹ãƒ†ãƒ¼ã‚¸é¸æŠç”¨ãƒ–ãƒ­ãƒƒã‚¯</returns>
 	static StageSelectBlock* Create(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="_blockType">ƒ‚ƒfƒ‹”Ô†</param>
-	/// <param name="mapChipNum">ƒ}ƒbƒvƒ`ƒbƒv‚Ì”Ô†</param>
-	/// <param name="shiftPos">ƒ}ƒbƒv‚ğ’†S‚É‚¸‚ç‚·’l</param>
-	/// <param name="parent">’†S“_—p‚ÌeƒIƒuƒWƒFƒNƒg</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="_blockType">ãƒ¢ãƒ‡ãƒ«ç•ªå·</param>
+	/// <param name="mapChipNum">ãƒãƒƒãƒ—ãƒãƒƒãƒ—ã®ç•ªå·</param>
+	/// <param name="shiftPos">ãƒãƒƒãƒ—ã‚’ä¸­å¿ƒã«ãšã‚‰ã™å€¤</param>
+	/// <param name="parent">ä¸­å¿ƒç‚¹ç”¨ã®è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const int _blockType, const XMINT3& mapChipNum, const Vector3& shiftPos, ObjObject3d* parent);
 };

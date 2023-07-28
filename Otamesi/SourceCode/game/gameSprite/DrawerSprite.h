@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 
 /// <summary>
-/// ˆø‚«o‚µˆÚ“®ƒXƒvƒ‰ƒCƒg
+/// å¼•ãå‡ºã—ç§»å‹•ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class DrawerSprite : public Sprite
 {
 public: //enum
-	//ˆø‚«o‚µ‚Å‰B‚ê‚éêŠ
+	//å¼•ãå‡ºã—ã§éš ã‚Œã‚‹å ´æ‰€
 	enum HidePlace
 	{
 		Left,
@@ -17,45 +17,45 @@ public: //enum
 	};
 
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="drawerKey">ˆø‚«o‚µ‚ÌŠJ•Â‚Ég—p‚·‚éƒL[</param>
-	/// <param name="hidePlace">ˆø‚«o‚µ‚Å‰B‚ê‚éêŠ</param>
-	/// <param name="posY">YÀ•W</param>
-	/// <param name="stickoutNum">•Â‚¶‚Ä‚¢‚éê‡‚É‰æ–Ê“à‚É‚Í‚İo‚·—Ê</param>
-	/// <param name="isOpenDrawer">ˆø‚«o‚µ‚ğŠJ‚¢‚Ä‚¢‚éó‘Ô‚©</param>
-	/// <returns>ˆø‚«o‚µˆÚ“®ƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="drawerKey">å¼•ãå‡ºã—ã®é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼</param>
+	/// <param name="hidePlace">å¼•ãå‡ºã—ã§éš ã‚Œã‚‹å ´æ‰€</param>
+	/// <param name="posY">Yåº§æ¨™</param>
+	/// <param name="stickoutNum">é–‰ã˜ã¦ã„ã‚‹å ´åˆã«ç”»é¢å†…ã«ã¯ã¿å‡ºã™é‡</param>
+	/// <param name="isOpenDrawer">å¼•ãå‡ºã—ã‚’é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ã‹</param>
+	/// <returns>å¼•ãå‡ºã—ç§»å‹•ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static DrawerSprite* Create(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer = false);
 
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="drawerKey">ˆø‚«o‚µ‚ÌŠJ•Â‚Ég—p‚·‚éƒL[</param>
-	/// <param name="hidePlace">ˆø‚«o‚µ‚Å‰B‚ê‚éêŠ</param>
-	/// <param name="posY">YÀ•W</param>
-	/// <param name="stickoutNum">•Â‚¶‚Ä‚¢‚éê‡‚É‰æ–Ê“à‚É‚Í‚İo‚·—Ê</param>
-	/// <param name="isOpenDrawer">ˆø‚«o‚µ‚ğŠJ‚¢‚Ä‚¢‚éó‘Ô‚©</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="drawerKey">å¼•ãå‡ºã—ã®é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼</param>
+	/// <param name="hidePlace">å¼•ãå‡ºã—ã§éš ã‚Œã‚‹å ´æ‰€</param>
+	/// <param name="posY">Yåº§æ¨™</param>
+	/// <param name="stickoutNum">é–‰ã˜ã¦ã„ã‚‹å ´åˆã«ç”»é¢å†…ã«ã¯ã¿å‡ºã™é‡</param>
+	/// <param name="isOpenDrawer">å¼•ãå‡ºã—ã‚’é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ã‹</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Texture& texture, BYTE drawerKey, HidePlace hidePlace, float posY, float stickoutNum, bool isOpenDrawer);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ŠJ•ÂˆÚ“®ŠJn
+	/// é–‹é–‰ç§»å‹•é–‹å§‹
 	/// </summary>
 	void MoveStart();
 
 	/// <summary>
-	/// ƒŠƒZƒbƒg
+	/// ãƒªã‚»ãƒƒãƒˆ
 	/// </summary>
 	void Reset();
 
@@ -64,33 +64,33 @@ public: //ƒƒ“ƒoŠÖ”
 	BYTE GetDrawerKey() { return drawerKey; }
 	bool GetIsMoveDrawer() { return isMoveDrawer; }
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ŠJ•ÂˆÚ“®
+	/// é–‹é–‰ç§»å‹•
 	/// </summary>
 	void Move();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ŠJ•ÂˆÚ“®‚É‚©‚©‚éŠÔ
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é–‹é–‰ç§»å‹•ã«ã‹ã‹ã‚‹æ™‚é–“
 	static const int moveTime = 30;
 
-private: //ƒƒ“ƒo•Ï”
-	//ˆø‚«o‚µ‚ğŠJ‚¢‚Ä‚¢‚éó‘Ô‚©
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å¼•ãå‡ºã—ã‚’é–‹ã„ã¦ã„ã‚‹çŠ¶æ…‹ã‹
 	bool isOpenDrawer = false;
-	//ƒV[ƒ“ŠJn‚ÌŠJ•Âó‘Ô•Û‘¶—p
+	//ã‚·ãƒ¼ãƒ³é–‹å§‹æ™‚ã®é–‹é–‰çŠ¶æ…‹ä¿å­˜ç”¨
 	bool isOpenDrawerSceneStart;
-	//ˆø‚«o‚µ‚ÌŠJ•Â‚Ég—p‚·‚éƒL[
+	//å¼•ãå‡ºã—ã®é–‹é–‰ã«ä½¿ç”¨ã™ã‚‹ã‚­ãƒ¼
 	BYTE drawerKey;
-	//ŠJ‚¢‚Ä‚¢‚éê‡‚ÌÀ•W
+	//é–‹ã„ã¦ã„ã‚‹å ´åˆã®åº§æ¨™
 	Vector2 openStatePos;
-	//•Â‚¶‚Ä‚¢‚éê‡‚ÌÀ•W
+	//é–‰ã˜ã¦ã„ã‚‹å ´åˆã®åº§æ¨™
 	Vector2 closedStatePos;
-	//•Â‚¶‚Ä‚¢‚éê‡‚É‰æ–Ê“à‚É‚Í‚İo‚·—Ê
+	//é–‰ã˜ã¦ã„ã‚‹å ´åˆã«ç”»é¢å†…ã«ã¯ã¿å‡ºã™é‡
 	float stickoutNum;
-	//ŠJ•ÂˆÚ“®ŠJnÀ•W
+	//é–‹é–‰ç§»å‹•é–‹å§‹æ™‚åº§æ¨™
 	Vector2 moveStartPos;
-	//ŠJ•ÂˆÚ“®—pƒ^ƒCƒ}[
+	//é–‹é–‰ç§»å‹•ç”¨ã‚¿ã‚¤ãƒãƒ¼
 	int32_t moveTimer = 0;
-	//ŠJ•ÂˆÚ“®’†‚©
+	//é–‹é–‰ç§»å‹•ä¸­ã‹
 	bool isMoveDrawer = false;
 };

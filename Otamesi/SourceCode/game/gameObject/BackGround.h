@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "InstanceObject.h"
 
 class BackGround
@@ -15,45 +15,45 @@ private:
 public:
 
 	/// <summary>
-	/// ¶¬
+	/// ç”Ÿæˆ
 	/// </summary>
 	/// <returns></returns>
 	static BackGround* Create();
 
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update();
 
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 
 	/// <summary>
-	/// ‰e—pŒõŒ¹ƒ‰ƒCƒg‚©‚çŒ©‚½‹“_‚Å‚Ì•`‰æ
+	/// å½±ç”¨å…‰æºãƒ©ã‚¤ãƒˆã‹ã‚‰è¦‹ãŸè¦–ç‚¹ã§ã®æç”»
 	/// </summary>
 	void DrawLightCameraView();
 
 	/// <summary>
-	/// frame‚²‚Æ‚Ì‰Šú‰»
+	/// frameã”ã¨ã®åˆæœŸåŒ–
 	/// </summary>
 	void FrameReset();
 
 private:
 
-	//objƒ‚ƒfƒ‹
+	//objãƒ¢ãƒ‡ãƒ«
 	std::unique_ptr<ObjModel> model;
 
-	//•`‰æ—pƒNƒ‰ƒX
+	//æç”»ç”¨ã‚¯ãƒ©ã‚¹
 	std::unique_ptr<InstanceObject> block[3];
 
-	//ƒIƒuƒWƒFƒNƒg‚Ìó‘Ô
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®çŠ¶æ…‹
 	std::vector<std::array<DirectX::XMFLOAT3, int(transform::size)>> info;
 };
 

@@ -1,4 +1,4 @@
-#include "TitleScene.h"
+ï»¿#include "TitleScene.h"
 #include "WindowApp.h"
 #include "Input.h"
 #include "Audio.h"
@@ -16,29 +16,29 @@
 
 void TitleScene::Initialize()
 {
-	//ƒ‰ƒCƒg¶¬
+	//ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup.reset(LightGroup::Create());
 	lightGroup->SetDirLightActive(0, false);
 	lightGroup->SetDirLightActive(1, false);
 	lightGroup->SetDirLightActive(2, false);
 
-	//obj‚©‚çƒ‚ƒfƒ‹ƒf[ƒ^‚ğ“Ç‚İ‚Ş
+	//objã‹ã‚‰ãƒ¢ãƒ‡ãƒ«ãƒ‡ãƒ¼ã‚¿ã‚’èª­ã¿è¾¼ã‚€
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
 
-	//‘I‘ğ’†‚ÌƒXƒe[ƒW”Ô†‚ğ0‚ÉƒZƒbƒg
+	//é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã‚’0ã«ã‚»ãƒƒãƒˆ
 	StageManager::SetSelectStage(0);
-	//ƒ}ƒbƒv¶¬
+	//ãƒãƒƒãƒ—ç”Ÿæˆ
 	mapData.reset(MapDataStage::Create(StageManager::GetSelectStage()));
 
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	camera.reset(new GameCamera());
-	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //ƒJƒƒ‰‹“_‚ÌƒXƒe[ƒW’†‰›‚©‚ç‚Ì‹——£
-	const XMINT3 mapSize = mapData->GetMapSize(); //ƒ}ƒbƒv‚Ì‘å‚«‚³
-	const Vector3 stageCenterPos = {}; //ƒXƒe[ƒW’†‰›À•W
+	const XMFLOAT3 distanceStageCenter = mapData->GetCameraDist(); //ã‚«ãƒ¡ãƒ©è¦–ç‚¹ã®ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®ã‹ã‚‰ã®è·é›¢
+	const XMINT3 mapSize = mapData->GetMapSize(); //ãƒãƒƒãƒ—ã®å¤§ãã•
+	const Vector3 stageCenterPos = {}; //ã‚¹ãƒ†ãƒ¼ã‚¸ä¸­å¤®åº§æ¨™
 	camera->Initialize(distanceStageCenter, stageCenterPos);
-	//‰e—pŒõŒ¹ƒJƒƒ‰‰Šú‰»
+	//å½±ç”¨å…‰æºã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	const float lightCameraCenterDistance = 80;
 	lightCamera.reset(GameLightCamera::Create(lightCameraCenterDistance));
 	lightCamera->SetProjectionNum({ 250, 250 }, { -250, -250 });
@@ -46,42 +46,42 @@ void TitleScene::Initialize()
 	OutLine::SetCmaera(camera.get());
 
 
-	//ƒvƒŒƒCƒ„[¶¬
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ç”Ÿæˆ
 	player.reset(Player::Create(modelPlayer.get(), mapData->GetPlayerCreateMapChipNum(), mapData->GetShiftPos(), camera.get(), modelPlayerEffect.get()));
 	player->SetMoveSurfacePhase(mapData->GetInstallationSurface());
-	//ƒvƒŒƒCƒ„[‚ÌˆÚ“®‰Â”\”»’è—p‚Éƒ}ƒbƒv”Ô†‚ğƒZƒbƒg
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ç§»å‹•å¯èƒ½åˆ¤å®šç”¨ã«ãƒãƒƒãƒ—ç•ªå·ã‚’ã‚»ãƒƒãƒˆ
 	PlayerActionManager::SetMapChipNum(mapData->GetMapChipNum());
-	//ƒJƒƒ‰‚É¶¬‚µ‚½ƒvƒŒƒCƒ„[‚ğƒZƒbƒg
+	//ã‚«ãƒ¡ãƒ©ã«ç”Ÿæˆã—ãŸãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’ã‚»ãƒƒãƒˆ
 	camera->SetPlayer(player.get());
 
-	//“V‹…¶¬
+	//å¤©çƒç”Ÿæˆ
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 
-	//”wŒiƒIƒuƒWƒFƒNƒg¶¬
+	//èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆç”Ÿæˆ
 	backGround.reset(BackGround::Create());
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	ObjObject3d::SetCamera(camera.get());
 	ObjObject3d::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	ObjObject3d::SetLightGroup(lightGroup.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	InstanceObject::SetCamera(camera.get());
 	InstanceObject::SetLightCamera(lightCamera.get());
 
-	//objƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	//objã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	InstanceObject::SetLightGroup(lightGroup.get());
 
-	//ƒp[ƒeƒBƒNƒ‹‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	ParticleManager::SetCamera(camera.get());
-	//‰æ–Ê‚Éƒp[ƒeƒBƒNƒ‹‚ªc‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å‘S‚Äíœ‚µ‚Ä‚¨‚­
+	//ç”»é¢ã«ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãŒæ®‹ã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§å…¨ã¦å‰Šé™¤ã—ã¦ãŠã
 	ParticleEmitter::GetInstance()->AllDelete();
 
-	//UIŠÖŒW¶¬
+	//UIé–¢ä¿‚ç”Ÿæˆ
 	userInterface_ = UserInterface::Create(UserInterface::GamePhase::Title);
-	//ƒ^ƒCƒgƒ‹ƒƒS¶¬
+	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´ç”Ÿæˆ
 	titleLogo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::TitleLogo), { WindowApp::window_width / 2, 140 }));
 	titleLogo->SetTexSize({1658, 518});
 	titleLogo->SetSize(titleLogo->GetTexSize() * 0.4f);
@@ -94,11 +94,12 @@ void TitleScene::Finalize()
 
 void TitleScene::Update()
 {
-	//ƒfƒoƒbƒO—pƒeƒLƒXƒg
+	//ãƒ‡ãƒãƒƒã‚°ç”¨ãƒ†ã‚­ã‚¹ãƒˆ
 	//DebugText::GetInstance()->Print("TITLE SCENE", 350, 200, 5);
+	ObjObject3d::SetCamera(camera.get());
 
 	if (!isStageClear) {
-		//ŸŒ³•ÏX‚ª‰Â”\‚©UI‚É“`‚¦‚é
+		//æ¬¡å…ƒå¤‰æ›´ãŒå¯èƒ½ã‹UIã«ä¼ãˆã‚‹
 		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
 		//undo
@@ -111,7 +112,7 @@ void TitleScene::Update()
 			Redo(camera.get(), player.get());
 		}
 
-		//binaryo—Í
+		//binaryå‡ºåŠ›
 		if (player->GetIsMove() || (!player->GetNowMove() && camera->GetIsTriggerDimensionChange())) {
 			orderNum++;
 			orderMaxNum = orderNum;
@@ -122,24 +123,24 @@ void TitleScene::Update()
 			KeepBinary(*camera, *player);
 		}
 		
-		//ƒvƒŒƒCƒ„[‚ªƒS[ƒ‹‚ğ‚µ‚½‚çƒXƒe[ƒWƒNƒŠƒA
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚´ãƒ¼ãƒ«ã‚’ã—ãŸã‚‰ã‚¹ãƒ†ãƒ¼ã‚¸ã‚¯ãƒªã‚¢
 		if (player->GetIsGoal()) {
-			//ƒNƒŠƒA‰¹
+			//ã‚¯ãƒªã‚¢éŸ³
 			Audio::GetInstance()->PlayWave(Audio::SoundName::clear);
 
 			isStageClear = true;
 			StageManager::StageClear();
 			camera->SetIsStageClear(true);
 
-			//ƒV[ƒ“Ø‚è‘Ö‚¦
+			//ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆ
 			SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "GAME");
-			//binaryíœ
+			//binaryå‰Šé™¤
 			DeleteBinary();
-			//Ÿ‚ÌƒXƒe[ƒW‚Ö
+			//æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã¸
 			StageManager::NextStageSelect();
 		}
 
-		//ƒGƒXƒP[ƒvƒL[‚Åƒƒjƒ…[
+		//ã‚¨ã‚¹ã‚±ãƒ¼ãƒ—ã‚­ãƒ¼ã§ãƒ¡ãƒ‹ãƒ¥ãƒ¼
 		if (Input::GetInstance()->TriggerKey(DIK_ESCAPE))
 		{
 			if (!userInterface_->GetMenuFlag())
@@ -158,44 +159,44 @@ void TitleScene::Update()
 	userInterface_->SetNotMove(isStageClear);
 	MenuAction();
 
-	//ƒJƒƒ‰XV
+	//ã‚«ãƒ¡ãƒ©æ›´æ–°
 	camera->Update();
 	lightCamera->Update();
 
-	//ƒ‰ƒCƒgXV
+	//ãƒ©ã‚¤ãƒˆæ›´æ–°
 	lightGroup->Update();
 
-	//ƒIƒuƒWƒFƒNƒgXV
-	//ƒvƒŒƒCƒ„[
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Update();
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	mapData->Update();
-	//“V‹…
+	//å¤©çƒ
 	skydome->Update();
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	backGround->Update();
 
-	//ƒXƒvƒ‰ƒCƒg
-	//UI‚ÌXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+	//UIã®æ›´æ–°
 	userInterface_->Update();
 
-	//ƒp[ƒeƒBƒNƒ‹XV
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æ›´æ–°
 	ParticleEmitter::GetInstance()->Update();
 
-	//ƒ^ƒCƒgƒ‹ƒƒS
+	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
 	titleLogo->Update();
 
-	//‰Šúó‘Ô‚ğbinary•Û‘¶
+	//åˆæœŸçŠ¶æ…‹ã‚’binaryä¿å­˜
 	if (player->GetIsStartMove()) {
 		KeepBinary(*camera, *player);
 	}
 
-	//ƒp[ƒeƒBƒNƒ‹XV
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æ›´æ–°
 	ParticleEmitter::GetInstance()->Update();
 
-	//ƒV[ƒ“•ÏXó‘Ô
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´çŠ¶æ…‹
 	SceneChangeMode();
-	//ƒV[ƒ“•ÏX‰‰oXV
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡ºæ›´æ–°
 	SceneChangeEffect::Update();
 }
 
@@ -205,38 +206,38 @@ void TitleScene::DrawBackSprite()
 
 void TitleScene::Draw3D()
 {
-	//Object3d‹¤’ÊƒRƒ}ƒ“ƒh
+	//Object3då…±é€šã‚³ãƒãƒ³ãƒ‰
 	ObjObject3d::DrawOutLinePrev();
-	///-------Object3d•`‰æ‚±‚±‚©‚ç-------///
-	// ƒAƒEƒgƒ‰ƒCƒ“—p’è”ƒoƒbƒtƒ@ƒZƒbƒg
+	///-------Object3dæç”»ã“ã“ã‹ã‚‰-------///
+	// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡ã‚»ãƒƒãƒˆ
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kNone);
-	//“V‹…
+	//å¤©çƒ
 	skydome->Draw();
-	////ƒvƒŒƒCƒ„[
+	////ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kPlayer);
 	player->Draw();
 
-	///-------Object3d•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Object3dæç”»ã“ã“ã¾ã§-------///
 
-	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+	///-------Instanceæç”»ã“ã“ã‹ã‚‰-------///
 
-	//ƒ}ƒbƒv—pƒuƒƒbƒN
+	//ãƒãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯
 	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	mapData->Draw();
 
 
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	InstanceObject::DrawPrev();
 	backGround->Draw();
 
-	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Instanceæç”»ã“ã“ã¾ã§-------///
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚©‚ç-------///
+	///-------ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»ã“ã“ã‹ã‚‰-------///
 
-	//ƒp[ƒeƒBƒNƒ‹•`‰æ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»
 	ParticleEmitter::GetInstance()->DrawAll();
 
-	///-------ƒp[ƒeƒBƒNƒ‹•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«æç”»ã“ã“ã¾ã§-------///
 }
 
 void TitleScene::AfterBloomDraw()
@@ -246,50 +247,55 @@ void TitleScene::AfterBloomDraw()
 
 void TitleScene::Draw3DLightView()
 {
-	///-------Instance•`‰æ‚±‚±‚©‚ç-------///
+	///-------Instanceæç”»ã“ã“ã‹ã‚‰-------///
 
 	InstanceObject::DrawLightViewPrev();
 
-	//”wŒiƒIƒuƒWƒFƒNƒg
+	//èƒŒæ™¯ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	backGround->DrawLightCameraView();
 
-	///-------Instance•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------Instanceæç”»ã“ã“ã¾ã§-------///
 }
 
 void TitleScene::DrawFrontSprite()
 {
-	//ƒXƒvƒ‰ƒCƒg‹¤’ÊƒRƒ}ƒ“ƒh
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆå…±é€šã‚³ãƒãƒ³ãƒ‰
 	SpriteCommon::GetInstance()->DrawPrev();
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚©‚ç-------///
+	///-------ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»ã“ã“ã‹ã‚‰-------///
 
-	//UIŠÖŒW
+	//UIé–¢ä¿‚
 	userInterface_->Draw();
 
-	//ƒ^ƒCƒgƒ‹ƒƒS
+	//ã‚¿ã‚¤ãƒˆãƒ«ãƒ­ã‚´
 	titleLogo->Draw();
 
-	//ƒV[ƒ“•ÏX‰‰o
+	//ã‚·ãƒ¼ãƒ³å¤‰æ›´æ¼”å‡º
 	SceneChangeEffect::Draw();
 
-	///-------ƒXƒvƒ‰ƒCƒg•`‰æ‚±‚±‚Ü‚Å-------///
+	///-------ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»ã“ã“ã¾ã§-------///
+}
+
+void TitleScene::DrawImageForUI()
+{
+	userInterface_->DrawMenuImage();
 }
 
 void TitleScene::MenuAction()
 {
-	//ƒƒjƒ…[‚ªŠJ‚¢‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãŒé–‹ã„ã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!userInterface_->GetMenuFlag()) { return; }
-	//Œˆ’è‚ÌƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//æ±ºå®šã®ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
-	//ƒXƒy[ƒXƒL[‚ğ‰Ÿ‚µ‚½uŠÔ‚É‘I‘ğ‚³‚ê‚Ä‚¢‚é€–Ú‚É‚æ‚Á‚Ä‹““®‚ğİ’è
-	//.exe‚ÌI—¹
+	//ã‚¹ãƒšãƒ¼ã‚¹ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸç¬é–“ã«é¸æŠã•ã‚Œã¦ã„ã‚‹é …ç›®ã«ã‚ˆã£ã¦æŒ™å‹•ã‚’è¨­å®š
+	//.exeã®çµ‚äº†
 	if (userInterface_->GetSelectionNumber() == (int)UserInterface::TitleSceneItem::ExeEnd) {
 		isEndRequest = true;
-		//seÄ¶
+		//seå†ç”Ÿ
 		Audio::GetInstance()->PlayWave(Audio::SoundName::button);
 	}
 
-	//binaryíœ
+	//binaryå‰Šé™¤
 	DeleteBinary();
 }
 

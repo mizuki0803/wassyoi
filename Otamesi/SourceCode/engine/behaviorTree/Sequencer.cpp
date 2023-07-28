@@ -1,8 +1,8 @@
-#include "Sequencer.h"
+ï»¿#include "Sequencer.h"
 
 Sequencer* Sequencer::Create()
 {
-	//ƒV[ƒPƒ“ƒT[‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚·ãƒ¼ã‚±ãƒ³ã‚µãƒ¼ã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	Sequencer* sequencer = new Sequencer();
 	if (sequencer == nullptr) {
 		return nullptr;
@@ -13,7 +13,7 @@ Sequencer* Sequencer::Create()
 
 bool Sequencer::Sequence()
 {
-	//false‚ª‹A‚Á‚Ä‚«‚½‚ç‘¦I—¹
+	//falseãŒå¸°ã£ã¦ããŸã‚‰å³çµ‚äº†
 	for (int i = 0; i < (signed)nodes.size(); i++) {
 		if (!(nodes[i])()) {
 			return false;
@@ -25,6 +25,6 @@ bool Sequencer::Sequence()
 
 void Sequencer::AddNode(std::function<bool()> func)
 {
-    //qƒm[ƒh”z—ñ‚É“o˜^
+    //å­ãƒãƒ¼ãƒ‰é…åˆ—ã«ç™»éŒ²
     nodes.push_back(func);
 }

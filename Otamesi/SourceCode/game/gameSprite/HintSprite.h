@@ -1,40 +1,40 @@
-#pragma once
+ï»¿#pragma once
 #include "DrawerSprite.h"
 
 /// <summary>
-/// ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg
+/// ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class HintSprite : public Sprite
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="parent">ˆø‚«o‚µeƒXƒvƒ‰ƒCƒg</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <returns>ƒqƒ“ƒgƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="parent">å¼•ãå‡ºã—è¦ªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <returns>ãƒ’ãƒ³ãƒˆã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static HintSprite* Create(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="parent">ˆø‚«o‚µeƒXƒvƒ‰ƒCƒg</param>
-	/// <param name="position">À•W</param>
-	/// <param name="anchorpoint">ƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="parent">å¼•ãå‡ºã—è¦ªã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</param>
+	/// <param name="position">åº§æ¨™</param>
+	/// <param name="anchorpoint">ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Texture& texture, DrawerSprite* parent, const Vector2 position, const Vector2& anchorpoint);
 
 	/// <summary>
-	/// XV
+	/// æ›´æ–°
 	/// </summary>
 	void Update() override;
 
 	/// <summary>
-	/// ‘å‚«‚³•ÏXŠJn
+	/// å¤§ãã•å¤‰æ›´é–‹å§‹
 	/// </summary>
 	void SizeChangeStart();
 
@@ -43,33 +43,33 @@ public: //ƒƒ“ƒoŠÖ”
 	bool GetIsSizeLarger() { return isSizeLarger; }
 	bool GetIsSizeChange() { return isSizeChange; }
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‘å‚«‚³•ÏX
+	/// å¤§ãã•å¤‰æ›´
 	/// </summary>
 	void SizeChange();
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//’Êí‚ÌƒeƒNƒXƒ`ƒƒ‘å‚«‚³
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//é€šå¸¸æ™‚ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å¤§ãã•
 	static const float normalTextureScale;
-	//Šg‘å•\¦‚ÌƒeƒNƒXƒ`ƒƒ‘å‚«‚³
+	//æ‹¡å¤§è¡¨ç¤ºæ™‚ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å¤§ãã•
 	static const float largeTextureScale;
 
-private: //ƒƒ“ƒo•Ï”
-	//eq\‘¢‚ğ‰ğœ‚µ‚½‚è‚·‚é‚Ì‚ÅA•Û‘¶—pˆø‚«o‚µeƒIƒuƒWƒFƒNƒg
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//è¦ªå­æ§‹é€ ã‚’è§£é™¤ã—ãŸã‚Šã™ã‚‹ã®ã§ã€ä¿å­˜ç”¨å¼•ãå‡ºã—è¦ªã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	DrawerSprite* parentStorage;
-	//•Û‘¶—pÀ•W
+	//ä¿å­˜ç”¨åº§æ¨™
 	Vector2 positionStorage;
-	//•Û‘¶—pƒAƒ“ƒJ[ƒ|ƒCƒ“ƒg
+	//ä¿å­˜ç”¨ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆ
 	Vector2 anchorpointStorage;
-	//Šg‘å•\¦’†‚©
+	//æ‹¡å¤§è¡¨ç¤ºä¸­ã‹
 	bool isSizeLarger = false;
-	//‘å‚«‚³•ÏX’†‚©
+	//å¤§ãã•å¤‰æ›´ä¸­ã‹
 	bool isSizeChange = false;
-	//ƒAƒNƒVƒ‡ƒ“ƒ^ƒCƒ}[
+	//ã‚¢ã‚¯ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒãƒ¼
 	int32_t actionTimer = 0;
-	//‘å‚«‚³•ÏX‘OÀ•W
+	//å¤§ãã•å¤‰æ›´å‰åº§æ¨™
 	Vector2 sizeChangeBeforePos;
-	//‘å‚«‚³•ÏXŒãÀ•W
+	//å¤§ãã•å¤‰æ›´å¾Œåº§æ¨™
 	Vector2 sizeChangeAfterPos;
 };

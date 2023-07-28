@@ -1,22 +1,22 @@
-#pragma once
+ï»¿#pragma once
 #include "Texture.h"
 #include <string>
 
 class TextureManager
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”	
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°	
 	/// <summary>
-	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	/// </summary>
-	/// <param name="texture">“Ç‚İ‚ñ‚¾ƒeƒNƒXƒ`ƒƒ‚ğ•Û‘¶‚·‚éêŠ</param> 
-	/// <param name="directoryPath">ƒpƒX</param>
-	/// <param name="filename">ƒtƒ@ƒCƒ‹–¼</param>
+	/// <param name="texture">èª­ã¿è¾¼ã‚“ã ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚’ä¿å­˜ã™ã‚‹å ´æ‰€</param> 
+	/// <param name="directoryPath">ãƒ‘ã‚¹</param>
+	/// <param name="filename">ãƒ•ã‚¡ã‚¤ãƒ«å</param>
 	static void LoadTexture(Texture& texture, const std::string& directoryPath, const std::string& filename);
 
 	//setter
 	static void SetDevice(ID3D12Device* device) { TextureManager::dev = device; };
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
 };

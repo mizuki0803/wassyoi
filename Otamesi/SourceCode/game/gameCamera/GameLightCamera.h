@@ -1,40 +1,40 @@
-#pragma once
+ï»¿#pragma once
 #include "LightCamera.h"
 
 /// <summary>
-/// ƒQ[ƒ€‚Ég—p‚·‚éŒõŒ¹ƒJƒƒ‰
+/// ã‚²ãƒ¼ãƒ ã«ä½¿ç”¨ã™ã‚‹å…‰æºã‚«ãƒ¡ãƒ©
 /// </summary>
 class GameLightCamera : public LightCamera
 {
-public: //Ã“Iƒƒ“ƒo•Ï”
+public: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>	
-	/// <param name="centerDistance">’†S‚©‚ç‚Ì‹——£</param>
-	/// <returns>ƒQ[ƒ€‚Ég—p‚·‚éŒõŒ¹ƒJƒƒ‰</returns>
+	/// <param name="centerDistance">ä¸­å¿ƒã‹ã‚‰ã®è·é›¢</param>
+	/// <returns>ã‚²ãƒ¼ãƒ ã«ä½¿ç”¨ã™ã‚‹å…‰æºã‚«ãƒ¡ãƒ©</returns>
 	static GameLightCamera* Create(float centerDistance);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="centerDistance">’†S‚©‚ç‚Ì‹——£</param>
+	/// <param name="centerDistance">ä¸­å¿ƒã‹ã‚‰ã®è·é›¢</param>
 	void Initialize(float centerDistance);
 
 	/// <summary>
-	/// XVˆ—
+	/// æ›´æ–°å‡¦ç†
 	/// </summary>
 	void Update() override;
 
-private: //ƒƒ“ƒoŠÖ”
+private: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ’†S‚ğ²‚É‰ñ“]
+	/// ä¸­å¿ƒã‚’è»¸ã«å›è»¢
 	/// </summary>
 	void Around();
 
-private: //ƒƒ“ƒo•Ï”
-	//’†S‚©‚ç‚Ì‹——£
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ä¸­å¿ƒã‹ã‚‰ã®è·é›¢
 	float centerDistance;
-	//‰ñ“]‚Éd—l‚·‚é‰ñ“]Šp
+	//å›è»¢ã«ä»•æ§˜ã™ã‚‹å›è»¢è§’
 	float aroundRotate = 0;
 };

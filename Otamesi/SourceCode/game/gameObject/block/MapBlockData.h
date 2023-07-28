@@ -1,38 +1,38 @@
-#pragma once
+ï»¿#pragma once
 
 /// <summary>
-/// ƒ}ƒbƒvƒuƒƒbƒNƒf[ƒ^
+/// ãƒžãƒƒãƒ—ãƒ–ãƒ­ãƒƒã‚¯ãƒ‡ãƒ¼ã‚¿
 /// </summary>
 class MapBlockData
 {
 public: //enum
-	//ƒ}ƒbƒv—pƒuƒƒbƒN‚ÌŽí—Þ
+	//ãƒžãƒƒãƒ—ç”¨ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡ž
 	enum MapBlockType
 	{
-		None,			//‚È‚É‚à‚È‚µ
-		Player,			//ƒvƒŒƒCƒ„[
-		Goal,			//ƒS[ƒ‹
-		Block,			//ƒuƒƒbƒN
-		UpPlane,		//ãŒü‚«ƒnƒŠƒ{ƒe
-		DownPlane,		//‰ºŒü‚«ƒnƒŠƒ{ƒe
-		LeftPlane,		//¶Œü‚«ƒnƒŠƒ{ƒe
-		RightPlane,		//‰EŒü‚«ƒnƒŠƒ{ƒe
-		ForwardPlane,	//Žè‘OŒü‚«ƒnƒŠƒ{ƒe
-		AwayPlane,		//‰œŒü‚«ƒnƒŠƒ{ƒe
+		None,			//ãªã«ã‚‚ãªã—
+		Player,			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
+		Goal,			//ã‚´ãƒ¼ãƒ«
+		Block,			//ãƒ–ãƒ­ãƒƒã‚¯
+		UpPlane,		//ä¸Šå‘ããƒãƒªãƒœãƒ†
+		DownPlane,		//ä¸‹å‘ããƒãƒªãƒœãƒ†
+		LeftPlane,		//å·¦å‘ããƒãƒªãƒœãƒ†
+		RightPlane,		//å³å‘ããƒãƒªãƒœãƒ†
+		ForwardPlane,	//æ‰‹å‰å‘ããƒãƒªãƒœãƒ†
+		AwayPlane,		//å¥¥å‘ããƒãƒªãƒœãƒ†
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// Žw’è‚µ‚½ƒ}ƒbƒv”Ô†‚ªƒuƒƒbƒN‚Å‚ ‚é‚©ƒ`ƒFƒbƒN
+	/// æŒ‡å®šã—ãŸãƒžãƒƒãƒ—ç•ªå·ãŒãƒ–ãƒ­ãƒƒã‚¯ã§ã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="mapChipNum">ƒ}ƒbƒv”Ô†</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="mapChipNum">ãƒžãƒƒãƒ—ç•ªå·</param>
+	/// <returns>æˆå¦</returns>
 	static bool MapChipNumBlockCheck(const int mapChipNum);
 
 	/// <summary>
-	/// Žw’è‚µ‚½ƒ}ƒbƒv”Ô†‚ªƒuƒƒbƒN‚Ü‚½‚Í‚»‚Ì–Ê‚É“K‚µ‚½ƒnƒŠƒ{ƒe‚Å‚ ‚é‚©ƒ`ƒFƒbƒN
+	/// æŒ‡å®šã—ãŸãƒžãƒƒãƒ—ç•ªå·ãŒãƒ–ãƒ­ãƒƒã‚¯ã¾ãŸã¯ãã®é¢ã«é©ã—ãŸãƒãƒªãƒœãƒ†ã§ã‚ã‚‹ã‹ãƒã‚§ãƒƒã‚¯
 	/// </summary>
-	/// <param name="mapChipNum">ƒ}ƒbƒv”Ô†</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="mapChipNum">ãƒžãƒƒãƒ—ç•ªå·</param>
+	/// <returns>æˆå¦</returns>
 	static bool MapChipNumBlockPlaneCheck(const int mapChipNum, MapBlockType planeType);
 };

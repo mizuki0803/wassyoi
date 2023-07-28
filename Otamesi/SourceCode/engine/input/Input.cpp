@@ -1,4 +1,4 @@
-#include "Input.h"
+ï»¿#include "Input.h"
 #include <cassert>
 
 #pragma comment(lib, "dinput8.lib")
@@ -13,72 +13,72 @@ Input* Input::GetInstance()
 
 BOOL CALLBACK DeviceFindCallBack(LPCDIDEVICEINSTANCE ipddi, LPVOID pvRef)
 {
-	// ƒfƒoƒCƒX”­Œ©‚ÉÀs‚³‚ê‚é
+	// ãƒ‡ãƒã‚¤ã‚¹ç™ºè¦‹æ™‚ã«å®Ÿè¡Œã•ã‚Œã‚‹
 	return DIENUM_CONTINUE;
 }
 
 void Input::Initialize(WindowApp* win)
 {
-	//Ø‚è‚Ä‚«‚½WindowApp‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğ‹L˜^
+	//å€Ÿã‚Šã¦ããŸWindowAppã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’è¨˜éŒ²
 	this->win = win;
 
 	HRESULT result;
 
-	//DirectInput‚ÌƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//DirectInputã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	result = DirectInput8Create(
 		win->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
 
 
-	///-----------------ƒL[“ü—Í‰Šú‰»-----------------///
+	///-----------------ã‚­ãƒ¼å…¥åŠ›åˆæœŸåŒ–-----------------///
 
-	//ƒL[ƒ{[ƒhƒfƒoƒCƒX‚Ìİ’è
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®è¨­å®š
 	result = dinput->CreateDevice(GUID_SysKeyboard, &devkeyboard, NULL);
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);	//•W€Œ`®
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = devkeyboard->SetDataFormat(&c_dfDIKeyboard);	//æ¨™æº–å½¢å¼
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = devkeyboard->SetCooperativeLevel(
 		win->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 
 
-	///----------------ƒ}ƒEƒX“ü—Í‰Šú‰»----------------///
+	///----------------ãƒã‚¦ã‚¹å…¥åŠ›åˆæœŸåŒ–----------------///
 
-	//ƒ}ƒEƒXƒfƒoƒCƒX‚Ìİ’è
+	//ãƒã‚¦ã‚¹ãƒ‡ãƒã‚¤ã‚¹ã®è¨­å®š
 	result = dinput->CreateDevice(GUID_SysMouse, &devmouse, NULL);
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = devmouse->SetDataFormat(&c_dfDIMouse);	//•W€Œ`®
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = devmouse->SetDataFormat(&c_dfDIMouse);	//æ¨™æº–å½¢å¼
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = devmouse->SetCooperativeLevel(
 		win->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 
-	///----------------ƒpƒbƒh“ü—Í‰Šú‰»----------------///
-	//ƒfƒoƒCƒX‚Ì—ñ‹“
+	///----------------ãƒ‘ãƒƒãƒ‰å…¥åŠ›åˆæœŸåŒ–----------------///
+	//ãƒ‡ãƒã‚¤ã‚¹ã®åˆ—æŒ™
 	result = dinput->EnumDevices(
 		DI8DEVTYPE_JOYSTICK, DeviceFindCallBack, &parameter, DIEDFL_FORCEFEEDBACK | DIEDFL_ATTACHEDONLY);
-	//ƒQ[ƒ€ƒpƒbƒhƒfƒoƒCƒX‚Ìİ’è
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãƒ‡ãƒã‚¤ã‚¹ã®è¨­å®š
 	result = dinput->CreateDevice(GUID_Joystick, &devgamepad, NULL);
 
-	//ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î‚±‚±‚ÅŠÖ”‚ğ”²‚¯‚é
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæ¥ç¶šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã“ã“ã§é–¢æ•°ã‚’æŠœã‘ã‚‹
 	if (devgamepad == nullptr) { return; }
 
-	//“ü—Íƒf[ƒ^Œ`®‚ÌƒZƒbƒg
-	result = devgamepad->SetDataFormat(&c_dfDIJoystick);	//•W€Œ`®
-	//”r‘¼§ŒäƒŒƒxƒ‹‚ÌƒZƒbƒg
+	//å…¥åŠ›ãƒ‡ãƒ¼ã‚¿å½¢å¼ã®ã‚»ãƒƒãƒˆ
+	result = devgamepad->SetDataFormat(&c_dfDIJoystick);	//æ¨™æº–å½¢å¼
+	//æ’ä»–åˆ¶å¾¡ãƒ¬ãƒ™ãƒ«ã®ã‚»ãƒƒãƒˆ
 	result = devgamepad->SetCooperativeLevel(
 		win->GetHwnd(), DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 
 
-	//²ƒ‚[ƒh‚ğâ‘Î’lƒ‚[ƒh‚Æ‚µ‚Äİ’è
+	//è»¸ãƒ¢ãƒ¼ãƒ‰ã‚’çµ¶å¯¾å€¤ãƒ¢ãƒ¼ãƒ‰ã¨ã—ã¦è¨­å®š
 	DIPROPDWORD diprop;
 	ZeroMemory(&diprop, sizeof(diprop));
 	diprop.diph.dwSize = sizeof(diprop);
 	diprop.diph.dwHeaderSize = sizeof(diprop.diph);
 	diprop.diph.dwHow = DIPH_DEVICE;
 	diprop.diph.dwObj = 0;
-	diprop.dwData = DIPROPAXISMODE_ABS;	//â‘Î’lƒ‚[ƒh‚Ìw’è(DIPROPAXISMODE_REL‚É‚µ‚½‚ç‘Š‘Î’l)
-	//²ƒ‚[ƒh‚ğ•ÏX
+	diprop.dwData = DIPROPAXISMODE_ABS;	//çµ¶å¯¾å€¤ãƒ¢ãƒ¼ãƒ‰ã®æŒ‡å®š(DIPROPAXISMODE_RELã«ã—ãŸã‚‰ç›¸å¯¾å€¤)
+	//è»¸ãƒ¢ãƒ¼ãƒ‰ã‚’å¤‰æ›´
 	result = devgamepad->SetProperty(DIPROP_AXISMODE, &diprop.diph);
-	//X²‚Ì’l‚Ì”ÍˆÍİ’è
+	//Xè»¸ã®å€¤ã®ç¯„å›²è¨­å®š
 	DIPROPRANGE diprg;
 	ZeroMemory(&diprg, sizeof(diprg));
 	diprg.diph.dwSize = sizeof(diprg);
@@ -88,16 +88,16 @@ void Input::Initialize(WindowApp* win)
 	diprg.lMin = -1000;
 	diprg.lMax = 1000;
 	result = devgamepad->SetProperty(DIPROP_RANGE, &diprg.diph);
-	//Y²‚Ì’l‚Ì”ÍˆÍİ’è
+	//Yè»¸ã®å€¤ã®ç¯„å›²è¨­å®š
 	diprg.diph.dwObj = DIJOFS_Y;
 	result = devgamepad->SetProperty(DIPROP_RANGE, &diprg.diph);
-	//RX²‚Ì’l‚Ì”ÍˆÍİ’è
+	//RXè»¸ã®å€¤ã®ç¯„å›²è¨­å®š
 	diprg.diph.dwObj = DIJOFS_RX;
 	result = devgamepad->SetProperty(DIPROP_RANGE, &diprg.diph);
-	//RY²‚Ì’l‚Ì”ÍˆÍİ’è
+	//RYè»¸ã®å€¤ã®ç¯„å›²è¨­å®š
 	diprg.diph.dwObj = DIJOFS_RY;
 	result = devgamepad->SetProperty(DIPROP_RANGE, &diprg.diph);
-	//Z²‚Ì’l‚Ì”ÍˆÍİ’è
+	//Zè»¸ã®å€¤ã®ç¯„å›²è¨­å®š
 	diprg.diph.dwObj = DIJOFS_Z;
 	result = devgamepad->SetProperty(DIPROP_RANGE, &diprg.diph);
 }
@@ -106,102 +106,102 @@ void Input::Update()
 {
 	HRESULT result;
 
-	///-----------------ƒL[“ü—ÍXV-----------------///
+	///-----------------ã‚­ãƒ¼å…¥åŠ›æ›´æ–°-----------------///
 
-	//‘O‰ñ‚ÌƒL[“ü—Í‚ğ•Û‘¶
+	//å‰å›ã®ã‚­ãƒ¼å…¥åŠ›ã‚’ä¿å­˜
 	memcpy(keyPre, key, sizeof(key));
-	//ƒL[ƒ{[ƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	result = devkeyboard->Acquire();
-	//‘SƒL[‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//å…¨ã‚­ãƒ¼ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	result = devkeyboard->GetDeviceState(sizeof(key), key);
 
 
-	///----------------ƒ}ƒEƒX“ü—ÍXV----------------///
+	///----------------ãƒã‚¦ã‚¹å…¥åŠ›æ›´æ–°----------------///
 
-	//‘O‰ñ‚Ìƒ}ƒEƒX“ü—Í‚ğ•Û‘¶
+	//å‰å›ã®ãƒã‚¦ã‚¹å…¥åŠ›ã‚’ä¿å­˜
 	mousePre = mouse;
-	//ƒ}ƒEƒXî•ñ‚Ìæ“¾ŠJn
+	//ãƒã‚¦ã‚¹æƒ…å ±ã®å–å¾—é–‹å§‹
 	result = devmouse->Acquire();
-	//ƒ}ƒEƒX‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//ãƒã‚¦ã‚¹ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	result = devmouse->GetDeviceState(sizeof(mouse), &mouse);
-	//ƒ}ƒEƒXÀ•W‚ğæ“¾‚·‚é
+	//ãƒã‚¦ã‚¹åº§æ¨™ã‚’å–å¾—ã™ã‚‹
 	GetCursorPos(&mousePoint);
-	//ƒXƒNƒŠ[ƒ“À•W‚ğƒNƒ‰ƒCƒAƒ“ƒgÀ•W‚É•ÏŠ·‚·‚é
+	//ã‚¹ã‚¯ãƒªãƒ¼ãƒ³åº§æ¨™ã‚’ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆåº§æ¨™ã«å¤‰æ›ã™ã‚‹
 	ScreenToClient(win->GetHwnd(), &mousePoint);
 
 
-	///----------------ƒpƒbƒh“ü—ÍXV----------------///
+	///----------------ãƒ‘ãƒƒãƒ‰å…¥åŠ›æ›´æ–°----------------///
 
-	//ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Î‚±‚±‚ÅŠÖ”‚ğ”²‚¯‚é
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæ¥ç¶šã•ã‚Œã¦ã„ãªã‘ã‚Œã°ã“ã“ã§é–¢æ•°ã‚’æŠœã‘ã‚‹
 	if (devgamepad == nullptr) { return; }
 
-	//‘O‰ñ‚ÌƒQ[ƒ€ƒpƒbƒh“ü—Í‚ğ•Û‘¶
+	//å‰å›ã®ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰å…¥åŠ›ã‚’ä¿å­˜
 	padPre = pad;
-	//ƒQ[ƒ€ƒpƒbƒhî•ñ‚Ìæ“¾ŠJn
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰æƒ…å ±ã®å–å¾—é–‹å§‹
 	result = devgamepad->Acquire();
-	//ƒQ[ƒ€ƒpƒbƒh‚Ì“ü—Íó‘Ô‚ğæ“¾‚·‚é
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ã®å…¥åŠ›çŠ¶æ…‹ã‚’å–å¾—ã™ã‚‹
 	result = devgamepad->GetDeviceState(sizeof(pad), &pad);
 }
 
 bool Input::PushKey(const BYTE keyNumber)
 {
-	//w’è‚ÌƒL[‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ã‚­ãƒ¼ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (key[keyNumber]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerKey(const BYTE keyNumber)
 {
-	//w’è‚ÌƒL[‚ğ‰Ÿ‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (key[keyNumber] && !keyPre[keyNumber]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseKey(const BYTE keyNumber)
 {
-	//w’è‚ÌƒL[‚ğ—£‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ã‚­ãƒ¼ã‚’é›¢ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (!key[keyNumber] && keyPre[keyNumber]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::PushMouseButton(const int mouseButton)
 {
-	//w’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (mouse.rgbButtons[mouseButton]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerMouseButton(const int mouseButton)
 {
-	//w’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (mouse.rgbButtons[mouseButton] &&
 		!mousePre.rgbButtons[mouseButton]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseMouseButton(const int mouseButton)
 {
-	//w’è‚Ìƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (!mouse.rgbButtons[mouseButton] &&
 		mousePre.rgbButtons[mouseButton]) {
 		return true;
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
@@ -223,10 +223,10 @@ float Input::GetMouseWheelVelocity()
 
 bool Input::PushGamePadButton(const int gamePadButton)
 {
-	//ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæ¥ç¶šã•ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	if (devgamepad == nullptr) { return false; }
 
-	//\šƒL[‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	if (gamePadButton >= PAD_LEFT && gamePadButton <= PAD_DOWN) {
 		if (gamePadButton == PAD_LEFT) {
 			bool inputPadLeft = (pad.rgdwPOV[0] == 22500 || pad.rgdwPOV[0] == 27000 || pad.rgdwPOV[0] == 31500);
@@ -253,22 +253,22 @@ bool Input::PushGamePadButton(const int gamePadButton)
 			}
 		}
 	}
-	//\šƒL[ˆÈŠO‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä‚¢‚ê‚Îtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ä»¥å¤–ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ã„ã‚Œã°trueã‚’è¿”ã™
 	else {
 		if (pad.rgbButtons[gamePadButton]) {
 			return true;
 		}
 	}
-	//‚Ç‚¿‚ç‚Å‚à‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerGamePadButton(const int gamePadButton)
 {
-	//ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæ¥ç¶šã•ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	if (devgamepad == nullptr) { return false; }
 
-	//\šƒL[‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (gamePadButton >= PAD_LEFT && gamePadButton <= PAD_DOWN) {
 		if (gamePadButton == PAD_LEFT) {
 			bool inputPadLeft = (pad.rgdwPOV[0] == 22500 || pad.rgdwPOV[0] == 27000 || pad.rgdwPOV[0] == 31500);
@@ -299,23 +299,23 @@ bool Input::TriggerGamePadButton(const int gamePadButton)
 			}
 		}
 	}
-	//\šƒL[ˆÈŠO‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ä»¥å¤–ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	else {
 		if (pad.rgbButtons[gamePadButton] &&
 			!padPre.rgbButtons[gamePadButton]) {
 			return true;
 		}
 	}
-	//‚Ç‚¿‚ç‚Å‚à‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseGamePadButton(const int gamePadButton)
 {
-	//ƒQ[ƒ€ƒpƒbƒh‚ªÚ‘±‚³‚ê‚Ä‚¢‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã‚²ãƒ¼ãƒ ãƒ‘ãƒƒãƒ‰ãŒæ¥ç¶šã•ã‚Œã¦ã„ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	if (devgamepad == nullptr) { return false; }
 
-	//\šƒL[‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	if (gamePadButton >= PAD_LEFT && gamePadButton <= PAD_DOWN) {
 		if (gamePadButton == PAD_LEFT) {
 			bool inputPadLeft = (pad.rgdwPOV[0] == 22500 || pad.rgdwPOV[0] == 27000 || pad.rgdwPOV[0] == 31500);
@@ -346,288 +346,288 @@ bool Input::ReleaseGamePadButton(const int gamePadButton)
 			}
 		}
 	}
-	//\šƒL[ˆÈŠO‚Ìw’è‚Ìƒ{ƒ^ƒ“‚ğ—£‚µ‚½uŠÔ‚È‚çtrue‚ğ•Ô‚·
+	//åå­—ã‚­ãƒ¼ä»¥å¤–ã®æŒ‡å®šã®ãƒœã‚¿ãƒ³ã‚’é›¢ã—ãŸç¬é–“ãªã‚‰trueã‚’è¿”ã™
 	else {
 		if (!pad.rgbButtons[gamePadButton] &&
 			padPre.rgbButtons[gamePadButton]) {
 			return true;
 		}
 	}
-	//‚»‚¤‚Å‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ãã†ã§ãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TiltGamePadLStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lX >= incline) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lX <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TiltGamePadLStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lY >= incline) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lY <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TiltGamePadRStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lRx >= incline) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lRx <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TiltGamePadRStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lRy >= incline) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lRy <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::PushGamePadTrigger(const float incline)
 {
 
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lZ >= incline) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¯‚ê‚Îtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‘ã‚Œã°trueã‚’è¿”ã™
 		if (pad.lZ <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerGamePadLStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lX >= incline && !(padPre.lX >= incline)) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lX <= incline && !(padPre.lX <= incline)) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerGamePadLStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lY >= incline && !(padPre.lY >= incline)) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lY <= incline && !(padPre.lY <= incline)) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerGamePadRStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lRx >= incline && !(padPre.lRx >= incline)) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lRx <= incline && !(padPre.lRx <= incline)) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::TriggerGamePadRStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lRy >= incline && !(padPre.lRy >= incline)) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚¢uŠÔ‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã„ç¬é–“ãªã‚‰trueã‚’è¿”ã™
 		if (pad.lRy <= incline && !(padPre.lRy <= incline)) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseGamePadLStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lX >= incline) && padPre.lX >= incline) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lX <= incline) && padPre.lX <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseGamePadLStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lY >= incline) && padPre.lY >= incline) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lY <= incline) && padPre.lY <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseGamePadRStickX(const float incline)
 {
-	//‰E‚É“|‚µ‚½‚Ì”»’è
+	//å³ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lRx >= incline) && padPre.lRx >= incline) {
 			return true;
 		}
 	}
-	//¶‚É“|‚µ‚½‚Ì”»’è
+	//å·¦ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lRx <= incline) && padPre.lRx <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
 bool Input::ReleaseGamePadRStickY(const float incline)
 {
-	//‰º‚É“|‚µ‚½‚Ì”»’è
+	//ä¸‹ã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	if (incline > 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è‘å‚«‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå¤§ãã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lRy >= incline) && padPre.lRy >= incline) {
 			return true;
 		}
 	}
-	//ã‚É“|‚µ‚½‚Ì”»’è
+	//ä¸Šã«å€’ã—ãŸæ™‚ã®åˆ¤å®š
 	else if (incline < 0) {
-		//ƒXƒeƒBƒbƒN‚ÌŒXÎ‚ªw’è‚µ‚½”’l‚æ‚è¬‚³‚©‚Á‚½‚È‚çtrue‚ğ•Ô‚·
+		//ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã®å‚¾æ–œãŒæŒ‡å®šã—ãŸæ•°å€¤ã‚ˆã‚Šå°ã•ã‹ã£ãŸãªã‚‰trueã‚’è¿”ã™
 		if (!(pad.lRy <= incline) && padPre.lRy <= incline) {
 			return true;
 		}
 	}
 
-	//‚Ç‚¿‚ç‚Å‚àtrue‚ª‚È‚¯‚ê‚Îfalse‚ğ•Ô‚·
+	//ã©ã¡ã‚‰ã§ã‚‚trueãŒãªã‘ã‚Œã°falseã‚’è¿”ã™
 	return false;
 }
 
@@ -649,7 +649,7 @@ float Input::GetPadLStickAngle()
 
 	float radian = atan2f(v, h) * 360 / (3.141592f * 2);
 
-	//ƒ}ƒCƒiƒX‚¾‚Á‚½ê‡‚Ì’l‚ğC³
+	//ãƒã‚¤ãƒŠã‚¹ã ã£ãŸå ´åˆã®å€¤ã‚’ä¿®æ­£
 	if (radian < 0) {
 		radian += 360;
 	}
@@ -665,7 +665,7 @@ float Input::GetPadRStickAngle()
 
 	float radian = atan2f(v, h) * 360 / (3.141592f * 2);
 
-	//ƒ}ƒCƒiƒX‚¾‚Á‚½ê‡‚Ì’l‚ğC³
+	//ãƒã‚¤ãƒŠã‚¹ã ã£ãŸå ´åˆã®å€¤ã‚’ä¿®æ­£
 	if (radian < 0) {
 		radian += 360;
 	}

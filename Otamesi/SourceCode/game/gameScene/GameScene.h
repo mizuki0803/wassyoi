@@ -119,9 +119,4 @@ private: //メンバ変数
 
 	//ステージクリアフラグ
 	bool isStageClear = false;
-
-	// UI用
-	std::unique_ptr<ImageUIRenderer> imageUiRenderer;
-
-
 };

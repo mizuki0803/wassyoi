@@ -1,4 +1,4 @@
-#include "Block.h"
+ï»¿#include "Block.h"
 
 const float Block::blockSize = 5.0f;
 std::unique_ptr<BaseBlock> Block::instanceBlock;
@@ -11,10 +11,10 @@ void Block::StaticInitialize()
 
 Block* Block::Create(const int _blockType, const XMINT3& mapChipNum)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	Block* instance = new Block();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize(_blockType, mapChipNum)) {
 		delete instance;
 		assert(0);
@@ -36,12 +36,12 @@ void Block::FrameReset()
 
 bool Block::Initialize(const int _blockType, const XMINT3& mapChipNum)
 {
-	//ƒuƒƒbƒN‚Ìí—Ş‚ğuƒuƒƒbƒNv‚Éİ’è
+	//ãƒ–ãƒ­ãƒƒã‚¯ã®ç¨®é¡ã‚’ã€Œãƒ–ãƒ­ãƒƒã‚¯ã€ã«è¨­å®š
 	blockType = BROCK_TYPE(_blockType);
 
-	//À•W‚ğƒZƒbƒg
+	//åº§æ¨™ã‚’ã‚»ãƒƒãƒˆ
 	position = { mapChipNum.x * Block::GetBlockSize(), mapChipNum.y * Block::GetBlockSize(), mapChipNum.z * Block::GetBlockSize() };
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	scale = { blockSize, blockSize, blockSize };
 
 	return true;

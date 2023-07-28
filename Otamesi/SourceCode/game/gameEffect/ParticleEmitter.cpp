@@ -1,4 +1,4 @@
-#include "ParticleEmitter.h"
+ï»¿#include "ParticleEmitter.h"
 #include "Easing.h"
 #include "TextureManager.h"
 #include <functional>
@@ -13,10 +13,10 @@ ParticleEmitter* ParticleEmitter::GetInstance()
 
 void ParticleEmitter::Initialize()
 {
-	//ƒeƒNƒXƒ`ƒƒ‘S“Ç‚İ‚İ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£å…¨èª­ã¿è¾¼ã¿
 	LoadTexture();
 
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[¶¬
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼ç”Ÿæˆ
 	circleParticle.reset(ParticleManager::Create(textures[Circle]));
 	explosionParticle.reset(ParticleManager::Create(textures[Fluffy]));
 	blackSmokeParticle.reset(ParticleManager::Create(textures[Fluffy]));
@@ -26,7 +26,7 @@ void ParticleEmitter::Initialize()
 
 void ParticleEmitter::Update()
 {
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[XV
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼æ›´æ–°
 	circleParticle->Update();
 	explosionParticle->Update();
 	blackSmokeParticle->Update();
@@ -36,211 +36,211 @@ void ParticleEmitter::Update()
 
 void ParticleEmitter::DrawAll()
 {
-	//‰ÁZ‡¬•`‰æ‘Oˆ—
+	//åŠ ç®—åˆæˆæç”»å‰å‡¦ç†
 	ParticleManager::DrawPrevAddBlend();
 
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[•`‰æ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼æç”»
 	circleParticle->Draw();
 	explosionParticle->Draw();
 	shineParticle->Draw();
 	curveParticle->Draw();
 
-	//Œ¸Z‡¬•`‰æ‘Oˆ—
+	//æ¸›ç®—åˆæˆæç”»å‰å‡¦ç†
 	ParticleManager::DrawPrevSubBlend();
 
-	//ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ[•`‰æ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼æç”»
 	blackSmokeParticle->Draw();
 }
 
 void ParticleEmitter::DemoEffect()
 {
-	//F
-	const XMFLOAT4 purple = { 1.0f, 0.1f, 1.0f, 1.0f }; //‡
-	const XMFLOAT4 lightBlue = { 0.1f, 1.0f, 1.0f, 1.0f }; //…F
+	//è‰²
+	const XMFLOAT4 purple = { 1.0f, 0.1f, 1.0f, 1.0f }; //ç´«
+	const XMFLOAT4 lightBlue = { 0.1f, 1.0f, 1.0f, 1.0f }; //æ°´è‰²
 
 	for (int i = 0; i < 100; i++) {
 		int life = 0;
 		life = (rand() % 200) + 10;
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 10.0f;
 		Vector3 pos{};
 		pos.x = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
 		pos.y = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
 		pos.z = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
-		//X,Y,Z‘S‚Ä[-0.05f, +0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-0.05f, +0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdVel = 0.1f;
 		Vector3 vel{};
 		vel.x = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
 		vel.y = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
 		vel.z = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
-		//d—Í‚ÉŒ©—§‚Ä‚ÄY‚Ì‚İ[-0.001f, 0]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//é‡åŠ›ã«è¦‹ç«‹ã¦ã¦Yã®ã¿[-0.001f, 0]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		Vector3 acc{};
 		const float mdAcc = 0.001f;
 		acc.y = -(float)rand() / RAND_MAX * mdAcc;
 
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, pos, vel, acc, 1.0f, 0.0f, lerp, purple, lightBlue);
 	}
 }
 
 void ParticleEmitter::DemoEffect2()
 {
-	//F
-	const XMFLOAT4 red = { 1.0f, 0.1f, 0.1f, 1.0f }; //‡
-	const XMFLOAT4 green = { 0.1f, 1.0f, 0.1f, 1.0f }; //…F
+	//è‰²
+	const XMFLOAT4 red = { 1.0f, 0.1f, 0.1f, 1.0f }; //ç´«
+	const XMFLOAT4 green = { 0.1f, 1.0f, 0.1f, 1.0f }; //æ°´è‰²
 
 	for (int i = 0; i < 100; i++) {
 		int life = 0;
 		life = (rand() % 200) + 10;
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 10.0f;
 		Vector3 pos{};
 		pos.x = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
 		pos.y = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
 		pos.z = (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
-		//X,Y,Z‘S‚Ä[-0.05f, +0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-0.05f, +0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdVel = 0.1f;
 		Vector3 vel{};
 		vel.x = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
 		vel.y = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
 		vel.z = (float)rand() / RAND_MAX * mdVel - mdVel / 2.0f;
-		//d—Í‚ÉŒ©—§‚Ä‚ÄY‚Ì‚İ[-0.001f, 0]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//é‡åŠ›ã«è¦‹ç«‹ã¦ã¦Yã®ã¿[-0.001f, 0]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		Vector3 acc{};
 		const float mdAcc = 0.001f;
 		acc.y = -(float)rand() / RAND_MAX * mdAcc;
 
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		explosionParticle->Add(life, pos, vel, acc, 1.0f, 0.0f, lerp, red, green);
 	}
 }
 
 void ParticleEmitter::PlayerJet(std::function<Vector3()> getTargetPos, const XMMATRIX& playerMatWorld, const int playerSpeedPhase)
 {
-	//ƒp[ƒeƒBƒNƒ‹(¬)¶¬
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«(å°)ç”Ÿæˆ
 	{
-		//F
-		const XMFLOAT4 startColor = { 0.6f, 0.6f, 0.6f, 1.0f }; //”Z‚¢”’
-		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.4f, 1.0f }; //”–‚¢”’
+		//è‰²
+		const XMFLOAT4 startColor = { 0.6f, 0.6f, 0.6f, 1.0f }; //æ¿ƒã„ç™½
+		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.4f, 1.0f }; //è–„ã„ç™½
 		Vector3 pos{};
 		float startScale = 0;
 		float endScale = 0;
 		float randVel = 0;
 		float randAcc = 0;
 
-		//ˆÚ“®‘¬“xƒtƒF[ƒY‚²‚Æ‚É’²®
-		//’ÊíˆÚ“®ó‘Ô
+		//ç§»å‹•é€Ÿåº¦ãƒ•ã‚§ãƒ¼ã‚ºã”ã¨ã«èª¿æ•´
+		//é€šå¸¸ç§»å‹•çŠ¶æ…‹
 		if (playerSpeedPhase == 0) {
 			randVel = (float)rand() / RAND_MAX * -0.1f - 0.1f;
 			const float mdAcc = 0.005f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.1f + 0.5f;
 		}
-		//‰Á‘¬ˆÚ“®ó‘Ô
+		//åŠ é€Ÿç§»å‹•çŠ¶æ…‹
 		else if (playerSpeedPhase == 1) {
 			randVel = (float)rand() / RAND_MAX * -0.2f - 0.2f;
 			const float mdAcc = 0.01f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.1f + 1.0f;
 		}
-		//Œ¸‘¬ˆÚ“®ó‘Ô
+		//æ¸›é€Ÿç§»å‹•çŠ¶æ…‹
 		else if (playerSpeedPhase == 2) {
 			randVel = (float)rand() / RAND_MAX * -0.001f - 0.001f;
 			const float mdAcc = 0.001f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.05f + 0.25f;
 		}
-		//’ÊíˆÚ“®‚É–ß‚·ó‘Ô
+		//é€šå¸¸ç§»å‹•ã«æˆ»ã™çŠ¶æ…‹
 		else if (playerSpeedPhase == 3) {
 			randVel = (float)rand() / RAND_MAX * -0.002f - 0.002f;
 			const float mdAcc = 0.0025f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.05f + 0.3f;
 		}
-		//‘¬“x‚ğƒZƒbƒg
+		//é€Ÿåº¦ã‚’ã‚»ãƒƒãƒˆ
 		Vector3 vel = { 0, 0, randVel };
 		vel = MatrixTransformDirection(vel, playerMatWorld);
-		//‰Á‘¬“x‚ğƒZƒbƒg
+		//åŠ é€Ÿåº¦ã‚’ã‚»ãƒƒãƒˆ
 		Vector3 acc = { 0, 0, randAcc };
 		acc = MatrixTransformDirection(acc, playerMatWorld);
 
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->AddTargetFollow(5, getTargetPos, pos, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 
-	//ƒp[ƒeƒBƒNƒ‹(‘å)¶¬
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«(å¤§)ç”Ÿæˆ
 	{
-		//F
-		const XMFLOAT4 startColor = { 1.0f, 0.21f, 0.21f, 1.0f }; //”–‚¢Ô
-		const XMFLOAT4 endColor = { 0.3f, 0.01f, 0.01f, 1.0f }; //”Z‚¢Ô
+		//è‰²
+		const XMFLOAT4 startColor = { 1.0f, 0.21f, 0.21f, 1.0f }; //è–„ã„èµ¤
+		const XMFLOAT4 endColor = { 0.3f, 0.01f, 0.01f, 1.0f }; //æ¿ƒã„èµ¤
 		Vector3 pos{};
 		float startScale = 0;
 		float endScale = 0;
 		float randVel = 0;
 		float randAcc = 0;
 
-		//ˆÚ“®‘¬“xƒtƒF[ƒY‚²‚Æ‚É’²®
-		//’ÊíˆÚ“®ó‘Ô
+		//ç§»å‹•é€Ÿåº¦ãƒ•ã‚§ãƒ¼ã‚ºã”ã¨ã«èª¿æ•´
+		//é€šå¸¸ç§»å‹•çŠ¶æ…‹
 		if (playerSpeedPhase == 0) {
 			randVel = (float)rand() / RAND_MAX * -0.1f - 0.1f;
 			const float mdAcc = 0.008f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.2f + 2.0f;
 		}
-		//‰Á‘¬ˆÚ“®ó‘Ô
+		//åŠ é€Ÿç§»å‹•çŠ¶æ…‹
 		else if (playerSpeedPhase == 1) {
 			randVel = (float)rand() / RAND_MAX * -0.2f - 0.2f;
 			const float mdAcc = 0.0016f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.2f + 3.4f;
 		}
-		//Œ¸‘¬ˆÚ“®ó‘Ô
+		//æ¸›é€Ÿç§»å‹•çŠ¶æ…‹
 		else if (playerSpeedPhase == 2) {
 			randVel = (float)rand() / RAND_MAX * -0.04f - 0.04f;
 			const float mdAcc = 0.004f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.1f + 1.0f;
 		}
-		//’ÊíˆÚ“®‚É–ß‚·ó‘Ô
+		//é€šå¸¸ç§»å‹•ã«æˆ»ã™çŠ¶æ…‹
 		else if (playerSpeedPhase == 3) {
 			randVel = (float)rand() / RAND_MAX * -0.06f - 0.06f;
 			const float mdAcc = 0.005f;
 			randAcc = -(float)rand() / RAND_MAX * mdAcc;
 			startScale = (float)rand() / RAND_MAX * 0.15f + 1.2f;
 		}
-		//‘¬“x‚ğƒZƒbƒg
+		//é€Ÿåº¦ã‚’ã‚»ãƒƒãƒˆ
 		Vector3 vel = { 0, 0, randVel };
 		vel = MatrixTransformDirection(vel, playerMatWorld);
-		//‰Á‘¬“x‚ğƒZƒbƒg
+		//åŠ é€Ÿåº¦ã‚’ã‚»ãƒƒãƒˆ
 		Vector3 acc = { 0, 0, randAcc };
 		acc = MatrixTransformDirection(acc, playerMatWorld);
 
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->AddTargetFollow(5, getTargetPos, pos, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::PlayerBlackSmokeJet(const Vector3& position)
 {
-	//À•W‚ğŒ³‚É•‰ŒƒGƒtƒFƒNƒg‚ğì¬
+	//åº§æ¨™ã‚’å…ƒã«é»’ç…™ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã‚’ä½œæˆ
 	for (int i = 0; i < 2; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 30) + 180;
 
-		//X,Y,Zƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const Vector3 mdVel = { 0.01f, 0.05f, 0.01f };
 		Vector3 vel{};
 		vel.x = ((float)rand() / RAND_MAX * mdVel.x - mdVel.x / 2.0f);
@@ -250,181 +250,181 @@ void ParticleEmitter::PlayerBlackSmokeJet(const Vector3& position)
 		const float mdAcc = 0.001f;
 		acc.y = (float)rand() / RAND_MAX * mdAcc;
 
-		//‘å‚«‚³‚ğƒZƒbƒg
+		//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 		const float mdScale = 2.5f;
 		const float randScale = ((float)rand() / RAND_MAX * mdScale);
 		const float startScale = randScale;
 		const float endScale = randScale * 5.0f;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//F
-		const XMFLOAT4 startColor = { 0.15f, 0.15f, 0.15f, 1 }; //”–‚¢•
-		const XMFLOAT4 endColor = { 0.01f, 0.01f, 0.01f, 1 }; //‚¤‚Á‚·‚¢•
+		//è‰²
+		const XMFLOAT4 startColor = { 0.15f, 0.15f, 0.15f, 1 }; //è–„ã„é»’
+		const XMFLOAT4 endColor = { 0.01f, 0.01f, 0.01f, 1 }; //ã†ã£ã™ã„é»’
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		blackSmokeParticle->Add(life, position, vel, acc, startScale, endScale, lerpFloat, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::PlayerVapor(const Vector3& position, const float size, const Vector3& velocity)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	const int life = (rand() % 10) + 30;
-	//‰Á‘¬“x‚Í0
+	//åŠ é€Ÿåº¦ã¯0
 	const Vector3 acc{};
-	//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+	//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	std::function<float(const float, const float, const float) > lerp =
 		std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	//F
-	const XMFLOAT4 startColor = { 0.05f, 0.05f, 0.05f, 1.0f }; //”Z‚¢”’
-	const XMFLOAT4 endColor = { 0.002f, 0.002f, 0.002f, 1.0f }; //”–‚¢”’
+	//è‰²
+	const XMFLOAT4 startColor = { 0.05f, 0.05f, 0.05f, 1.0f }; //æ¿ƒã„ç™½
+	const XMFLOAT4 endColor = { 0.002f, 0.002f, 0.002f, 1.0f }; //è–„ã„ç™½
 
-	//’Ç‰Á
+	//è¿½åŠ 
 	circleParticle->Add(life, position, velocity, acc, size, size, lerp, startColor, endColor);
 }
 
 void ParticleEmitter::PlayerRolling(const int lifeTime, std::function<Vector3()> getTargetPos, const Vector3& localPos, const float rotation, const float size, const XMFLOAT4& color)
 {
-	//‰Á‘¬“x‚Í0
+	//åŠ é€Ÿåº¦ã¯0
 	const Vector3 vel{};
 	const Vector3 acc{};
-	//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+	//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	std::function<float(const float, const float, const float) > lerp =
 		std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	//F
-	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+	//è‰²
+	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-	//’Ç‰Á
+	//è¿½åŠ 
 	curveParticle->AddTargetFollow(lifeTime, getTargetPos, localPos, vel, acc, size, size, lerp, color, endColor, rotation);
 }
 
 void ParticleEmitter::Shot(const Vector3& position)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	const int life = 3;
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	const Vector3 vel{};
 	const Vector3 acc{};
-	//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+	//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 	std::function<float(const float, const float, const float) > lerp =
 		std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-	//F
-	const XMFLOAT4 green = { 0.1f, 0.3f, 0.1f, 1.0f }; //”–‚¢—Î
+	//è‰²
+	const XMFLOAT4 green = { 0.1f, 0.3f, 0.1f, 1.0f }; //è–„ã„ç·‘
 	for (int i = 0; i < 3; i++) {
-		//‘å‚«‚³
+		//å¤§ãã•
 		const float scale = 2.5f;
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, scale, scale, lerp, green, green);
 	}
 
-	//F
-	const XMFLOAT4 white = { 0.1f, 0.1f, 0.1f, 1.0f }; //”–‚¢”’
+	//è‰²
+	const XMFLOAT4 white = { 0.1f, 0.1f, 0.1f, 1.0f }; //è–„ã„ç™½
 	for (int i = 0; i < 3; i++) {
-		//‘å‚«‚³
+		//å¤§ãã•
 		const float scale = 1.25f;
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, scale, scale, lerp, white, white);
 	}
 }
 
 void ParticleEmitter::ShotDead(const Vector3& position, const float size)
 {
-	//F
-	const XMFLOAT4 startColor = { 0.2f, 0.3f, 0.4f, 1.0f }; //”–‚¢Â
-	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+	//è‰²
+	const XMFLOAT4 startColor = { 0.2f, 0.3f, 0.4f, 1.0f }; //è–„ã„é’
+	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 3; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		const int life = (rand() % 10) + 15;
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 0.5f;
 		Vector3 pos = position;
 		pos.x += (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
 		pos.z += (float)rand() / RAND_MAX * mdPos - mdPos / 2.0f;
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 2.0f;
 		const float startScale = (float)rand() / RAND_MAX * mdScale + (size * 2);
 		const float endScale = startScale;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > outQuad =
 			std::bind(&Easing::OutCubic, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, pos, vel, acc, startScale, endScale, outQuad, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::ChargeShot(const Vector3& position, const float size)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	const int life = 2;
-	//F
-	const XMFLOAT4 startColor = { 0.1f, 1.0f, 0.05f, 1.0f }; //”Z‚¢—Î
-	const XMFLOAT4 endColor = { 0.1f, 0.4f, 0.05f, 1.0f }; //”–‚¢—Î
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//è‰²
+	const XMFLOAT4 startColor = { 0.1f, 1.0f, 0.05f, 1.0f }; //æ¿ƒã„ç·‘
+	const XMFLOAT4 endColor = { 0.1f, 0.4f, 0.05f, 1.0f }; //è–„ã„ç·‘
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 10; i++) {
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 2.8f;
 		float startScale = (float)rand() / RAND_MAX * mdScale + (size * 2 / 7) - mdScale / 2;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2) - mdScale / 2;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::ChargeShotDead(const Vector3& position, const float size)
 {
-	//F
-	const XMFLOAT4 startColor = { 0.04f, 0.1f, 0.04f, 1.0f }; //”Z‚¢—Î
-	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+	//è‰²
+	const XMFLOAT4 startColor = { 0.04f, 0.1f, 0.04f, 1.0f }; //æ¿ƒã„ç·‘
+	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 20; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 20) + 30;
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 10.0f;
 		const float scale = size * 3 / 5;
 		float startScale = 0;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > outQuad =
 			std::bind(&Easing::OutCubic, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, outQuad, startColor, endColor);
 	}
 
 	for (int i = 0; i < 10; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 20) + 60;
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 10.0f;
 		float startScale = 0;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > outQuad =
 			std::bind(&Easing::OutCubic, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, outQuad, startColor, endColor);
 	}
 }
@@ -432,17 +432,17 @@ void ParticleEmitter::ChargeShotDead(const Vector3& position, const float size)
 void ParticleEmitter::FireBall(const Vector3& position, const float size, const int time)
 {
 	for (int i = 0; i < 5; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 30) + time;
 
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		Vector3 pos = position;
 		const float mdPos2 = 0.8f;
 		pos.x += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 		pos.y += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 		pos.z += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 
-		//X,Y,Z‘S‚Ä[-0.05f, +0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-0.05f, +0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdVel = 0.05f;
 		Vector3 vel{};
 		vel.x = ((float)rand() / RAND_MAX * mdVel - mdVel / 2.0f) * size;
@@ -450,111 +450,111 @@ void ParticleEmitter::FireBall(const Vector3& position, const float size, const 
 		vel.z = ((float)rand() / RAND_MAX * mdVel - mdVel / 2.0f) * size;
 		Vector3 acc{};
 
-		//‘å‚«‚³
+		//å¤§ãã•
 		float startScale = size;
 		float endScale = size * 2;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-		//F
+		//è‰²
 		const float mdGreen = 0.2f;
 		const float green = 0.2f + (float)rand() / RAND_MAX * mdGreen;
-		const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //”Z‚¢Ô
-		const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+		const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //æ¿ƒã„èµ¤
+		const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		explosionParticle->Add(life, pos, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::BossCharge(const Vector3& position, const float size)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	const int life = 2;
-	//F
-	const XMFLOAT4 startColor = { 1.0f, 0.1f, 0.1f, 1.0f }; //”Z‚¢Ô
-	const XMFLOAT4 endColor = { 0.4f, 0.01f, 0.01f, 1.0f }; //”–‚¢Ô
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//è‰²
+	const XMFLOAT4 startColor = { 1.0f, 0.1f, 0.1f, 1.0f }; //æ¿ƒã„èµ¤
+	const XMFLOAT4 endColor = { 0.4f, 0.01f, 0.01f, 1.0f }; //è–„ã„èµ¤
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 20; i++) {
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 1.5f;
 		float startScale = (float)rand() / RAND_MAX * mdScale + (size * 2 / 7) - mdScale / 2;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2) - mdScale / 2;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::BossChargeShot(const Vector3& position, const float size)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	const int life = 2;
-	//F
-	const XMFLOAT4 startColor = { 1.0f, 0.1f, 0.1f, 1.0f }; //”Z‚¢Ô
-	const XMFLOAT4 endColor = { 0.4f, 0.01f, 0.01f, 1.0f }; //”–‚¢Ô
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//è‰²
+	const XMFLOAT4 startColor = { 1.0f, 0.1f, 0.1f, 1.0f }; //æ¿ƒã„èµ¤
+	const XMFLOAT4 endColor = { 0.4f, 0.01f, 0.01f, 1.0f }; //è–„ã„èµ¤
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 20; i++) {
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 1.0f;
 		float startScale = (float)rand() / RAND_MAX * mdScale + (size * 2 / 4) - mdScale / 2;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2) - mdScale / 2;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerp =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, lerp, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::BossChargeShotDead(const Vector3& position, const float size)
 {
-	//F
-	const XMFLOAT4 startColor = { 0.1f, 0.04f, 0.04f, 1.0f }; //”Z‚¢Ô
-	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+	//è‰²
+	const XMFLOAT4 startColor = { 0.1f, 0.04f, 0.04f, 1.0f }; //æ¿ƒã„èµ¤
+	const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-	//‘¬“xA‰Á‘¬“x‚Í0
+	//é€Ÿåº¦ã€åŠ é€Ÿåº¦ã¯0
 	Vector3 vel{};
 	Vector3 acc{};
 
 	for (int i = 0; i < 20; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 10) + 15;
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 10.0f;
 		const float scale = size * 3 / 5;
 		float startScale = 0;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > outQuad =
 			std::bind(&Easing::OutCubic, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, outQuad, startColor, endColor);
 	}
 
 	for (int i = 0; i < 10; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 20) + 60;
-		//‘å‚«‚³‚ğƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//å¤§ãã•ã‚’ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdScale = 10.0f;
 		float startScale = 0;
 		float endScale = (float)rand() / RAND_MAX * mdScale + (size * 2);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > outQuad =
 			std::bind(&Easing::OutCubic, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		circleParticle->Add(life, position, vel, acc, startScale, endScale, outQuad, startColor, endColor);
 	}
 }
@@ -562,7 +562,7 @@ void ParticleEmitter::BossChargeShotDead(const Vector3& position, const float si
 void ParticleEmitter::Explosion(const Vector3& position, const float size, const int time)
 {
 	for (int j = 0; j < 5; j++) {
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 2.0f;
 		Vector3 pos = position;
 		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f) * size;
@@ -570,16 +570,16 @@ void ParticleEmitter::Explosion(const Vector3& position, const float size, const
 		pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f) * size;
 
 		for (int i = 0; i < 25; i++) {
-			//¶‘¶ŠÔ
+			//ç”Ÿå­˜æ™‚é–“
 			int life = (rand() % 30) + time;
 
-			//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+			//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 			const float mdPos2 = 0.8f;
 			pos.x += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 			pos.y += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 			pos.z += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 
-			//X,Y,Z‘S‚Ä[-0.05f, +0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+			//X,Y,Zå…¨ã¦[-0.05f, +0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 			const float mdVel = 0.05f;
 			Vector3 vel{};
 			vel.x = ((float)rand() / RAND_MAX * mdVel - mdVel / 2.0f) * size;
@@ -590,16 +590,16 @@ void ParticleEmitter::Explosion(const Vector3& position, const float size, const
 			const float mdScale = 3.0f;
 			float startScale = 0.3f * size;
 			float endScale = (4.0f + (float)rand() / RAND_MAX * mdScale - mdScale / 2.0f) * size;
-			//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+			//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 			std::function<float(const float, const float, const float) > outQuart =
 				std::bind(&Easing::OutQuart, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-			//F
+			//è‰²
 			const float mdGreen = 0.2f;
 			const float green = 0.2f + (float)rand() / RAND_MAX * mdGreen;
-			const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //”Z‚¢—Î
-			const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+			const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //æ¿ƒã„ç·‘
+			const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-			//’Ç‰Á
+			//è¿½åŠ 
 			explosionParticle->Add(life, pos, vel, acc, startScale, endScale, outQuart, startColor, endColor);
 		}
 	}
@@ -608,7 +608,7 @@ void ParticleEmitter::Explosion(const Vector3& position, const float size, const
 void ParticleEmitter::BossDeadExplosion(const Vector3& position, const float size, const bool isGround)
 {
 	for (int j = 0; j < 15; j++) {
-		//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 3.0f;
 		Vector3 pos = position;
 		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f) * size;
@@ -617,16 +617,16 @@ void ParticleEmitter::BossDeadExplosion(const Vector3& position, const float siz
 		pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f) * size;
 
 		for (int i = 0; i < 25; i++) {
-			//¶‘¶ŠÔ
+			//ç”Ÿå­˜æ™‚é–“
 			int life = (rand() % 30) + 75;
 
-			//X,Y,Z‘S‚Ä[-5.0f, +5.0f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+			//X,Y,Zå…¨ã¦[-5.0f, +5.0f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 			const float mdPos2 = 2.5f;
 			pos.x += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 			if(!isGround) { pos.y += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size; }
 			pos.z += ((float)rand() / RAND_MAX * mdPos2 - mdPos2 / 2.0f) * size;
 
-			//X,Y,Z‘S‚Ä[-0.25f, +0.25f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+			//X,Y,Zå…¨ã¦[-0.25f, +0.25f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 			const float mdVel = 0.75f;
 			Vector3 vel{};
 			vel.x = ((float)rand() / RAND_MAX * mdVel - mdVel / 2.0f) * size;
@@ -642,16 +642,16 @@ void ParticleEmitter::BossDeadExplosion(const Vector3& position, const float siz
 			const float mdScale = 5.0f;
 			float startScale = 3.0f * size;
 			float endScale = (20.0f + (float)rand() / RAND_MAX * mdScale - mdScale / 2.0f) * size;
-			//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+			//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 			std::function<float(const float, const float, const float) > outQuart =
 				std::bind(&Easing::OutQuart, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-			//F
+			//è‰²
 			const float mdGreen = 0.2f;
 			const float green = 0.2f + (float)rand() / RAND_MAX * mdGreen;
-			const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //”Z‚¢—Î
-			const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //–³F
+			const XMFLOAT4 startColor = { 0.9f, green, 0.1f, 1.0f }; //æ¿ƒã„ç·‘
+			const XMFLOAT4 endColor = { 0, 0, 0, 1.0f }; //ç„¡è‰²
 
-			//’Ç‰Á
+			//è¿½åŠ 
 			explosionParticle->Add(life, pos, vel, acc, startScale, endScale, outQuart, startColor, endColor);
 		}
 	}
@@ -660,17 +660,17 @@ void ParticleEmitter::BossDeadExplosion(const Vector3& position, const float siz
 void ParticleEmitter::BlackSmoke(const Vector3& position, const float size, const int time)
 {
 	for (int i = 0; i < 2; i++) {
-		//¶‘¶ŠÔ
+		//ç”Ÿå­˜æ™‚é–“
 		int life = (rand() % 30) + time;
 
-		//X,Y,Z‚²‚Æ‚É‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zã”ã¨ã«ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 0.1f;
 		Vector3 pos = position;
 		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 		pos.y += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f) + 1.0f;
 		pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 
-		//X,Y,Z‘S‚Ä[-0.25f, +0.25f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-0.25f, +0.25f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const Vector3 mdVel = { 0.01f, 0.05f, 0.01f };
 		Vector3 vel{};
 		vel.x = ((float)rand() / RAND_MAX * mdVel.x - mdVel.x / 2.0f);
@@ -684,107 +684,107 @@ void ParticleEmitter::BlackSmoke(const Vector3& position, const float size, cons
 		const float randScale = ((float)rand() / RAND_MAX * mdScale);
 		const float startScale = randScale * size;
 		const float endScale = randScale * size * 2.0f;
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//F
-		const XMFLOAT4 startColor = { 0.15f, 0.15f, 0.15f, 1 }; //”–‚¢•
-		const XMFLOAT4 endColor = { 0.01f, 0.01f, 0.01f, 1 }; //‚¤‚Á‚·‚¢•
+		//è‰²
+		const XMFLOAT4 startColor = { 0.15f, 0.15f, 0.15f, 1 }; //è–„ã„é»’
+		const XMFLOAT4 endColor = { 0.01f, 0.01f, 0.01f, 1 }; //ã†ã£ã™ã„é»’
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		blackSmokeParticle->Add(life, pos, vel, acc, startScale, endScale, lerpFloat, startColor, endColor);
 	}
 }
 
 void ParticleEmitter::ItemShine(const Vector3& position, const float size, const int num)
 {
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	for (int i = 0; i < num; i++) {
 		int life = 40;
 
-		//X,Y,Z‚É‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zã«ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 4.0f;
 		Vector3 pos = position;
 		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 		pos.y += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 		pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 
-		//ˆÚ“®‚µ‚È‚¢‚Ì‚Å‘¬“x‚Í•ÏX‚È‚µ
+		//ç§»å‹•ã—ãªã„ã®ã§é€Ÿåº¦ã¯å¤‰æ›´ãªã—
 		Vector3 vel{};
 		Vector3 acc{};
 		const float mdScale = 2.0f * size;
 		const float randScale = ((float)rand() / RAND_MAX * mdScale) + (1.0f * size);
 		const float scale = mdScale + (1.0f * size);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//F
-		const XMFLOAT4 startColor = { 0.8f, 0.8f, 0.6f, 1 }; //‰©F
-		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.3f, 1 }; //”–‚¢‰©F
+		//è‰²
+		const XMFLOAT4 startColor = { 0.8f, 0.8f, 0.6f, 1 }; //é»„è‰²
+		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.3f, 1 }; //è–„ã„é»„è‰²
 
-		//‰Šú‰ñ“]Šp
+		//åˆæœŸå›è»¢è§’
 		const float rot = ((float)rand() / RAND_MAX * 360);
 
-		//‰ñ“]‘¬“x
+		//å›è»¢é€Ÿåº¦
 		const float mdRotSpeed = 1.5f;
 		const float baseSpeed = 2.0f * ((float)num / 2);
 		const float rotSpeed = ((float)rand() / RAND_MAX * mdRotSpeed) + baseSpeed;
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		shineParticle->Add(life, pos, vel, acc, scale, scale, lerpFloat, startColor, endColor, rot, rotSpeed);
 	}
 }
 
 void ParticleEmitter::DemoShine(const Vector3& position, const float size, const int num)
 {
-	//F
-	const XMFLOAT4 purple = { 1.0f, 0.1f, 1.0f, 1.0f }; //‡
-	const XMFLOAT4 lightBlue = { 0.1f, 1.0f, 1.0f, 1.0f }; //…F
+	//è‰²
+	const XMFLOAT4 purple = { 1.0f, 0.1f, 1.0f, 1.0f }; //ç´«
+	const XMFLOAT4 lightBlue = { 0.1f, 1.0f, 1.0f, 1.0f }; //æ°´è‰²
 
-	//¶‘¶ŠÔ
+	//ç”Ÿå­˜æ™‚é–“
 	for (int i = 0; i < num; i++) {
 		int life = 60;
 
-		//X,Y,Z‚É‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zã«ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdPos = 100.0f;
 		Vector3 pos = position;
 		pos.x += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 		pos.y += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 		//pos.z += ((float)rand() / RAND_MAX * mdPos - mdPos / 2.0f);
 
-		//X,Y,Z‘S‚Ä[-0.05f, +0.05f]‚Åƒ‰ƒ“ƒ_ƒ€‚É•ª•z
+		//X,Y,Zå…¨ã¦[-0.05f, +0.05f]ã§ãƒ©ãƒ³ãƒ€ãƒ ã«åˆ†å¸ƒ
 		const float mdVel = 0.1f;
 		Vector3 vel{};
 		Vector3 acc{};
 		const float mdScale = 2.0f * size;
 		const float randScale = ((float)rand() / RAND_MAX * mdScale) + (1.0f * size);
 		const float scale = mdScale + (1.0f * size);
-		//‘å‚«‚³•ÏX‚ÌƒC[ƒWƒ“ƒO
+		//å¤§ãã•å¤‰æ›´ã®ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°
 		std::function<float(const float, const float, const float) > lerpFloat =
 			std::bind(&Easing::LerpFloat, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 
-		//F
-		const XMFLOAT4 startColor = { 0.8f, 0.8f, 0.6f, 1 }; //‰©F
-		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.3f, 1 }; //”–‚¢‰©F
+		//è‰²
+		const XMFLOAT4 startColor = { 0.8f, 0.8f, 0.6f, 1 }; //é»„è‰²
+		const XMFLOAT4 endColor = { 0.4f, 0.4f, 0.3f, 1 }; //è–„ã„é»„è‰²
 
-		//‰Šú‰ñ“]Šp
+		//åˆæœŸå›è»¢è§’
 		const float rot = ((float)rand() / RAND_MAX * 360);
 
-		//‰ñ“]‘¬“x
+		//å›è»¢é€Ÿåº¦
 		const float mdRotSpeed = 1.5f;
 		const float baseSpeed = 2.0f * ((float)num / 2);
 		const float rotSpeed = ((float)rand() / RAND_MAX * mdRotSpeed) + baseSpeed;
 
-		//’Ç‰Á
+		//è¿½åŠ 
 		shineParticle->Add(life, pos, vel, acc, 3.0f, 0.0f, lerpFloat, startColor, endColor, rot, rotSpeed);
 	}
 }
 
 void ParticleEmitter::AllDelete()
 {
-	//‘Sƒp[ƒeƒBƒNƒ‹‚Ìíœ
+	//å…¨ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®å‰Šé™¤
 	circleParticle->AllDelete();
 	explosionParticle->AllDelete();
 	blackSmokeParticle->AllDelete();
@@ -793,10 +793,10 @@ void ParticleEmitter::AllDelete()
 
 void ParticleEmitter::LoadTexture()
 {
-	//ƒp[ƒeƒBƒNƒ‹ƒeƒNƒXƒ`ƒƒ—pƒfƒBƒŒƒNƒgƒŠƒpƒX
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒ‡ã‚£ãƒ¬ã‚¯ãƒˆãƒªãƒ‘ã‚¹
 	const std::string directoryPath = "Resources/particleTexture/";
 
-	//ƒp[ƒeƒBƒNƒ‹—pƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	//ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ç”¨ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	TextureManager::LoadTexture(textures[Circle], directoryPath, "effect1.png");
 	TextureManager::LoadTexture(textures[Fluffy], directoryPath, "effect2.png");
 	TextureManager::LoadTexture(textures[Shine], directoryPath, "effect3.png");

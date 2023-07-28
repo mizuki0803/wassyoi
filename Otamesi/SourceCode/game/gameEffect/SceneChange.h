@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 #include <string>
@@ -8,7 +8,7 @@
 
 namespace
 {
-	//ƒtƒF[ƒhƒ^ƒCƒv
+	//ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—
 	enum class TYPE
 	{
 		FadeOut = -1,
@@ -16,7 +16,7 @@ namespace
 		FadeIn = 1,
 	};
 
-	//ƒtƒF[ƒhƒ^ƒCƒv
+	//ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—
 	enum class SIZEMAX
 	{
 		Width = 32,
@@ -25,29 +25,29 @@ namespace
 
 	class BlackBox
 	{
-	public: // ƒƒ“ƒoŠÖ”
+	public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 		/// <summary>
-		/// “®ì
+		/// å‹•ä½œ
 		/// </summary>
-		/// <param name="type">ƒtƒF[ƒhƒ^ƒCƒv</param>
+		/// <param name="type">ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¿ã‚¤ãƒ—</param>
 		void Spin(TYPE type);
 		/// <summary>
-		/// ƒIƒtƒZƒbƒgƒ^ƒCƒ}[‚Ìİ’è
+		/// ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚¿ã‚¤ãƒãƒ¼ã®è¨­å®š
 		/// </summary>
 		/// <param name="num"></param>
 		void AddOffsetTimer(int num) { offsetTimer_ += num; }
 
-	public: // ƒƒ“ƒoŠÖ”
+	public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 		/// <summary>
-		/// ƒIƒtƒZƒbƒgƒ^ƒCƒ}[‚Ìæ“¾
+		/// ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚¿ã‚¤ãƒãƒ¼ã®å–å¾—
 		/// </summary>
-		/// <returns>ƒIƒtƒZƒbƒgƒ^ƒCƒ}[</returns>
+		/// <returns>ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚¿ã‚¤ãƒãƒ¼</returns>
 		int GetOffsetTimer() { return offsetTimer_; }
 
-	public: // ƒƒ“ƒo•Ï”
+	public: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 		std::unique_ptr<Sprite> sprite_;
 		int offsetTimer_ = 0;
-		// ƒC[ƒWƒ“ƒO‚Ìis“x—p
+		// ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®é€²è¡Œåº¦ç”¨
 		float easeTimer_ = 0.0f;
 		bool inEnd_ = false;
 		bool outEnd_ = false;
@@ -56,15 +56,15 @@ namespace
 
 class SceneChange final
 {
-private: // ƒGƒCƒŠƒAƒX
-	// DirectX::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 	using XMVECTOR = DirectX::XMVECTOR;
 
-public: // ƒTƒuƒNƒ‰ƒX
+public: // ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 
 
 private:
@@ -75,38 +75,38 @@ public:
 	SceneChange(const SceneChange& fbxFactory) = delete;
 	SceneChange& operator=(const SceneChange& fbxFactory) = delete;
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX‚Ìæ“¾
+	/// ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒVƒ“ƒOƒ‹ƒgƒ“ƒCƒ“ƒXƒ^ƒ“ƒX</returns>
+	/// <returns>ã‚·ãƒ³ã‚°ãƒ«ãƒˆãƒ³ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹</returns>
 	static SceneChange* GetInstance();
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize();
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ å‡¦ç†
 	/// </summary>
 	void Update();
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
 	/// <summary>
-	/// ƒV[ƒ“ƒ`ƒFƒ“ƒWŠJn
+	/// ã‚·ãƒ¼ãƒ³ãƒã‚§ãƒ³ã‚¸é–‹å§‹
 	/// </summary>
-	/// <param name="sceneName">ƒV[ƒ“–¼</param>
+	/// <param name="sceneName">ã‚·ãƒ¼ãƒ³å</param>
 	void SceneChangeStart(const std::string& sceneName);
 
-public: // ƒƒ“ƒoŠÖ”
+public: // ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒV[ƒ“ƒCƒ“I—¹ƒtƒ‰ƒO‚Ìæ“¾
+	/// ã‚·ãƒ¼ãƒ³ã‚¤ãƒ³çµ‚äº†ãƒ•ãƒ©ã‚°ã®å–å¾—
 	/// </summary>
-	/// <returns>ƒV[ƒ“ƒCƒ“I—¹ƒtƒ‰ƒO</returns>
+	/// <returns>ã‚·ãƒ¼ãƒ³ã‚¤ãƒ³çµ‚äº†ãƒ•ãƒ©ã‚°</returns>
 	bool GetinEndFlag() { return inEndFlag_; }
 
-private: // ƒƒ“ƒo•Ï”
+private: // ãƒ¡ãƒ³ãƒå¤‰æ•°
 	bool inEndFlag_ = false;
 	bool outEndFlag_ = false;
 

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "ObjObject3d.h"
 #include "Texture.h"
 #include "PipelineSet.h"
@@ -6,38 +6,45 @@
 
 class ImageUIRenderer
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
 	struct VertexPosUv
 	{
-		XMFLOAT3 pos;	//xyzÀ•W
-		XMFLOAT2 uv;	//uvÀ•W
+		XMFLOAT3 pos;	//xyzåº§æ¨™
+		XMFLOAT2 uv;	//uvåº§æ¨™
+	};
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	enum class TexName
+	{
+		Move,
+		Camera,
+		Max
 	};
 
 
 	/// <summary>
-	/// ƒAƒEƒgƒ‰ƒCƒ“¶¬
+	/// ã‚¢ã‚¦ãƒˆãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	/// </summary>
-	/// <returns>ƒVƒƒƒhƒEƒ}ƒbƒv</returns>
+	/// <returns>ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—</returns>
 	static ImageUIRenderer *Create();
 
 
 	/// <summary>
-	/// ƒVƒƒƒhƒEƒ}ƒbƒv‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—å…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void Common(ID3D12Device *dev, ID3D12GraphicsCommandList *cmdList)
 	{
-		//nullptrƒ`ƒFƒbƒN
+		//nullptrãƒã‚§ãƒƒã‚¯
 		assert(dev);
 		assert(cmdList);
 
@@ -46,49 +53,46 @@ public: //ƒTƒuƒNƒ‰ƒX
 	};
 
 
-	// XV—p
+	// æ›´æ–°ç”¨
 	void Update(bool isMoveMenu, bool isCameraMenu);
 
 
 
-	// ƒJƒƒ‰à–¾—p‰æ‘œ‘‚«o‚µ
+	// ã‚«ãƒ¡ãƒ©èª¬æ˜ç”¨ç”»åƒæ›¸ãå‡ºã—
 	void DrawCameraDescription();
 
-	// ˆÚ“®à–¾—p‰æ‘œ‘‚«o‚µ
+	// ç§»å‹•èª¬æ˜ç”¨ç”»åƒæ›¸ãå‡ºã—
 	void DrawMoveDescription();
 
 
+	Texture &GetTex(TexName name)
+	{
+		return texture_[static_cast<int>(name)];
+	}
 private:
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	bool Initialize();
 
-	//ƒfƒoƒCƒX
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device *dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList *cmdList;
-	//ƒpƒCƒvƒ‰ƒCƒ“ƒZƒbƒg
+	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚»ãƒƒãƒˆ
 	static PipelineSet pipelineSet;
 
-	//’¸“_ƒoƒbƒtƒ@
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> vertBuff;
-	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
 	D3D12_VERTEX_BUFFER_VIEW vbView{};
-	//[“xƒoƒbƒtƒ@
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> depthBuff;
-	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapRTV_;
-	//[“xƒoƒbƒtƒ@—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV_;
 
 
-	// ƒeƒNƒXƒ`ƒƒ
-	enum class TexName
-	{
-		Move,
-		Camera,
-		Max
-	};
 	Texture texture_[static_cast<int>(TexName::Max)];
 
 
@@ -97,23 +101,44 @@ private:
 	enum class KeyObjectName
 	{
 		W,A,S,D,
+		Up,Left,Down,Right,
 		Max
 	};
-	// ƒL[ƒIƒuƒWƒFƒNƒg
+	// ã‚­ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	std::unique_ptr<ObjObject3d> key_[static_cast<int>(KeyObjectName::Max)];
-	// ƒvƒŒƒCƒ„[
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	std::unique_ptr<ObjObject3d> player_;
+	// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼åº§æ¨™
+	float player_pos_[6]
+	{
+		-2.5f,
+		-1.5f,
+		-0.5f,
+		0.5f,
+		1.5f,
+		2.5f
+	};
 
+	unsigned int moveFrameCounter_{ 0 };
+	unsigned int cameraFrameCounter_{ 0 };
+	// ç§»å‹•èª¬æ˜ç”¨ã‚«ãƒ¡ãƒ©
+	std::unique_ptr<Camera> player_camera_;
 
 	// 
 	enum class ArrowObjectName
 	{
-		Up, Left, Down, Right,
+		Left, Right,
+		SpinLeft, SpinRight,
 		Max
 	};
-	// ƒJƒƒ‰
+
+
+	// ã‚«ãƒ¡ãƒ©
 	std::unique_ptr<ObjObject3d> camera_;
-	// ƒAƒ[
+	// ã‚¢ãƒ­ãƒ¼
 	std::unique_ptr<ObjObject3d> arrow_[static_cast<int>(ArrowObjectName::Max)];
+	// ã‚«ãƒ¡ãƒ©èª¬æ˜ç”¨ã‚«ãƒ¡ãƒ©
+	std::unique_ptr<Camera> camera_camera_;
+
 };
 

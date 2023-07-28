@@ -1,4 +1,4 @@
-#include "Vector3.h"
+ï»¿#include "Vector3.h"
 #include <cmath>	//sqrt
 
 using namespace DirectX;
@@ -25,16 +25,16 @@ Vector3::Vector3(const float* array)
 
 const Vector3 Vector3::LocalTranslation(const Vector3& distance, const DirectX::XMMATRIX& m)
 {
-	//•½sˆÚ“®s—ñ‚ÌŒvZ
+	//å¹³è¡Œç§»å‹•è¡Œåˆ—ã®è¨ˆç®—
 	XMMATRIX matTrans = XMMatrixTranslation(distance.x, distance.y, distance.z);
-	//ƒ[ƒ‹ƒhs—ñ‚Ì‡¬
+	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã®åˆæˆ
 	XMMATRIX matWorld = {};
-	matWorld = XMMatrixIdentity();	//•ÏŒ`‚ğƒŠƒZƒbƒg
-	matWorld *= matTrans;	//ƒ[ƒ‹ƒhs—ñ‚É•½sˆÚ“®‚ğ”½‰f
-	//©‹@ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhs—ñ‚ğ‚©‚¯‚é
+	matWorld = XMMatrixIdentity();	//å¤‰å½¢ã‚’ãƒªã‚»ãƒƒãƒˆ
+	matWorld *= matTrans;	//ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã«å¹³è¡Œç§»å‹•ã‚’åæ˜ 
+	//è‡ªæ©Ÿã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰è¡Œåˆ—ã‚’ã‹ã‘ã‚‹
 	matWorld *= m;
 
-	//À•W‚ğæ“¾
+	//åº§æ¨™ã‚’å–å¾—
 	return { matWorld.r[3].m128_f32[0], matWorld.r[3].m128_f32[1], matWorld.r[3].m128_f32[2] };
 }
 
@@ -42,9 +42,9 @@ const Vector3 Vector3::VelocityRotate(const Vector3& vec, const bool isMinusYRot
 {
 	Vector3 rota = {};
 	rota.y = XMConvertToDegrees(std::atan2(vec.x, vec.z));
-	//Y²Šp“x‚ª•‰‚Ì”‚È‚Ì‚ğC³‚·‚éê‡
+	//Yè»¸è§’åº¦ãŒè² ã®æ•°ãªã®ã‚’ä¿®æ­£ã™ã‚‹å ´åˆ
 	if (isMinusYRotaFix) {
-		//•‰‚Ì”‚È‚ç‚ÎŠp“xC³
+		//è² ã®æ•°ãªã‚‰ã°è§’åº¦ä¿®æ­£
 		if (rota.y <= 0) {
 			rota.y += 360;
 		}

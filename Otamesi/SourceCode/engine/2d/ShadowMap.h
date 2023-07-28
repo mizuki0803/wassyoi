@@ -1,76 +1,76 @@
-#pragma once
+ï»¿#pragma once
 #include <DirectXMath.h>
 #include "Texture.h"
 
 /// <summary>
-/// ƒVƒƒƒhƒEƒ}ƒbƒv
+/// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—
 /// </summary>
 class ShadowMap
 {
-private: // ƒGƒCƒŠƒAƒX
-	// Microsoft::WRL::‚ğÈ—ª
+private: // ã‚¨ã‚¤ãƒªã‚¢ã‚¹
+	// Microsoft::WRL::ã‚’çœç•¥
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
 
-public: //ƒTƒuƒNƒ‰ƒX
-	//’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+public: //ã‚µãƒ–ã‚¯ãƒ©ã‚¹
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ç”¨ãƒ‡ãƒ¼ã‚¿æ§‹é€ ä½“
 	struct ConstBufferData
 	{
-		XMFLOAT4 color;	//F(RGBA)
-		XMMATRIX mat;	//3•ÏŠ·s—ñ
+		XMFLOAT4 color;	//è‰²(RGBA)
+		XMMATRIX mat;	//3å¤‰æ›è¡Œåˆ—
 	};
 
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ƒVƒƒƒhƒEƒ}ƒbƒv¶¬
+	/// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ç”Ÿæˆ
 	/// </summary>
-	/// <returns>ƒVƒƒƒhƒEƒ}ƒbƒv</returns>
+	/// <returns>ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—</returns>
 	static ShadowMap* Create();
 
 	/// <summary>
-	/// ƒVƒƒƒhƒEƒ}ƒbƒv‹¤’Ê•”•ª‚Ì‰Šú‰»
+	/// ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—å…±é€šéƒ¨åˆ†ã®åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="dev">ƒfƒoƒCƒX</param>
-	/// <param name="cmdList">ƒRƒ}ƒ“ƒhƒŠƒXƒg</param>
+	/// <param name="dev">ãƒ‡ãƒã‚¤ã‚¹</param>
+	/// <param name="cmdList">ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ</param>
 	static void ShadowMapCommon(ID3D12Device* dev, ID3D12GraphicsCommandList* cmdList);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	bool Initialize();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æ‘Oˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å‰å‡¦ç†
 	/// </summary>
 	void DrawScenePrev();
 
 	/// <summary>
-	/// ƒV[ƒ“•`‰æŒãˆ—
+	/// ã‚·ãƒ¼ãƒ³æç”»å¾Œå‡¦ç†
 	/// </summary>
 	void DrawSceneRear();
 
 	//getter
 	const Texture& GetTexture() { return depthTexture; }
 
-private: //Ã“Iƒƒ“ƒo•Ï”
-	//ƒfƒoƒCƒX
+private: //é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒ‡ãƒã‚¤ã‚¹
 	static ID3D12Device* dev;
-	//ƒRƒ}ƒ“ƒhƒŠƒXƒg
+	//ã‚³ãƒãƒ³ãƒ‰ãƒªã‚¹ãƒˆ
 	static ID3D12GraphicsCommandList* cmdList;
-	//ƒVƒƒƒhƒEƒ}ƒbƒvƒeƒNƒXƒ`ƒƒƒTƒCƒY(4K)
+	//ã‚·ãƒ£ãƒ‰ã‚¦ãƒãƒƒãƒ—ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(4K)
 	static const int shadowMapTexSize = 4096;
 
-private: //ƒƒ“ƒo•Ï”
-	//’è”ƒoƒbƒtƒ@
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//å®šæ•°ãƒãƒƒãƒ•ã‚¡
 	ComPtr<ID3D12Resource> constBuff;
-	//ƒeƒNƒXƒ`ƒƒ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
 	Texture depthTexture;
-	//DSV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	//DSVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—
 	ComPtr<ID3D12DescriptorHeap> descHeapDSV;
 };
 

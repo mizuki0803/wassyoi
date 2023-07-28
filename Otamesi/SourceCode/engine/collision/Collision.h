@@ -1,124 +1,124 @@
-#pragma once
+ï»¿#pragma once
 #include "CollisionShape.h"
 #include "Vector3.h"
 #include "Vector2.h"
 
 /// <summary>
-/// Õ“Ë”»’è
+/// è¡çªåˆ¤å®š
 /// </summary>
 class Collision
 {
 public:
 	/// <summary>
-	/// ‹…‚Æ‹…‚Ì“–‚½‚è”»’è
+	/// çƒã¨çƒã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="posA">Õ“Ë‘ÎÛA‚ÌÀ•W</param>
-	/// <param name="posB">Õ“Ë‘ÎÛB‚ÌÀ•W</param>
-	/// <param name="radiusA">Õ“Ë‘ÎÛA‚Ì”¼Œa</param>
-	/// <param name="radiusB">Õ“Ë‘ÎÛB‚Ì”¼Œa</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="posA">è¡çªå¯¾è±¡Aã®åº§æ¨™</param>
+	/// <param name="posB">è¡çªå¯¾è±¡Bã®åº§æ¨™</param>
+	/// <param name="radiusA">è¡çªå¯¾è±¡Aã®åŠå¾„</param>
+	/// <param name="radiusB">è¡çªå¯¾è±¡Bã®åŠå¾„</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSphereToSphere(const Vector3& posA, const Vector3& posB, const float radiusA, const float radiusB);
 
 	/// <summary>
-	/// ‰~‚Æ‰~‚Ì“–‚½‚è”»’è
+	/// å††ã¨å††ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="posA">Õ“Ë‘ÎÛA‚ÌÀ•W</param>
-	/// <param name="posB">Õ“Ë‘ÎÛB‚ÌÀ•W</param>
-	/// <param name="radiusA">Õ“Ë‘ÎÛA‚Ì”¼Œa</param>
-	/// <param name="radiusB">Õ“Ë‘ÎÛB‚Ì”¼Œa</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="posA">è¡çªå¯¾è±¡Aã®åº§æ¨™</param>
+	/// <param name="posB">è¡çªå¯¾è±¡Bã®åº§æ¨™</param>
+	/// <param name="radiusA">è¡çªå¯¾è±¡Aã®åŠå¾„</param>
+	/// <param name="radiusB">è¡çªå¯¾è±¡Bã®åŠå¾„</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckCircleToCircle(const Vector2& posA, const Vector2& posB, const float radiusA, const float radiusB);
 
 	/// <summary>
-	/// lŠp‚ÆlŠp‚Ì“–‚½‚è”»’è
+	/// å››è§’ã¨å››è§’ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="posA">Õ“Ë‘ÎÛA‚ÌÀ•W</param>
-	/// <param name="posB">Õ“Ë‘ÎÛB‚ÌÀ•W</param>
-	/// <param name="radiusA">Õ“Ë‘ÎÛA‚Ì‘å‚«‚³</param>
-	/// <param name="radiusB">Õ“Ë‘ÎÛB‚Ì‘å‚«‚³</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="posA">è¡çªå¯¾è±¡Aã®åº§æ¨™</param>
+	/// <param name="posB">è¡çªå¯¾è±¡Bã®åº§æ¨™</param>
+	/// <param name="radiusA">è¡çªå¯¾è±¡Aã®å¤§ãã•</param>
+	/// <param name="radiusB">è¡çªå¯¾è±¡Bã®å¤§ãã•</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSquareToSquare(const Vector2& posA, const Vector2& posB, const Vector2& sizeA, const Vector2& sizeB);
 
 
 	/// <summary>
-	/// ‹…‚Æ‹…‚Ì“–‚½‚è”»’è
+	/// çƒã¨çƒã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere1">‹…1</param>
-	/// <param name="sphere2">‹…2</param>
-	/// <param name="inter">Œğ“_(•½–Êã‚ÌÅ‹ßÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="sphere1">çƒ1</param>
+	/// <param name="sphere2">çƒ2</param>
+	/// <param name="inter">äº¤ç‚¹(å¹³é¢ä¸Šã®æœ€è¿‘æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSphere2Sphere(const Sphere& sphere1, const Sphere& sphere2,
 		DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// ‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	/// çƒã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="inter">Œğ“_(•½–Êã‚ÌÅ‹ßÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="inter">äº¤ç‚¹(å¹³é¢ä¸Šã®æœ€è¿‘æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSphere2Plane(const Sphere& sphere, const Plane& plane,
 		DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// “_‚ÆOŠpŒ`‚ÌÅ‹ßÚ“_‚ğ‹‚ß‚é
+	/// ç‚¹ã¨ä¸‰è§’å½¢ã®æœ€è¿‘æ¥ç‚¹ã‚’æ±‚ã‚ã‚‹
 	/// </summary>
-	/// <param name="point">“_</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="closest">Å‹ßÚ“_(o—Í—p)</param>
+	/// <param name="point">ç‚¹</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="closest">æœ€è¿‘æ¥ç‚¹(å‡ºåŠ›ç”¨)</param>
 	static void ClosestPtPoint2Triangle(const DirectX::XMVECTOR& point,
 		const Triangle& triangle, DirectX::XMVECTOR* closest);
 
 	/// <summary>
-	/// ‹…‚Æ–@ü•t‚«OŠpŒ`‚Ì“–‚½‚è”»’è
+	/// çƒã¨æ³•ç·šä»˜ãä¸‰è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="inter">Œğ“_(OŠpŒ`ã‚ÌÅ‹ßÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="inter">äº¤ç‚¹(ä¸‰è§’å½¢ä¸Šã®æœ€è¿‘æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSphere2Triangle(const Sphere& sphere, const Triangle& triangle,
 		DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// ‹…‚Æ–@ü•t‚«lŠpŒ`‚Ì“–‚½‚è”»’è
+	/// çƒã¨æ³•ç·šä»˜ãå››è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="sphere">‹…</param>
-	/// <param name="triangle">lŠpŒ`</param>
-	/// <param name="inter">Œğ“_(lŠpŒ`ã‚ÌÅ‹ßÚ“_)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="triangle">å››è§’å½¢</param>
+	/// <param name="inter">äº¤ç‚¹(å››è§’å½¢ä¸Šã®æœ€è¿‘æ¥ç‚¹)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckSphere2Square(const Sphere& sphere, const Square& square,
 		DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// ƒŒƒC‚Æ•½–Ê‚Ì“–‚½‚è”»’è
+	/// ãƒ¬ã‚¤ã¨å¹³é¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="plane">•½–Ê</param>
-	/// <param name="distance">‹——£(o—Í—p)</param>
-	/// <param name="inter">Œğ“_(o—Í—p)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="plane">å¹³é¢</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›ç”¨)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›ç”¨)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckRay2Plane(const Ray& ray, const Plane& plane,
 		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// ƒŒƒC‚Æ–@ü•t‚«OŠpŒ`‚Ì“–‚½‚è”»’è
+	/// ãƒ¬ã‚¤ã¨æ³•ç·šä»˜ãä¸‰è§’å½¢ã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="triangle">OŠpŒ`</param>
-	/// <param name="distance">‹——£(o—Í—p)</param>
-	/// <param name="inter">Œğ“_(o—Í—p)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="triangle">ä¸‰è§’å½¢</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›ç”¨)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›ç”¨)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckRay2Triangle(const Ray& ray, const Triangle& triangle,
 		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 
 	/// <summary>
-	/// ƒŒƒC‚Æ‹…‚Ì“–‚½‚è”»’è
+	/// ãƒ¬ã‚¤ã¨çƒã®å½“ãŸã‚Šåˆ¤å®š
 	/// </summary>
-	/// <param name="ray">ƒŒƒC</param>
-	/// <param name="sphere">‹…</param>
-	/// <param name="distance">‹——£(o—Í—p)</param>
-	/// <param name="inter">Œğ“_(o—Í—p)</param>
-	/// <returns>Œğ·‚µ‚Ä‚¢‚é‚©”Û‚©</returns>
+	/// <param name="ray">ãƒ¬ã‚¤</param>
+	/// <param name="sphere">çƒ</param>
+	/// <param name="distance">è·é›¢(å‡ºåŠ›ç”¨)</param>
+	/// <param name="inter">äº¤ç‚¹(å‡ºåŠ›ç”¨)</param>
+	/// <returns>äº¤å·®ã—ã¦ã„ã‚‹ã‹å¦ã‹</returns>
 	static bool CheckRay2Sphere(const Ray& ray, const Sphere& sphere,
 		float* distance = nullptr, DirectX::XMVECTOR* inter = nullptr);
 };

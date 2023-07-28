@@ -1,13 +1,13 @@
-#include "MapDataStageSelectManager.h"
+ï»¿#include "MapDataStageSelectManager.h"
 #include "Input.h"
 #include "StageManager.h"
 
 MapDataStageSelectManager* MapDataStageSelectManager::Create()
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ç”Ÿæˆ
 	MapDataStageSelectManager* instance = new MapDataStageSelectManager();
 
-	//‰Šú‰»ˆ—
+	//åˆæœŸåŒ–å‡¦ç†
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
@@ -19,12 +19,12 @@ MapDataStageSelectManager* MapDataStageSelectManager::Create()
 
 bool MapDataStageSelectManager::Initialize()
 {
-	//Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚Ìƒ}ƒbƒv‚ğ¶¬‚·‚é
+	//ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã®ãƒãƒƒãƒ—ã‚’ç”Ÿæˆã™ã‚‹
 	std::unique_ptr<MapDataStageSelect> newMapData;
 	newMapData.reset(MapDataStageSelect::Create(StageManager::GetSelectStage(), StageSelectBlockManager::BlockManagerPositionPhase::Center));
 	mapDatas.push_back(std::move(newMapData));
 
-	//ƒXƒe[ƒW”Ô†•\¦—pUI¶¬
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºç”¨UIç”Ÿæˆ
 	const Vector2 uiPos = { 450, 85 };
 	const float uiSize = 1;
 	stageNumberUI.reset(StageNumberUI::Create(uiPos, uiSize, StageManager::GetSelectStage()));
@@ -34,27 +34,27 @@ bool MapDataStageSelectManager::Initialize()
 
 void MapDataStageSelectManager::Update()
 {
-	//ƒ}ƒbƒv‚ÌƒuƒƒbƒNŠÇ—‚Ìíœƒtƒ‰ƒO‚ªtrue‚È‚çíœ‚·‚é
+	//ãƒãƒƒãƒ—ã®ãƒ–ãƒ­ãƒƒã‚¯ç®¡ç†ã®å‰Šé™¤ãƒ•ãƒ©ã‚°ãŒtrueãªã‚‰å‰Šé™¤ã™ã‚‹
 	mapDatas.remove_if([](std::unique_ptr<MapDataStageSelect>& mapData) {
 		return mapData->GetStageSelectBlockManager()->GetIsDelete();
 		});
 
 
-	//‘I‘ğ‚·‚éƒXƒe[ƒW‚ğ•ÏX‚·‚é
+	//é¸æŠã™ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å¤‰æ›´ã™ã‚‹
 	ChangeStage();
 
-	//ƒ}ƒbƒvXV
+	//ãƒãƒƒãƒ—æ›´æ–°
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		mapData->Update();
 	}
 
-	//ƒXƒe[ƒW”Ô†•\¦—pUIXV
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºç”¨UIæ›´æ–°
 	stageNumberUI->Update();
 }
 
 void MapDataStageSelectManager::Draw()
 {
-	//•`‰æ
+	//æç”»
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		mapData->Draw();
 	}
@@ -62,7 +62,7 @@ void MapDataStageSelectManager::Draw()
 
 void MapDataStageSelectManager::DrawUI()
 {
-	//ƒXƒe[ƒW”Ô†•\¦—pUI•`‰æ
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·è¡¨ç¤ºç”¨UIæç”»
 	stageNumberUI->Draw();
 }
 
@@ -77,42 +77,42 @@ void MapDataStageSelectManager::ChangeStage()
 {
 	if (menuFlag_) { return; }
 
-	//•ÏX‚·‚éƒL[“ü—Í‚ğ‚µ‚Ä‚¢‚È‚¯‚ê‚Î”²‚¯‚é
+	//å¤‰æ›´ã™ã‚‹ã‚­ãƒ¼å…¥åŠ›ã‚’ã—ã¦ã„ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!(Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_D) ||
 		Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT))) { return; }
 
-	//Šù‚ÉˆÚ“®’†‚Å‚ ‚ê‚Î”²‚¯‚é
+	//æ—¢ã«ç§»å‹•ä¸­ã§ã‚ã‚Œã°æŠœã‘ã‚‹
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		if (mapData->GetStageSelectBlockManager()->GetIsMove()) { return; }
 	}
 
-	//Ÿ‚É‘I‘ğ‚·‚éƒXƒe[ƒW‚Ìƒ}ƒbƒv‚ğ¶¬‚·‚é
+	//æ¬¡ã«é¸æŠã™ã‚‹ã‚¹ãƒ†ãƒ¼ã‚¸ã®ãƒãƒƒãƒ—ã‚’ç”Ÿæˆã™ã‚‹
 	std::unique_ptr<MapDataStageSelect> newMapData;
 
-	//‰EƒL[‚ğ‰Ÿ‚µ‚½ê‡‚ÍŸ‚ÌƒXƒe[ƒW‚ğ‘I‘ğ‚·‚é
+	//å³ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸå ´åˆã¯æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’é¸æŠã™ã‚‹
 	if (Input::GetInstance()->PushKey(DIK_D) || Input::GetInstance()->PushKey(DIK_RIGHT)) {
-		if (!StageManager::NextStageSelect()) { return; } //ƒXƒe[ƒW”Ô†‚ÉƒGƒ‰[‚ª¶‚¶‚½‚ç”²‚¯‚é
+		if (!StageManager::NextStageSelect()) { return; } //ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã«ã‚¨ãƒ©ãƒ¼ãŒç”Ÿã˜ãŸã‚‰æŠœã‘ã‚‹
 
-		//‰æ–ÊŠO(‰E)‚ÉŸ‚ÌƒXƒe[ƒW‚ğ¶¬‚·‚é
+		//ç”»é¢å¤–(å³)ã«æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ç”Ÿæˆã™ã‚‹
 		newMapData.reset(MapDataStageSelect::Create(StageManager::GetSelectStage(), StageSelectBlockManager::BlockManagerPositionPhase::OutscreenRight));
-		//Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğ¶‚ÉˆÚ“®‚³‚¹‚é
+		//ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å·¦ã«ç§»å‹•ã•ã›ã‚‹
 		for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 			mapData->GetStageSelectBlockManager()->MoveStart(StageSelectBlockManager::BlockManagerPositionPhase::OutscreenLeft);
 		}
 	}
-	//¶ƒL[‚ğ‰Ÿ‚µ‚½ê‡‚Í‘O‚ÌƒXƒe[ƒW‚ğ‘I‘ğ‚·‚é
+	//å·¦ã‚­ãƒ¼ã‚’æŠ¼ã—ãŸå ´åˆã¯å‰ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’é¸æŠã™ã‚‹
 	else if (Input::GetInstance()->PushKey(DIK_A) || Input::GetInstance()->PushKey(DIK_LEFT)) {
-		if (!StageManager::PrevStageSelect()) { return; } //ƒXƒe[ƒW”Ô†‚ÉƒGƒ‰[‚ª¶‚¶‚½‚ç”²‚¯‚é
+		if (!StageManager::PrevStageSelect()) { return; } //ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã«ã‚¨ãƒ©ãƒ¼ãŒç”Ÿã˜ãŸã‚‰æŠœã‘ã‚‹
 
-		//‰æ–ÊŠO(¶)‚ÉŸ‚ÌƒXƒe[ƒW‚ğ¶¬‚·‚é
+		//ç”»é¢å¤–(å·¦)ã«æ¬¡ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’ç”Ÿæˆã™ã‚‹
 		newMapData.reset(MapDataStageSelect::Create(StageManager::GetSelectStage(), StageSelectBlockManager::BlockManagerPositionPhase::OutscreenLeft));
-		//Œ»İ‘I‘ğ’†‚ÌƒXƒe[ƒW‚ğ‰E‚ÉˆÚ“®‚³‚¹‚é
+		//ç¾åœ¨é¸æŠä¸­ã®ã‚¹ãƒ†ãƒ¼ã‚¸ã‚’å³ã«ç§»å‹•ã•ã›ã‚‹
 		for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 			mapData->GetStageSelectBlockManager()->MoveStart(StageSelectBlockManager::BlockManagerPositionPhase::OutscreenRight);
 		}
 	}	
 	mapDatas.push_back(std::move(newMapData));
 
-	//ƒXƒe[ƒW”Ô†‚ÌXV
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ç•ªå·ã®æ›´æ–°
 	stageNumberUI->ChengeStageNum(StageManager::GetSelectStage());
 }

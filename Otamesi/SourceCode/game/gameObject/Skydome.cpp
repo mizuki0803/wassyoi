@@ -1,25 +1,25 @@
-#include "Skydome.h"
+ï»¿#include "Skydome.h"
 
 const float Skydome::size = 10.0f;
 const float Skydome::rotSpeed = 4.3f;
 
 Skydome* Skydome::Create(ObjModel* model)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	Skydome* instance = new Skydome();
 
-	//ƒ‚ƒfƒ‹‚ğƒZƒbƒg
+	//ãƒ¢ãƒ‡ãƒ«ã‚’ã‚»ãƒƒãƒˆ
 	assert(model);
 	instance->model = model;
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize()) {
 		delete instance;
 		assert(0);
 		return nullptr;
 	}
 
-	//‘å‚«‚³‚ğƒZƒbƒg
+	//å¤§ãã•ã‚’ã‚»ãƒƒãƒˆ
 	instance->scale = { size, size, size };
 
 	return instance;
@@ -27,10 +27,10 @@ Skydome* Skydome::Create(ObjModel* model)
 
 void Skydome::Update()
 {
-	//‰ñ“]
+	//å›è»¢
 	Rotate();
 
-	//ƒIƒuƒWƒFƒNƒgXV
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
 	ObjObject3d::Update();
 }
 
@@ -38,7 +38,7 @@ void Skydome::Rotate()
 {
 	rotation.y += -0.001f;
 
-	//‰ñ“]ó‘Ô‚Å‚È‚¯‚ê‚Î”²‚¯‚é
+	//å›è»¢çŠ¶æ…‹ã§ãªã‘ã‚Œã°æŠœã‘ã‚‹
 	if (!isRotate) { return; }
 
 	rotation.y += -rotSpeed;

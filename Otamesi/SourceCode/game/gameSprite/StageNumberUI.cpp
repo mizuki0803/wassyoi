@@ -1,12 +1,12 @@
-#include "StageNumberUI.h"
+ï»¿#include "StageNumberUI.h"
 #include "SpriteTextureLoader.h"
 
 StageNumberUI* StageNumberUI::Create(const Vector2& position, const float size, const int stageNum)
 {
-	//ƒCƒ“ƒXƒ^ƒ“ƒX‚ğ¶¬
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ç”Ÿæˆ
 	StageNumberUI* instance = new StageNumberUI();
 
-	// ‰Šú‰»
+	// åˆæœŸåŒ–
 	if (!instance->Initialize(position, size, stageNum)) {
 		delete instance;
 		assert(0);
@@ -18,17 +18,17 @@ StageNumberUI* StageNumberUI::Create(const Vector2& position, const float size, 
 
 bool StageNumberUI::Initialize(const Vector2& position, const float size, const int stageNum)
 {
-	//•\¦—pƒTƒCƒY‚ğƒZƒbƒg
+	//è¡¨ç¤ºç”¨ã‚µã‚¤ã‚ºã‚’ã‚»ãƒƒãƒˆ
 	const Vector2 texSize = { 80, 90 };
 	const Vector2 showsize = texSize * size;
 	
-	//Œ…”‚Ì•ªA”šƒXƒvƒ‰ƒCƒg¶¬
+	//æ¡æ•°ã®åˆ†ã€æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	for (int i = 0; i < digitNum; i++) {
 		const Vector2 pos = { position.x + texSize.x + ((digitNum - i) * showsize.x), position.y };
 		numbers[i].reset(NumberSprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Number), pos, showsize, texSize));
 	}
 
-	//‚»‚ê‚¼‚ê‚ÌŒ…”‚É‡‚Á‚½”š‚ğŠ„‚è“–‚Ä‚é
+	//ãã‚Œãã‚Œã®æ¡æ•°ã«åˆã£ãŸæ•°å­—ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 	ChengeStageNum(stageNum);
 
 	return true;
@@ -36,7 +36,7 @@ bool StageNumberUI::Initialize(const Vector2& position, const float size, const 
 
 void StageNumberUI::Update()
 {
-	//ƒXƒvƒ‰ƒCƒgXV
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæ›´æ–°
 	for (int i = 0; i < digitNum; i++) {
 		numbers[i]->Update();
 	}
@@ -44,7 +44,7 @@ void StageNumberUI::Update()
 
 void StageNumberUI::Draw()
 {
-	//ƒXƒvƒ‰ƒCƒg•`‰æ
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»
 	for (int i = 0; i < digitNum; i++) {
 		numbers[i]->Draw();
 	}
@@ -52,17 +52,17 @@ void StageNumberUI::Draw()
 
 void StageNumberUI::ChengeStageNum(const int stageNum)
 {
-	//‚»‚ê‚¼‚ê‚ÌŒ…”‚É‡‚Á‚½”š‚ğŠ„‚è“–‚Ä‚é
+	//ãã‚Œãã‚Œã®æ¡æ•°ã«åˆã£ãŸæ•°å­—ã‚’å‰²ã‚Šå½“ã¦ã‚‹
 	for (int i = 0; i < digitNum; i++) {
-		//Š„‚é”
+		//å‰²ã‚‹æ•°
 		int divisionNum = 1;
-		//Œ…”•ª10‚ğæZ‚·‚é(1,10,100,...)
+		//æ¡æ•°åˆ†10ã‚’ä¹—ç®—ã™ã‚‹(1,10,100,...)
 		for (int j = 0; j < i; j++) {
 			divisionNum *= 10;
 		}
-		//w’è‚µ‚½Œ…‚Ì”š‚ğo‚·
+		//æŒ‡å®šã—ãŸæ¡ã®æ•°å­—ã‚’å‡ºã™
 		int numberDigit = (stageNum / divisionNum) % 10;
-		//Zo‚µ‚½Œ…‚Ì”š‚ğ”šƒXƒvƒ‰ƒCƒg‚ÉŠ„‚è“–‚Ä‚é
+		//ç®—å‡ºã—ãŸæ¡ã®æ•°å­—ã‚’æ•°å­—ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã«å‰²ã‚Šå½“ã¦ã‚‹
 		numbers[i]->SetNumber(numberDigit);
 	}
 }

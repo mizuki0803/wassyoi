@@ -1,41 +1,41 @@
-#pragma once
+ï»¿#pragma once
 #include "Sprite.h"
 
 /// <summary>
-/// ‰¹—Ê•ÏX—pƒ|ƒCƒ“ƒ^[ƒXƒvƒ‰ƒCƒg
+/// éŸ³é‡å¤‰æ›´ç”¨ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
 /// </summary>
 class SoundVolumePointer : public Sprite
 {
-public: //Ã“Iƒƒ“ƒoŠÖ”
+public: //é™çš„ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ¶¬ˆ—
+	/// ç”Ÿæˆå‡¦ç†
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="barLeftPos">‰¹—Êƒo[¶’[À•W</param>
-	/// <param name="barLength">‰¹—Êƒo[‚Ì’·‚³</param>
-	/// <param name="startPercentage">¶¬‚Ì‰¹—Êƒp[ƒZƒ“ƒe[ƒW</param>
-	/// <returns>‰¹—Ê•ÏX—pƒ|ƒCƒ“ƒ^[ƒXƒvƒ‰ƒCƒg</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="barLeftPos">éŸ³é‡ãƒãƒ¼å·¦ç«¯åº§æ¨™</param>
+	/// <param name="barLength">éŸ³é‡ãƒãƒ¼ã®é•·ã•</param>
+	/// <param name="startPercentage">ç”Ÿæˆæ™‚ã®éŸ³é‡ãƒ‘ãƒ¼ã‚»ãƒ³ãƒ†ãƒ¼ã‚¸</param>
+	/// <returns>éŸ³é‡å¤‰æ›´ç”¨ãƒã‚¤ãƒ³ã‚¿ãƒ¼ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ</returns>
 	static SoundVolumePointer* Create(const Texture& texture, const Vector2 barLeftPos, float barLength, float startPercentage);
 
-public: //ƒƒ“ƒoŠÖ”
+public: //ãƒ¡ãƒ³ãƒé–¢æ•°
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
-	/// <param name="texture">ƒeƒNƒXƒ`ƒƒ</param>
-	/// <param name="barLeftPos">‰¹—Êƒo[¶’[À•W</param>
-	/// <param name="barLength">‰¹—Êƒo[‚Ì’·‚³</param>
-	/// <param name="startPercentage">¶¬‚Ì‰¹—Êƒp[ƒZƒ“ƒe[ƒW</param>
-	/// <returns>¬”Û</returns>
+	/// <param name="texture">ãƒ†ã‚¯ã‚¹ãƒãƒ£</param>
+	/// <param name="barLeftPos">éŸ³é‡ãƒãƒ¼å·¦ç«¯åº§æ¨™</param>
+	/// <param name="barLength">éŸ³é‡ãƒãƒ¼ã®é•·ã•</param>
+	/// <param name="startPercentage">ç”Ÿæˆæ™‚ã®éŸ³é‡ãƒ‘ãƒ¼ã‚»ãƒ³ãƒ†ãƒ¼ã‚¸</param>
+	/// <returns>æˆå¦</returns>
 	bool Initialize(const Texture& texture, const Vector2 barLeftPos, float barLength, float startPercentage);
 
 	/// <summary>
-	/// ‰¹—ÊŠ„‡•ÏX
+	/// éŸ³é‡å‰²åˆå¤‰æ›´
 	/// </summary>
 	void SetPercentage(float percentage);
 
-private: //ƒƒ“ƒo•Ï”
-	//ƒo[‚Ì¶’[À•W
+private: //ãƒ¡ãƒ³ãƒå¤‰æ•°
+	//ãƒãƒ¼ã®å·¦ç«¯åº§æ¨™
 	Vector2 barLeftPos;
-	//ƒo[‚Ì’·‚³
+	//ãƒãƒ¼ã®é•·ã•
 	float barLength;
 };

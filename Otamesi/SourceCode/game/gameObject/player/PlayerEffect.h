@@ -1,4 +1,4 @@
-#pragma once
+Ôªø#pragma once
 #include "ObjObject3d.h"
 
 class Player;
@@ -10,7 +10,7 @@ public:
 	static PlayerEffect *Create(ObjModel *model, float scale);
 
 	/// <summary>
-	/// çXêV
+	/// Êõ¥Êñ∞
 	/// </summary>
 	void Update(Player *player);
 
