@@ -45,6 +45,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, true); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, true); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_5, DrawerSprite::Left, 290, stickoutNum, true); //その他操作説明
 
 		//子供スプライト生成
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
@@ -57,10 +58,14 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//カメラ操作説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
 			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//カメラ操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayOthers].get(),
+			{}, drawerSprites[HowToPlayOthers]->GetAnchorpoint());	//その他ー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayOthers].get(),
+			{ -(drawerSprites[HowToPlayOthers]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayOthers]->GetSize().y / 2 }, { 0.5f, 0.5f }); //その他操作説明の画像
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
-		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f ), { 0.5f, 0.5f }, false, false));
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
 		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
@@ -77,7 +82,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
-		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2 , (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
 		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuStageSelect), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
@@ -101,6 +106,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 500, stickoutNum, false); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 500, stickoutNum, false); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_5, DrawerSprite::Left, 290, stickoutNum, false); //その他操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_1, DrawerSprite::Right, 50, stickoutNum, false); //ヒント1
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_2, DrawerSprite::Right, 247, stickoutNum, false); //ヒント2
 
@@ -115,6 +121,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			{}, drawerSprites[HowToPlayCamera]->GetAnchorpoint());	//カメラ操作説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayCamera].get(),
 			drawerSprites[HowToPlayCamera]->GetSize() / 2 + Vector2({ drawerHandleSize / 2, 0 }), { 0.5f, 0.5f });	//カメラ操作説明の画像
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer), drawerSprites[HowToPlayOthers].get(),
+			{}, drawerSprites[HowToPlayOthers]->GetAnchorpoint());	//その他ー操作説明の文字
+		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), drawerSprites[HowToPlayOthers].get(),
+			{ -(drawerSprites[HowToPlayOthers]->GetSize().x / 2 + drawerHandleSize / 2), drawerSprites[HowToPlayOthers]->GetSize().y / 2 }, { 0.5f, 0.5f }); //その他操作説明の画像
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint1Text), drawerSprites[Hint1].get(),
 			{}, drawerSprites[Hint1]->GetAnchorpoint());	//ヒント1説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Hint2Text), drawerSprites[Hint2].get(),

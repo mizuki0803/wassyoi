@@ -5,7 +5,7 @@
         "value1": 60.0,
         "value2": 60.0
     },
-    "installationSurface": 0,
+    "installationSurface": 2,
     "mapSize": {
         "value0": 5,
         "value1": 5,

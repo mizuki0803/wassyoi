@@ -19,6 +19,7 @@ public: //enum
 		HowToPlayMenu,		//メニュー
 		HowToPlayPlayer,	//プレイヤー操作
 		HowToPlayCamera,	//カメラ操作
+		HowToPlayOthers,	//その他操作
 		Hint1,				//ヒント1
 		Hint2,				//ヒント2
 
