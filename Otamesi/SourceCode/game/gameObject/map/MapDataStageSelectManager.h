@@ -41,7 +41,11 @@ public: //メンバ関数
 	/// frameごとの初期化
 	/// </summary>
 	void FrameReset();
+	
+	//getter
+	bool GetIsChangeStage() { return isChangeStage; }
 
+	//setter
 	void SetNotMove(bool flag1) { menuFlag_ = flag1; }
 
 private: //メンバ関数
@@ -53,10 +57,11 @@ private: //メンバ関数
 private: //メンバ変数
 	//1ステージ分のマップデータ群
 	std::list<std::unique_ptr<MapDataStageSelect>> mapDatas;
-
 	//ステージ番号表示用UI
 	std::unique_ptr<StageNumberUI> stageNumberUI;
 
+	//ステージ変更をしたか
+	bool isChangeStage = false;
 	// メニューを開いているか
 	bool menuFlag_ = false;
 };

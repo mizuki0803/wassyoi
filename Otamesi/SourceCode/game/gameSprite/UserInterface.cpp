@@ -71,6 +71,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		//子供スプライト生成
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), drawerSprites[HowToPlayMenu].get(),
 			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
+
+		//矢印スプライト生成
+		stageSelectArrowSprite.reset(StageSelectArrow::Create());
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -156,6 +159,11 @@ void UserInterface::Update()
 		drawerSprite->Update();
 	}
 
+	//ステージ選択シーン用矢印スプライト更新
+	if (stageSelectArrowSprite) {
+		stageSelectArrowSprite->Update();
+	}
+
 	//メニュースプライト更新
 	MenuUpdate();
 	menuBackScreen_->Update();
@@ -195,6 +203,11 @@ void UserInterface::Draw()
 	//次元変更可能確認スプライト描画
 	if (isChangeDimenisonSprite) {
 		isChangeDimenisonSprite->Draw();
+	}
+
+	//ステージ選択シーン用矢印スプライト更新
+	if (stageSelectArrowSprite) {
+		stageSelectArrowSprite->Draw();
 	}
 
 	//説明用引き出しスプライト描画

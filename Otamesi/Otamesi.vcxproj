@@ -179,6 +179,7 @@
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\StageSelectArrow.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
   </ItemGroup>
@@ -453,6 +454,7 @@
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h" />
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\StageSelectArrow.h" />
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

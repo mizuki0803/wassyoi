@@ -30,8 +30,8 @@ bool Bird::Initialize(ObjModel* bodyModel, ObjModel* wingModel, const Vector3& p
 	body.reset(BirdBody::Create(bodyModel, position, velocity));
 
 	//両翼生成
-	wings[0].reset(BirdWing::Create(wingModel, body.get(), BirdWing::WingType::LeftWing, {}));
-	wings[1].reset(BirdWing::Create(wingModel, body.get(), BirdWing::WingType::RightWing, {}));
+	wings[0].reset(BirdWing::Create(wingModel, body.get(), BirdWing::WingType::LeftWing, { 5, 0, 0 }));
+	wings[1].reset(BirdWing::Create(wingModel, body.get(), BirdWing::WingType::RightWing, { -5, 0, 0 }));
 
 	return true;
 }
@@ -108,7 +108,7 @@ void Bird::FadeoutAction()
 
 	//胴体と翼の大きさを小さくする
 	const float size = Easing::OutQuad(1, 0, time);
-	body->SetScale({size, size, size});
+	body->SetScale({ size, size, size });
 
 	//タイマーが指定した時間以下なら抜ける
 	if (actionTimer < fadeoutTime) { return; }

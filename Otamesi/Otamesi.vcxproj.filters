@@ -415,6 +415,9 @@
     <ClCompile Include="SourceCode\game\gameObject\bird\BirdManager.cpp">
       <Filter>ソース ファイル\game\gameObject\bird</Filter>
     </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\StageSelectArrow.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\FBX.hlsli">
@@ -815,6 +818,9 @@
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameObject\bird\BirdManager.h">
       <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\StageSelectArrow.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
     <!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
   </ItemGroup>

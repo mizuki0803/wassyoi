@@ -3,6 +3,7 @@
 #include "DrawerSprite.h"
 #include "SoundVolumePointer.h"
 #include "HintSprite.h"
+#include "StageSelectArrow.h"
 #include <array>
 #include <vector>
 #include <functional>
@@ -129,6 +130,7 @@ public: //メンバ関数
 	bool GetMenuFlag() { return menuFlag_; }
 	const int GetSelectionNumber() { return selectionNumber_; }
 	bool GetIsHintViewMode();
+	StageSelectArrow* GetStageSelectArrow() { return stageSelectArrowSprite.get(); }
 
 private: //メンバ関数
 	/// <summary>
@@ -211,6 +213,8 @@ private: //メンバ変数
 	std::vector<std::function<void()>> menuFunc_;
 	// 関数の番号
 	size_t menuPhase_ = static_cast<int>(MenuPhase::Start);
+	// ステージ選択シーン用矢印スプライト
+	std::unique_ptr<StageSelectArrow> stageSelectArrowSprite;
 	// プレイシーンの保存用
 	GamePhase gamePhase_;
 };

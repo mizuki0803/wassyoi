@@ -52,6 +52,9 @@ public: //静的メンバ関数
 	/// <returns></returns>
 	static bool AllStageClearTriggerCheck();
 
+	//getter
+	static int GetStageNum() { return stageNum - 1; }
+
 private: //静的メンバ変数(定数)
 	static const int stageNum = 19;
 

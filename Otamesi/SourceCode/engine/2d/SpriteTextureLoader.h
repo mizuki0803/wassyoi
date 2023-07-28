@@ -35,6 +35,7 @@ public: //テクスチャ名
 		ClearBack,		//ステージクリアの背景
 		PressSpace,		//PRESS SPACE
 		ParanomaSky,	// スカイドーム用
+		StageSelectArrow,//ステージ選択用矢印
 
 		SpriteTextureNum,	//スプライトテクスチャの枚数
 	};

@@ -40,4 +40,6 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[PressSpace], directoryPath, "pressSpace.png");
 
 	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");
+
+	TextureManager::LoadTexture(textures[StageSelectArrow], directoryPath, "select_arrow.png");
 }

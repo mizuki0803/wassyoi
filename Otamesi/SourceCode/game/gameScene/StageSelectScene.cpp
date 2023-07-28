@@ -93,6 +93,10 @@ void StageSelectScene::Update()
 	//オブジェクト更新
 	//マップ用ブロック
 	mapDataManager->Update();
+	//ステージを変更したときのみ、矢印スプライトを描画するか判定する
+	if (mapDataManager->GetIsChangeStage()) {
+		userInterface_->GetStageSelectArrow()->SelectStageCheckDraw();
+	}
 	//天球
 	skydome->Update();
 

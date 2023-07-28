@@ -26,8 +26,8 @@ void TitleScene::Initialize()
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
-	modelBirdBody.reset(ObjModel::LoadFromOBJ("bird_a"));
-	modelBirdWing.reset(ObjModel::LoadFromOBJ("bird_wing"));
+	modelBirdBody.reset(ObjModel::LoadFromOBJ("bird_a",true));
+	modelBirdWing.reset(ObjModel::LoadFromOBJ("bird_wing",true));
 
 	//選択中のステージ番号を0にセット
 	StageManager::SetSelectStage(0);
