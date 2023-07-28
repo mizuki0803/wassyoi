@@ -18,6 +18,7 @@ public: //テクスチャ名
 		MenuTitle,		//メニューのタイトル
 		MenuVolume,		//メニューの音量
 		MenuStageSelect,//メニューのステージセレクト
+		MenuExit,		//メニューでの終了
 		SoundVolumeBar,	//音量変更用バー
 		SoundVolumePointer,	//音量変更用ポインター
 		Husen,	//ノーマル付箋
