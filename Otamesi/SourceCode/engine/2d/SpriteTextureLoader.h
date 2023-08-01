@@ -17,6 +17,8 @@ public: //テクスチャ名
 		MenuFrame,		//メニューの枠組み
 		SoundVolumeBar,	//音量変更用バー
 		SoundVolumePointer,	//音量変更用ポインター
+		MenuIconDef,	// メニューアイコン
+		MenuIconArrow,	// メニューアイコン
 		Husen,	//ノーマル付箋
 		HusenL,	//左向き付箋
 		HusenR,	//右向き付箋

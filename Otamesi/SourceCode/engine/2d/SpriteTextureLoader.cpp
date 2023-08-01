@@ -22,6 +22,8 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
 	//操作方法関係
 	TextureManager::LoadTexture(textures[Husen], directoryPath, "husen.png");
+	TextureManager::LoadTexture(textures[MenuIconDef], directoryPath, "MenuIcon1.png");
+	TextureManager::LoadTexture(textures[MenuIconArrow], directoryPath, "MenuIcon2.png");
 	TextureManager::LoadTexture(textures[HusenL], directoryPath, "husen_L.png");
 	TextureManager::LoadTexture(textures[HusenR], directoryPath, "husen_R.png");
 	TextureManager::LoadTexture(textures[HusenH], directoryPath, "husen_hint.png");
@@ -31,7 +33,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[Hint1Text], directoryPath, "hint1Text.png");
 	TextureManager::LoadTexture(textures[Hint2Text], directoryPath, "hint2Text.png");
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
-	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "stageSelect.png");
+	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "menuText.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");
 	TextureManager::LoadTexture(textures[ClearBack], directoryPath, "Clear_Back.png");

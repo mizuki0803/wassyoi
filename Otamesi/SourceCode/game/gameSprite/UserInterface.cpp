@@ -13,7 +13,7 @@ std::unique_ptr<UserInterface> UserInterface::Create(GamePhase gamePhase)
 	UserInterface* temp = new UserInterface;
 	temp->Initialize(gamePhase);
 
-	// a
+	
 
 	return std::unique_ptr<UserInterface>(temp);
 }
@@ -32,11 +32,13 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	const float	stickoutNum = 50.0f; //引き出しスプライトが画面内にはみ出す量
 	const float drawerHandleSize = 45.0f;	//引き出しスプライトの取っ手のサイズ
 
-	imageUiRendere_.reset(ImageUIRenderer::Create());
 
 	//メニュー用スプライト生成
 	if (GamePhase::Title == gamePhase)
 	{
+		// UI用レンダラー
+		imageUiRendere_.reset(ImageUIRenderer::Create());
+
 		for (int i = 0; i < 2; i++)
 		{
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
@@ -57,7 +59,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		isChangeDimenison = false;
 
 		//説明用引き出しスプライト生成
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 20, stickoutNum, true); //メニュー画面移行 esc
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 460, stickoutNum, true); //プレイヤー操作説明
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 460, stickoutNum, true); //カメラ操作説明
 
@@ -66,7 +68,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateChildSprite(
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu), 
 			drawerSprites[HowToPlayMenu].get(),
-			{}, 
+			{-85,10}, 
 			drawerSprites[HowToPlayMenu]->GetAnchorpoint());
 
 		// プレイヤー操作説明の文字
@@ -96,6 +98,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	}
 	else if (GamePhase::Selection == gamePhase)
 	{
+
 		for (int i = 0; i < 2; i++)
 		{
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
@@ -113,6 +116,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
+		// UI用レンダラー
+		imageUiRendere_.reset(ImageUIRenderer::Create());
+
 		for (int i = 0; i < 3; i++)
 		{
 			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));

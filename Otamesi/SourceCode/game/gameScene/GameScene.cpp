@@ -274,15 +274,14 @@ void GameScene::Draw3D()
 
 	///-------Instance描画ここから-------///
 
-	//�}�b�v�p�u���b�N
-	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	//マップ用ブロック
+	InstanceObject::DrawPrev(InstanceObject::PipelineType::OutLine);
 	mapData->Draw();
 
 
 
-	InstanceObject::DrawPrev();
 	//背景オブジェクト
+	InstanceObject::DrawPrev();
 	backGround->Draw();
 
 

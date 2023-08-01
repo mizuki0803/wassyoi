@@ -107,7 +107,7 @@ private:
 	// キーオブジェクト
 	std::unique_ptr<ObjObject3d> key_[static_cast<int>(KeyObjectName::Max)];
 	// プレイヤー
-	std::unique_ptr<ObjObject3d> player_;
+	std::unique_ptr<ObjObject3d> move_player_;
 	// プレイヤー座標
 	float player_pos_[6]
 	{

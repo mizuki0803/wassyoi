@@ -195,7 +195,6 @@ bool ImageUIRenderer::Initialize()
 	dev->CreateDepthStencilView(depthBuff.Get(),
 		&dsvDesc,
 		descHeapDSV_->GetCPUDescriptorHandleForHeapStart());
-
 	
 
 	// モデルの読み込み
@@ -219,11 +218,11 @@ bool ImageUIRenderer::Initialize()
 	);
 	key_[static_cast<int>(KeyObjectName::D)]->SetPosition({ 2,0,-4 });
 
-	player_.reset(
+	move_player_.reset(
 		ObjObject3d::Create(ObjModel::LoadFromOBJ("Player", true))
 	);
-	player_->SetPosition({ 0,0,4 });
-	player_->SetScale({ 2,2,2 });
+	move_player_->SetPosition({ 0,0,4 });
+	move_player_->SetScale({ 2,2,2 });
 
 	arrow_[static_cast<int>(ArrowObjectName::Left)].reset(
 		ObjObject3d::Create(ObjModel::LoadFromOBJ("Arrow", true))
@@ -271,10 +270,10 @@ bool ImageUIRenderer::Initialize()
 
 void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 {
-	static auto aKey = key_[static_cast<int>(KeyObjectName::A)].get();
-	static auto dKey = key_[static_cast<int>(KeyObjectName::D)].get();
-	static auto leftKey = key_[static_cast<int>(KeyObjectName::Left)].get();
-	static auto rightKey = key_[static_cast<int>(KeyObjectName::Right)].get();
+	auto aKey = key_[static_cast<int>(KeyObjectName::A)].get();
+	auto dKey = key_[static_cast<int>(KeyObjectName::D)].get();
+	auto leftKey = key_[static_cast<int>(KeyObjectName::Left)].get();
+	auto rightKey = key_[static_cast<int>(KeyObjectName::Right)].get();
 		// 移動用画像更新
 	if (isMoveMenu)
 	{
@@ -358,7 +357,7 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 
 		// Player
 		{
-			auto pos = player_->GetPosition();
+			auto pos = move_player_->GetPosition();
 			// +移動
 			if (moveFrameCounter_ >= 0 &&
 				moveFrameCounter_ < 150)
@@ -370,7 +369,7 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 					static_cast<float>((moveFrameCounter_ - index * 30) / 30.0f)
 					);
 				
-				player_->SetPosition(pos);
+				move_player_->SetPosition(pos);
 			}
 			// -移動
 			else if (
@@ -387,8 +386,8 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 					static_cast<float>((counter - ( 5 - index) * 30) / 30.0f)
 				);
 
-				player_->SetPosition(pos);
-				player_->SetPosition(pos);
+				move_player_->SetPosition(pos);
+				move_player_->SetPosition(pos);
 			}
 		}
 
@@ -558,7 +557,7 @@ void ImageUIRenderer::DrawMoveDescription()
 	ObjObject3d::SetCamera(player_camera_.get());
 	player_camera_->Update();
 	// モデル更新
-	player_->Update();
+	move_player_->Update();
 	for (int i = 0; i <= static_cast<int>(KeyObjectName::D); ++i)
 	{
 		key_[i]->Update();
@@ -600,7 +599,7 @@ void ImageUIRenderer::DrawMoveDescription()
 	ObjObject3d::DrawPrev();
 
 	// モデル更新
-	player_->Draw();
+	move_player_->Draw();
 
 	for (int i = 0; i <= static_cast<int>(KeyObjectName::D); ++i)
 	{
