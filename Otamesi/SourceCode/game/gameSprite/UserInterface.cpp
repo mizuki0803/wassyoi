@@ -46,10 +46,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 
 		//次元変更可能確認スプライト生成
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
 		float size = 1.0f;
 		for (auto& i : ChangeDimenisonSpriteEffect) {
-			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
 			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
 			i.inst->SetScale(size);
 			i.isSizeUp = true;
@@ -57,7 +57,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
-		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { 650, WindowApp::window_height - 50 }));
+		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { WindowApp::window_width / 2 , WindowApp::window_height - 50 }));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 20, stickoutNum, true); //メニュー画面移行 esc
@@ -113,7 +113,8 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateChildSprite(
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu),
 			drawerSprites[HowToPlayMenu].get(),
-			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
+			{ -85,10 },
+			drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
@@ -128,9 +129,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 		//次元変更可能確認スプライト生成
 		float size = 1.0f;
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2 ,650 }));
 		for (auto& i : ChangeDimenisonSpriteEffect) {
-			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
 			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
 			i.inst->SetScale(size);
 			i.isSizeUp = true;
@@ -138,7 +139,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
-		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { 650, WindowApp::window_height - 50 }));
+		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { WindowApp::window_width / 2, WindowApp::window_height - 50 }));
 
 		//説明用引き出しスプライト生成
 

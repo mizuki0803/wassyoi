@@ -280,7 +280,7 @@ bool ImageUIRenderer::Initialize()
 		{ 0.5f,0.5f,0.5f,1.0f }
 	);
 	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetPosition(
-		{ -3.0f,0.0f,0.2f }
+		{ -3.0f,0.0f,-0.5f }
 	);
 	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetRotation(
 		{ 180.0f,40.0f,0.0f }
@@ -293,7 +293,7 @@ bool ImageUIRenderer::Initialize()
 		{ 0.5f,0.5f,0.5f,1.0f }
 	);
 	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetPosition(
-		{ 3.0f,0.0f,0.2f }
+		{ 3.0f,0.0f,-0.5f }
 	);
 	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetRotation(
 		{ 0.0f,140.0f,0.0f }
@@ -517,25 +517,25 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 			{
 				auto rot = camera_->GetPosition();
 				// +移動
-				if (moveFrameCounter_ >= 0 &&
-					moveFrameCounter_ < 150)
+				if (cameraFrameCounter_ >= 0 &&
+					cameraFrameCounter_ < 150)
 				{
-					int index{ static_cast<int>(moveFrameCounter_ / 75.0f) };
+					int index{ static_cast<int>(cameraFrameCounter_ / 75.0f) };
 					rot.y = Easing::OutQuint(
 						camera_rot_[index],
 						camera_rot_[index + 1],
-						static_cast<float>((moveFrameCounter_ - index * 75) / 75.0f)
+						static_cast<float>((cameraFrameCounter_ - index * 75) / 75.0f)
 					);
 
 					camera_->SetRotation(rot);
 				}
 				// -移動
 				else if (
-					moveFrameCounter_ >= 180 &&
-					moveFrameCounter_ < 315
+					cameraFrameCounter_ >= 180 &&
+					cameraFrameCounter_ < 315
 					)
 				{
-					int counter = moveFrameCounter_ - 180;
+					int counter = cameraFrameCounter_ - 180;
 					int index{ 2 - static_cast<int>(counter / 75.0f) };
 					int next_index{ index - 1 };
 					rot.y = Easing::OutQuint(
