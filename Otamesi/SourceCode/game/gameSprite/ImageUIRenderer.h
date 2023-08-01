@@ -78,8 +78,6 @@ private:
 	static ID3D12Device *dev;
 	//コマンドリスト
 	static ID3D12GraphicsCommandList *cmdList;
-	//パイプラインセット
-	static PipelineSet pipelineSet;
 
 	//頂点バッファ
 	ComPtr<ID3D12Resource> vertBuff;
@@ -133,12 +131,21 @@ private:
 	};
 
 
-	// カメラ
+	// カメラオブジェクト
 	std::unique_ptr<ObjObject3d> camera_;
+	// カメラ用Player
+	std::unique_ptr<ObjObject3d> camera_player_;
 	// アロー
 	std::unique_ptr<ObjObject3d> arrow_[static_cast<int>(ArrowObjectName::Max)];
 	// カメラ説明用カメラ
 	std::unique_ptr<Camera> camera_camera_;
+
+	float camera_rot_[3]
+	{
+		90.0f,
+		0.0f,
+		-90.0f
+	};
 
 };
 

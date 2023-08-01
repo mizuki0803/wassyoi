@@ -17,7 +17,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[TitleLogo], directoryPath, "title.png");
 	//メニュー関係
 	TextureManager::LoadTexture(textures[MenuBackScreen], directoryPath, "BackScreen.png");
-	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "frame.png");
+	TextureManager::LoadTexture(textures[MenuFrame], directoryPath, "menuFrame.png");
 	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
 	//操作方法関係
@@ -33,6 +33,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[Hint1Text], directoryPath, "hint1Text.png");
 	TextureManager::LoadTexture(textures[Hint2Text], directoryPath, "hint2Text.png");
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
+	TextureManager::LoadTexture(textures[UnDoReDo], directoryPath, "UndoRedo.png");
 	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "menuText.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");

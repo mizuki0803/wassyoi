@@ -30,6 +30,7 @@ public: //テクスチャ名
 		Hint1,	//ヒント1
 		Hint2,	//ヒント2
 		HowToPlayChengeDemension,//操作方法(次元変更)
+		UnDoReDo,				//操作方法(UndoRedo)
 		HowToPlayMenu,	//操作方法(メニュー)
 		StageClear,		//ステージクリア
 		ClearBack,		//ステージクリアの背景

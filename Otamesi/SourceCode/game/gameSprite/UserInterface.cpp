@@ -57,6 +57,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
+		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { 650, WindowApp::window_height - 50 }));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 20, stickoutNum, true); //メニュー画面移行 esc
@@ -137,6 +138,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		}
 		SpriteEffectCount = 0;
 		isChangeDimenison = false;
+		unDoReDo.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::UnDoReDo), { 650, WindowApp::window_height - 50 }));
 
 		//説明用引き出しスプライト生成
 
@@ -149,10 +151,12 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenH), DIK_2, DrawerSprite::Right, 230, stickoutNum, false); //ヒント2
 
 		//子供スプライト生成
-		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu),
+		CreateChildSprite(
+			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayMenu),
 			drawerSprites[HowToPlayMenu].get(),
-			{}, drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
-		
+			{ -85,10 },
+			drawerSprites[HowToPlayMenu]->GetAnchorpoint());
+
 		// プレイヤー操作説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer),
 			drawerSprites[HowToPlayPlayer].get(),
@@ -222,6 +226,7 @@ void UserInterface::Update()
 	if (isChangeDimenisonSprite) {
 		SpaceEffect();
 		isChangeDimenisonSprite->Update();
+		unDoReDo->Update();
 	}
 
 	//説明用引き出しスプライト更新
@@ -283,6 +288,7 @@ void UserInterface::Draw()
 	//次元変更可能確認スプライト描画
 	if (isChangeDimenisonSprite) {
 		isChangeDimenisonSprite->Draw();
+		unDoReDo->Draw();
 	}
 
 	//説明用引き出しスプライト描画

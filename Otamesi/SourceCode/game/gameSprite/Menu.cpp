@@ -6,7 +6,7 @@ std::unique_ptr<Menu> Menu::Create(Vector2 pos)
 {
 	Menu* temp = new Menu;
 
-	temp->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), pos, { 0.5f, 0.5f }, false, false);
+	temp->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), pos,{ 0.5f, 0.5f }, false, false);
 
 	temp->Update();
 
@@ -22,7 +22,7 @@ bool Menu::Initialize(const Texture& texture, const Vector2& position, const Vec
 
 	//画面全体を覆うのに必要な情報をセット
 	size = { 0.0f, 0.0f };
-	texSize = { 256, 256 };
+	//texSize = { 256, 256 };
 
 	menuEaseData_ = std::make_unique<EaseData>(15);
 

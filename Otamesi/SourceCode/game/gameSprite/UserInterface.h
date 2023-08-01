@@ -180,6 +180,8 @@ private: //静的メンバ変数
 private: //メンバ変数
 	//次元変更可能か可能のときのみ光るスペースキースプライト
 	std::unique_ptr<Sprite> isChangeDimenisonSprite;
+	// UndoRedo説明用
+	std::unique_ptr<Sprite> unDoReDo;
 	//押せるときの反応
 	std::array<SpaceIndo, 4> ChangeDimenisonSpriteEffect;
 	//反応を入れるカウント

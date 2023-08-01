@@ -265,6 +265,45 @@ bool ImageUIRenderer::Initialize()
 		ObjObject3d::Create(ObjModel::LoadFromOBJ("KeyBoradRight", true))
 	);
 	key_[static_cast<int>(KeyObjectName::Right)]->SetPosition({ 2,0,-4 });
+
+
+	camera_player_.reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("Player", true))
+	);
+	camera_player_->SetPosition({ 0,0,4 });
+	camera_player_->SetScale({ 2,2,2 });
+
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("CurveArrow", true))
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetColor(
+		{ 0.5f,0.5f,0.5f,1.0f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetPosition(
+		{ -3.0f,0.0f,0.2f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetRotation(
+		{ 180.0f,40.0f,0.0f }
+	);
+
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)].reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("CurveArrow", true))
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetColor(
+		{ 0.5f,0.5f,0.5f,1.0f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetPosition(
+		{ 3.0f,0.0f,0.2f }
+	);
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetRotation(
+		{ 0.0f,140.0f,0.0f }
+	);
+
+	camera_.reset(
+		ObjObject3d::Create(ObjModel::LoadFromOBJ("Camera", true))
+	);
+	camera_->SetPosition({ 0,0,4 });
+
 	return true;
 }
 
@@ -429,19 +468,15 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 			if (cameraFrameCounter_ >= 0 &&
 				cameraFrameCounter_ < 150)
 			{
-				/*rot.x += (180.0f / 150.0f);
-				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetRotation(
-					{ rot }
-				);
-				arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+				arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetColor(
 					{ 0.8f,0.0f,0.0f,0.8f }
-				);*/
+				);
 			}
 			else
 			{
-				/*arrow_[static_cast<int>(ArrowObjectName::Right)]->SetColor(
+				arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->SetColor(
 					{ 0.3f,0.3f,0.3f,1.0f }
-				);*/
+				);
 			}
 		}
 
@@ -467,19 +502,50 @@ void ImageUIRenderer::Update(bool isMoveMenu, bool isCameraMenu)
 			if (cameraFrameCounter_ >= 180 &&
 				cameraFrameCounter_ < 315)
 			{
-				/*rot.x += (180.0f / 150.0f);
-				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetRotation(
-					{ rot }
-				);
-				arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+				arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetColor(
 					{ 0.8f,0.0f,0.0f,0.8f }
-				);*/
+				);
 			}
 			else
 			{
-				/*arrow_[static_cast<int>(ArrowObjectName::Left)]->SetColor(
+				arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->SetColor(
 					{ 0.3f,0.3f,0.3f,1.0f }
-				);*/
+				);
+			}
+
+			// カメラの移動
+			{
+				auto rot = camera_->GetPosition();
+				// +移動
+				if (moveFrameCounter_ >= 0 &&
+					moveFrameCounter_ < 150)
+				{
+					int index{ static_cast<int>(moveFrameCounter_ / 75.0f) };
+					rot.y = Easing::OutQuint(
+						camera_rot_[index],
+						camera_rot_[index + 1],
+						static_cast<float>((moveFrameCounter_ - index * 75) / 75.0f)
+					);
+
+					camera_->SetRotation(rot);
+				}
+				// -移動
+				else if (
+					moveFrameCounter_ >= 180 &&
+					moveFrameCounter_ < 315
+					)
+				{
+					int counter = moveFrameCounter_ - 180;
+					int index{ 2 - static_cast<int>(counter / 75.0f) };
+					int next_index{ index - 1 };
+					rot.y = Easing::OutQuint(
+						camera_rot_[index],
+						camera_rot_[next_index],
+						static_cast<float>((counter - (2 - index) * 75) / 75.0f)
+					);
+
+					camera_->SetRotation(rot);
+				}
 			}
 		}
 		// カウントリセット
@@ -499,11 +565,15 @@ void ImageUIRenderer::DrawCameraDescription()
 {
 	ObjObject3d::SetCamera(camera_camera_.get());
 	camera_camera_->Update();
+	camera_->Update();
+	camera_player_->Update();
 	for (int i = static_cast<int>(KeyObjectName::Up); i <= static_cast<int>(KeyObjectName::Right); ++i)
 	{
 		key_[i]->Update();
 	}
 
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->Update();
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->Update();
 
 	//リソースバリアを変更(シェーダリソース→描画可能)
 	cmdList->ResourceBarrier(1,	&CD3DX12_RESOURCE_BARRIER::Transition(texture_[static_cast<int>(TexName::Camera)].texBuff.Get(),
@@ -539,6 +609,11 @@ void ImageUIRenderer::DrawCameraDescription()
 	// ここから描画
 	ObjObject3d::DrawPrev();
 
+	camera_->Draw();
+	camera_player_->Draw();
+
+	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)]->Draw();
+	arrow_[static_cast<int>(ArrowObjectName::SpinRight)]->Draw();
 
 	for (int i = static_cast<int>(KeyObjectName::Up); i <= static_cast<int>(KeyObjectName::Right); ++i)
 	{
