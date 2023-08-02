@@ -289,11 +289,7 @@ void GameCamera::ChanegeDimensionStart()
 	//行動を「次元切り替え」にする
 	actionPhase = ActionPhase::ChangeDimension;
 
-	if (is2D) {
-		Audio::GetInstance()->PlayWave(Audio::SoundName::d2_d3);
-	} else {
-		Audio::GetInstance()->PlayWave(Audio::SoundName::d3_d2);
-	}
+	Audio::GetInstance()->PlayWave(Audio::SoundName::change_dimension);
 }
 
 void GameCamera::SetClearResetAround()

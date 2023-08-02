@@ -55,14 +55,13 @@ private: //サブクラス
 
 public:
 
-	enum class SoundName{
+	enum class SoundName {
 		bgm,//
 		button,//ボタン
 		stage_change,//ステージセレクトでの変更
 		player_move,//プレイヤーの移動
 		not,//2d↔3d不可
-		d2_d3,//2dから3d変換
-		d3_d2,//3dから2d変換
+		change_dimension,//次元変更
 		ui_inout,//ui（付箋）の移動
 		hintoUp,//ヒントのサイズ変更
 		undo_redo,//undo redo
@@ -77,8 +76,7 @@ public:
 		"stage_change",
 		"player_move",
 		"not",
-		"d2_d3",
-		"d3_d2",
+		"change_dimension",
 		"ui_inout",
 		"hintoUp",
 		"undo_redo",

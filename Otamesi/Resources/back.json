@@ -102,26 +102,6 @@
             }
         },
         {
-            "name": "Cube.005",
-            "transform": {
-                "translation": [
-                    0.0,
-                    0.0,
-                    -2.0
-                ],
-                "rotation": [
-                    90.00000762939453,
-                    -0.0,
-                    0.0
-                ],
-                "scaling": [
-                    40.0,
-                    1.0,
-                    40.0
-                ]
-            }
-        },
-        {
             "name": "Cube.006",
             "transform": {
                 "translation": [

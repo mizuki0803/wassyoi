@@ -1,6 +1,7 @@
 ﻿#include "MapDataStageSelectManager.h"
 #include "Input.h"
 #include "StageManager.h"
+#include "Audio.h"
 
 MapDataStageSelectManager* MapDataStageSelectManager::Create()
 {
@@ -90,6 +91,9 @@ void MapDataStageSelectManager::ChangeStage()
 	for (const std::unique_ptr<MapDataStageSelect>& mapData : mapDatas) {
 		if (mapData->GetStageSelectBlockManager()->GetIsMove()) { return; }
 	}
+
+	//se再生
+	Audio::GetInstance()->PlayWave(Audio::SoundName::stage_change);
 
 	//次に選択するステージのマップを生成する
 	std::unique_ptr<MapDataStageSelect> newMapData;

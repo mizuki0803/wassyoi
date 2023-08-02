@@ -45,11 +45,11 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		menuframe_.push_back(std::move(tempMenu));
 
 		//次元変更可能確認スプライト生成
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
 		float size = 1.0f;
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 		for (auto& i : ChangeDimenisonSpriteEffect) {
-			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
-			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
+			i.inst->SetColor({ 0.005f,0.25f,0.25f,0.5f });
 			i.inst->SetScale(size);
 			i.isSizeUp = true;
 			size += 0.002f * 50.0f;
@@ -131,9 +131,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	
 		//次元変更可能確認スプライト生成
 		float size = 1.0f;
-		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2 ,650 }));
+		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 		for (auto& i : ChangeDimenisonSpriteEffect) {
-			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
+			i.inst.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { 650, WindowApp::window_width / 2 }));
 			i.inst->SetColor({ 0.005f,0.25f,0.25f,1.0f });
 			i.inst->SetScale(size);
 			i.isSizeUp = true;
@@ -309,11 +309,13 @@ void UserInterface::Draw()
 	for (const std::unique_ptr<Sprite>& childSprite : childSprites) {
 		childSprite->Draw();
 	}
+
 	//ヒントスプライト描画
 	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
 		if (!hintSprite) { continue; }
 		hintSprite->Draw();
 	}
+
 	//かさんごーせー
 	SpriteCommon::GetInstance()->DrawPrev("Add");
 	AddDraw();

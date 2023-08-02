@@ -96,7 +96,6 @@ void GameScene::Initialize()
 	//ステージクリアUI生成
 	stageClear_ = ClearStaging::Create();
 
-
 }
 
 void GameScene::Finalize()
@@ -193,6 +192,8 @@ void GameScene::Update()
 			}
 			//次のステージがある場合は次のステージへ
 			else if (StageManager::NextStageSelect()) {
+				//ステージクリア演出
+				backGround->SetStageClearFlag();
 				//カメラの回転を元に戻す状態にする
 				camera->SetClearResetAround();
 			}
