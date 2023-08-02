@@ -41,6 +41,8 @@ public: //メンバ関数
 
 	const bool EaseEnd() {return menuEaseData_->GetEndFlag(); }
 
+	const float GetTimeRate() { return menuEaseData_->GetTimeRate(); }
+
 private: //メンバ変数
 	// イージング
 	std::unique_ptr<EaseData> menuEaseData_;

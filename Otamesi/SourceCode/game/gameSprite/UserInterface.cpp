@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Audio.h"
 #include "HintTextureLoader.h"
+#include "Easing.h"
 
 float UserInterface::soundVolume_ = 1.0f;
 const float UserInterface::soundMaxVolume_ = 2.0f;
@@ -39,7 +40,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		// UI用レンダラー
 		imageUiRendere_.reset(ImageUIRenderer::Create());
 
-		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), Vector2(680.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 130.0f, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
 		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), Vector2(256.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuExit), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
@@ -99,7 +100,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	else if (GamePhase::Selection == gamePhase)
 	{
 
-		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(680.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 130.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
 		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
@@ -122,7 +123,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		// UI用レンダラー
 		imageUiRendere_.reset(ImageUIRenderer::Create());
 
-		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(680.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 130.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
 		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuStageSelect), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
 		menuframe_.push_back(std::move(tempMenu));
@@ -216,7 +217,9 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 	//音量変更用スプライト生成
 	soundVolumeBar = std::unique_ptr<Sprite>(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumeBar),
-		{ menuframe_[0]->GetPosition().x + 150, menuframe_[0]->GetPosition().y }, { 0.0f, 0.5f }, false, false));
+		{ menuframe_[0]->GetPosition().x - 30, menuframe_[0]->GetPosition().y }, { 0.0f, 0.5f }, false, false));
+
+	soundVolumeBar->SetSize({ 262.0f, 38.0f });
 	const float soundVolumeStartPercentage = soundVolume_ / soundMaxVolume_; //最大音量と比較時の音量割合
 	soundVolumePointer = std::unique_ptr<SoundVolumePointer>(SoundVolumePointer::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::SoundVolumePointer),
 		soundVolumeBar->GetPosition(), soundVolumeBar->GetSize().x, soundVolumeStartPercentage));
@@ -413,6 +416,10 @@ void UserInterface::MenuOpen()
 		menu->Update();
 		count++;
 	}
+	
+
+	soundVolumeBar->SetSize({ Easing::OutBack(0.0f, 262.0f, menuframe_[0]->GetTimeRate()), Easing::OutBack(0.0f, 38.0f, menuframe_[0]->GetTimeRate()) });
+	soundVolumePointer->SetSize({ Easing::OutBack(0.0f, 32.0f, menuframe_[0]->GetTimeRate()), Easing::OutBack(0.0f, 38.0f, menuframe_[0]->GetTimeRate()) });
 
 	bool hitFlag = false;
 	for (auto& menu : menuframe_)
