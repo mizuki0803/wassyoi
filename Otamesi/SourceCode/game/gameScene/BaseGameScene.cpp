@@ -4,6 +4,7 @@
 #include "JsonLoader.h"
 #include "GameCamera.h"
 #include "Player.h"
+#include "Audio.h"
 
 void BaseGameScene::SceneChangeStart(const DirectX::XMFLOAT4& color, int32_t deepenTime, int32_t waitTime, int32_t returnTime, const std::string& nextSceneName)
 {
@@ -62,6 +63,9 @@ void BaseGameScene::Undo(GameCamera* _camera, Player* _player)
 {
 	if (orderNum == 0) { return; }
 
+	//se�Đ�
+	Audio::GetInstance()->PlayWave(Audio::SoundName::undo_redo);
+
 	orderNum--;
 	bool is2D = false;
 	int moveSurface = 0;
@@ -87,6 +91,10 @@ void BaseGameScene::Undo(GameCamera* _camera, Player* _player)
 void BaseGameScene::Redo(GameCamera* _camera, Player* _player)
 {
 	if (orderNum == orderMaxNum){return;}
+
+	//se�Đ�
+	Audio::GetInstance()->PlayWave(Audio::SoundName::undo_redo);
+
 	orderNum++;
 	bool is2D = false;
 	int moveSurface = 0;

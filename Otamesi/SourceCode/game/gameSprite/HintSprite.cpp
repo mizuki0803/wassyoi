@@ -1,6 +1,7 @@
 ﻿#include "HintSprite.h"
 #include "Easing.h"
 #include "WindowApp.h"
+#include "Audio.h"
 
 const float HintSprite::normalTextureScale = 0.15f;
 const float HintSprite::largeTextureScale = 0.7f;
@@ -95,6 +96,9 @@ void HintSprite::SizeChange()
 	if (!isSizeChange) { return; }
 
 	//タイマー更新
+	if (actionTimer == 0) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::hintoUp);
+	}
 	actionTimer++;
 	const float moveTime = 30; //座標移動にかかる時間
 

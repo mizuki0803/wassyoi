@@ -39,11 +39,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 		// UI用レンダラー
 		imageUiRendere_.reset(ImageUIRenderer::Create());
 
-		for (int i = 0; i < 2; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 2) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), Vector2(256.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuExit), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 2) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
 
 		//次元変更可能確認スプライト生成
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2,650 }));
@@ -100,11 +99,10 @@ void UserInterface::Initialize(GamePhase gamePhase)
 	else if (GamePhase::Selection == gamePhase)
 	{
 
-		for (int i = 0; i < 2; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128) + 50.0f), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
@@ -115,18 +113,22 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			drawerSprites[HowToPlayMenu].get(),
 			{ -85,10 },
 			drawerSprites[HowToPlayMenu]->GetAnchorpoint());	//メニュー画面説明の文字
+		
+		// ステージセレクトアロー
+		stageSelectArrowSprite.reset(StageSelectArrow::Create());
 	}
 	else if (GamePhase::Game == gamePhase)
 	{
 		// UI用レンダラー
 		imageUiRendere_.reset(ImageUIRenderer::Create());
 
-		for (int i = 0; i < 3; i++)
-		{
-			std::unique_ptr<Menu> temp = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(i * 128)));
-			menuframe_.push_back(std::move(temp));
-		}
-
+		std::unique_ptr<Menu> tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuVolume), Vector2(WindowApp::window_width / 2 - 190.0f, (WindowApp::window_height / 3) + static_cast<float>(0 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), Vector2(450.0f, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuStageSelect), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(1 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+		tempMenu = Menu::Create(Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(2 * 128)), Vector2(256, 96.0f), Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuTitle), Vector2(WindowApp::window_width / 2, (WindowApp::window_height / 3) + static_cast<float>(2 * 128)), { 0.5f, 0.5f }, false, false));
+		menuframe_.push_back(std::move(tempMenu));
+	
 		//次元変更可能確認スプライト生成
 		float size = 1.0f;
 		isChangeDimenisonSprite.reset(Sprite::Create(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayChengeDemension), { WindowApp::window_width / 2 ,650 }));
@@ -189,6 +191,7 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			drawerSprites[Hint1].get(),
 			{ 12,65 },
 			drawerSprites[Hint1]->GetAnchorpoint());
+
 		// ヒント2説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(
 			SpriteTextureLoader::Hint2Text), 
@@ -234,6 +237,11 @@ void UserInterface::Update()
 	DrawerSpriteMoveStartKey();
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Update();
+	}
+
+	// ステージセレクトあろー更新
+	if (stageSelectArrowSprite) {
+		stageSelectArrowSprite->Update();
 	}
 
 	//メニュースプライト更新
@@ -288,6 +296,10 @@ void UserInterface::Draw()
 		unDoReDo->Draw();
 	}
 
+	//ステージセレクトアロー更新
+	if (stageSelectArrowSprite) {
+		stageSelectArrowSprite->Draw();
+	}
 	//説明用引き出しスプライト描画
 	for (const std::unique_ptr<DrawerSprite>& drawerSprite : drawerSprites) {
 		drawerSprite->Draw();
@@ -302,7 +314,6 @@ void UserInterface::Draw()
 		if (!hintSprite) { continue; }
 		hintSprite->Draw();
 	}
-
 	//かさんごーせー
 	SpriteCommon::GetInstance()->DrawPrev("Add");
 	AddDraw();
@@ -310,6 +321,13 @@ void UserInterface::Draw()
 	SpriteCommon::GetInstance()->DrawPrev();
 
 	//メニュースプライト描画
+	//hint描画
+	for (const std::unique_ptr<HintSprite>& hintSprite : hintSprites) {
+		if (!hintSprite) { continue; }
+		hintSprite->Draw();
+	}
+
+	//メニュー描画
 	if (menuFlag_)
 	{
 		menuBackScreen_->Draw();
@@ -375,6 +393,10 @@ void UserInterface::MenuReset()
 
 void UserInterface::MenuOpen()
 {
+	if (easeTimer_ == 0) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu);
+	}
+
 	int count = 0;
 	easeTimer_++;
 	selectionNumber_ = 0;
@@ -410,6 +432,8 @@ void UserInterface::MenuSelection()
 {
 	if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_UP))
 	{
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu_move);
+
 		selectionNumber_--;
 
 		if (selectionNumber_ < 0)
@@ -419,6 +443,8 @@ void UserInterface::MenuSelection()
 	}
 	else if (Input::GetInstance()->GetInstance()->TriggerKey(DIK_DOWN))
 	{
+		Audio::GetInstance()->PlayWave(Audio::SoundName::menu_move);
+
 		selectionNumber_++;
 
 		if (selectionNumber_ >= menuframe_.size())
@@ -530,6 +556,8 @@ void UserInterface::DrawerSpriteMoveStartKey()
 		//開閉に使用するキーが入力されていなければ飛ばす
 		if (!(Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey()))) { continue; }
 		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
+		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+
 		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
 
 		//開閉開始

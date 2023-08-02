@@ -11,7 +11,7 @@ public: //メンバ関数
 	/// </summary>
 	/// <param name="pos">位置</param>
 	/// <returns></returns>
-	static std::unique_ptr<Menu> Create(Vector2 pos);
+	static std::unique_ptr<Menu> Create(const Vector2 pos, const Vector2 size, Sprite* text);
 
 	/// <summary>
 	/// 初期化
@@ -30,6 +30,11 @@ public: //メンバ関数
 	void Update() override;
 
 	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw() override;
+
+	/// <summary>
 	/// リセット
 	/// </summary>
 	void Reset();
@@ -39,5 +44,11 @@ public: //メンバ関数
 private: //メンバ変数
 	// イージング
 	std::unique_ptr<EaseData> menuEaseData_;
+
+	std::unique_ptr<Sprite> menuText_;
+	//
+	Vector2 frameSize_;
+
+	Vector2 textSize_;
 };
 

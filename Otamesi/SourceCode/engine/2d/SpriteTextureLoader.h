@@ -15,6 +15,10 @@ public: //テクスチャ名
 		Block,			//ブロック
 		MenuBackScreen, //メニュー画面用の背景
 		MenuFrame,		//メニューの枠組み
+		MenuTitle,		//メニュー用テキスト（Title）
+		MenuVolume,		//メニュー用テキスト（Volume）
+		MenuStageSelect,//メニュー用テキスト（Select）
+		MenuExit,		//メニュー用テキスト（Exit）
 		SoundVolumeBar,	//音量変更用バー
 		SoundVolumePointer,	//音量変更用ポインター
 		MenuIconDef,	// メニューアイコン
@@ -36,7 +40,7 @@ public: //テクスチャ名
 		ClearBack,		//ステージクリアの背景
 		PressSpace,		//PRESS SPACE
 		ParanomaSky,	// スカイドーム用
-
+		StageSelectArrow,//ステージセレクト
 		SpriteTextureNum,	//スプライトテクスチャの枚数
 	};
 

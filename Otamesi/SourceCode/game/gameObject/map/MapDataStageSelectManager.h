@@ -41,7 +41,11 @@ public: //メンバ関数
 	/// frameごとの初期化
 	/// </summary>
 	void FrameReset();
+	
+	//getter
+	bool GetIsChangeStage() { return isChangeStage; }
 
+	//setter
 	void SetNotMove(bool flag1) { menuFlag_ = flag1; }
 
 private: //メンバ関数
@@ -57,6 +61,8 @@ private: //メンバ変数
 	//ステージ番号表示用UI
 	std::unique_ptr<StageNumberUI> stageNumberUI;
 
-	// メニューを開いているか
+
+	//�X�e�[�W�ύX��������
+	bool isChangeStage = false;
 	bool menuFlag_ = false;
 };

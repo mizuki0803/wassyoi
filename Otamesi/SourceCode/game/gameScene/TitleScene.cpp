@@ -26,6 +26,8 @@ void TitleScene::Initialize()
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
+	modelBirdBody.reset(ObjModel::LoadFromOBJ("bird_a",true));
+	modelBirdWing.reset(ObjModel::LoadFromOBJ("bird_wing",true));
 
 	//選択中のステージ番号を0にセット
 	StageManager::SetSelectStage(0);
@@ -59,6 +61,9 @@ void TitleScene::Initialize()
 
 	//背景オブジェクト生成
 	backGround.reset(BackGround::Create());
+
+	const int32_t birdCreateInterval = 60 * 10;	//�������̊Ԋu (1�b�ɂ������t���[����(60) * �b(60) * ��)
+	birdManager.reset(BirdManager::Create(modelBirdBody.get(), modelBirdWing.get(), birdCreateInterval));
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -103,12 +108,12 @@ void TitleScene::Update()
 		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
 		//undo
-		if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+		if (Input::GetInstance()->TriggerKey(DIK_LCONTROL)) {
 			Undo(camera.get(), player.get());
 
 		}
 		//redo
-		else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+		else if (Input::GetInstance()->TriggerKey(DIK_LSHIFT)) {
 			Redo(camera.get(), player.get());
 		}
 
@@ -175,6 +180,8 @@ void TitleScene::Update()
 	skydome->Update();
 	//背景オブジェクト
 	backGround->Update();
+	//���Ǘ��X�V
+	birdManager->Update();
 
 	//スプライト
 	//UIの更新
@@ -213,7 +220,8 @@ void TitleScene::Draw3D()
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kNone);
 	//天球
 	skydome->Draw();
-	////プレイヤー
+	//���Ǘ�
+	birdManager->Draw();
 	GamePostEffect::SetIdColorBuffer(5, PostEffect::kPlayer);
 	player->Draw();
 

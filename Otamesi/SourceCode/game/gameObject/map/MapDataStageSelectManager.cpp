@@ -39,6 +39,11 @@ void MapDataStageSelectManager::Update()
 		return mapData->GetStageSelectBlockManager()->GetIsDelete();
 		});
 
+	//�X�e�[�W��ύX���Ă��Ȃ���Ԃɖ߂�
+	if (isChangeStage) {
+		isChangeStage = false;
+	}
+
 
 	//選択するステージを変更する
 	ChangeStage();
@@ -115,4 +120,7 @@ void MapDataStageSelectManager::ChangeStage()
 
 	//ステージ番号の更新
 	stageNumberUI->ChengeStageNum(StageManager::GetSelectStage());
+
+	//�X�e�[�W��ύX����
+	isChangeStage = true;
 }

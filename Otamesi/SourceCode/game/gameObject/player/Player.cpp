@@ -3,7 +3,7 @@
 #include "Easing.h"
 #include "Block.h"
 #include "PlayerActionManager.h"
-
+#include "Audio.h"
 
 const float Player::playerSize = 3.5f;
 
@@ -214,6 +214,8 @@ void Player::MovePosStart()
 
 	//行動を「座標移動」にする
 	actionPhase = ActionPhase::MovePos;
+
+	Audio::GetInstance()->PlayWave(Audio::SoundName::player_move);
 }
 
 void Player::MovePos()
@@ -223,7 +225,7 @@ void Player::MovePos()
 
 	//タイマー更新
 	actionTimer++;
-	const float moveTime = 30; //座標移動にかかる時間
+	const float moveTime = 25; //座標移動にかかる時間
 
 	//座標移動イージングに使用する変数(0～1を算出)
 	const float time = actionTimer / moveTime;
@@ -255,7 +257,10 @@ void Player::ChanegeDimensionStart()
 	if (!(Input::GetInstance()->TriggerKey(DIK_SPACE))) { return; }
 
 	//次元変更できる状態なのかを判定
-	if (!ChangeDimensionStartCheck()) { return; }
+	if (!ChangeDimensionStartCheck()) {
+		Audio::GetInstance()->PlayWave(Audio::SoundName::not);
+		return;
+	}
 
 	//現在カメラの向いている方向の面に接地する
 	if (gameCamera->GetCameraYPosPhase() == (int)GameCamera::CameraYPosPhase::Top) { moveSurfacePhase = MoveSurfacePhase::Upward; }

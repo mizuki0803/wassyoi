@@ -150,6 +150,9 @@
     <Filter Include="リソース ファイル\InstanceObjectLightView">
       <UniqueIdentifier>{ae56402a-d9cc-40b4-bbc2-dc876b042f5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\game\gameObject\bird">
+      <UniqueIdentifier>{c356b15f-1c5e-4b23-9400-87ec324b8c59}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SourceCode\engine\2d\DebugText.cpp">
@@ -398,6 +401,21 @@
       <!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
     </ClCompile>
     <ClCompile Include="SourceCode\game\gameSprite\ImageUIRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\bird\birdBody.cpp">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\bird\birdWing.cpp">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\bird\bird.cpp">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameObject\bird\BirdManager.cpp">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClCompile>
+    <ClCompile Include="SourceCode\game\gameSprite\StageSelectArrow.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -778,16 +796,28 @@
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
-    <!-- <<<<<<< HEAD
-    <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
-======= -->
     <ClInclude Include="SourceCode\game\gameSprite\HintSprite.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
     <ClInclude Include="SourceCode\game\gameSprite\HintTextureLoader.h">
       <Filter>ソース ファイル\game\gameSprite</Filter>
     </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\HowToPlayUI.h" />
     <ClInclude Include="SourceCode\game\gameSprite\ImageUIRenderer.h" />
-    <!-- >>>>>>> 210db97a8e4d9e392678b9d2a4c31b95802e131c -->
+    <ClInclude Include="SourceCode\game\gameObject\bird\bird.h">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\bird\birdBody.h">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\bird\birdWing.h">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameObject\bird\BirdManager.h">
+      <Filter>ソース ファイル\game\gameObject\bird</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceCode\game\gameSprite\StageSelectArrow.h">
+      <Filter>ソース ファイル\game\gameSprite</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

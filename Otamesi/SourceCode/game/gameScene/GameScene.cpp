@@ -31,6 +31,8 @@ void GameScene::Initialize()
 	modelPlayer.reset(ObjModel::LoadFromOBJ("player"));
 	modelPlayerEffect.reset(ObjModel::LoadFromOBJ("effect"));
 	modelSkydome.reset(ObjModel::LoadFromOBJ("skydomeStage01", true));
+	modelBirdBody.reset(ObjModel::LoadFromOBJ("bird_a", true));
+	modelBirdWing.reset(ObjModel::LoadFromOBJ("bird_wing", true));
 
 	//マップ生成
 	mapData.reset(MapDataStage::Create(StageManager::GetSelectStage()));
@@ -62,6 +64,9 @@ void GameScene::Initialize()
 	//天球生成
 	skydome.reset(Skydome::Create(modelSkydome.get()));
 
+	//鳥管理生成
+	const int32_t birdCreateInterval = 60 * 10;	//鳥生成の間隔 (1秒にかかるフレーム数(60) * 秒(60) * 分)
+	birdManager.reset(BirdManager::Create(modelBirdBody.get(), modelBirdWing.get(), birdCreateInterval));
 
 	//objオブジェクトにカメラをセット
 	ObjObject3d::SetCamera(camera.get());
@@ -110,6 +115,8 @@ void GameScene::Update()
 				//シーン切り替え
 				SceneChangeStart({ 0,0,0,0 }, 60, 60, 60, "TITLE");
 			}
+			//次元変更が可能かUIに伝える
+			userInterface_->IsChangeDimensionCheck(true);
 		}
 		//その他ステージは通常の動き
 		else {
@@ -117,11 +124,11 @@ void GameScene::Update()
 			userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
 			//undo
-			if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Z)) {
+			if (Input::GetInstance()->TriggerKey(DIK_LCONTROL)) {
 				Undo(camera.get(), player.get());
 			}
 			//redo
-			else if (Input::GetInstance()->PushKey(DIK_LCONTROL) && Input::GetInstance()->TriggerKey(DIK_Y)) {
+			else if (Input::GetInstance()->TriggerKey(DIK_LSHIFT)) {
 				Redo(camera.get(), player.get());
 			}
 
@@ -229,6 +236,8 @@ void GameScene::Update()
 	skydome->Update();
 	//背景オブジェクト
 	backGround->Update();
+	//鳥管理更新
+	birdManager->Update();
 
 	//スプライト
 	//UIの更新
@@ -265,6 +274,8 @@ void GameScene::Draw3D()
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kNone);
 	//天球
 	skydome->Draw();
+	//鳥管理
+	birdManager->Draw();
 	////�v���C���[
 	GamePostEffect::SetIdColorBuffer(5,PostEffect::kPlayer);
 	//プレイヤー

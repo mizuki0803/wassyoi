@@ -40,7 +40,7 @@ void BaseBlock::Draw()
 	GamePostEffect::SetIdColorBuffer(6, PostEffect::kGoal);
 	block[static_cast<int>(BROCK_TYPE::goal)]->Draw();
 	for (int i = 0; i< int(BROCK_TYPE::size); i++) {
-		if (i<int(BROCK_TYPE::plane)) {
+		if (i<=int(BROCK_TYPE::plane)) {
 			GamePostEffect::SetIdColorBuffer(6, PostEffect::kStage);
 			block[i]->Draw();
 		} else if (i == int(BROCK_TYPE::player)) {

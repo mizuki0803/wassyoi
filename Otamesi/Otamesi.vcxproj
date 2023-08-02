@@ -60,7 +60,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\bird;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -82,7 +82,7 @@
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(ProjectDir)SourceCode;$(ProjectDir)SourceCode\engine;$(ProjectDir)SourceCode\engine\2d;$(ProjectDir)SourceCode\engine\3d;$(ProjectDir)SourceCode\engine\audio;$(ProjectDir)SourceCode\engine\base;$(ProjectDir)SourceCode\engine\behaviorTree;$(ProjectDir)SourceCode\engine\camera;$(ProjectDir)SourceCode\engine\collision;$(ProjectDir)SourceCode\engine\input;$(ProjectDir)SourceCode\engine\light;$(ProjectDir)SourceCode\engine\math;$(ProjectDir)SourceCode\engine\scene;$(ProjectDir)SourceCode\game\gameCamera;$(ProjectDir)SourceCode\game\gameEffect;$(ProjectDir)SourceCode\game\gameObject;$(ProjectDir)SourceCode\game\gameObject\bird;$(ProjectDir)SourceCode\game\gameObject\block;$(ProjectDir)SourceCode\game\gameObject\map;$(ProjectDir)SourceCode\game\gameObject\player;$(ProjectDir)SourceCode\game\gameScene;$(ProjectDir)SourceCode\game\gameSprite;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
@@ -148,6 +148,10 @@
     <ClCompile Include="SourceCode\game\gameEffect\SceneChange.cpp" />
     <ClCompile Include="SourceCode\game\gameEffect\SceneChangeEffect.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\BackGround.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\bird\bird.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\bird\birdBody.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\bird\BirdManager.cpp" />
+    <ClCompile Include="SourceCode\game\gameObject\bird\birdWing.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\BaseBlock.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\Block.cpp" />
     <ClCompile Include="SourceCode\game\gameObject\block\MapBlockData.cpp" />
@@ -177,6 +181,7 @@
     <ClCompile Include="SourceCode\game\gameSprite\SceneChangeSprite.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\SoundVolumePointer.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\StageNumberUI.cpp" />
+    <ClCompile Include="SourceCode\game\gameSprite\StageSelectArrow.cpp" />
     <ClCompile Include="SourceCode\game\gameSprite\UserInterface.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
   </ItemGroup>
@@ -417,6 +422,10 @@
     <ClInclude Include="SourceCode\game\gameEffect\SceneChange.h" />
     <ClInclude Include="SourceCode\game\gameEffect\SceneChangeEffect.h" />
     <ClInclude Include="SourceCode\game\gameObject\BackGround.h" />
+    <ClInclude Include="SourceCode\game\gameObject\bird\bird.h" />
+    <ClInclude Include="SourceCode\game\gameObject\bird\birdBody.h" />
+    <ClInclude Include="SourceCode\game\gameObject\bird\BirdManager.h" />
+    <ClInclude Include="SourceCode\game\gameObject\bird\birdWing.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\BaseBlock.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\Block.h" />
     <ClInclude Include="SourceCode\game\gameObject\block\MapBlockData.h" />
@@ -446,6 +455,7 @@
     <ClInclude Include="SourceCode\game\gameSprite\SceneChangeSprite.h" />
     <ClInclude Include="SourceCode\game\gameSprite\SoundVolumePointer.h" />
     <ClInclude Include="SourceCode\game\gameSprite\StageNumberUI.h" />
+    <ClInclude Include="SourceCode\game\gameSprite\StageSelectArrow.h" />
     <ClInclude Include="SourceCode\game\gameSprite\UserInterface.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,11 +2,17 @@
 #include "SpriteTextureLoader.h"
 #include "Easing.h"
 
-std::unique_ptr<Menu> Menu::Create(Vector2 pos)
+std::unique_ptr<Menu> Menu::Create(const Vector2 pos, const Vector2 size, Sprite* text)
 {
 	Menu* temp = new Menu;
 
 	temp->Initialize(SpriteTextureLoader::GetTexture(SpriteTextureLoader::MenuFrame), pos,{ 0.5f, 0.5f }, false, false);
+
+	temp->frameSize_ = size;
+
+	temp->menuText_ = std::unique_ptr<Sprite>(text);
+
+	temp->textSize_ = temp->menuText_->GetSize();
 
 	temp->Update();
 
@@ -31,15 +37,26 @@ bool Menu::Initialize(const Texture& texture, const Vector2& position, const Vec
 
 void Menu::Update()
 {
-	size = { Easing::OutBack(0.0f, 256.0f, menuEaseData_->GetTimeRate()), Easing::OutBack(0.0f, 96.0f, menuEaseData_->GetTimeRate()) };
+	size = { Easing::OutBack(0.0f, frameSize_.x, menuEaseData_->GetTimeRate()), Easing::OutBack(0.0f, frameSize_.y, menuEaseData_->GetTimeRate()) };
+	menuText_->SetSize(Vector2(Easing::OutBack(0.0f, textSize_.x, menuEaseData_->GetTimeRate()), Easing::OutBack(0.0f, textSize_.y, menuEaseData_->GetTimeRate())));
 	menuEaseData_->Update();
 	//スプライト更新
+	menuText_->Update();
+	//�X�v���C�g�X�V
 	Sprite::Update();
+}
+
+void Menu::Draw()
+{
+	Sprite::Draw();
+	menuText_->Draw();
 }
 
 void Menu::Reset()
 {
 	size = { 0.0f, 0.0f };
+	menuText_->SetSize(Vector2());
 	menuEaseData_->Reset();
 	Sprite::Update();
+	menuText_->Update();
 }

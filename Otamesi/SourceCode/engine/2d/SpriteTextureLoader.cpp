@@ -21,6 +21,11 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[SoundVolumeBar], directoryPath, "soundVolumeBar.png");
 	TextureManager::LoadTexture(textures[SoundVolumePointer], directoryPath, "soundVolumePointer.png");
 	//操作方法関係
+	TextureManager::LoadTexture(textures[MenuTitle], directoryPath, "Menu_Title.png");
+	TextureManager::LoadTexture(textures[MenuVolume], directoryPath, "Menu_Volume.png");
+	TextureManager::LoadTexture(textures[MenuStageSelect], directoryPath, "Menu_StageSelect.png");
+	TextureManager::LoadTexture(textures[MenuExit], directoryPath, "Exit.png");
+	//�������@�֌W
 	TextureManager::LoadTexture(textures[Husen], directoryPath, "husen.png");
 	TextureManager::LoadTexture(textures[MenuIconDef], directoryPath, "MenuIcon1.png");
 	TextureManager::LoadTexture(textures[MenuIconArrow], directoryPath, "MenuIcon2.png");
@@ -41,4 +46,6 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[PressSpace], directoryPath, "pressSpace.png");
 
 	TextureManager::LoadTexture(textures[ParanomaSky], directoryPath, "ParanomaSkyDorm.png");
+
+	TextureManager::LoadTexture(textures[StageSelectArrow], directoryPath, "select_arrow.png");
 }

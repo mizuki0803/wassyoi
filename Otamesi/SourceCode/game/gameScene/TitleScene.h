@@ -7,6 +7,7 @@
 #include "MapDataStage.h"
 #include "BackGround.h"
 #include "Skydome.h"
+#include "BirdManager.h"
 #include "UserInterface.h"
 
 /// <summary>
@@ -91,6 +92,8 @@ private: //メンバ変数
 	std::unique_ptr<ObjModel> modelPlayer;
 	std::unique_ptr<ObjModel> modelSkydome;
 	std::unique_ptr<ObjModel> modelPlayerEffect;
+	std::unique_ptr<ObjModel> modelBirdBody;
+	std::unique_ptr<ObjModel> modelBirdWing;
 
 	//プレイヤー
 	std::unique_ptr<Player> player;
@@ -103,6 +106,9 @@ private: //メンバ変数
 
 	//背景オブジェクト
 	std::unique_ptr<BackGround> backGround;
+
+	//鳥マネージャ
+	std::unique_ptr<BirdManager> birdManager;
 
 	//UI関係
 	std::unique_ptr<UserInterface> userInterface_;

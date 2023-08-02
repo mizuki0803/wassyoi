@@ -93,7 +93,9 @@ void StageSelectScene::Update()
 	//オブジェクト更新
 	//マップ用ブロック
 	mapDataManager->Update();
-	//天球
+	if (mapDataManager->GetIsChangeStage()) {
+		userInterface_->GetStageSelectArrow()->SelectStageCheckDraw();
+	}
 	skydome->Update();
 
 	//UIの更新
