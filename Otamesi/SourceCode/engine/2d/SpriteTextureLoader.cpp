@@ -33,12 +33,15 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[HusenR], directoryPath, "husen_R.png");
 	TextureManager::LoadTexture(textures[HusenH], directoryPath, "husen_hint.png");
 
+	TextureManager::LoadTexture(textures[HowToPlaySystem], directoryPath, "howToPlaySystemText.png");
 	TextureManager::LoadTexture(textures[HowToPlayPlayer], directoryPath, "howToPlayPlayerText.png");
 	TextureManager::LoadTexture(textures[HowToPlayCamera], directoryPath, "howToPlayCameraText.png");
 	TextureManager::LoadTexture(textures[Hint1Text], directoryPath, "hint1Text.png");
 	TextureManager::LoadTexture(textures[Hint2Text], directoryPath, "hint2Text.png");
+	TextureManager::LoadTexture(textures[ZoomIcon], directoryPath, "zoomIcon.png");
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
-	TextureManager::LoadTexture(textures[UnDoReDo], directoryPath, "UndoRedo.png");
+	TextureManager::LoadTexture(textures[HowToPlayUndo], directoryPath, "undo.png");
+	TextureManager::LoadTexture(textures[HowToPlayRedo], directoryPath, "redo.png");
 	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "menuText.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");

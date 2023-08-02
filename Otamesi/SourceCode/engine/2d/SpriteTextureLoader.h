@@ -27,14 +27,17 @@ public: //テクスチャ名
 		HusenL,	//左向き付箋
 		HusenR,	//右向き付箋
 		HusenH,	//ヒント付箋
+		HowToPlaySystem,	//操作方法(システム)
 		HowToPlayPlayer,	//操作方法(プレイヤー)
 		HowToPlayCamera,//操作方法(カメラ)
 		Hint1Text,//操作方法(ヒント1)
 		Hint2Text,	//操作方法(ヒント2)
 		Hint1,	//ヒント1
 		Hint2,	//ヒント2
+		ZoomIcon,	//ヒント拡大説明
 		HowToPlayChengeDemension,//操作方法(次元変更)
-		UnDoReDo,				//操作方法(UndoRedo)
+		HowToPlayUndo,	//操作方法(Undo)
+		HowToPlayRedo,	//操作方法(Redo)
 		HowToPlayMenu,	//操作方法(メニュー)
 		StageClear,		//ステージクリア
 		ClearBack,		//ステージクリアの背景

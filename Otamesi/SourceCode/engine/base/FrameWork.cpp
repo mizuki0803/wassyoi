@@ -159,11 +159,6 @@ void FrameWork::Update()
 		isEndRequest = true;
 		return;
 	}
-	//製作者用隠しゲームループ終了コマンド
-	if (input->PushKey(DIK_LCONTROL) && input->PushKey(DIK_LSHIFT) && input->PushKey(DIK_7)) {
-		isEndRequest = true;
-		return;
-	}
 
 	//フレームレート確認
 	//FpsCheck::Display();

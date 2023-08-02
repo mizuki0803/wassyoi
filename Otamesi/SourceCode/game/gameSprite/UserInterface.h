@@ -18,6 +18,7 @@ public: //enum
 	enum DrawerSpriteName
 	{
 		HowToPlayMenu,		//メニュー
+		HowToPlaySystem,	//システム操作
 		HowToPlayPlayer,	//プレイヤー操作
 		HowToPlayCamera,	//カメラ操作
 		Hint1,				//ヒント1
@@ -182,8 +183,6 @@ private: //静的メンバ変数
 private: //メンバ変数
 	//次元変更可能か可能のときのみ光るスペースキースプライト
 	std::unique_ptr<Sprite> isChangeDimenisonSprite;
-	// UndoRedo説明用
-	std::unique_ptr<Sprite> unDoReDo;
 	//押せるときの反応
 	std::array<SpaceIndo, 4> ChangeDimenisonSpriteEffect;
 	//反応を入れるカウント
@@ -196,6 +195,8 @@ private: //メンバ変数
 	std::vector<std::unique_ptr<Sprite>> childSprites;
 	//ヒントスプライト
 	std::array<std::unique_ptr<HintSprite>, 2> hintSprites;
+	//ヒント拡大説明スプライト
+	std::array<std::unique_ptr<Sprite>, 2> zoomIconSprites;
 	// イージング進行
 	float easeTimer_ = 0.0f;
 	// メニュー用の背景
