@@ -236,10 +236,6 @@ void UserInterface::Update()
 		drawerSprite->Update();
 	}
 
-	//imageUiRendere_->Update(
-	//	drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsOpenDrawer(),
-	//	drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsOpenDrawer());
-
 	//メニュースプライト更新
 	MenuUpdate();
 	menuBackScreen_->Update();
@@ -330,11 +326,13 @@ void UserInterface::Draw()
 
 void UserInterface::DrawMenuImage()
 {
-	if (true)
+	if (drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsOpenDrawer() ||
+		drawerSprites[DrawerSpriteName::HowToPlayPlayer]->GetIsMoveDrawer())
 	{
 		imageUiRendere_->DrawMoveDescription();
 	}
-	if (true)
+	if (drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsOpenDrawer() ||
+		drawerSprites[DrawerSpriteName::HowToPlayCamera]->GetIsMoveDrawer())
 	{
 		imageUiRendere_->DrawCameraDescription();
 	}

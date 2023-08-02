@@ -36,7 +36,7 @@ public: //サブクラス
 	/// <returns>シャドウマップ</returns>
 	static ImageUIRenderer *Create();
 
-
+	~ImageUIRenderer();
 	/// <summary>
 	/// シャドウマップ共通部分の初期化
 	/// </summary>

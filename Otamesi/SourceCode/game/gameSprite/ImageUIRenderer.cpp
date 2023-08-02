@@ -24,6 +24,10 @@ ImageUIRenderer *ImageUIRenderer::Create()
 	return instance;
 }
 
+ImageUIRenderer::~ImageUIRenderer()
+{
+}
+
 bool ImageUIRenderer::Initialize()
 {
 	HRESULT result;
@@ -270,7 +274,7 @@ bool ImageUIRenderer::Initialize()
 	camera_player_.reset(
 		ObjObject3d::Create(ObjModel::LoadFromOBJ("Player", true))
 	);
-	camera_player_->SetPosition({ 0,0,4 });
+	camera_player_->SetPosition({ 0,0,5 });
 	camera_player_->SetScale({ 2,2,2 });
 
 	arrow_[static_cast<int>(ArrowObjectName::SpinLeft)].reset(
@@ -302,7 +306,7 @@ bool ImageUIRenderer::Initialize()
 	camera_.reset(
 		ObjObject3d::Create(ObjModel::LoadFromOBJ("Camera", true))
 	);
-	camera_->SetPosition({ 0,0,4 });
+	camera_->SetPosition({ 0,0,5 });
 
 	return true;
 }
