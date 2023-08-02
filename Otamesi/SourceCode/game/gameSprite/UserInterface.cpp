@@ -419,7 +419,7 @@ void UserInterface::MenuOpen()
 	
 
 	soundVolumeBar->SetSize({ Easing::OutBack(0.0f, 262.0f, menuframe_[0]->GetTimeRate()), Easing::OutBack(0.0f, 38.0f, menuframe_[0]->GetTimeRate()) });
-	soundVolumePointer->SetSize({ Easing::OutBack(0.0f, 32.0f, menuframe_[0]->GetTimeRate()), Easing::OutBack(0.0f, 38.0f, menuframe_[0]->GetTimeRate()) });
+	soundVolumePointer->SetSize({ Easing::OutQuart(0.0f, 32.0f, menuframe_[0]->GetTimeRate()), Easing::OutQuart(0.0f, 38.0f, menuframe_[0]->GetTimeRate()) });
 
 	bool hitFlag = false;
 	for (auto& menu : menuframe_)
