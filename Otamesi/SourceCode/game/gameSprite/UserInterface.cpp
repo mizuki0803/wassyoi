@@ -147,8 +147,8 @@ void UserInterface::Initialize(GamePhase gamePhase)
 
 		//説明用引き出しスプライト生成
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::Husen), DIK_ESCAPE, DrawerSprite::Left, 0, stickoutNum, true); //メニュー画面移行 esc
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 460, stickoutNum, true); //プレイヤー操作説明
-		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 460, stickoutNum, true); //カメラ操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenL), DIK_3, DrawerSprite::Left, 460, stickoutNum, false); //プレイヤー操作説明
+		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenR), DIK_4, DrawerSprite::Right, 460, stickoutNum, false); //カメラ操作説明
 		
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenH), DIK_1, DrawerSprite::Right, 0, stickoutNum, false); //ヒント1
 		CreateDrawerSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HusenH), DIK_2, DrawerSprite::Right, 230, stickoutNum, false); //ヒント2

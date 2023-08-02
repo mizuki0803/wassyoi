@@ -116,7 +116,7 @@ bool ImageUIRenderer::Initialize()
 			//画像イメージ
 			UINT *img = new UINT[pixelCount];
 			for (int i = 0; i < pixelCount; i++) {
-				img[i] = 0xff0000ff;
+				img[i] = 0x00000000;
 			}
 
 			//テクスチャバッファにデータ転送
