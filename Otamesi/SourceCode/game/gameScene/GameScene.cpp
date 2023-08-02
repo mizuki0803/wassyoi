@@ -397,7 +397,10 @@ void GameScene::RestartGame()
 	userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
 	//全てのステージをクリア後の特別なステージのみその他の設定をリセットさせずに抜ける
-	if (StageManager::GetSelectStage() == 100) { return; }
+	if (StageManager::GetSelectStage() == 100) {
+		userInterface_->SetIsDrawEsc(false);
+		return;
+	}
 
 	//次のステージを開始するためにフラグなどをリセット
 	player->Reset();

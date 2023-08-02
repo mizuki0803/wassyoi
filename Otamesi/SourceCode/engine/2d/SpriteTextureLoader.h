@@ -38,6 +38,7 @@ public: //テクスチャ名
 		HowToPlayChengeDemension,//操作方法(次元変更)
 		HowToPlayUndo,	//操作方法(Undo)
 		HowToPlayRedo,	//操作方法(Redo)
+		HowToPlayReset, //操作方法(reset)
 		HowToPlayMenu,	//操作方法(メニュー)
 		StageClear,		//ステージクリア
 		ClearBack,		//ステージクリアの背景

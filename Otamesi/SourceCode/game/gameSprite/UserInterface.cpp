@@ -84,13 +84,19 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo),
 			drawerSprites[HowToPlaySystem].get(),
 			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 - 63 + drawerHandleSize / 2),
-			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 50 }, { 0.5f, 0.5f });
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 30 }, { 0.5f, 0.5f });
 
 		CreateChildSprite(
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo),
 			drawerSprites[HowToPlaySystem].get(),
 			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 + 63 + drawerHandleSize / 2),
-			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 50 }, { 0.5f, 0.5f });
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 30 }, { 0.5f, 0.5f });
+
+		CreateChildSprite(
+			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayReset),
+			drawerSprites[HowToPlaySystem].get(),
+			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 + drawerHandleSize / 2),
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 - 50.0f }, { 0.5f, 0.5f });
 
 		// プレイヤー操作説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer),
@@ -190,13 +196,19 @@ void UserInterface::Initialize(GamePhase gamePhase)
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayUndo),
 			drawerSprites[HowToPlaySystem].get(),
 			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 - 63 + drawerHandleSize / 2),
-			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 50 }, { 0.5f, 0.5f });
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 30 }, { 0.5f, 0.5f });
 
 		CreateChildSprite(
 			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayRedo),
 			drawerSprites[HowToPlaySystem].get(),
 			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 + 63 + drawerHandleSize / 2),
-			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 50 }, { 0.5f, 0.5f });
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 + 30 }, { 0.5f, 0.5f });
+
+		CreateChildSprite(
+			SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayReset),
+			drawerSprites[HowToPlaySystem].get(),
+			{ -(drawerSprites[HowToPlaySystem]->GetSize().x / 2 + drawerHandleSize / 2),
+			drawerSprites[HowToPlaySystem]->GetSize().y / 2 - 50.0f }, { 0.5f, 0.5f });
 
 		// プレイヤー操作説明の文字
 		CreateChildSprite(SpriteTextureLoader::GetTexture(SpriteTextureLoader::HowToPlayPlayer),
@@ -389,6 +401,9 @@ void UserInterface::Draw()
 		soundVolumeBar->Draw();
 		soundVolumePointer->Draw();
 	}
+
+	//esc描画しないなら抜ける
+	if (!isDrawEsc) { return; }
 
 	//メニュー引き出しスプライト描画
 	drawerSprites[DrawerSpriteName::HowToPlayMenu]->Draw();
@@ -617,9 +632,13 @@ void UserInterface::DrawerSpriteMoveStartKey()
 		//開閉に使用するキーが入力されていなければ飛ばす
 		if (!(Input::GetInstance()->GetInstance()->TriggerKey(drawerSprite->GetDrawerKey()))) { continue; }
 		//エスケープキーの説明だけはキーではなく特殊な方法で開閉するので飛ばす
-		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
+		if (drawerSprite == drawerSprites[HowToPlayMenu]) {
+			if (!isDrawEsc) { continue; }
+			Audio::GetInstance()->PlayWave(Audio::SoundName::menu);
+			continue;
+		}
 
-		if (drawerSprite == drawerSprites[HowToPlayMenu]) { continue; }
+		Audio::GetInstance()->PlayWave(Audio::SoundName::ui_inout);
 
 		//開閉開始
 		drawerSprite->MoveStart();

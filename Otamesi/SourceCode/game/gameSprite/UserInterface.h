@@ -132,6 +132,8 @@ public: //メンバ関数
 	//フラグの設定、取得
 	void SetMenuFlag(bool flag) { menuFlag_ = flag; drawerSprites[HowToPlayMenu]->MoveStart(); }
 	void SetNotMove(bool flag) { notMove_ = flag; }
+	void SetIsDrawEsc(bool flag) { isDrawEsc = flag; }
+
 
 	bool GetMenuFlag() { return menuFlag_; }
 	const int GetSelectionNumber() { return selectionNumber_; }
@@ -228,4 +230,7 @@ private: //メンバ変数
 
 	// メニュー用の画像生成
 	std::unique_ptr<ImageUIRenderer> imageUiRendere_;
+
+	//esc描画判定
+	bool isDrawEsc = true;
 };

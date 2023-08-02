@@ -92,9 +92,6 @@ void MapDataStageSelectManager::ChangeStage()
 		if (mapData->GetStageSelectBlockManager()->GetIsMove()) { return; }
 	}
 
-	//se再生
-	Audio::GetInstance()->PlayWave(Audio::SoundName::stage_change);
-
 	//次に選択するステージのマップを生成する
 	std::unique_ptr<MapDataStageSelect> newMapData;
 
@@ -127,4 +124,7 @@ void MapDataStageSelectManager::ChangeStage()
 
 	//�X�e�[�W��ύX����
 	isChangeStage = true;
+
+	//se再生
+	Audio::GetInstance()->PlayWave(Audio::SoundName::stage_change);
 }

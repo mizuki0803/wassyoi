@@ -42,6 +42,7 @@ void SpriteTextureLoader::TextureLoad()
 	TextureManager::LoadTexture(textures[HowToPlayChengeDemension], directoryPath, "changeDemension.png");
 	TextureManager::LoadTexture(textures[HowToPlayUndo], directoryPath, "undo.png");
 	TextureManager::LoadTexture(textures[HowToPlayRedo], directoryPath, "redo.png");
+	TextureManager::LoadTexture(textures[HowToPlayReset], directoryPath, "reset.png");
 	TextureManager::LoadTexture(textures[HowToPlayMenu], directoryPath, "menuText.png");
 	//ステージクリア関係
 	TextureManager::LoadTexture(textures[StageClear], directoryPath, "Clear_Front.png");
