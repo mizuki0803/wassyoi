@@ -107,14 +107,15 @@ void TitleScene::Update()
 		//次元変更が可能かUIに伝える
 		userInterface_->IsChangeDimensionCheck(player->ChangeDimensionStartCheck());
 
-		//undo
-		if (Input::GetInstance()->TriggerKey(DIK_LCONTROL)) {
-			Undo(camera.get(), player.get());
-
-		}
-		//redo
-		else if (Input::GetInstance()->TriggerKey(DIK_LSHIFT)) {
-			Redo(camera.get(), player.get());
+		if (!player->GetNowMove() && camera->GetActionPhase() == GameCamera::ActionPhase::None) {
+			//undo
+			if (Input::GetInstance()->TriggerKey(DIK_LCONTROL)) {
+				Undo(camera.get(), player.get());
+			}
+			//redo
+			else if (Input::GetInstance()->TriggerKey(DIK_LSHIFT)) {
+				Redo(camera.get(), player.get());
+			}
 		}
 
 		//binary出力
